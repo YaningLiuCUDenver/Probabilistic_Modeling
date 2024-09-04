@@ -1,0 +1,1030 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.47">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>3&nbsp; Classification of States for Markov Chains – MATH 4792/5792 Probabilistic Modeling</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./Lecture4.html" rel="next">
+<link href="./Lecture2.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./Lecture3.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Classification of States for Markov Chains</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">MATH 4792/5792 Probabilistic Modeling</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lecture1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Stochastic Processes</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lecture2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Introduction to Markov Chains</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lecture3.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Classification of States for Markov Chains</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lecture4.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Limiting Probabilities for Markov Chains</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lecture5.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Some Markov Chains Applications</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lecture6.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Time Reversible Markov Chains</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lecture7.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Hidden Markov Chains</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lecture8.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">The Exponential Distribution</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lecture9.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Further Properties of the Exponential Distribution</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lecture10.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">The Poisson Process</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lecture11.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Further Properties of Poisson Processes</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lecture12.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Conditional Distribution of the Arrival Times</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lecture13.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Introduction to Continuous-Time Markov Chains</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lecture14.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Introduction to Queueing Theory</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lecture15.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Exponential Models</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lecture16.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Brownian Motion</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lecture17.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Variations on Brownian Motion and Pricing Stock Options</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lecture18.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Introduction to Monte Carlo Simulation</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lecture19.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">General Techniques for Simulating Continuous Random Variables</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lecture20.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Special Techniques for Simulating Continuous Random Variables</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lecture21.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Simulating from Discrete Distributions</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lecture22.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Simulating Stochastic Processes</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lecture23.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Variance Reduction Techniques-Part I</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lecture24.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Variance Reduction Techniques-Part II</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lecture25.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Variance Reduction Techniques-Part III</span></span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#classification-of-states" id="toc-classification-of-states" class="nav-link active" data-scroll-target="#classification-of-states"><span class="header-section-number">3.1</span> Classification of States</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Classification of States for Markov Chains</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="classification-of-states" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="classification-of-states"><span class="header-section-number">3.1</span> Classification of States</h2>
+<p>State <span class="math inline">\(j\)</span> is said to be accessible from state <span class="math inline">\(i\)</span> if <span class="math inline">\(P^n_{ij} &gt; 0\)</span> for some <span class="math inline">\(n \ge 0\)</span>. Note that this implies that state <span class="math inline">\(j\)</span> is accessible from state <span class="math inline">\(i\)</span> if and only if, starting in <span class="math inline">\(i\)</span>, it is possible that the process will ever enter state <span class="math inline">\(j\)</span> . This is true since if <span class="math inline">\(j\)</span> is not accessible from <span class="math inline">\(i\)</span>, then <span class="math display">\[
+\begin{aligned}
+P\{\text{ever enter }j|\text{start in }i\} &amp;= P\left\{\cup_{n=0}^\infty\{X_n=j\}|X_0=i\right\} \\
+&amp;\le \sum_{n=0}^\infty P\{X_n=j|X_0=i\} = \sum_{n=0}^\infty P^n_{ij} = 0
+\end{aligned}
+\]</span></p>
+<p>Two states <span class="math inline">\(i\)</span> and <span class="math inline">\(j\)</span> that are accessible to each other are said to <strong>communicate</strong>, and we write <span class="math inline">\(i \leftrightarrow j\)</span>.</p>
+<p>Note that any state communicates with itself since, by definition, <span class="math display">\[
+P^0_{ii} = P\{X_0=i | X_0=i\} = 1
+\]</span></p>
+<p>The relation of communication satisfies the following three properties:</p>
+<ol type="1">
+<li>State <span class="math inline">\(i\)</span> communicates with state <span class="math inline">\(i\)</span>, all <span class="math inline">\(i \ge 0\)</span>.</li>
+<li>If state <span class="math inline">\(i\)</span> communicates with state <span class="math inline">\(j\)</span>, then state <span class="math inline">\(j\)</span> communicates with state <span class="math inline">\(i\)</span>.</li>
+<li>If state <span class="math inline">\(i\)</span> communicates with state <span class="math inline">\(j\)</span>, and state <span class="math inline">\(j\)</span> communicates with state <span class="math inline">\(k\)</span>, then state <span class="math inline">\(i\)</span> communicates with state <span class="math inline">\(k\)</span>.</li>
+</ol>
+<p>Properties 1 and 2 follow immediately from the definition of communication. To prove 3, suppose that <span class="math inline">\(i\)</span> communicates with <span class="math inline">\(j\)</span> , and <span class="math inline">\(j\)</span> communicates with <span class="math inline">\(k\)</span>. Thus, there exist integers <span class="math inline">\(n\)</span> and <span class="math inline">\(m\)</span> such that <span class="math inline">\(P^n_{ij} &gt; 0\)</span>, <span class="math inline">\(P^m_{jk} &gt; 0\)</span>. Now by the Chapman–Kolmogorov equations, we have that <span class="math display">\[
+P^{n+m}_{ik} = \sum_{r=0}^\infty P^n_{ir} P^m_{rk} \ge P^n_{ij} P^m_{jk} &gt; 0
+\]</span> Hence, state <span class="math inline">\(k\)</span> is accessible from state <span class="math inline">\(i\)</span>. Similarly, we can show that state <span class="math inline">\(i\)</span> is accessible from state <span class="math inline">\(k\)</span>. Hence, states <span class="math inline">\(i\)</span> and <span class="math inline">\(k\)</span> communicate.</p>
+<p>Two states that communicate are said to be in the same <strong>class</strong>. It is an easy consequence of 1, 2, and 3 that any two classes of states are either identical or disjoint. In other words, the concept of communication divides the state space up into a number of separate classes. The Markov chain is said to be <strong>irreducible</strong> if there is only one class, that is, if all states communicate with each other.</p>
+<div id="exm-exa1" class="theorem example">
+<p><span class="theorem-title"><strong>Example 3.1</strong></span> Consider the Markov chain consisting of the three states 0, 1, 2 and having transition probability matrix <span class="math display">\[
+P =
+\begin{bmatrix}
+\frac{1}{2} &amp; \frac{1}{2} &amp; 0 \\
+\frac{1}{2} &amp; \frac{1}{4} &amp; \frac{1}{4} \\
+0 &amp; \frac{1}{3} &amp; \frac{2}{3}
+\end{bmatrix}
+\]</span> It is easy to verify that this Markov chain is irreducible. For example, it is possible to go from state 0 to state 2 since <span class="math display">\[
+0 \rightarrow 1 \rightarrow 2
+\]</span> That is, one way of getting from state 0 to state 2 is to go from state 0 to state 1 (with probability <span class="math inline">\(\frac{1}{2}\)</span>) and then go from state 1 to state 2 (with probability <span class="math inline">\(\frac{1}{4}\)</span>).</p>
+</div>
+<div id="exm-exa2" class="theorem example">
+<p><span class="theorem-title"><strong>Example 3.2</strong></span> Consider a Markov chain consisting of the four states 0, 1, 2, 3 and having transition probability matrix <span class="math display">\[
+P =
+\begin{bmatrix}
+\frac{1}{2} &amp; \frac{1}{2} &amp; 0 &amp; 0 \\
+\frac{1}{2} &amp; \frac{1}{2} &amp; 0 &amp; 0 \\
+\frac{1}{4} &amp; \frac{1}{4} &amp; \frac{1}{4} &amp; \frac{1}{4} \\
+0 &amp; 0 &amp; 0 &amp; 1
+\end{bmatrix}
+\]</span> The classes of this Markov chain are <span class="math inline">\(\{0, 1\}\)</span>, <span class="math inline">\(\{2\}\)</span>, and <span class="math inline">\(\{3\}\)</span>. Note that while state 0 (or 1) is accessible from state 2, the reverse is not true. Since state 3 is an absorbing state, that is, <span class="math inline">\(P_{33} = 1\)</span>, no other state is accessible from it.</p>
+</div>
+<p>For any state <span class="math inline">\(i\)</span> we let <span class="math inline">\(f_i\)</span> denote the probability that, starting in state <span class="math inline">\(i\)</span>, the process will ever reenter state <span class="math inline">\(i\)</span>. State <span class="math inline">\(i\)</span> is said to be <strong>recurrent</strong> if <span class="math inline">\(f_i = 1\)</span> and <strong>transient</strong> if <span class="math inline">\(f_i &lt; 1\)</span>.</p>
+<p>Suppose that the process starts in state <span class="math inline">\(i\)</span> and <span class="math inline">\(i\)</span> is recurrent. Hence, with probability 1, the process will eventually reenter state <span class="math inline">\(i\)</span>. However, by the definition of a Markov chain, it follows that the process will be starting over again when it reenters state <span class="math inline">\(i\)</span> and, therefore, state <span class="math inline">\(i\)</span> will eventually be visited again. Continual repetition of this argument leads to the conclusion that if state <span class="math inline">\(i\)</span> is recurrent then, starting in state <span class="math inline">\(i\)</span>, the process will reenter state <span class="math inline">\(i\)</span> again and again and again—in fact, infinitely often.</p>
+<p>On the other hand, suppose that state <span class="math inline">\(i\)</span> is transient. Hence, each time the process enters state <span class="math inline">\(i\)</span> there will be a positive probability, namely, <span class="math inline">\(1−f_i\)</span> , that it will never again enter that state. Therefore, starting in state <span class="math inline">\(i\)</span>, the probability that the process will be in state <span class="math inline">\(i\)</span> for exactly <span class="math inline">\(n\)</span> time periods equals <span class="math inline">\(f^{n−1}_i (1 − f_i )\)</span>, <span class="math inline">\(n\ge 1\)</span>. In other words, if state <span class="math inline">\(i\)</span> is transient then, starting in state <span class="math inline">\(i\)</span>, the number of time periods that the process will be in state <span class="math inline">\(i\)</span> has a geometric distribution with finite mean <span class="math inline">\(1/(1 -f_i)\)</span>.</p>
+<p>From the preceding two paragraphs, it follows that state <span class="math inline">\(i\)</span> is recurrent if and only if, starting in state <span class="math inline">\(i\)</span>, the expected number of time periods that the process is in state <span class="math inline">\(i\)</span> is infinite. But, letting <span class="math display">\[
+I_n =
+\begin{cases}
+1, &amp; \text{if } X_n=i \\
+0, &amp; \text{if } X_n\ne i
+\end{cases}
+\]</span> we have that <span class="math inline">\(\sum_{n=0}^\infty I_n\)</span> represents the number of periods that the process is in state <span class="math inline">\(i\)</span>. Also, <span class="math display">\[
+\begin{aligned}
+E\left[\sum_{n=0}^\infty I_n | X_0=i\right] &amp;= \sum_{n=0}^\infty E[I_n | X_0=i] \\
+&amp;= \sum_{n=0}^\infty P\{X_n=i | X_0 = i\} = \sum_{n=0}^\infty P^n_{ii}
+\end{aligned}
+\]</span> We have thus proven the following.</p>
+<div id="prp-prp1" class="theorem proposition">
+<p><span class="theorem-title"><strong>Proposition 3.1</strong></span> State <span class="math inline">\(i\)</span> is <span class="math display">\[
+\begin{aligned}
+\text{recurrent if } \sum_{n=1}^\infty P^n_{ii} &amp;= \infty, \\
+\text{transient if } \sum_{n=1}^\infty P^n_{ii} &amp;&lt; \infty, \\
+\end{aligned}
+\]</span></p>
+</div>
+<p>The argument leading to the preceding proposition is doubly important because it also shows that a transient state will only be visited a finite number of times (hence the name transient). This leads to the conclusion that in a finite-state Markov chain not all states can be transient. To see this, suppose the states are <span class="math inline">\(0, 1, \dots , M\)</span> and suppose that they are all transient. Then after a finite amount of time (say, after time <span class="math inline">\(T_0\)</span>) state 0 will never be visited, and after a time (say, <span class="math inline">\(T_1\)</span>) state 1 will never be visited, and after a time (say, <span class="math inline">\(T_2\)</span>) state 2 will never be visited, and so on. Thus, after a finite time <span class="math inline">\(T = \max{\{T_0,T_1, \dots , T_M\}}\)</span> no states will be visited. But as the process must be in some state after time <span class="math inline">\(T\)</span> we arrive at a contradiction, which shows that at least one of the states must be recurrent.</p>
+<p>Another use of <a href="Lecture24.html#prp-prp1" class="quarto-xref">Proposition&nbsp;<span>24.1</span></a> is that it enables us to show that recurrence is a class property.</p>
+<div id="cor-cor1" class="theorem corollary">
+<p><span class="theorem-title"><strong>Corollary 3.1</strong></span> If state <span class="math inline">\(i\)</span> is recurrent, and state <span class="math inline">\(i\)</span> communicates with state <span class="math inline">\(j\)</span>, then state <span class="math inline">\(j\)</span> is recurrent.</p>
+</div>
+<div class="proof">
+<p><span class="proof-title"><em>Proof</em>. </span>To prove this we first note that, since state <span class="math inline">\(i\)</span> communicates with state <span class="math inline">\(j\)</span>, there exist integers <span class="math inline">\(k\)</span> and <span class="math inline">\(m\)</span> such that <span class="math inline">\(P^k_{ij} &gt; 0\)</span>, <span class="math inline">\(P^m_{ji} &gt; 0\)</span>. Now, for any integer <span class="math inline">\(n\)</span> <span class="math display">\[
+P^{m+n+k}_{jj} \ge P^m_{ji} P^n_{ii} P^k_{ij}
+\]</span> This follows since the left side of the preceding is the probability of going from <span class="math inline">\(j\)</span> to <span class="math inline">\(j\)</span> in <span class="math inline">\(m+n+k\)</span> steps, while the right side is the probability of going from <span class="math inline">\(j\)</span> to <span class="math inline">\(j\)</span> in <span class="math inline">\(m + n + k\)</span> steps via a path that goes from <span class="math inline">\(j\)</span> to <span class="math inline">\(i\)</span> in <span class="math inline">\(m\)</span> steps, then from <span class="math inline">\(i\)</span> to <span class="math inline">\(i\)</span> in an additional <span class="math inline">\(n\)</span> steps, then from <span class="math inline">\(i\)</span> to <span class="math inline">\(j\)</span> in an additional <span class="math inline">\(k\)</span> steps.</p>
+<p>From the preceding we obtain, by summing over <span class="math inline">\(n\)</span>, that <span class="math display">\[
+\sum_{n=1}^\infty P^{m+n+k}_{jj} \ge P^m_{ji} P^k_{ij} \sum_{n=1}^\infty P^n_{ii} = \infty
+\]</span> since <span class="math inline">\(P^m_{ji} P^k_{ij} &gt; 0\)</span> and <span class="math inline">\(\sum_{n=1}^\infty P^n_{ii}\)</span> is infinite since state <span class="math inline">\(i\)</span> is recurrent. Thus, by <a href="Lecture24.html#prp-prp1" class="quarto-xref">Proposition&nbsp;<span>24.1</span></a> it follows that state <span class="math inline">\(j\)</span> is also recurrent.</p>
+</div>
+<div id="rem-rem1" class="proof remark">
+<p><span class="proof-title"><em>Remark 3.1</em>. </span></p>
+<ol type="1">
+<li><a href="Lecture23.html#cor-cor1" class="quarto-xref">Corollary&nbsp;<span>23.1</span></a> also implies that transience is a class property. For if state <span class="math inline">\(i\)</span> is transient and communicates with state <span class="math inline">\(j\)</span> , then state <span class="math inline">\(j\)</span> must also be transient. For if <span class="math inline">\(j\)</span> were recurrent then, by <a href="Lecture23.html#cor-cor1" class="quarto-xref">Corollary&nbsp;<span>23.1</span></a>, <span class="math inline">\(i\)</span> would also be recurrent and hence could not be transient.</li>
+<li><a href="Lecture23.html#cor-cor1" class="quarto-xref">Corollary&nbsp;<span>23.1</span></a> along with our previous result that not all states in a finite Markov chain can be transient leads to the conclusion that all states of a finite irreducible Markov chain are recurrent.</li>
+</ol>
+</div>
+<div id="exm-exa3" class="theorem example">
+<p><span class="theorem-title"><strong>Example 3.3</strong></span> Let the Markov chain consisting of the states <span class="math inline">\(0, 1, 2, 3\)</span> have the transition probability matrix <span class="math display">\[
+P =
+\begin{bmatrix}
+0 &amp; 0 &amp; \frac{1}{2} &amp; \frac{1}{2} \\
+1 &amp; 0 &amp; 0 &amp; 0 \\
+0 &amp; 1 &amp; 0 &amp; 0 \\
+0 &amp; 1 &amp; 0 &amp; 0
+\end{bmatrix}
+\]</span> Determine which states are transient and which are recurrent.</p>
+</div>
+<div id="sol-sol3" class="proof solution">
+<p><span class="proof-title"><em>Solution 3.1</em>. </span>It is a simple matter to check that all states communicate and, hence, since this is a finite chain, all states must be recurrent.</p>
+</div>
+<div id="exm-exa4" class="theorem example">
+<p><span class="theorem-title"><strong>Example 3.4</strong></span> Consider the Markov chain having states <span class="math inline">\(0, 1, 2, 3, 4\)</span> and <span class="math display">\[
+P =
+\begin{bmatrix}
+\frac{1}{2} &amp; \frac{1}{2} &amp; 0 &amp; 0 &amp; 0 \\
+\frac{1}{2} &amp; \frac{1}{2} &amp; 0 &amp; 0 &amp; 0 \\
+0 &amp; 0 &amp; \frac{1}{2} &amp; \frac{1}{2} &amp; 0 \\
+0 &amp; 0 &amp; \frac{1}{2} &amp; \frac{1}{2} &amp; 0 \\
+\frac{1}{4} &amp; \frac{1}{4} &amp; 0 &amp; 0 &amp; \frac{1}{2}
+\end{bmatrix}
+\]</span> Determine the recurrent state.</p>
+</div>
+<div id="sol-sol4" class="proof solution">
+<p><span class="proof-title"><em>Solution 3.2</em>. </span>This chain consists of the three classes <span class="math inline">\(\{0, 1\}\)</span>, <span class="math inline">\(\{2, 3\}\)</span>, and <span class="math inline">\(\{4\}\)</span>. The first two classes are recurrent and the third transient.</p>
+</div>
+<div id="exm-exa5" class="theorem example">
+<p><span class="theorem-title"><strong>Example 3.5</strong></span> (A Random Walk) Consider a Markov chain whose state space consists of the integers <span class="math inline">\(i = 0, \pm 1,\pm 2, \dots\)</span>, and have transition probabilities given by <span class="math display">\[
+P_{i,i+1} = p = 1 - P_{i,i−1}, \quad i = 0,\pm 1,\pm 2, \dots
+\]</span> where <span class="math inline">\(0&lt;p&lt;1\)</span>. In other words, on each transition the process either moves one step to the right (with probability <span class="math inline">\(p\)</span>) or one step to the left (with probability <span class="math inline">\(1−p\)</span>). One colorful interpretation of this process is that it represents the wanderings of a drunken man as he walks along a straight line. Another is that it represents the winnings of a gambler who on each play of the game either wins or loses one dollar.</p>
+</div>
+<p>Since all states clearly communicate, it follows from <a href="Lecture23.html#cor-cor1" class="quarto-xref">Corollary&nbsp;<span>23.1</span></a> that they are either all transient or all recurrent. So let us consider state 0 and attempt to determine if <span class="math inline">\(\sum_{n=1}^\infty P^n_{00}\)</span> is finite or infinite.</p>
+<p>Since it is impossible to be even (using the gambling model interpretation) after an odd number of plays we must, of course, have that <span class="math display">\[
+P^{2n-1}_{00} = 0, \quad n = 1,2,\dots
+\]</span></p>
+<p>On the other hand, we would be even after <span class="math inline">\(2n\)</span> trials if and only if we won <span class="math inline">\(n\)</span> of these and lost <span class="math inline">\(n\)</span> of these. Because each play of the game results in a win with probability <span class="math inline">\(p\)</span> and a loss with probability <span class="math inline">\(1-p\)</span>, the desired probability is thus the binomial probability <span class="math display">\[
+P^{2n}_{00} = \binom{2n}{n}p^n(1-p)^n = \frac{(2n)!}{n!n!}(p(1-p))^n,\quad n=1,2,3,\dots
+\]</span> By using an approximation, due to Stirling, which asserts that <span id="eq-eq4-3"><span class="math display">\[
+n!\sim n^{n+1/2}e^{-n}\sqrt{2\pi}
+\tag{3.1}\]</span></span> where we say that <span class="math inline">\(a_n\sim b_n\)</span> when <span class="math inline">\(\lim_{n\rightarrow\infty} a_n/b_n = 1\)</span>, we obtain <span class="math display">\[
+P^{2n}_{00} \sim \frac{(4p(1-p))^n}{\sqrt{\pi n}}
+\]</span> Now it is easy to verify, for positive <span class="math inline">\(a_n, b_n\)</span>, that if <span class="math inline">\(a_n \sim b_n\)</span>, then <span class="math inline">\(\sum_n a_n &lt;\infty\)</span> if and only if <span class="math inline">\(\sum_n b_n &lt;\infty\)</span>. Hence, <span class="math inline">\(\sum_{n=1}^\infty P^n_{00}\)</span> will converge if and only if <span class="math display">\[
+\sum_{n=1}^\infty \frac{(4p(1-p))^n}{\sqrt{\pi n}}
+\]</span> does. However, <span class="math inline">\(4p(1−p) \le 1\)</span> with equality holding if and only if <span class="math inline">\(p = \frac{1}{2}\)</span>. Hence, <span class="math inline">\(\sum_{n=1}^\infty P^n_{00} = \infty\)</span> if and only if <span class="math inline">\(p = \frac{1}{2}\)</span>. Thus, the chain is recurrent when <span class="math inline">\(p = \frac{1}{2}\)</span> and transient if <span class="math inline">\(p \ne \frac{1}{2}\)</span>.</p>
+<p>When <span class="math inline">\(p = \frac{1}{2}\)</span>, the preceding process is called a <strong>symmetric random walk</strong>. We could also look at symmetric random walks in more than one dimension. For instance, in the two-dimensional symmetric random walk the process would, at each transition, either take one step to the left, right, up, or down, each having probability <span class="math inline">\(\frac{1}{4}\)</span>. That is, the state is the pair of integers <span class="math inline">\((i, j)\)</span> and the transition probabilities are given by <span class="math display">\[
+P_{(i,j), (i+1,j)} = P_{(i,j), (i-1,j)} = P_{(i,j), (i,j+1)} = P_{(i,j), (i,j-1)} = \frac{1}{4}
+\]</span> By using the same method as in the one-dimensional case, we now show that this Markov chain is also recurrent.</p>
+<p>Since the preceding chain is irreducible, it follows that all states will be recurrent if state <span class="math inline">\(\boldsymbol{0} = (0, 0)\)</span> is recurrent. So consider<span class="math inline">\(P^{2n}_{\boldsymbol{0}\boldsymbol{0}}\)</span>. Now after <span class="math inline">\(2n\)</span> steps, the chain will be back in its original location if for some <span class="math inline">\(i\)</span>, <span class="math inline">\(0 \le i \le n\)</span>, the <span class="math inline">\(2n\)</span> steps consist of <span class="math inline">\(i\)</span> steps to the left, <span class="math inline">\(i\)</span> to the right, <span class="math inline">\(n−i\)</span> up, and <span class="math inline">\(n−i\)</span> down. Since each step will be either of these four types with probability <span class="math inline">\(\frac{1}{4}\)</span>, it follows that the desired probability is a multinomial probability. That is, <span id="eq-eq4-4"><span class="math display">\[
+\begin{aligned}
+P^{2n}_{\boldsymbol{0}\boldsymbol{0}} &amp;= \sum_{i=0}^n \frac{(2n)!}{i!i!(n-i)!(n-i)!}\left(\frac{1}{4}\right)^{2n} = \sum_{i=0}^n \frac{(2n)!}{n!n!}\frac{n!}{(n-i)!i!}\frac{n!}{(n-i)!i!}\left(\frac{1}{4}\right)^{2n} \nonumber \\
+&amp;= \left(\frac{1}{4}\right)^{2n}\binom{2n}{n}\sum_{i=0}^n\binom{n}{i}\binom{n}{n-i} = \left(\frac{1}{4}\right)^{2n}\binom{2n}{n}\binom{2n}{n}
+\end{aligned}
+\tag{3.2}\]</span></span> where the last equality uses the combinatorial identity <span class="math display">\[
+\binom{2n}{n} = \sum_{i=0}^n\binom{n}{i}\binom{n}{n-i}
+\]</span> which follows upon noting that both sides represent the number of subgroups of size <span class="math inline">\(n\)</span> one can select from a set of <span class="math inline">\(n\)</span> white and <span class="math inline">\(n\)</span> black objects. Now, <span class="math display">\[
+\binom{2n}{n} = \frac{(2n)!}{n!n!} \sim \frac{(2n)^{2n+1/2}e^{-2n}\sqrt{2\pi}}{n^{2n+1}e^{-2n}(2\pi)} = \frac{4^n}{\sqrt{\pi n}}
+\]</span> where we used Stirling’s approximation in the second step. Hence from <a href="#eq-eq4-4" class="quarto-xref">Equation&nbsp;<span>3.2</span></a> we see that <span id="eq-prob"><span class="math display">\[
+P^{2n}_{00} \sim \frac{1}{\pi n}
+\tag{3.3}\]</span></span> which shows that <span class="math inline">\(\sum_{n}P^{2n}_{00} = \infty\)</span>, and thus all states are recurrent.</p>
+<p>Interestingly enough, whereas the symmetric random walks in one and two dimensions are both recurrent, all higher-dimensional symmetric random walks turn out to be transient. (For instance, the three-dimensional symmetric random walk is at each transition equally likely to move in any of six ways—either to the left, right, up, down, in, or out.)</p>
+<p>The following Python code verifies <a href="#eq-prob" class="quarto-xref">Equation&nbsp;<span>3.3</span></a>.</p>
+<div id="5c3c9d6c" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> p_00_2n(n, sample_size):</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co">    The function computes P^{2n}_{00} for a 2D symmetric random walk, </span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co">    the probability that state 0 is visited again in 2n steps. </span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co">    The probability is known to be about 1/(pi n) when n is large.</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co">    input:</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co">    n: int, 2n is the number of steps</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co">    sample_size: int, sample size, the number of experiments performed</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co">    output:</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co">    prob: P^{2n}_{00}, the probability that state 0 is visited again in 2n steps.</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    count <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(sample_size):</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>        current_state <span class="op">=</span> np.array([<span class="dv">0</span>,<span class="dv">0</span>])</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> j <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">2</span><span class="op">*</span>n):</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>            rn <span class="op">=</span> np.random.random()  <span class="co"># simulate a random number</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Decide where to move</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> rn <span class="op">&lt;=</span> <span class="fl">0.25</span>:</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>                current_state[<span class="dv">0</span>] <span class="op">-=</span> <span class="dv">1</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>            <span class="cf">elif</span> rn <span class="op">&lt;=</span> <span class="fl">0.5</span>:</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>                current_state[<span class="dv">0</span>] <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>            <span class="cf">elif</span> rn <span class="op">&lt;=</span> <span class="fl">0.75</span>:</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>                current_state[<span class="dv">1</span>] <span class="op">-=</span> <span class="dv">1</span></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>            <span class="cf">else</span>:</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>                current_state[<span class="dv">1</span>] <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> np.array_equal(current_state, np.array([<span class="dv">0</span>,<span class="dv">0</span>])):</span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>            count <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>    prob <span class="op">=</span> count <span class="op">/</span> sample_size</span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> prob</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="4815c74f" class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="dv">1000</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>sample_size <span class="op">=</span> <span class="dv">100000</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Computed probability is: '</span>, p_00_2n(n, sample_size),</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>      <span class="st">'and analytical probability is: '</span>, <span class="dv">1</span><span class="op">/</span>(np.pi<span class="op">*</span>n))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Computed probability is:  0.00025 and analytical probability is:  0.0003183098861837907</code></pre>
+</div>
+</div>
+<div id="exm-exa6" class="theorem example">
+<p><span class="theorem-title"><strong>Example 3.6</strong></span> (On the Ultimate Instability of the Aloha Protocol) Consider a communications facility in which the numbers of messages arriving during each of the time periods <span class="math inline">\(n = 1, 2, \dots\)</span> are independent and identically distributed random variables. Let <span class="math inline">\(a_i = P\{i \text{ arrivals}\}\)</span>, and suppose that <span class="math inline">\(a_0+a_1 &lt; 1\)</span>. Each arriving message will transmit at the end of the period in which it arrives. If exactly one message is transmitted, then the transmission is successful and the message leaves the system. However, if at any time two or more messages simultaneously transmit, then a collision is deemed to occur and these messages remain in the system. Once a message is involved in a collision it will, independently of all else, transmit at the end of each additional period with probability <span class="math inline">\(p\)</span>—the so-called Aloha protocol (because it was first instituted at the University of Hawaii). We will show that such a system is asymptotically unstable in the sense that the number of successful transmissions will, with probability 1, be finite.</p>
+<p>To begin let <span class="math inline">\(X_n\)</span> denote the number of messages in the facility at the beginning of the <span class="math inline">\(n\)</span>th period, and note that <span class="math inline">\(\{X_n,n \ge 0\}\)</span> is a Markov chain. Now for <span class="math inline">\(k \ge 0\)</span> define the indicator variables <span class="math inline">\(I_k\)</span> by <span class="math display">\[
+I_k =
+\begin{cases}
+1, &amp; \text{if the first time that the chain departs state k it directly goes to state k −1} \\
+0, &amp;\text{otherwise}
+\end{cases}
+\]</span> and let it be 0 if the system is never in state <span class="math inline">\(k\)</span>, <span class="math inline">\(k \ge 0\)</span>. (For instance, if the successive states are <span class="math inline">\(0, 1, 3, 4, \dots\)</span> , then <span class="math inline">\(I_3 = 0\)</span> since when the chain first departs state 3 it goes to state 4; whereas, if they are <span class="math inline">\(0, 3, 3, 2, \dots\)</span> , then <span class="math inline">\(I_3 = 1\)</span> since this time it goes to state 2.) Now, <span id="eq-eq4-6"><span class="math display">\[
+E\left[\sum_{k=0}^\infty I_k\right] = \sum_{k=0}^\infty E[I_k] = \sum_{k=0}^\infty P\{I_k=1\} \le \sum_{k=0}^\infty P\{I_k=1 | k \text{ is ever visited}\}
+\tag{3.4}\]</span></span></p>
+<p>Now, <span class="math inline">\(P\{I_k=1 | k \text{ is ever visited}\}\)</span> is the probability that when state <span class="math inline">\(k\)</span> is departed the next state is <span class="math inline">\(k - 1\)</span>. That is, it is the conditional probability that a transition from <span class="math inline">\(k\)</span> is to <span class="math inline">\(k-1\)</span> given that it is not back into <span class="math inline">\(k\)</span>, and so <span class="math display">\[
+P\{I_k=1 | k \text{ is ever visited}\} = \frac{P_{k,k-1}}{1-P_{kk}}
+\]</span> Because <span class="math display">\[
+\begin{aligned}
+P_{k,k-1} &amp;= a_0kp(1-p)^{k-1}, \\
+P_{k,k} &amp;= a_0[1-kp(1-p)^{k-1}] + a_1(1-p)^k
+\end{aligned}
+\]</span> which is seen by noting that if there are <span class="math inline">\(k\)</span> messages present on the beginning of a day, then (a) there will be <span class="math inline">\(k - 1\)</span> at the beginning of the next day if there are no new messages that day and exactly one of the <span class="math inline">\(k\)</span> messages transmits; and (b) there will be <span class="math inline">\(k\)</span> at the beginning of the next day if either</p>
+<ol type="1">
+<li><p>there are no new messages and it is not the case that exactly one of the existing <span class="math inline">\(k\)</span> messages transmits (otherwise the transmission would be successful), or</p></li>
+<li><p>there is exactly one new message (which automatically transmits) and none of the other <span class="math inline">\(k\)</span> messages transmits.</p></li>
+</ol>
+<p>Substitution of the preceding into <a href="#eq-eq4-6" class="quarto-xref">Equation&nbsp;<span>3.4</span></a> yields <span class="math display">\[
+E\left[\sum_{k=0}^\infty I_k\right] \le \sum_{k=0}^\infty \frac{a_0kp(1-p)^{k-1}}{1-a_0[1-kp(1-p)^{k-1}]-a_1(1-p)^k} &lt; \infty
+\]</span> where the convergence follows by noting that when <span class="math inline">\(k\)</span> is large the denominator of the expression in the preceding sum converges to <span class="math inline">\(1 − a_0\)</span> and so the convergence or divergence of the sum is determined by whether or not the sum of the terms in the numerator converge and <span class="math inline">\(\sum_{k=0}^\infty k(1-p)^{k-1}&lt;\infty\)</span>.</p>
+<p>Hence, <span class="math inline">\(E\left[\sum_{k=0}^\infty I_k\right]&lt; \infty\)</span>, which implies that <span class="math inline">\(\sum_{k=0}^\infty I_k &lt; \infty\)</span> with probability 1 (for if there was a positive probability that <span class="math inline">\(\sum_{k=0}^\infty I_k\)</span> could be <span class="math inline">\(\infty\)</span>, then its mean would be <span class="math inline">\(\infty\)</span>). Hence, with probability 1, there will be only a finite number of states that are initially departed via a successful transmission; or equivalently, there will be some finite integer <span class="math inline">\(N\)</span> such that whenever there are <span class="math inline">\(N\)</span> or more messages in the system, there will never again be a successful transmission. From this (and the fact that such higher states will eventually be reached—why?) it follows that, with probability 1, there will only be a finite number of successful transmissions.</p>
+
+
+</div>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./Lecture2.html" class="pagination-link" aria-label="Introduction to Markov Chains">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Introduction to Markov Chains</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./Lecture4.html" class="pagination-link" aria-label="Limiting Probabilities for Markov Chains">
+        <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Limiting Probabilities for Markov Chains</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

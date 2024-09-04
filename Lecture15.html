@@ -1,0 +1,1049 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.47">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>15&nbsp; Exponential Models – MATH 4792/5792 Probabilistic Modeling</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./Lecture16.html" rel="next">
+<link href="./Lecture14.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./Lecture15.html"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Exponential Models</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">MATH 4792/5792 Probabilistic Modeling</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lecture1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Stochastic Processes</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lecture2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Introduction to Markov Chains</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lecture3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Classification of States for Markov Chains</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lecture4.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Limiting Probabilities for Markov Chains</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lecture5.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Some Markov Chains Applications</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lecture6.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Time Reversible Markov Chains</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lecture7.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Hidden Markov Chains</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lecture8.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">The Exponential Distribution</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lecture9.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Further Properties of the Exponential Distribution</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lecture10.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">The Poisson Process</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lecture11.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Further Properties of Poisson Processes</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lecture12.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Conditional Distribution of the Arrival Times</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lecture13.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Introduction to Continuous-Time Markov Chains</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lecture14.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Introduction to Queueing Theory</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lecture15.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Exponential Models</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lecture16.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Brownian Motion</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lecture17.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Variations on Brownian Motion and Pricing Stock Options</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lecture18.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Introduction to Monte Carlo Simulation</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lecture19.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">General Techniques for Simulating Continuous Random Variables</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lecture20.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Special Techniques for Simulating Continuous Random Variables</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lecture21.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Simulating from Discrete Distributions</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lecture22.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Simulating Stochastic Processes</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lecture23.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Variance Reduction Techniques-Part I</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lecture24.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Variance Reduction Techniques-Part II</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lecture25.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Variance Reduction Techniques-Part III</span></span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#a-single-server-exponential-queueing-system" id="toc-a-single-server-exponential-queueing-system" class="nav-link active" data-scroll-target="#a-single-server-exponential-queueing-system"><span class="header-section-number">15.1</span> A Single-Server Exponential Queueing System</a></li>
+  <li><a href="#a-single-server-exponential-queueing-system-having-finite-capacity" id="toc-a-single-server-exponential-queueing-system-having-finite-capacity" class="nav-link" data-scroll-target="#a-single-server-exponential-queueing-system-having-finite-capacity"><span class="header-section-number">15.2</span> A Single-Server Exponential Queueing System Having Finite Capacity</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Exponential Models</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="a-single-server-exponential-queueing-system" class="level2" data-number="15.1">
+<h2 data-number="15.1" class="anchored" data-anchor-id="a-single-server-exponential-queueing-system"><span class="header-section-number">15.1</span> A Single-Server Exponential Queueing System</h2>
+<p>Suppose that customers arrive at a single-server service station in accordance with a Poisson process having rate λ. That is, the time between successive arrivals are independent exponential random variables having mean <span class="math inline">\(1/\lambda\)</span>. Each customer, upon arrival, goes directly into service if the server is free and, if not, the customer joins the queue. When the server finishes serving a customer, the customer leaves the system, and the next customer in line, if there is any, enters service. The successive service times are assumed to be independent exponential random variables having mean <span class="math inline">\(1/\mu\)</span>.</p>
+<p>The preceding is called the <span class="math inline">\(M/M/1\)</span> queue. The two <span class="math inline">\(M\)</span>’s refer to the fact that both the interarrival and the service distributions are exponential (and thus memoryless, or Markovian), and the 1 to the fact that there is a single server. To analyze it, we shall begin by determining the limiting probabilities <span class="math inline">\(P_n\)</span>, for <span class="math inline">\(n = 0, 1, \dots\)</span>. To do so, think along the following lines. Suppose that we have an infinite number of rooms numbered <span class="math inline">\(0, 1, 2, \dots\)</span>, and suppose that we instruct an individual to enter room n whenever there are n customers in the system. That is, he would be in room 2 whenever there are two customers in the system; and if another were to arrive, then he would leave room 2 and enter room 3. Similarly, if a service would take place he would leave room 2 and enter room 1 (as there would now be only one customer in the system).</p>
+<p>Now suppose that in the long run our individual is seen to have entered room 1 at the rate of ten times an hour. Then at what rate must he have left room 1? Clearly, at this same rate of ten times an hour. For the total number of times that he enters room 1 must be equal to (or one greater than) the total number of times he leaves room 1. This sort of argument thus yields the general principle which will enable us to determine the state probabilities. Namely, for each <span class="math inline">\(n \ge 0\)</span>, <em>the rate at which the process enters state <span class="math inline">\(n\)</span> equals the rate at which it leaves state <span class="math inline">\(n\)</span></em>. Let us now determine these rates. Consider first state 0. When in state 0 the process can leave only by an arrival as clearly there cannot be a departure when the system is empty. Since the arrival rate is <span class="math inline">\(\lambda\)</span> and the proportion of time that the process is in state 0 is <span class="math inline">\(P_0\)</span>, it follows that the rate at which the process leaves state <span class="math inline">\(0\)</span> is <span class="math inline">\(\lambda P_0\)</span>. On the other hand, state 0 can only be reached from state 1 via a departure. That is, if there is a single customer in the system and he completes service, then the system becomes empty. Since the service rate is <span class="math inline">\(\mu\)</span> and the proportion of time that the system has exactly one customer is <span class="math inline">\(P_1\)</span>, it follows that the rate at which the process enters state 0 is <span class="math inline">\(\mu P_1\)</span>.</p>
+<p>Hence, from our rate-equality principle we get our first equation, <span class="math display">\[
+\lambda P_0 = \mu P_1
+\]</span></p>
+<p>Now consider state 1. The process can leave this state either by an arrival (which occurs at rate <span class="math inline">\(\lambda)\)</span> or a departure (which occurs at rate <span class="math inline">\(\mu).\)</span> Hence, when in state 1, the process will leave this state at a rate of <span class="math inline">\(\lambda+\mu^*\)</span> Since the proportion of time the process is in state 1 is <span class="math inline">\(P_1\)</span>, the rate at which the process leaves state 1 is <span class="math inline">\((\lambda+\mu)P_1.\)</span> On the other hand, state 1 can be entered either from state 0 via an arrival or from state 2 via a departure. Hence, the rate at which the process enters state 1 is <span class="math inline">\(\lambda P_0+\mu P_2.\)</span> Because the reasoning for other states is similar, we obtain the following set of equations: <span id="eq-eq8-5"><span class="math display">\[
+\begin{array}{c}
+\text{State} &amp; \text{Rate at which the process leaves = rate at which it enters} \\
+0 &amp; \lambda P_{0}=\mu P_{1}\\
+n,n\geqslant1 &amp; (\lambda+\mu)P_{n}=\lambda P_{n-1}+\mu P_{n+1}\\
+\end{array}
+\tag{15.1}\]</span></span></p>
+<p>The set of <a href="#eq-eq8-5" class="quarto-xref">Equation&nbsp;<span>15.1</span></a> which balances the rate at which the process enters each state with the rate at which it leaves that state is known as <em>balance equations</em>. In order to solve <a href="#eq-eq8-5" class="quarto-xref">Equation&nbsp;<span>15.1</span></a>, we rewrite them to obtain <span class="math display">\[
+\begin{align*}
+P_{1}&amp;=\frac{\lambda}{\mu}P_{0},\\
+P_{n+1}&amp;=\frac{\lambda}{\mu}P_{n}+\left(P_{n}-\frac{\lambda}{\mu}P_{n-1}\right),\quad n\geqslant 1
+\end{align*}
+\]</span> Solving in terms of <span class="math inline">\(P_0\)</span> yields <span class="math display">\[
+\begin{align*}
+&amp;P_{0}=P_{0},\\
+&amp;P_{1}=\frac{\lambda}{\mu}P_{0},\\
+&amp;P_{2}=\frac{\lambda}{\mu}P_{1}+\left(P_{1}-\frac{\lambda}{\mu}P_{0}\right)=\frac{\lambda}{\mu}P_{1}=\left(\frac{\lambda}{\mu}\right)^{2}P_{0},\\
+&amp;P_{3}=\frac{\lambda}{\mu}P_{2}+\left(P_{2}-\frac{\lambda}{\mu}P_{1}\right)=\frac{\lambda}{\mu}P_{2}=\left(\frac{\lambda}{\mu}\right)^{3}P_{0},\\
+&amp;P_{4}=\frac{\lambda}{\mu}P_{3}+\left(P_{3}-\frac{\lambda}{\mu}P_{2}\right)=\frac{\lambda}{\mu}P_{3}=\left(\frac{\lambda}{\mu}\right)^{4}P_{0},\\
+&amp;P_{n+1}=\frac{\lambda}{\mu}P_{n}+\left(P_{n}-\frac{\lambda}{\mu}P_{n-1}\right)=\frac{\lambda}{\mu}P_{n}=\left(\frac{\lambda}{\mu}\right)^{n+1}P_{0}
+\end{align*}
+\]</span></p>
+<p>To determine <span class="math inline">\(P_0\)</span> we use the fact that the <span class="math inline">\(P_n\)</span> must sum to 1, and thus <span class="math display">\[
+1=\sum_{n=0}^{\infty}P_{n}=\sum_{n=0}^{\infty}\left(\frac{\lambda}{\mu}\right)^{n}P_{0}=\frac{P_{0}}{1-\lambda/\mu}
+\]</span> or <span id="eq-eq8-6"><span class="math display">\[
+\begin{align*}
+&amp;P_{0}=1-\frac{\lambda}{\mu},\\
+&amp;P_{n}=\left(\frac{\lambda}{\mu}\right)^{n}\left(1-\frac{\lambda}{\mu}\right),\quad n\geqslant1
+\end{align*}
+\tag{15.2}\]</span></span></p>
+<p>Notice that for the preceding equations to make sense, it is necessary for <span class="math inline">\(\lambda/\mu\)</span> to be less than l. For otherwise <span class="math inline">\(\sum_{n=0}^\infty(\lambda/\mu)^n\)</span> would be infinite and all the <span class="math inline">\(P_n\)</span> would be 0. Hence, we shall assume that <span class="math inline">\(\lambda/\mu&lt;1.\)</span> Note that it is quite intuitive that there would be no limiting probabilities if <span class="math inline">\(\lambda&gt;\mu.\)</span> For suppose that <span class="math inline">\(\lambda&gt;\mu.\)</span> Since customers arrive at a Poisson rate <span class="math inline">\(\lambda\)</span>, it follows that the expected total number of arrivals by time <span class="math inline">\(t\)</span> is <span class="math inline">\(\lambda t.\)</span> On the other hand, what is the expected number of customers served by time <span class="math inline">\(t?\)</span> If there were always customers present, then the number of customers served would be a Poisson process having rate <span class="math inline">\(\mu\)</span> since the time between successive services would be independent exponentials having mean <span class="math inline">\(1/\mu.\)</span> Hence, the expected number of customers served by time <span class="math inline">\(\iota\)</span> is no greater than <span class="math inline">\(\mu t;\)</span> and, therefore, the expected number in the system at time <span class="math inline">\(t\)</span> is at least <span class="math display">\[
+\lambda t-\mu t=(\lambda-\mu)t
+\]</span> Now if <span class="math inline">\(\lambda&gt;\mu\)</span>,then the preceding number goes to infinity as <span class="math inline">\(t\)</span> becomes large. That is, <span class="math inline">\(\lambda/\mu&gt;1\)</span>, the queue size increases without limit and there will be no limiting probabilities. Note also that the condition <span class="math inline">\(\lambda/\mu&lt;1\)</span> is equivalent to the condition that the mean service time be less than the mean time between successive arrivals. This is the general condition that must be satisfied for limited probabilities to exist in most single-server queueing systems.</p>
+<div id="rem-rem1" class="proof remark">
+<p><span class="proof-title"><em>Remark 15.1</em>. </span></p>
+<ol type="i">
+<li><p>In solving the balance equations for the <span class="math inline">\(M/M/1\)</span> queue, we obtained as an intermediate step the set of equations <span class="math display">\[
+\lambda P_{n}=\mu P_{n+1},\quad n\geqslant 0
+\]</span> These equations could have been directly argued from the general queueing result (shown in Proposition 1 in Lecture 14) that the rate at which arrivals find <span class="math inline">\(n\)</span> in the system – namely <span class="math inline">\(\lambda P_n\)</span>–is equal to the rate at which departures leave behind <span class="math inline">\(n\)</span>–namely, <span class="math inline">\(\mu P_{n+1}.\)</span></p></li>
+<li><p>We can also prove that <span class="math inline">\(P_n=(\lambda/\mu)^n(1-\lambda/\mu)\)</span> by using a queueing cost identity. Suppose that, for a fixed <span class="math inline">\(n&gt;0\)</span>, whenever there are at least <span class="math inline">\(n\)</span> customers in the system the <span class="math inline">\(n\)</span>th oldest customer (with age measured from when the customer arrived) pays 1 per unit time. Letting <span class="math inline">\(X\)</span> be the steady state number of customers in the system, because the system earns 1 per unit time whenever <span class="math inline">\(X\)</span> is at least <span class="math inline">\(n\)</span>, it follows that <span class="math display">\[
+\text{average rate at which the system earns} = P\{X\geqslant n\}
+\]</span> Also, because a customer who finds fewer than <span class="math inline">\(n-1\)</span> in the system when it arrives will pay 0, while an arrival who finds at least <span class="math inline">\(n-1\)</span> in the system will pay 1 per unit time for an exponentially distributed time with rate <span class="math inline">\(\mu\)</span> <span class="math display">\[
+\text{average amount a customer pays} =\frac{1}{\mu}P\{X\geqslant n-1\}
+\]</span> Therefore, the queueing cost identity yields that <span class="math display">\[
+P\{X\geqslant n\}=(\lambda/\mu)P\{X\geqslant n-1\},\quad n&gt;0
+\]</span> Iterating this gives <span class="math display">\[
+\begin{align*}
+P\{X\geqslant n\}&amp;=(\lambda/\mu)P\{X\geqslant n-1\}\\
+&amp;=(\lambda/\mu)^{2}P\{X\geqslant n-2\}\\&amp;=\cdots\\
+&amp;=(\lambda/\mu)^{n}P\{X\geqslant0\}\\
+&amp;=(\lambda/\mu)^{n}
+\end{align*}
+\]</span> Therefore, <span class="math display">\[
+P\{X=n\}=P\{X\geqslant n\}-P\{X\geqslant n+1\}=(\lambda/\mu)^{n}(1-\lambda/\mu)
+\]</span></p></li>
+</ol>
+</div>
+<p>Now let us attempt to express the quantities <span class="math inline">\(L,L_Q,W\)</span>, and <span class="math inline">\(W_Q\)</span> in terms of the limiting probabilities <span class="math inline">\(P_n.\)</span> Since <span class="math inline">\(P_n\)</span> is the long-run probability that the system contains exactly <span class="math inline">\(n\)</span> customers, the average number of customers in the system clearly is given by <span id="eq-eq8-7"><span class="math display">\[
+\begin{align*}
+\text{L}&amp;=\sum_{n=0}^{\infty}nP_{n}\\
+&amp;=\sum_{n=0}^{\infty}n\left(\frac{\lambda}{\mu}\right)^{n}\left(1-\frac{\lambda}{\mu}\right)\\
+&amp;=\frac{\lambda}{\mu-\lambda}
+\end{align*}
+\tag{15.3}\]</span></span> where the last equation followed upon application of the algebraic identity <span class="math display">\[
+\sum_{n=0}^{\infty}nx^n=\frac{x}{(1-x)^2}
+\]</span> The quantities <span class="math inline">\(W, W_Q\)</span>, and <span class="math inline">\(L_Q\)</span> now can be obtained with the help of Equations (2) and (3) from Lecture 14. That is, since <span class="math inline">\(\lambda_{\alpha}=\lambda\)</span>, we have from <a href="#eq-eq8-7" class="quarto-xref">Equation&nbsp;<span>15.3</span></a> that <span id="eq-eq8-8"><span class="math display">\[
+\begin{align*}
+W&amp;=\frac{L}{\lambda}\\&amp;=\frac{1}{\mu-\lambda},\\W_{Q}&amp;=W-E[S]\\
+&amp;=W-\frac{1}{\mu}\\
+&amp;=\frac{\lambda}{\mu(\mu-\lambda)},\\L_{Q}
+&amp;=\lambda W_{Q}\\
+&amp;=\frac{\lambda^{2}}{\mu(\mu-\lambda)}
+\end{align*}
+\tag{15.4}\]</span></span></p>
+<div id="exm-exa1" class="theorem example">
+<p><span class="theorem-title"><strong>Example 15.1</strong></span> Suppose that customers arrive at a Poisson rate of one per every 12 minutes, and that the service time is exponential at a rate of one service per 8 minutes. What are <span class="math inline">\(L\)</span> and <span class="math inline">\(W?\)</span></p>
+</div>
+<div id="sol-sol1" class="proof solution">
+<p><span class="proof-title"><em>Solution 15.1</em>. </span>Since <span class="math inline">\(\lambda=\frac{1}{12},\mu=\frac{1}{8}\)</span>, we have <span class="math display">\[
+L=2,\quad W=24
+\]</span> Hence, the average number of customers in the system is two, and the average time a customer spends in the system is 24 minutes.</p>
+<p>Now suppose that the arrival rate increases 20 percent to <span class="math inline">\(\lambda=\frac{1}{10}.\)</span> What is the corresponding change in <span class="math inline">\(L\)</span> and <span class="math inline">\(W?\)</span> Again using <a href="#eq-eq8-7" class="quarto-xref">Equation&nbsp;<span>15.3</span></a>, we get <span class="math display">\[
+L=4,\quad W=40
+\]</span> Hence, an increase of 20 percent in the arrival rate doubled the average number of customers in the system.</p>
+<p>To understand this better, write <a href="#eq-eq8-7" class="quarto-xref">Equation&nbsp;<span>15.3</span></a> as <span class="math display">\[
+\begin{align*}
+L&amp;=\frac{\lambda/\mu}{1-\lambda/\mu},\\
+W&amp;=\frac{1/\mu}{1-\lambda/\mu}
+\end{align*}
+\]</span> From these equations we can see that when <span class="math inline">\(\lambda/\mu\)</span> is near 1, a slight increase in <span class="math inline">\(\lambda/\mu\)</span> will lead to a large increase in <span class="math inline">\(L\)</span> and <span class="math inline">\(W.\)</span></p>
+</div>
+<div id="rem-rem2" class="proof remark">
+<p><span class="proof-title"><em>Remark 15.2</em>. </span>(<strong>A Technical Remark</strong>) We have used the fact that if one event occurs at an exponential rate <span class="math inline">\(\lambda\)</span>, and another independent event at an exponential rate <span class="math inline">\(\mu\)</span>, then together they occur at an exponential rate <span class="math inline">\(\lambda+\mu.\)</span> To check this formally, let <span class="math inline">\(T_{1}\)</span> be the time at which the first event occurs, and <span class="math inline">\(T_{2}\)</span> the time at which the second event occurs. Then <span class="math display">\[
+\begin{align*}
+P\{T_{1}\leqslant t\}&amp;=1-e^{-\lambda t},\\
+P\{T_{2}\leqslant t\}&amp;=1-e^{-\mu t}
+\end{align*}
+\]</span> Now if we are interested in the time until either <span class="math inline">\(T_1\)</span> or <span class="math inline">\(T_2\)</span> occurs, then we are interested in <span class="math inline">\(T=\min(T_1,T_2).\)</span> Now <span class="math display">\[
+\begin{align*}
+P\{T\leqslant t\}&amp;=1-P\{T&gt;t\}\\
+&amp;=1-P\{\min(T_1,T_2)&gt;t\}
+\end{align*}
+\]</span> However, <span class="math inline">\(\min(T_1,T_2)&gt;t\)</span> if and only if both <span class="math inline">\(T_1\)</span> and <span class="math inline">\(T_2\)</span> are greater than <span class="math inline">\(t;\)</span> hence, <span class="math display">\[
+\begin{align*}
+P\{T\leqslant t\}&amp;=1-P\{T_{1}&gt;t,T_{2}&gt;t\}\\
+&amp;=1-P\{T_{1}&gt;t\}P\{T_{2}&gt;t\}\\
+&amp;=1-e^{-\lambda t}e^{-\mu t}\\&amp;=1-e^{-(\lambda+\mu)t}
+\end{align*}
+\]</span> Thus, <span class="math inline">\(T\)</span> has an exponential distribution with rate <span class="math inline">\(\lambda+\mu\)</span>, and we are justified in adding the rates.</p>
+</div>
+<p>Given that an <span class="math inline">\(M/M/1\)</span> steady-state customer—that is, a customer who arrives after the system has been in operation a long time—spends a total of <span class="math inline">\(t\)</span> time units in the system, let us determine the conditional distribution of <span class="math inline">\(N\)</span>, the number of others that were present when that customer arrived. That is, letting <span class="math inline">\(W^*\)</span> be the amount of time a customer spends in the system, we will find <span class="math inline">\(P\{N=n|W^*=t\}.\)</span> Now, <span class="math display">\[
+\begin{align*}
+P\{N=n|W^{*}=t\}&amp;=\frac{f_{N,W^{*}}(n,t)}{f_{W}^{*}(t)}\\
+&amp;=\frac{P\{N=n\}f_{W^{*}|N}(t|n)}{f_{W}^{*}(t)}
+\end{align*}
+\]</span> where <span class="math inline">\(f_W^*|N(t|n)\)</span> is the conditional density of <span class="math inline">\(W^*\)</span> given that <span class="math inline">\(N=n\)</span>, and <span class="math inline">\(f_W^*(t)\)</span> is the unconditional density of <span class="math inline">\(W^*.\)</span> Now, given that <span class="math inline">\(N=n\)</span>, the time that the customer spends in the system is distributed as the sum of <span class="math inline">\(n+1\)</span> independent exponential random variables with a common rate <span class="math inline">\(\mu\)</span>, implying that the conditional distribution of <span class="math inline">\(W^*\)</span> given that <span class="math inline">\(N=n\)</span> is the gamma distribution with parameters <span class="math inline">\(n+1\)</span> and <span class="math inline">\(\mu.\)</span> Therefore, with <span class="math inline">\(C=1/f_W^*(t)\)</span> <span class="math display">\[
+\begin{align*}
+P\{N=n|W^{*}=t\}&amp;=CP\{N=n\}\mu e^{-\mu t}\frac{(\mu t)^{n}}{n!}\\
+&amp;=C(\lambda/\mu)^{n}(1-\lambda/\mu)\mu e^{-\mu t}\frac{(\mu t)^{n}}{n!}&amp;\text{(by PASTA)}\\
+&amp;=K\:\frac{(\lambda t)^{n}}{n!}
+\end{align*}
+\]</span> where <span class="math inline">\(K=C(1-\lambda/\mu)\mu e^{-\mu t}\)</span> does not depend on <span class="math inline">\(n.\)</span> Summing over <span class="math inline">\(n\)</span> yields <span class="math display">\[
+1=\sum_{n=0}^{\infty}P\{N=n|T=t\}=K\sum_{n=0}^{\infty}\frac{(\lambda t)^{n}}{n!}=Ke^{\lambda t}
+\]</span> Thus, <span class="math inline">\(K=e^{-\lambda I}\)</span>, showing that <span class="math display">\[
+P\{N=n|W^{*}=t\}=e^{-\lambda t}\frac{(\lambda t)^{n}}{n!}
+\]</span> Therefore, the conditional distribution of the number seen by an arrival who spends a total of <span class="math inline">\(t\)</span> time units in the system is the Poisson distribution with mean <span class="math inline">\(\lambda t.\)</span> In addition, as a by-product of our analysis, we have that <span class="math display">\[
+\begin{align*}
+f_{W^{*}}(t)&amp;=1/C\\
+&amp;=\frac{1}{K}(1-\lambda/\mu)\mu e^{-\mu t}\\
+&amp;=(\mu-\lambda)e^{-(\mu-\lambda)t}
+\end{align*}
+\]</span> In other words, <span class="math inline">\(W^*\)</span>, the amount of time a customer spends in the system, is an exponential random variable with rate <span class="math inline">\(\mu-\lambda.\)</span> (As a check, we note that <span class="math inline">\(E[W^*]=\)</span> <span class="math inline">\(1/(\mu-\lambda)\)</span> which checks with <a href="#eq-eq8-8" class="quarto-xref">Equation&nbsp;<span>15.4</span></a> since W=E[W*].)</p>
+<div id="rem-rem3" class="proof remark">
+<p><span class="proof-title"><em>Remark 15.3</em>. </span>Another argument as to why <span class="math inline">\(W^*\)</span> is exponential with rate <span class="math inline">\(\mu-\lambda\)</span> is as follows. If we let <span class="math inline">\(N\)</span> denote the number of customers in the system as seen by an arrival, then this arrival will spend <span class="math inline">\(N+1\)</span> service times in the system before departing. Now, <span class="math display">\[
+P\{N+1=j\}=P\{N=j-1\}=(\lambda/\mu)^{j-1}(1-\lambda/\mu),\quad j\geqslant 1
+\]</span> In words, the number of services that have to be completed before the arrival departs is a geometric random variable with parameter <span class="math inline">\(1-\lambda/\mu.\)</span> Therefore, after each service completion our customer will be the one departing with probability <span class="math inline">\(1-\lambda/\mu.\)</span> Thus, no matter how long the customer has already spent in the system, the probability he will depart in the next <span class="math inline">\(h\)</span> time units is <span class="math inline">\(\mu h+o(h)\)</span>, the probability that a service ends in that time, multiplied by <span class="math inline">\(1-\lambda/\mu.\)</span> That is, the customer will depart in the next <span class="math inline">\(h\)</span> time units with probability <span class="math inline">\((\mu-\lambda)h+o(h)\)</span>, which says that the hazard rate function of <span class="math inline">\(W^*\)</span> is the constant <span class="math inline">\(\mu-\lambda.\)</span> But only the exponential has a constant hazard rate, and so we can conclude that <span class="math inline">\(W^*\)</span> is exponential with rate <span class="math inline">\(\mu-\lambda.\)</span></p>
+</div>
+</section>
+<section id="a-single-server-exponential-queueing-system-having-finite-capacity" class="level2" data-number="15.2">
+<h2 data-number="15.2" class="anchored" data-anchor-id="a-single-server-exponential-queueing-system-having-finite-capacity"><span class="header-section-number">15.2</span> A Single-Server Exponential Queueing System Having Finite Capacity</h2>
+<p>In the previous model, we assumed that there was no limit on the number of customers that could be in the system at the same time. However, in reality there is always a finite system capacity <span class="math inline">\(N\)</span>, in the sense that there can be no more than <span class="math inline">\(N\)</span> customers in the system at any time. By this, we mean that if an arriving customer finds that there are already <span class="math inline">\(N\)</span> customers present, then he does not enter the system.</p>
+<p>As before, we let <span class="math inline">\(P_n, 0 \le n \le N\)</span>, denote the limiting probability that there are <span class="math inline">\(n\)</span> customers in the system. The rate-equality principle yields the following set of balance equations: <span class="math display">\[
+\begin{array}{c}
+\text{State} &amp; \text{Rate at which the process leaves = rate at which it enters} \\
+0 &amp; \lambda P_0 = \mu P_1 \\
+1\le n \le N-1 &amp; (\lambda+\mu) P_n = \lambda P_{n-1} + \mu P_{n+1} \\
+N &amp; \mu P_N = \lambda P_{N-1}
+\end{array}
+\]</span> The argument for state 0 is exactly as before. Namely, when in state 0, the process will leave only via an arrival (which occurs at rate <span class="math inline">\(\lambda\)</span> and hence the rate at which the process leaves state 0 is <span class="math inline">\(\lambda P_0.\)</span> On the other hand, the process can enter state 0 only from state 1 via a departure; hence, the rate at which the process enters state 0 is <span class="math inline">\(\mu P_1.\)</span> The equation for states <span class="math inline">\(n\)</span>, where l<span class="math inline">\(\leqslant n&lt;N\)</span>, is the same as before. The equation for state <span class="math inline">\(N\)</span> is different because now state <span class="math inline">\(N\)</span> can only be left via a departure since an arriving customer will not enter the system when it is in state <span class="math inline">\(N;\)</span> also, state <span class="math inline">\(N\)</span> can now only be entered from state <span class="math inline">\(N-1\)</span> (as there is no longer a state <span class="math inline">\(N+1)\)</span> via an arrival. We could now either solve the balance equations exactly as we did for the infinite capacity model, or we could save a few lines by directly using the result that the rate at which departures leave behind <span class="math inline">\(n-1\)</span> is equal to the rate at which arrivals find <span class="math inline">\(n-1.\)</span> Invoking this result yields that <span id="eq-eq8-9"><span class="math display">\[
+\mu P_{n}=\lambda P_{n-1},\quad n=1,\ldots,N
+\tag{15.5}\]</span></span></p>
+<p>giving that <span id="eq-eq8-10"><span class="math display">\[
+P_n=\dfrac{\lambda}{\mu}P_{n-1}=\left(\dfrac{\lambda}{\mu}\right)^2P_{n-2}=\cdots=\left(\dfrac{\lambda}{\mu}\right)^nP_0,\quad n=1,\ldots,N
+\tag{15.6}\]</span></span></p>
+<p>By using the fact that <span class="math inline">\(\sum_{n=0}^NP_n=1\)</span> we obtain <span class="math display">\[
+\begin{align*}
+1 &amp;=P_{0}\sum_{n=0}^{N}\left(\frac{\lambda}{\mu}\right)^{n}\\
+  &amp;=P_{0}\left[\frac{1-(\lambda/\mu)^{N+1}}{1-\lambda/\mu}\right]
+\end{align*}
+\]</span> or <span class="math display">\[
+P_0=\frac{(1-\lambda/\mu)}{1-(\lambda/\mu)^{N+1}}
+\]</span> and hence from <a href="#eq-eq8-10" class="quarto-xref">Equation&nbsp;<span>15.6</span></a> we obtain <span id="eq-eq8-11"><span class="math display">\[
+P_{n}=\frac{(\lambda/\mu)^{n}(1-\lambda/\mu)}{1-(\lambda/\mu)^{N+1}},\quad n=0,1,\ldots,N
+\tag{15.7}\]</span></span></p>
+<p>Note that in this case, there is no need to impose the condition that <span class="math inline">\(\lambda/\mu&lt;1.\)</span> The queue size is, by definition, bounded so there is no possibility of its increasing indefinitely.</p>
+<p>As before, <span class="math inline">\(L\)</span> may be expressed in terms of <span class="math inline">\(P_n\)</span> to yield <span class="math display">\[
+\begin{align*}
+\text{L}&amp;=\sum_{n=0}^{N}n\:P_{n}\\
+&amp;=\frac{(1-\lambda/\mu)}{1-(\lambda/\mu)^{N+1}}\sum_{n=0}^{N}n\left(\frac{\lambda}{\mu}\right)^{n}
+\end{align*}
+\]</span> which after some algebra yields <span id="eq-eq8-12"><span class="math display">\[
+L=\frac{\lambda[1+N(\lambda/\mu)^{N+1}-(N+1)(\lambda/\mu)^{N}]}{(\mu-\lambda)(1-(\lambda/\mu)^{N+1})}
+\tag{15.8}\]</span></span></p>
+<p>In deriving <span class="math inline">\(W\)</span>, the expected amount of time a customer spends in the system, we must be a little carcful about what we mean by a customer. Specifically, are we including those “customers”who arrive to find the system full and thus do not spend any time in the system? Or, do we just want the expected time spent in the system by a customer who actually entered the system? The two questions lead, of course, to differcnt answers. In the first case, we have <span class="math inline">\(\lambda_a=\lambda;\)</span> whereas in the second case, since the fraction of arrivals that actually enter the system is <span class="math inline">\(1-P_N\)</span>, it follows that <span class="math inline">\(\lambda_a=\lambda(1-P_N).\)</span> Once it is clear what we mean by a customer, W can be obtained from <span class="math display">\[
+W=\frac{L}{\lambda_a}
+\]</span></p>
+<div id="exm-exa2" class="theorem example">
+<p><span class="theorem-title"><strong>Example 15.3</strong></span> Suppose that it costs <span class="math inline">\(c\mu\)</span> dollars per hour to provide service at a rate <span class="math inline">\(\mu.\)</span> Suppose also that we incur a gross profit of <span class="math inline">\(A\)</span> dollars for each customer served. If the system has a capacity <span class="math inline">\(N\)</span>, what service rate <span class="math inline">\(\mu\)</span> maximizes our total profit?</p>
+<div id="sol-sol2" class="proof solution">
+<p><span class="proof-title"><em>Solution 15.2</em>. </span>To solve this, suppose that we use rate <span class="math inline">\(\mu.\)</span> Let us determine the amount of money coming in per hour and subtract from this the amount going out each hour. This will give us our profit per hour, and we can choose <span class="math inline">\(\mu\)</span> so as to maximize this.</p>
+<p>Now, potential customers arrive at a rate <span class="math inline">\(\lambda.\)</span> However, a certain proportion of them do not join the system—namely, those who arrive when there are <span class="math inline">\(N\)</span> customers already in the system. Hence, since <span class="math inline">\(P_N\)</span> is the proportion of time that the system is full, it follows that entering customers arrive at a rate of <span class="math inline">\(\lambda(1-P_N).\)</span> Since each customer pays $A, it follows that money comes in at an hourly rate of <span class="math inline">\(\lambda(1-P_N)A\)</span> and since it goes out at an hourly rate of <span class="math inline">\(c\mu\)</span>,it follows that our total profit per hour is given by <span class="math display">\[
+\begin{align*}
+\text{profit per hour}&amp;=\lambda(1-P_{N})A-c\mu\\
+&amp;=\lambda A\biggl[1-\frac{(\lambda/\mu)^{N}(1-\lambda/\mu)}{1-(\lambda/\mu)^{N+1}}\biggr]-c\mu\\
+&amp;=\frac{\lambda A[1-(\lambda/\mu)^{N}]}{1-(\lambda/\mu)^{N+1}}-c\mu
+\end{align*}
+\]</span> For instance if <span class="math inline">\(N=2,\lambda=1,A=10,c=1\)</span>, then <span class="math display">\[
+\begin{align*}
+\mathrm{profit~per~hour}&amp;=\frac{10[1-(1/\mu)^{2}]}{1-(1/\mu)^{3}}-\mu\\
+&amp;=\frac{10(\mu^{3}-\mu)}{\mu^{3}-1}-\mu
+\end{align*}
+\]</span> in order to maximize profit we differentiate to obtain <span class="math display">\[
+\frac{d}{d\mu}[\text{profit per hour}]=10\frac{(2\mu^3-3\mu^2+1)}{(\mu^3-1)^2}-1
+\]</span> The value of <span class="math inline">\(\mu\)</span> that maximizes our profit now can be obtained by equating to zero and solving numerically.</p>
+</div>
+<section id="a-shoeshine-shop" class="level3" data-number="15.2.1">
+<h3 data-number="15.2.1" class="anchored" data-anchor-id="a-shoeshine-shop"><span class="header-section-number">15.2.1</span> A Shoeshine Shop</h3>
+<p>Consider a shoeshine shop consisting of two chairs. Suppose that an entering customer first will go to chair 1. When his work is completed in chair l, he will go either to chair <span class="math inline">\(2\)</span> if that chair is empty or else wait in chair 1 until chair 2 becomes empty. Suppose that a potential customer will enter this shop as long as chair 1 is empty. (Thus, for instance, a potential customer might enter even if there is a customer in chair 2.)</p>
+<p>If we suppose that potential customers arrive in accordance with a Poisson process at rate <span class="math inline">\(\lambda\)</span>, and that the service times for the two chairs are independent and have respective exponential rates of <span class="math inline">\(\mu_1\)</span> and <span class="math inline">\(\mu_2\)</span>, then</p>
+<ol type="a">
+<li><p>what proportion of potential customers enters the system?</p></li>
+<li><p>what is the mean number of customers in the system?</p></li>
+<li><p>what is the average amount of time that an entering customer spends in the system?</p></li>
+</ol>
+<p>To begin we must first decide upon an appropriate state space. It is clear that the state of the system must include more information than merely the number of customers in the system. For instance, it would not be enough to specify that there is one customer in the system as we would also have to know which chair he was in. Further, if we only know that there are two customers in the system, then we would not know if the man in chair 1 is still being served or if he is just waiting for the person in chair 2 to finish. To account for these points, the following state space, consisting of the five states, <span class="math inline">\((0, 0), (1, 0), (0, 1), (1, 1)\)</span>, and <span class="math inline">\((b, 1)\)</span>, will be used. The states have the following interpretation:</p>
+<p><span class="math display">\[
+\begin{array}{c}
+\text{State}  &amp;  \text{Interpretation} \\
+(0, 0) &amp; \text{There are no customers in the system.} \\
+(1, 0) &amp; \text{There is one customer in the system, and he is in chair 1.} \\
+(0, 1) &amp; \text{There is one customer in the system, and he is in chair 2.} \\
+(1, 1) &amp; \text{There are two customers in the system, and both} \\
+       &amp; \text{are presently being served.} \\
+(b, 1) &amp; \text{There are two customers in the system, but the customer } \\
+       &amp; \text{in the first chair has completed his work in that chair and } \\
+       &amp; \text{is waiting for the second chair to become free.}
+\end{array}
+\]</span> It should be noted that when the system is in state <span class="math inline">\((b, 1)\)</span>, the person in chair 1, though not being served, is nevertheless “blocking” potential arrivals from entering the system.</p>
+<p>As a prelude to writing down the balance equations, it is usually worthwhile to make a transition diagram. This is done by first drawing a circle for each state and then drawing an arrow labeled by the rate at which the process goes from one state to another. The transition diagram for this model is shown in the following figure. The explanation for the diagram is as follows: The arrow from state <span class="math inline">\((0, 0)\)</span> to state <span class="math inline">\((1, 0)\)</span> which is labeled <span class="math inline">\(\lambda\)</span> means that when the process is in state <span class="math inline">\((0, 0)\)</span>, that is, when the system is empty, then it goes to state <span class="math inline">\((1, 0)\)</span> at a rate <span class="math inline">\(\lambda\)</span>, that is via an arrival. The arrow from <span class="math inline">\((0, 1)\)</span> to <span class="math inline">\((1, 1)\)</span> is similarly explained.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Shoeshine.png" class="img-fluid figure-img" style="width:70.0%"></p>
+<figcaption>A transition diagram.</figcaption>
+</figure>
+</div>
+<p>When the process is in state <span class="math inline">\((1, 0)\)</span>, it will go to state <span class="math inline">\((0, 1)\)</span> when the customer in chair 1 is finished and this occurs at a rate <span class="math inline">\(\mu_1\)</span>; hence the arrow from <span class="math inline">\((1, 0)\)</span> to <span class="math inline">\((0, 1)\)</span> labeled <span class="math inline">\(\mu_1\)</span>. The arrow from <span class="math inline">\((1, 1)\)</span> to <span class="math inline">\((b, 1)\)</span> is similarly explained.</p>
+<p>When in state <span class="math inline">\((b, 1)\)</span> the process will go to state <span class="math inline">\((0, 1)\)</span> when the customer in chair 2 completes his service (which occurs at rate <span class="math inline">\(\mu_2\)</span>); hence the arrow from <span class="math inline">\((b, 1)\)</span> to <span class="math inline">\((0, 1)\)</span> labeled <span class="math inline">\(\mu_2\)</span>. Also when in state <span class="math inline">\((1, 1)\)</span> the process will go to state <span class="math inline">\((1, 0)\)</span> when the man in chair 2 finishes and hence the arrow from <span class="math inline">\((1, 1)\)</span> to <span class="math inline">\((1, 0)\)</span> labeled <span class="math inline">\(\mu_2\)</span>. Finally, if the process is in state <span class="math inline">\((0, 1)\)</span>, then it will go to state <span class="math inline">\((0, 0)\)</span> when the man in chair 2 completes his service, hence the arrow from <span class="math inline">\((0, 1)\)</span> to <span class="math inline">\((0, 0)\)</span> labeled <span class="math inline">\(\mu_2\)</span>.</p>
+<p>Because there are no other possible transitions, this completes the transition diagram.</p>
+<p>To write the balance equations we equate the sum of the arrows (multiplied by the probability of the states where they originate) coming into a state with the sum of the arrows (multiplied by the probability of the state) going out of that state. This gives <span class="math display">\[
+\begin{array}{c}
+\text{State} &amp; \text{Rate that the process leaves = rate that it enters} \\
+(0, 0) &amp; \lambda P_{00} = \mu_2 P_{01} \\
+(1, 0) &amp; \mu_1P_{10} = \lambda P_{00} +\mu_2P_{11} \\
+(0, 1) &amp; (\lambda +\mu_2)P_{01} = \mu_1P_{10} +\mu_2P_{b1} \\
+(1, 1) &amp; (\mu_1 +\mu_2)P_{11} = \lambda P_{01} \\
+(b, 1) &amp; \mu_2P_{b1} = \mu_1P_{11}
+\end{array}
+\]</span> These along with the equation <span class="math display">\[
+P_{00} +P_{10} +P_{01} +P_{11} +P_{b1} = 1
+\]</span> may be solved to determine the limiting probabilities. Though it is easy to solve the preceding equations, the resulting solutions are quite involved and hence will not be explicitly presented. However, it is easy to answer our questions in terms of these limiting probabilities. First, since a potential customer will enter the system when the state is either <span class="math inline">\((0,0)\)</span> or <span class="math inline">\((0,1)\)</span>, it follows that the proportion of customers entering the system is <span class="math inline">\(P_{00}+P_{01}\)</span>. Secondly, since there is one customer in the system whenever the state is <span class="math inline">\((0, 1)\)</span> or <span class="math inline">\((1,0)\)</span> and two customers in the system whenever the state is <span class="math inline">\((1, 1)\)</span> or <span class="math inline">\((b, 1)\)</span>, it follows that <span class="math inline">\(L\)</span>, the average number in the system, is given by <span class="math display">\[
+L=P_{01}+P_{10}+2(P_{11}+P_{b1})
+\]</span> To derive the average amount of time that an entering customer spends in the system, we use the relationship <span class="math inline">\(W=L/\lambda_{\alpha}\)</span>. Since a potential customer will enter the system when in state <span class="math inline">\((0,0)\)</span> or <span class="math inline">\((0,1)\)</span>, it follows that <span class="math inline">\(\lambda_a=\lambda(P_{00}+P_{01})\)</span> and hence <span class="math display">\[
+W=\frac{P_{01}+P_{10}+2(P_{11}+P_{b1})}{\lambda_{(}P_{00}+P_{01})}
+\]</span></p>
+<div id="exm-exa3" class="theorem example">
+<p><span class="theorem-title"><strong>Example 15.2</strong></span> &nbsp;</p>
+<ol type="a">
+<li><p>If <span class="math inline">\(\lambda=1,\mu_{1}=1,\mu_{2}=2\)</span>, then calculate the preceding quantities of interest.</p></li>
+<li><p>If <span class="math inline">\(\lambda = 1\)</span>, <span class="math inline">\(\mu_{1}= 2\)</span>, <span class="math inline">\(\mu_{2}= 1\)</span>, then calculate the preceding.</p></li>
+</ol>
+</div>
+<div id="sol-sol3" class="proof solution">
+<p><span class="proof-title"><em>Solution 15.3</em>. </span></p>
+<ol type="a">
+<li><p>Solving the balance equations yields <span class="math display">\[
+P_{00}=\frac{12}{37},\quad P_{10}=\frac{16}{37},\quad P_{11}=\frac{2}{37},\quad P_{01}=\frac{6}{37},\quad P_{b1}=\frac{1}{37}
+\]</span> Hence, <span class="math display">\[
+L=\frac{28}{37},\quad W=\frac{28}{18}
+\]</span></p></li>
+<li><p>Solving the balance equations yields <span class="math display">\[
+P_{00}=\frac{3}{11},\quad P_{10}=\frac{2}{11},\quad P_{11}=\frac{1}{11},\quad P_{b1}=\frac{2}{11},\quad P_{01}=\frac{3}{11}
+\]</span> Hence, <span class="math display">\[
+L=1,\quad W=\frac{11}{6}
+\]</span></p></li>
+</ol>
+</div>
+
+
+</section>
+</div>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./Lecture14.html" class="pagination-link" aria-label="Introduction to Queueing Theory">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Introduction to Queueing Theory</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./Lecture16.html" class="pagination-link" aria-label="Brownian Motion">
+        <span class="nav-page-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Brownian Motion</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

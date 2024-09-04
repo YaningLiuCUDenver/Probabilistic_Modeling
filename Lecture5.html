@@ -1,0 +1,988 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.47">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>5&nbsp; Some Markov Chains Applications – MATH 4792/5792 Probabilistic Modeling</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./Lecture6.html" rel="next">
+<link href="./Lecture4.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./Lecture5.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Some Markov Chains Applications</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">MATH 4792/5792 Probabilistic Modeling</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lecture1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Stochastic Processes</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lecture2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Introduction to Markov Chains</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lecture3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Classification of States for Markov Chains</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lecture4.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Limiting Probabilities for Markov Chains</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lecture5.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Some Markov Chains Applications</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lecture6.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Time Reversible Markov Chains</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lecture7.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Hidden Markov Chains</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lecture8.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">The Exponential Distribution</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lecture9.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Further Properties of the Exponential Distribution</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lecture10.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">The Poisson Process</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lecture11.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Further Properties of Poisson Processes</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lecture12.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Conditional Distribution of the Arrival Times</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lecture13.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Introduction to Continuous-Time Markov Chains</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lecture14.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Introduction to Queueing Theory</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lecture15.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Exponential Models</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lecture16.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Brownian Motion</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lecture17.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Variations on Brownian Motion and Pricing Stock Options</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lecture18.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Introduction to Monte Carlo Simulation</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lecture19.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">General Techniques for Simulating Continuous Random Variables</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lecture20.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Special Techniques for Simulating Continuous Random Variables</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lecture21.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Simulating from Discrete Distributions</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lecture22.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Simulating Stochastic Processes</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lecture23.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Variance Reduction Techniques-Part I</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lecture24.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Variance Reduction Techniques-Part II</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lecture25.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Variance Reduction Techniques-Part III</span></span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#the-gamblers-ruin-problem" id="toc-the-gamblers-ruin-problem" class="nav-link active" data-scroll-target="#the-gamblers-ruin-problem"><span class="header-section-number">5.1</span> The Gambler’s Ruin Problem</a></li>
+  <li><a href="#a-model-for-algorithmic-efficiency" id="toc-a-model-for-algorithmic-efficiency" class="nav-link" data-scroll-target="#a-model-for-algorithmic-efficiency"><span class="header-section-number">5.2</span> A Model for Algorithmic Efficiency</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Some Markov Chains Applications</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="the-gamblers-ruin-problem" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="the-gamblers-ruin-problem"><span class="header-section-number">5.1</span> The Gambler’s Ruin Problem</h2>
+<p>Consider a gambler who at each play of the game has probability <span class="math inline">\(p\)</span> of winning one unit and probability <span class="math inline">\(q = 1 - p\)</span> of losing one unit. Assuming that successive plays of the game are independent, what is the probability that, starting with <span class="math inline">\(i\)</span> units, the gambler’s fortune will reach <span class="math inline">\(N\)</span> before reaching <span class="math inline">\(0\)</span>?</p>
+<p>If we let <span class="math inline">\(X_n\)</span> denote the player’s fortune at time <span class="math inline">\(n\)</span>, then the process <span class="math inline">\(\{X_n, n = 0, 1, 2, \dots\}\)</span> is a Markov chain with transition probabilities <span class="math display">\[
+\begin{aligned}
+P_{00} &amp;= P_{NN} = 1, \\
+P_{i,i+1} &amp;= p = 1-P_{i,i-1}, \quad i=1,2,\dots,N-1
+\end{aligned}
+\]</span></p>
+<p>This Markov chain has three classes, namely, <span class="math inline">\(\{0\}\)</span>, <span class="math inline">\(\{1, 2, \dots, N -1\}\)</span>, and <span class="math inline">\(\{N\}\)</span>; the first and third class being recurrent and the second transient. Since each transient state is visited only finitely often, it follows that, after some finite amount of time, the gambler will either attain his goal of <span class="math inline">\(N\)</span> or go broke.</p>
+<p>Let <span class="math inline">\(P_i, i = 0, 1, \dots, N\)</span>, denote the probability that, starting with <span class="math inline">\(i\)</span>, the gambler’s fortune will eventually reach <span class="math inline">\(N\)</span>. By conditioning on the outcome of the initial play of the game we obtain <span class="math display">\[
+P_i = pP_{i+1} + qP_{i-1}, \quad i=1,2,\dots,N-1
+\]</span> or equivalently, since <span class="math inline">\(p+q=1\)</span>, <span class="math display">\[
+pP_i + qP_i = pP_{i+1} + qP_{i-1}
+\]</span> or <span class="math display">\[
+P_{i+1}-P_i=\frac{q}{p}\left(P_i-P_{i-1}\right), \quad i=1,2, \ldots, N-1
+\]</span> Hence, since <span class="math inline">\(P_0=0\)</span>, we obtain from the preceding line that</p>
+<p><span class="math display">\[
+\begin{aligned}
+P_2-P_1 &amp; =\frac{q}{p}\left(P_1-P_0\right)=\frac{q}{p} P_1, \\
+P_3-P_2= &amp; \frac{q}{p}\left(P_2-P_1\right)=\left(\frac{q}{p}\right)^2 P_1, \\
+&amp; \vdots \\
+P_i-P_{i-1}= &amp; \frac{q}{p}\left(P_{i-1}-P_{i-2}\right)=\left(\frac{q}{p}\right)^{i-1} P_1, \\
+&amp; \vdots \\
+P_N-P_{N-1} &amp; =\left(\frac{q}{p}\right)\left(P_{N-1}-P_{N-2}\right)=\left(\frac{q}{p}\right)^{N-1} P_1
+\end{aligned}
+\]</span></p>
+<p>Adding the first <span class="math inline">\(i-1\)</span> of these equations yields <span class="math display">\[
+P_i-P_1=P_1\left[\left(\frac{q}{p}\right)+\left(\frac{q}{p}\right)^2+\cdots+\left(\frac{q}{p}\right)^{i-1}\right]
+\]</span> or <span class="math display">\[
+P_i= \begin{cases}\frac{1-(q / p)^i}{1-(q / p)} P_1, &amp; \text { if } \frac{q}{p} \neq 1 \\ i P_1, &amp; \text { if } \frac{q}{p}=1\end{cases}
+\]</span> Now, using the fact that <span class="math inline">\(P_N=1\)</span>, we obtain that <span class="math display">\[
+P_1= \begin{cases}\frac{1-(q / p)}{1-(q / p)^N}, &amp; \text { if } p \neq \frac{1}{2} \\ \frac{1}{N}, &amp; \text { if } p=\frac{1}{2}\end{cases}
+\]</span></p>
+<p>and hence <span id="eq-eq4-14"><span class="math display">\[
+P_i= \begin{cases}\frac{1-(q / p)^i}{1-(q / p)^N}, &amp; \text { if } p \neq \frac{1}{2} \\ \frac{i}{N}, &amp; \text { if } p=\frac{1}{2}\end{cases}
+\tag{5.1}\]</span></span> Note that, as <span class="math inline">\(N\rightarrow\infty\)</span>, <span class="math display">\[
+P_i\rightarrow \begin{cases} 1-\left(\frac{q}{p}\right)^i, &amp; \text { if } p &gt; \frac{1}{2} \\ 0, &amp; \text { if } p\le\frac{1}{2}\end{cases}
+\]</span> Thus, if <span class="math inline">\(p &gt; \frac{1}{2}\)</span>, there is a positive probability that the gambler’s fortune will increase indefinitely; while if <span class="math inline">\(p \le \frac{1}{2}\)</span>, the gambler will, with probability 1, go broke against an infinitely rich adversary.</p>
+<div id="9fe5120b" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> compute_Pi(p, N, i, sample_size):</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co">    Compute Pi, i=0,1,...,N, the probability that, starting with i, </span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co">    the gambler’s fortune will eventually reach N</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co">    input:</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co">    p: float, the probability p_{i,i+1}</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co">    N: int, the last state</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co">    i: int between 0 and N (inclusive), the starting state</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co">    sample_size: int, the sample size, i.e, </span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co">    how many experiments are performed</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="co">    output:</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="co">    Pi: float, the probability Pi</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>    count <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> j <span class="kw">in</span> <span class="bu">range</span>(sample_size):</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>        state <span class="op">=</span> i</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>        <span class="cf">while</span> state <span class="op">!=</span> <span class="dv">0</span> <span class="kw">and</span> state <span class="op">!=</span> N:</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> np.random.random() <span class="op">&lt;</span> p:</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>                state <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>            <span class="cf">else</span>:</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>                 state <span class="op">-=</span> <span class="dv">1</span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> state <span class="op">==</span> N:</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>            count <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>    Pi <span class="op">=</span> count <span class="op">/</span> sample_size</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> Pi</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>We consider a case where <span class="math inline">\(p=0.5\)</span>, so <span class="math inline">\(P_i=\frac{i}{N}\)</span>.</p>
+<div id="b672c546" class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>p <span class="op">=</span> <span class="fl">0.5</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>N <span class="op">=</span> <span class="dv">10</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>i <span class="op">=</span> <span class="dv">3</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>sample_size <span class="op">=</span> <span class="dv">10000</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'The simulated probability is: '</span>, compute_Pi(p, N, i, sample_size), </span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>      <span class="st">' and the theoretical probability is: '</span>, i<span class="op">/</span>N)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>The simulated probability is:  0.307  and the theoretical probability is:  0.3</code></pre>
+</div>
+</div>
+<p>Now consider a case where <span class="math inline">\(p=0.3\ne 0.5\)</span>. In this case, <span class="math inline">\(P_i= \frac{1-(q / p)^i}{1-(q / p)^N}\)</span>.</p>
+<div id="471b765c" class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>p <span class="op">=</span> <span class="fl">0.3</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>N <span class="op">=</span> <span class="dv">10</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>i <span class="op">=</span> <span class="dv">8</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>sample_size <span class="op">=</span> <span class="dv">10000</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'The simulated probability is: '</span>, compute_Pi(p, N, i, sample_size), </span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>      <span class="st">' and the theoretical probability is: '</span>, (<span class="dv">1</span><span class="op">-</span>((<span class="dv">1</span><span class="op">-</span>p)<span class="op">/</span>p)<span class="op">**</span>i)<span class="op">/</span>(<span class="dv">1</span><span class="op">-</span>((<span class="dv">1</span><span class="op">-</span>p)<span class="op">/</span>p)<span class="op">**</span>N))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>The simulated probability is:  0.1839  and the theoretical probability is:  0.18350278772959905</code></pre>
+</div>
+</div>
+<div id="exm-exa1" class="theorem example">
+<p><span class="theorem-title"><strong>Example 5.1</strong></span> Suppose Max and Patty decide to flip pennies; the one coming closest to the wall wins. Patty, being the better player, has a probability <span class="math inline">\(0.6\)</span> of winning on each flip. (a) If Patty starts with five pennies and Max with ten, what is the probability that Patty will wipe Max out? (b) What if Patty starts with 10 and Max with 20?</p>
+</div>
+<div id="sol-sol1" class="proof solution">
+<p><span class="proof-title"><em>Solution 5.1</em>. </span></p>
+<ol type="a">
+<li><p>The desired probability is obtained from <a href="#eq-eq4-14" class="quarto-xref">Equation&nbsp;<span>5.1</span></a> by letting <span class="math inline">\(i = 5\)</span>, <span class="math inline">\(N = 15\)</span>, and <span class="math inline">\(p = 0.6\)</span>. Hence, the desired probability is <span class="math display">\[
+\frac{1-\left(\frac{2}{3}\right)^5}{1-\left(\frac{2}{3}\right)^{15}} \approx 0.87
+\]</span></p></li>
+<li><p>The desired probability is <span class="math display">\[
+\frac{1-\left(\frac{2}{3}\right)^{10}}{1-\left(\frac{2}{3}\right)^{30}} \approx 0.98
+\]</span></p></li>
+</ol>
+</div>
+</section>
+<section id="a-model-for-algorithmic-efficiency" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="a-model-for-algorithmic-efficiency"><span class="header-section-number">5.2</span> A Model for Algorithmic Efficiency</h2>
+<p>The following optimization problem is called a linear program: <span class="math display">\[
+\begin{aligned}
+&amp;\text{minimize } \boldsymbol{cx}, \\
+&amp;\text{subject to} A\boldsymbol{x} = \boldsymbol{b}, \boldsymbol{x} \ge \boldsymbol{0}
+\end{aligned}
+\]</span> where <span class="math inline">\(A\)</span> is an <span class="math inline">\(m \times n\)</span> matrix of fixed constants; <span class="math inline">\(\boldsymbol{c} = (c_1, \dots , c_n)\)</span> and <span class="math inline">\(\boldsymbol{b} = (b_1, \dots, b_m)\)</span> are vectors of fixed constants; and <span class="math inline">\(\boldsymbol{x} = (x_1, \dots , x_n)\)</span> is the <span class="math inline">\(n\)</span>-vector of nonnegative values that is to be chosen to minimize <span class="math inline">\(\boldsymbol{cx}=\sum_{i=1}^n c_ix_i\)</span>. Supposing that <span class="math inline">\(n &gt; m\)</span>, it can be shown that the optimal <span class="math inline">\(\boldsymbol{x}\)</span> can always be chosen to have at least <span class="math inline">\(n - m\)</span> components equal to <span class="math inline">\(0\)</span>—that is, it can always be taken to be one of the so-called extreme points of the feasibility region.</p>
+<p>The simplex algorithm solves this linear program by moving from an extreme point of the feasibility region to a better (in terms of the objective function <span class="math inline">\(\boldsymbol{cx}\)</span>) extreme point (via the pivot operation) until the optimal is reached. Because there can be as many as <span class="math inline">\(N=\binom{n}{m}\)</span> such extreme points, it would seem that this method might take many iterations, but, surprisingly to some, this does not appear to be the case in practice.</p>
+<p>To obtain a feel for whether or not the preceding statement is surprising, let us consider a simple probabilistic (Markov chain) model as to how the algorithm moves along the extreme points. Specifically, we will suppose that if at any time the algorithm is at the <span class="math inline">\(j\)</span>th best extreme point then after the next pivot the resulting extreme point is equally likely to be any of the <span class="math inline">\(j-1\)</span> best. Under this assumption, we show that the time to get from the <span class="math inline">\(N\)</span>th best to the best extreme point has approximately, for large <span class="math inline">\(N\)</span>, a normal distribution with mean and variance equal to the logarithm (base <span class="math inline">\(e\)</span>) of <span class="math inline">\(N\)</span>.</p>
+<p>Consider a Markov chain for which <span class="math inline">\(P_{11} = 1\)</span> and <span class="math display">\[
+P_{ij} = \frac{1}{i-1},\quad j=1,\dots,i-1, \, i&gt;1
+\]</span> and let <span class="math inline">\(T_i\)</span> denote the number of transitions needed to go from state <span class="math inline">\(i\)</span> to state <span class="math inline">\(1\)</span>. A recursive formula for <span class="math inline">\(E[T_i]\)</span> can be obtained by conditioning on the initial transition: <span class="math display">\[
+E[T_i] = 1 + \frac{1}{i-1}\sum_{j=1}^{i-1}E[T_j]
+\]</span> Starting with E[T_1] = 0, we successively see that <span class="math display">\[
+\begin{aligned}
+E[T_2] &amp;= 1, \\
+E[T_3] &amp;= 1+\frac{1}{2}, \\
+E[T_4] &amp;= 1+\frac{1}{3}(1+1+\frac{1}{2}) = 1+\frac{1}{2}+\frac{1}{3}
+\end{aligned}
+\]</span> and it is not difficult to guess and then prove inductively that <span class="math display">\[
+E[T_i] = \sum_{j=1}^{i-1} 1/j
+\]</span> However, to obtain a more complete description of <span class="math inline">\(T_N\)</span>, we will use the representation <span class="math display">\[
+T_N = \sum_{j=1}^{N-1} I_j
+\]</span> where <span class="math display">\[
+I_j =
+\begin{cases}
+1, &amp; \text{ if the process ever enters } j\\
+0, &amp; \text{ otherwise}
+\end{cases}
+\]</span> The importance of the preceding representation stems from the following:</p>
+<div id="prp-prp1" class="theorem proposition">
+<p><span class="theorem-title"><strong>Proposition 5.1</strong></span> <span class="math inline">\(I_1,\dots,I_{N-1}\)</span> are independent and <span class="math display">\[
+P\{I_j=1\} = 1/j,\quad 1\le j\le N-1
+\]</span></p>
+</div>
+<div class="proof">
+<p><span class="proof-title"><em>Proof</em>. </span>Given <span class="math inline">\(I_{j+1}, \dots , I_N\)</span>, let <span class="math inline">\(n = \min\{i:i &gt; j,I_i = 1\}\)</span> denote the lowest numbered state, greater than <span class="math inline">\(j\)</span> , that is entered. Thus we know that the process enters state <span class="math inline">\(n\)</span> and the next state entered is one of the states <span class="math inline">\(1, 2, \dots, j\)</span>. Hence, as the next state from state <span class="math inline">\(n\)</span> is equally likely to be any of the lower number states <span class="math inline">\(1, 2, \dots, n-1\)</span> we see that <span class="math display">\[
+P\{I_j=1 | I_{j+1},\dots,I_N\} = \frac{1/(n-1)}{j/(n-1)} = 1/j
+\]</span> Hence, <span class="math inline">\(P\{I_j = 1\} = 1/j\)</span>, and independence follows since the preceding conditional probability does not depend on <span class="math inline">\(I_{j+1}, \dots, I_N\)</span>.</p>
+</div>
+<div id="cor-cor1" class="theorem corollary">
+<p><span class="theorem-title"><strong>Corollary 5.1</strong></span> &nbsp;</p>
+<ol type="i">
+<li><p><span class="math inline">\(E[T_N] = \sum_{j=1}^{N-1} 1/j\)</span>.</p></li>
+<li><p><span class="math inline">\(\text{Var}(T_N) = \sum_{j=1}^{N-1}(1/j)(1-1/j)\)</span>.</p></li>
+<li><p>For <span class="math inline">\(N\)</span> large, <span class="math inline">\(T_N\)</span> has approximately a normal distribution with mean <span class="math inline">\(\log N\)</span> and variance <span class="math inline">\(\log N\)</span>.</p></li>
+</ol>
+</div>
+<div class="proof">
+<p><span class="proof-title"><em>Proof</em>. </span>Parts (i) and (ii) follow from <a href="Lecture24.html#prp-prp1" class="quarto-xref">Proposition&nbsp;<span>24.1</span></a> and the representation <span class="math inline">\(T_N = \sum_{j=1}^{N-1} I_j\)</span>. Part (iii) follows from the central limit theorem since <span class="math display">\[
+\int_{1}^N\frac{dx}{x} &lt; \sum_{j=1}^{N-1} 1/j &lt; 1+\int_{1}^{N-1}\frac{dx}{x}
+\]</span> or <span class="math display">\[
+\log N &lt; \sum_{j=1}^{N-1} 1/j &lt; 1+\log{(N-1)}
+\]</span> and so <span class="math display">\[
+\log N \approx \sum_{j=1}^{N-1} 1/j
+\]</span></p>
+</div>
+<p>Returning to the simplex algorithm, if we assume that <span class="math inline">\(n\)</span>, <span class="math inline">\(m\)</span>, and <span class="math inline">\(n - m\)</span> are all large, we have by Stirling’s approximation that <span class="math display">\[
+N = \binom{n}{m} \sim \frac{n^{n+1/2}}{(n-m)^{n-m+1/2} m^{m+1/2} \sqrt{2}\pi}
+\]</span> and so, letting <span class="math inline">\(c=n/m\)</span>, <span class="math display">\[
+\begin{aligned}
+\log N &amp;\sim \left(mc+\frac{1}{2}\right)\log{(mc)} - \left(m(c-1)+\frac{1}{2}\right)\log{(m(c-1))} \\
+       &amp;-\left(m+\frac{1}{2}\right)\log m - \frac{1}{2}\log{(2\pi)}
+\end{aligned}
+\]</span> or <span class="math display">\[
+\log N \sim m\left[c\log{\frac{c}{c-1}}+\log{(c-1)}\right]
+\]</span> Now, as <span class="math inline">\(\lim_{x\rightarrow\infty} x\log{[x/(x-1)]}=1\)</span>, it follows that, when <span class="math inline">\(c\)</span> is large, <span class="math display">\[
+\log N \sim m[1+\log{(c-1)}]
+\]</span> Thus, for instance, if <span class="math inline">\(n = 8000\)</span>, <span class="math inline">\(m = 1000\)</span>, then the number of necessary transitions is approximately normally distributed with mean and variance equal to <span class="math inline">\(1000(1 + \log 7) \approx 3000\)</span>. Hence, the number of necessary transitions would be roughly between <span class="math display">\[
+3000 \pm 2\sqrt{3000} \text{ or roughly } 3000\pm 110
+\]</span> <span class="math inline">\(95\)</span> percent of the time.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./Lecture4.html" class="pagination-link" aria-label="Limiting Probabilities for Markov Chains">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Limiting Probabilities for Markov Chains</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./Lecture6.html" class="pagination-link" aria-label="Time Reversible Markov Chains">
+        <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Time Reversible Markov Chains</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

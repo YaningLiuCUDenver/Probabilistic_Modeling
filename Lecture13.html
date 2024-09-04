@@ -1,0 +1,961 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.47">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>13&nbsp; Introduction to Continuous-Time Markov Chains – MATH 4792/5792 Probabilistic Modeling</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./Lecture14.html" rel="next">
+<link href="./Lecture12.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./Lecture13.html"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Introduction to Continuous-Time Markov Chains</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">MATH 4792/5792 Probabilistic Modeling</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lecture1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Stochastic Processes</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lecture2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Introduction to Markov Chains</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lecture3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Classification of States for Markov Chains</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lecture4.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Limiting Probabilities for Markov Chains</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lecture5.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Some Markov Chains Applications</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lecture6.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Time Reversible Markov Chains</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lecture7.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Hidden Markov Chains</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lecture8.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">The Exponential Distribution</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lecture9.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Further Properties of the Exponential Distribution</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lecture10.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">The Poisson Process</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lecture11.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Further Properties of Poisson Processes</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lecture12.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Conditional Distribution of the Arrival Times</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lecture13.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Introduction to Continuous-Time Markov Chains</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lecture14.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Introduction to Queueing Theory</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lecture15.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Exponential Models</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lecture16.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Brownian Motion</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lecture17.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Variations on Brownian Motion and Pricing Stock Options</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lecture18.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Introduction to Monte Carlo Simulation</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lecture19.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">General Techniques for Simulating Continuous Random Variables</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lecture20.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Special Techniques for Simulating Continuous Random Variables</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lecture21.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Simulating from Discrete Distributions</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lecture22.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Simulating Stochastic Processes</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lecture23.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Variance Reduction Techniques-Part I</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lecture24.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Variance Reduction Techniques-Part II</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lecture25.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Variance Reduction Techniques-Part III</span></span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><span class="header-section-number">13.1</span> Introduction</a></li>
+  <li><a href="#continuous-time-markov-chains" id="toc-continuous-time-markov-chains" class="nav-link" data-scroll-target="#continuous-time-markov-chains"><span class="header-section-number">13.2</span> Continuous-Time Markov Chains</a></li>
+  <li><a href="#birth-and-death-processes" id="toc-birth-and-death-processes" class="nav-link" data-scroll-target="#birth-and-death-processes"><span class="header-section-number">13.3</span> Birth and Death Processes</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Introduction to Continuous-Time Markov Chains</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="introduction" class="level2" data-number="13.1">
+<h2 data-number="13.1" class="anchored" data-anchor-id="introduction"><span class="header-section-number">13.1</span> Introduction</h2>
+<p>We consider a class of probability models that has a wide variety of applications in the real world. The members of this class are the continuous-time analogs of the discrete-time Markov chains and as such are characterized by the Markovian property that, given the present state, the future is independent of the past.</p>
+<p>One example of a continuous-time Markov chain has already been met. This is the Poisson process. For if we let the total number of arrivals by time <span class="math inline">\(t\)</span> [that is, <span class="math inline">\(N(t)\)</span>] be the state of the process at time <span class="math inline">\(t\)</span>, then the Poisson process is a continuous-time Markov chain having states <span class="math inline">\(0, 1, 2, \dots\)</span> that always proceeds from state <span class="math inline">\(n\)</span> to state <span class="math inline">\(n + 1\)</span>, where <span class="math inline">\(n \ge 0\)</span>. Such a process is known as a pure <em>birth process</em> since when a transition occurs the state of the system is always increased by one. More generally, an exponential model which can go (in one transition) only from state <span class="math inline">\(n\)</span> to either state <span class="math inline">\(n - 1\)</span> or state <span class="math inline">\(n + 1\)</span> is called a <em>birth and death model</em>. For such a model, transitions from state <span class="math inline">\(n\)</span> to state <span class="math inline">\(n + 1\)</span> are designated as births, and those from <span class="math inline">\(n\)</span> to <span class="math inline">\(n - 1\)</span> as deaths. Birth and death models have wide applicability in the study of biological systems and in the study of waiting line systems in which the state represents the number of customers in the system. These models will be studied extensively.</p>
+<p>Next, we define continuous-time Markov chains and then relate them to the discrete-time Markov chains.</p>
+</section>
+<section id="continuous-time-markov-chains" class="level2" data-number="13.2">
+<h2 data-number="13.2" class="anchored" data-anchor-id="continuous-time-markov-chains"><span class="header-section-number">13.2</span> Continuous-Time Markov Chains</h2>
+<p>Suppose we have a continuous-time stochastic process <span class="math inline">\(\{X(t), t \ge 0\}\)</span> taking on values in the set of nonnegative integers. In analogy with the definition of a discrete-time Markov chain, we say that the process <span class="math inline">\(\{X(t), t \ge 0\}\)</span> is a continuous-time Markov chain if for all <span class="math inline">\(s, t \ge 0\)</span> and nonnegative integers <span class="math inline">\(i, j, x(u)\)</span>, <span class="math inline">\(0 \le u &lt; s\)</span> <span class="math display">\[
+\begin{align*}
+P\{X(t+s) &amp;= j | X(s) = i, X(u) = x(u), 0\le u \lt s\} \\
+          &amp;= P\{X(t+s) = j | X(s) = i\}
+\end{align*}
+\]</span></p>
+<p>In other words, a continuous-timeMarkov chain is a stochastic process having the Markovian property that the conditional distribution of the future <span class="math inline">\(X(t + s)\)</span> given the present <span class="math inline">\(X(s\)</span>) and the past <span class="math inline">\(X(u), 0\le u &lt; s\)</span>, depends only on the present and is independent of the past. If, in addition, <span class="math display">\[
+P\{X(t+s) = j | X(s)=i\}
+\]</span> is independent of <span class="math inline">\(s\)</span>, then the continuous-time Markov chain is said to have <em>stationary</em> or <em>homogeneous</em> transition probabilities.</p>
+<p>All Markov chains considered in this course will be assumed to have stationary transition probabilities.</p>
+<p>Suppose that a continuous-time Markov chain enters state <span class="math inline">\(i\)</span> at some time, say, time <span class="math inline">\(0\)</span>, and suppose that the process does not leave state <span class="math inline">\(i\)</span> (that is, a transition does not occur) during the next ten minutes. What is the probability that the process will not leave state <span class="math inline">\(i\)</span> during the following five minutes? Now since the process is in state <span class="math inline">\(i\)</span> at time 10 it follows, by the Markovian property, that the probability that it remains in that state during the interval <span class="math inline">\([10, 15]\)</span> is just the (unconditional) probability that it stays in state <span class="math inline">\(i\)</span> for at least five minutes. That is, if we let <span class="math inline">\(T_i\)</span> denote the amount of time that the process stays in state <span class="math inline">\(i\)</span> before making a transition into a different state, then <span class="math display">\[
+P\{T_i \gt 15 | T_i\gt 10\} = P\{T_i \gt 5\}
+\]</span> or, in general, by the same reasoning, <span class="math display">\[
+P\{T_i \gt s+t | T_i \gt s\} = P\{T_i \gt t\}
+\]</span> for all <span class="math inline">\(s, t \ge 0\)</span>. Hence, the random variable <span class="math inline">\(T_i\)</span> is <em>memoryless</em> and must thus be exponentially distributed.</p>
+<p>In fact, the preceding gives us another way of defining a continuous-time Markov chain. Namely, it is a stochastic process having the properties that each time it enters state <span class="math inline">\(i\)</span></p>
+<ol type="i">
+<li><p>the amount of time it spends in that state before making a transition into a different state is exponentially distributed with mean, say, <span class="math inline">\(1/v_i\)</span> , and</p></li>
+<li><p>when the process leaves state <span class="math inline">\(i\)</span>, it next enters state <span class="math inline">\(j\)</span> with some probability, say, <span class="math inline">\(P_{ij}\)</span>. Of course, the <span class="math inline">\(P_{ij}\)</span> must satisfy <span class="math display">\[
+\begin{align*}
+P_{ii} &amp;= 0, \quad \text{all } i \\
+\sum_j P_{ij} &amp;= 1, \quad \text{all }i
+\end{align*}
+\]</span> In other words, a continuous-time Markov chain is a stochastic process that moves from state to state in accordance with a (discrete-time) Markov chain, but is such that the amount of time it spends in each state, before proceeding to the next state, is exponentially distributed. In addition, the amount of time the process spends in state <span class="math inline">\(i\)</span>, and the next state visited, must be independent random variables. For if the next state visited were dependent on <span class="math inline">\(T_i\)</span> , then information as to how long the process has already been in state <span class="math inline">\(i\)</span> would be relevant to the prediction of the next state—and this contradicts the Markovian assumption.</p></li>
+</ol>
+<div id="exm-exa1" class="theorem example">
+<p><span class="theorem-title"><strong>Example 13.1</strong></span> (A Shoeshine Shop) Consider a shoeshine establishment consisting of two chairs—chair 1 and chair 2. A customer upon arrival goes initially to chair 1 where his shoes are cleaned and polish is applied. After this is done the customer moves on to chair 2 where the polish is buffed. The service times at the two chairs are assumed to be independent random variables that are exponentially distributed with respective rates <span class="math inline">\(\mu_1\)</span> and <span class="math inline">\(\mu_2\)</span>. Suppose that potential customers arrive in accordance with a Poisson process having rate <span class="math inline">\(\lambda\)</span>, and that a potential customer will enter the system only if both chairs are empty. The preceding model can be analyzed as a continuous-time Markov chain, but first we must decide upon an appropriate state space. Since a potential customer will enter the system only if there are no other customers present, it follows that there will always either be 0 or 1 customers in the system. However, if there is 1 customer in the system, then we would also need to know which chair he was presently in. Hence, an appropriate state space might consist of the three states 0, 1, and 2 where the states have the following interpretation:</p>
+<span class="math display">\[\begin{array}
+\text{state}  &amp;  \text{Interpretation} \\
+0 &amp; \text{system is empty} \\
+1 &amp; \text{a customer is in chair } 1 \\
+2 &amp; \text{a customer is in chair } 2
+\end{array}\]</span>
+<p>We leave it as an exercise for you to verify that <span class="math display">\[
+v_0 = \lambda, \quad v_1 = \mu_1, \quad v_2=\mu_2
+\]</span> <span class="math display">\[
+P_{01} = P_{12} = P_{20} = 1
+\]</span></p>
+</div>
+</section>
+<section id="birth-and-death-processes" class="level2" data-number="13.3">
+<h2 data-number="13.3" class="anchored" data-anchor-id="birth-and-death-processes"><span class="header-section-number">13.3</span> Birth and Death Processes</h2>
+<p>Consider a system whose state at any time is represented by the number of people in the system at that time. Suppose that whenever there are <span class="math inline">\(n\)</span> people in the system, then (i) new arrivals enter the system at an exponential rate <span class="math inline">\(\lambda_n\)</span>, and (ii) people leave the system at an exponential rate <span class="math inline">\(\mu_n\)</span>. That is, whenever there are <span class="math inline">\(n\)</span> persons in the system, then the time until the next arrival is exponentially distributed with mean <span class="math inline">\(1/\lambda_n\)</span> and is independent of the time until the next departure which is itself exponentially distributed with mean <span class="math inline">\(1/\mu_n\)</span>. Such a system is called a <em>birth and death process</em>. The parameters <span class="math inline">\(\{\lambda_n\}_{n=0}^\infty\)</span> and <span class="math inline">\(\{\mu_n\}_{n=1}^\infty\)</span> are called, respectively, the arrival (or birth) and departure (or death) rates.</p>
+<p>Thus, a birth and death process is a continuous-time Markov chain with states <span class="math inline">\(\{0, 1, \dots\}\)</span> for which transitions from state <span class="math inline">\(n\)</span> may go only to either state <span class="math inline">\(n - 1\)</span> or state <span class="math inline">\(n + 1\)</span>. The relationships between the birth and death rates and the state transition rates and probabilities are <span class="math display">\[
+\begin{align*}
+v_0 &amp;= \lambda_0, \\
+v_i &amp;= \lambda_i + \mu_i, \quad i\gt 0 \\
+P_{01} &amp;= 1, \\
+P_{i,i+1} &amp;= \frac{\lambda_i}{\lambda_i+\mu_i}, \quad i\gt 0 \\
+P_{i,i-1} &amp;= \frac{\mu_i}{\lambda_i+\mu_i}, \quad i\gt 0
+\end{align*}
+\]</span> The preceding follows, because if there are <span class="math inline">\(i\)</span> in the system, then the next state will be <span class="math inline">\(i + 1\)</span> if a birth occurs before a death, and the probability that an exponential random variable with rate <span class="math inline">\(\lambda_i\)</span> will occur earlier than an (independent) exponential with rate <span class="math inline">\(\mu_i\)</span> is <span class="math inline">\(\lambda_i/(\lambda_i + \mu_i )\)</span>. Moreover, the time until either a birth or a death occurs is exponentially distributed with rate <span class="math inline">\(\lambda_i + \mu_i\)</span> (and so, <span class="math inline">\(v_i = \lambda_i + \mu_i\)</span> ).</p>
+<div id="exm-exa2" class="theorem example">
+<p><span class="theorem-title"><strong>Example 13.2</strong></span> (The Poisson Process) Consider a birth and death process for which <span class="math display">\[
+\begin{align*}
+\mu_n &amp;= 0, \quad \text{for all } n\ge 0 \\
+\lambda_n &amp;= \lambda, \quad \text{for all } n\ge 0
+\end{align*}
+\]</span> This is a process in which departures never occur, and the time between successive arrivals is exponential with mean <span class="math inline">\(1/\lambda\)</span>. Hence, this is just the Poisson process.</p>
+</div>
+<p>A birth and death process for which <span class="math inline">\(\mu_n = 0\)</span> for all <span class="math inline">\(n\)</span> is called a pure birth process. Another pure birth process is given by the next example.</p>
+<div id="exm-exa3" class="theorem example">
+<p><span class="theorem-title"><strong>Example 13.3</strong></span> (A Birth Process with Linear Birth Rate) Consider a population whose members can give birth to new members but cannot die. If each member acts independently of the others and takes an exponentially distributed amount of time, with mean <span class="math inline">\(1/\lambda\)</span>, to give birth, then if <span class="math inline">\(X(t)\)</span> is the population size at time <span class="math inline">\(t\)</span>, then <span class="math inline">\(\{X(t), t \ge 0\}\)</span> is a pure birth process with <span class="math inline">\(\lambda_n = n\lambda\)</span>, <span class="math inline">\(n \ge 0\)</span>. This follows since if the population consists of <span class="math inline">\(n\)</span> persons and each gives birth at an exponential rate <span class="math inline">\(\lambda\)</span>, then the total rate at which births occur is <span class="math inline">\(n\lambda\)</span>. This pure birth process is known as a Yule process after G. Yule, who used it in his mathematical theory of evolution.</p>
+</div>
+<div id="exm-exa4" class="theorem example">
+<p><span class="theorem-title"><strong>Example 13.4</strong></span> (A Linear Growth Model with Immigration) A model in which <span class="math display">\[
+\begin{align*}
+\mu_n &amp;= n\mu, \quad n\ge 1\\
+\lambda_n &amp;=n\lambda+\theta, \quad n\ge 0
+\end{align*}
+\]</span> is called a linear growth process with immigration. Such processes occur naturally in the study of biological reproduction and population growth. Each individual in the population is assumed to give birth at an exponential rate <span class="math inline">\(\lambda\)</span>; in addition, there is an exponential rate of increase <span class="math inline">\(\theta\)</span> of the population due to an external source such as immigration. Hence, the total birth rate where there are <span class="math inline">\(n\)</span> persons in the system is <span class="math inline">\(n\lambda + \theta\)</span>. Deaths are assumed to occur at an exponential rate <span class="math inline">\(\mu\)</span> for each member of the population, so <span class="math inline">\(\mu_n = n\mu\)</span>.</p>
+</div>
+<p>Let <span class="math inline">\(X(t)\)</span> denote the population size at time <span class="math inline">\(t\)</span>. Suppose that <span class="math inline">\(X(0) = i\)</span> and let <span class="math display">\[
+M(t) = E[X(t)]
+\]</span> We will determine <span class="math inline">\(M(t)\)</span> by deriving and then solving a differential equation that it satisfies. We start by deriving an equation for <span class="math inline">\(M(t + h)\)</span> by conditioning on <span class="math inline">\(X(t)\)</span>. This yields <span class="math display">\[
+M(t + h) = E[X(t+h)] = E[E[X(t + h)|X(t)]]
+\]</span> Now, given the size of the population at time <span class="math inline">\(t\)</span> then, ignoring events whose probability is <span class="math inline">\(o(h)\)</span>, the population at time <span class="math inline">\(t + h\)</span> will either increase in size by <span class="math inline">\(1\)</span> if a birth or an immigration occurs in <span class="math inline">\((t, t + h)\)</span>, or decrease by 1 if a death occurs in this interval, or remain the same if neither of these two possibilities occurs. That is, given <span class="math inline">\(X(t)\)</span>, <span class="math display">\[
+X(t+h)=
+\begin{cases}
+X(t)+1,\quad\text{with probability}\:[\theta+X(t)\lambda]h+o(h)\\
+X(t)-1,\quad\text{with probability}\:X(t)\mu h+o(h)\\
+X(t),\quad\text{with probability}\:1-[\theta+X(t)\lambda+X(t)\mu
+\end{cases}
+\]</span> Therefore, <span class="math display">\[E[X(t+h)|X(t)]=X(t)+[\theta+X(t)\lambda-X(t)\mu]h+o(h)\]</span> Taking expectations yields <span class="math display">\[M(t+h)=M(t)+(\lambda-\mu)M(t)h+\theta h+o(h)\]</span> or, equivalently, <span class="math display">\[\frac{M(t+h)-M(t)}{h}=(\lambda-\mu)M(t)+\theta+\frac{o(h)}{h}\]</span> Taking the limit as <span class="math inline">\(h\to 0\)</span> yields the differential equation <span id="eq-eq6-1"><span class="math display">\[
+M'(t)=(\lambda-\mu)M(t)+\theta
+\tag{13.1}\]</span></span> If we now define the function <span class="math inline">\(h(t)\)</span> by <span class="math display">\[h(t)=(\lambda-\mu)M(t)+\theta \]</span> then <span class="math display">\[h'(t)=(\lambda-\mu)M'(t)\]</span> Therefore, the differential <a href="#eq-eq6-1" class="quarto-xref">Equation&nbsp;<span>13.1</span></a> can be rewritten as <span class="math display">\[\frac{h'(t)}{\lambda-\mu}=h(t)\]</span> Or <span class="math display">\[\frac{h'(t)}{h(t)}=\lambda-\mu \]</span> Integration yields <span class="math display">\[\log[h(t)]=(\lambda-\mu)t+c\]</span> or <span class="math display">\[h(t)=Ke^{(\lambda-\mu)t}\]</span> Putting this back in terms of <span class="math inline">\(M(t)\)</span> gives <span class="math display">\[\theta+(\lambda-\mu)M(t)=Ke^{(\lambda-\mu)t}\]</span> To determine the value of the constant <span class="math inline">\(K\)</span>,we use the fact that <span class="math inline">\(M(0)=i\)</span> and evaluate the preceding at <span class="math inline">\(t=0.\)</span> This gives <span class="math display">\[\theta+(\lambda-\mu)i=K\]</span> Substituting this back in the preceding equation for <span class="math inline">\(M(t)\)</span> yields the following solution for <span class="math inline">\(M(t)\colon\)</span> <span class="math display">\[M(t)=\frac{\theta}{\lambda-\mu}[e^{(\lambda-\mu)t}-1]+ie^{(\lambda-\mu)t}\]</span> Note that we have implicitly assumed that <span class="math inline">\(\lambda\neq\mu.\)</span> If <span class="math inline">\(\lambda=\mu\)</span>, then the differential equation (6.1) reduces to <span id="eq-eq6-2"><span class="math display">\[
+M^{\prime}(t)=\theta
+\tag{13.2}\]</span></span></p>
+<p>Integrating <a href="#eq-eq6-2" class="quarto-xref">Equation&nbsp;<span>13.2</span></a> and using that <span class="math inline">\(M(0)=i\)</span> gives the solution <span class="math display">\[M(t)=\theta t+i\quad\blacksquare \]</span></p>
+<div id="exm-exa5" class="theorem example">
+<p><span class="theorem-title"><strong>Example 13.5</strong></span> (The Queueing System <span class="math inline">\(M/M/1)\)</span> Suppose that customers arrive at a single-server service station in accordance with a Poisson process having rate <span class="math inline">\(\lambda.\)</span> That is, the times between successive arrivals are independent exponential random variables having mean <span class="math inline">\(1/\lambda.\)</span> Upon arrival, each customer goes directly into service if the server is free; if not, then the customer joins the queue (that is, he waits in line). When the server finishes serving a customer, the customer leaves the system and the next customer in line, if there are any waiting, enters the service. The successive service times are assumed to be independent exponential random variables having mean <span class="math inline">\(1/\mu.\)</span> The preceding is known as the <span class="math inline">\(M/M/1\)</span> queueing system. The first <span class="math inline">\(M\)</span> refers to the fact that the interarrival process is Markovian (since it is a Poisson process) and the second to the fact that the service distribution is exponential (and, hence, Markovian).The 1 refers to the fact that there is a single server. If we let <span class="math inline">\(X(t)\)</span> denote the number in the system at time <span class="math inline">\(t\)</span> then <span class="math inline">\(\{X(t),t\geqslant0\}\)</span> is a birth and death process with <span class="math display">\[
+\begin{align*}
+&amp;\mu_{n}=\mu,\quad n\geqslant1\\
+&amp;\lambda_{n}=\lambda\:,\quad n\geqslant0\quad\blacksquare
+\end{align*}
+\]</span></p>
+</div>
+<div id="exm-exa6" class="theorem example">
+<p><span class="theorem-title"><strong>Example 13.6</strong></span> (A Multiserver Exponential Queueing System) Consider an exponential queueing system in which there are s servers available, each serving at rate <span class="math inline">\(\mu.\)</span> An entering customer first waits in line and then goes to the first free server. This is a birth and death process with parameters <span class="math display">\[
+\mu_n=
+\begin{cases}n\mu,&amp;\quad1\leqslant n\leqslant s\\
+s\mu,&amp;\quad n&gt;s\\\lambda_n=\lambda,&amp;\quad n\geqslant0
+\end{cases}
+\]</span> To see why this is true, reason as follows: If there are <span class="math inline">\(n\)</span> customers in the system, where <span class="math inline">\(n\leqslant s\)</span>, then <span class="math inline">\(n\)</span> servers will be busy. Since each of these servers works at rate <span class="math inline">\(\mu\)</span>, the total departure rate will be <span class="math inline">\(n\mu.\)</span> On the other hand, if there are <span class="math inline">\(n\)</span> customers in the system, where <span class="math inline">\(n&gt;s\)</span>, then all s of the servers will be busy, and thus the total departure rate will be <span class="math inline">\(s\mu\)</span>.This is known as an <span class="math inline">\(M/M/s\)</span> queueing model.</p>
+</div>
+<p>Consider now a general birth and death process with birth rates <span class="math inline">\(\{\lambda_n\}\)</span> and death rates <span class="math inline">\(\{\mu _{n}\}\)</span>, where <span class="math inline">\(\bar{\mu}_0=0\)</span>, and let <span class="math inline">\(T_i\)</span> denote the time, starting from state <span class="math inline">\(i\)</span>, it takes for the process to enter state <span class="math inline">\(i+1,i\geqslant0.\)</span> We will recursively compute <span class="math inline">\(E[T_i]\)</span>, <span class="math inline">\(i\geqslant0\)</span>, by starting with <span class="math inline">\(i=0.\)</span> Since <span class="math inline">\(T_0\)</span> is exponential with rate <span class="math inline">\(\lambda_0\)</span>, we have that <span class="math display">\[E[T_0]=\frac1{\lambda_0}\]</span> For <span class="math inline">\(i&gt;0\)</span>, we condition whether the first transition takes the process into state <span class="math inline">\(i-1\)</span> or <span class="math inline">\(i+1.\)</span> That is, let <span class="math display">\[
+I_i=
+\begin{cases}1,&amp;\quad\text{if the first transition from}i\text{is to}i+1\\
+0,&amp;\quad\text{if the first transition from}i\text{is to}i-1
+\end{cases}
+\]</span> and note that <span id="eq-eq6-3"><span class="math display">\[
+\begin{aligned}
+&amp;E[T_{i}|I_{i}=1]=\frac{1}{\lambda_{i}+\mu_{i}},\\
+&amp;E[T_{i}|I_{i}=0]=\frac{1}{\lambda_{i}+\mu_{i}}+E[T_{i-1}]+E[T_{i}]
+\end{aligned}
+\tag{13.3}\]</span></span> This follows since, independent of whether the first transition is from a birth or death, the time until it occurs is exponential with rate <span class="math inline">\(\lambda_i+\mu_i;\)</span> now if this first transition is a birth, then the population size is at <span class="math inline">\(i+1\)</span>, so no additional time is needed; whereas if it is death, then the population size becomes <span class="math inline">\(i-1\)</span> and the additional time needed to reach <span class="math inline">\(i+1\)</span> is equal to the time it takes to return to state <span class="math inline">\(i\)</span> (and this has mean <span class="math inline">\(E[T_{i-1}])\)</span> plus the additional time it then takes to reach <span class="math inline">\(i+1\)</span> (and this has mean <span class="math inline">\(E[T_i]).\)</span> Hence, since the probability that the first transition is a birth is <span class="math inline">\(\lambda_i/(\lambda_i+\mu_i)\)</span>, we see that <span class="math display">\[
+E[T_i]=\frac{1}{\lambda_i+\mu_i}+\frac{\mu_i}{\lambda_i+\mu_i}(E[T_{i-1}]+E[T_i])
+\]</span> or, equivalently, <span class="math display">\[
+E[T_i]=\frac{1}{\lambda_i}+\frac{\mu_i}{\lambda_i}E[T_{i-1}],\quad i\geqslant1
+\]</span> Starting with <span class="math inline">\(E[T_0]=1/\lambda_0\)</span>, the preceding yields an efficient method to successively compute <span class="math inline">\(E[T_1],E[T_2]\)</span>, and so on.</p>
+<p>Suppose now that we wanted to determine the expected time to go from state <span class="math inline">\(i\)</span> to state <span class="math inline">\(j\)</span> where <span class="math inline">\(i&lt;j.\)</span> This can be accomplished using the preceding by noting that this quantity will equal <span class="math inline">\(E[T_{i}]+E[T_{i+1}]+\cdots+E[T_{j-1}].\)</span></p>
+<div id="exm-exa7" class="theorem example">
+<p><span class="theorem-title"><strong>Example 13.7</strong></span> For the birth and death process having parameters <span class="math inline">\(\lambda_i\equiv\lambda\)</span>, <span class="math inline">\(\mu_i\equiv\mu\)</span>, <span class="math display">\[
+\begin{align*}
+E[T_{i}]&amp;=\frac{1}{\lambda}+\frac{\mu}{\lambda}E[T_{i-1}]\\&amp;=\frac{1}{\lambda}(1+\mu E[T_{i-1}])
+\end{align*}
+\]</span> Starting with <span class="math inline">\(E[T_0]=1/\lambda\)</span>, we see that <span class="math display">\[
+\begin{align*}
+&amp;E[T_{1}]=\frac{1}{\lambda}\biggl(1+\frac{\mu}{\lambda}\biggr),\\
+&amp;E[T_{2}]=\frac{1}{\lambda}\biggl[1+\frac{\mu}{\lambda}+\biggl(\frac{\mu}{\lambda}\biggr)^{2}\biggr]
+\end{align*}
+\]</span> and, in general, <span class="math display">\[
+E[T_i]=\frac{1}{\lambda}\biggl[1+\frac{\mu}{\lambda}+\biggl(\frac{\mu}{\lambda}\biggr)^2+\cdots+\biggl(\frac{\mu}{\lambda}\biggr)^i\biggr]
+\]</span> <span class="math display">\[=\frac{1-(\mu/\lambda)^{i+1}}{\lambda-\mu},\quad i\geqslant0\]</span> The expected time to reach state <span class="math inline">\(j\)</span>, starting at state <span class="math inline">\(k,k&lt;j\)</span>, is <span class="math display">\[
+\begin{align*}
+E[\text{time to go from } k \text{ to } j] &amp;= \sum_i=k^{j-1}E[T_i] \\
+&amp;= =\frac{j-k}{\lambda-\mu}-\frac{(\mu/\lambda)^{k+1}}{\lambda-\mu}\frac{[1-(\mu/\lambda)^{j-k}]}{1-\mu/\lambda}
+\end{align*}
+\]</span> The foregoing assumes that <span class="math inline">\(\lambda\neq\mu.\)</span> If <span class="math inline">\(\lambda=\mu\)</span>, then <span class="math display">\[
+\begin{align*}
+E[T_{i}] &amp;= \frac{i+1}{\lambda}, \\
+E[\text{ time to go from } k \text{ to } j] &amp;= \frac {j( j+ 1) - k( k+ 1) }{21}
+\end{align*}
+\]</span></p>
+</div>
+<p>We can also compute the variance of the time to go from 0 to <span class="math inline">\(i+1\)</span> by utilizing the conditional variance formula. First note that <a href="#eq-eq6-3" class="quarto-xref">Equation&nbsp;<span>13.3</span></a> can be written as <span class="math display">\[
+E[T_i|I_i]=\frac{1}{\lambda_i+\mu_i}+(1-I_i)(E[T_{i-1}]+E[T_i])
+\]</span> Thus <span id="eq-eq6-4"><span class="math display">\[
+\begin{align*}
+\mathrm{Var}(E[T_{i}|I_{i}])&amp;=(E[T_{i-1}]+E[T_{i}])^{2}\:\mathrm{Var}(I_{i})\\
+&amp;=(E[T_{i-1}]+E[T_{i}])^{2}\frac{\mu_{i}\lambda_{i}}{(\mu_{i}+\lambda_{i})^{2}}
+\end{align*}
+\tag{13.4}\]</span></span></p>
+<p>where <span class="math inline">\(\mathrm{Var}(I_i)\)</span> is as shown since <span class="math inline">\(I_i\)</span> is a Bernoulli random variable with parameter <span class="math inline">\(p=\lambda_{i}/(\lambda_{i}+\mu_{i}).\)</span> Also, note that if we let <span class="math inline">\(X_i\)</span> denote the time until the transition from <span class="math inline">\(i\)</span> occurs, then <span id="eq-eq6-5"><span class="math display">\[
+\begin{align*}
+\mathrm{Var}(T_{i}|I_{i}=1)&amp;=\mathrm{Var}(X_{i}|I_{i}=1)\\
+&amp;=\mathrm{Var}(X_{i})\\&amp;=\frac{1}{(\lambda_{i}+\mu_{i})^{2}}
+\end{align*}
+\tag{13.5}\]</span></span></p>
+<p>where the preceding uses the fact that the time until transition is independent of the next state visited. Also, <span id="eq-eq6-6"><span class="math display">\[
+\begin{align*}
+\mathrm{Var}(T_{i}|I_{i}=0)&amp;=\mathrm{Var}(X_{i}+\mathrm{time~to~get~back~to~}i+\mathrm{time~to~then~reach~} i+1)\\
+&amp;=\mathrm{Var}(X_{i})+\mathrm{Var}(T_{i-1})+\mathrm{Var}(T_{i})
+\end{align*}
+\tag{13.6}\]</span></span></p>
+<p>where the foregoing uses the fact that the three random variables are independent. We can rewrite <a href="#eq-eq6-5" class="quarto-xref">Equation&nbsp;<span>13.5</span></a> and <a href="#eq-eq6-6" class="quarto-xref">Equation&nbsp;<span>13.6</span></a> as <span class="math display">\[
+\mathrm{Var}(T_i|I_i)=\mathrm{Var}(X_i)+(1-I_i)[\mathrm{Var}(T_{i-1})+\mathrm{Var}(T_i)]
+\]</span> so <span id="eq-eq6-7"><span class="math display">\[
+E[\mathrm{Var}(T_{i}|I_{i})]=\frac{1}{(\mu_{i}+\lambda_{i})^{2}}+\frac{\mu_{i}}{\mu_{i}+\lambda_{i}}[\mathrm{Var}(T_{i-1})+\mathrm{Var}(T_{i})]
+\tag{13.7}\]</span></span> Hence, using the conditional variance formula, which states that <span class="math inline">\(\mathrm{Var}(T_i)\)</span> is the sum of <a href="#eq-eq6-7" class="quarto-xref">Equation&nbsp;<span>13.7</span></a> and <a href="#eq-eq6-4" class="quarto-xref">Equation&nbsp;<span>13.4</span></a>, we obtain <span class="math display">\[
+\begin{align*}
+\mathrm{Var}(T_{i})&amp;=\frac{1}{(\mu_{i}+\lambda_{i})^{2}}+\frac{\mu_{i}}{\mu_{i}+\lambda_{i}}[\mathrm{Var}(T_{i-1})+\mathrm{Var}(T_{i})]\\
+&amp;+\frac{\mu_{i}\lambda_{i}}{(\mu_{i}+\lambda_{i})^{2}}(E[T_{i-1}]+E[T_{i}])^{2}
+\end{align*}
+\]</span> or, equivalently, <span class="math display">\[
+\mathrm{Var}(T_{i})=\frac{1}{\lambda_{i}(\lambda_{i}+\mu_{i})}+\frac{\mu_{i}}{\lambda_{i}}\:\mathrm{Var}(T_{i-1})+\frac{\mu_{i}}{\mu_{i}+\lambda_{i}}(E[T_{i-1}]+E[T_{i}])^{2}
+\]</span> Starting with <span class="math inline">\(\mathrm{Var}(T_0)=1/\lambda_0^2\)</span> and using the former recursion to obtain the expectations, we can recursively compute <span class="math inline">\(\mathrm{Var}(T_i).\)</span> In addition, if we want the variance of the time to reach state <span class="math inline">\(j\)</span>, starting from state <span class="math inline">\(k, k&lt;j\)</span>,then this can be expressed as the time to go from <span class="math inline">\(k\)</span> to <span class="math inline">\(k+1\)</span> plus the additional time to go from <span class="math inline">\(k+1\)</span> to <span class="math inline">\(k+2\)</span>, and so on. Since, by the Markovian property, these successive random variables are independent, it follows that <span class="math display">\[
+\mathrm{Var}(\text{time to go from }k\mathrm{~to~}j)=\sum_{i=k}^{j-1}\mathrm{Var}(T_i)
+\]</span></p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./Lecture12.html" class="pagination-link" aria-label="Conditional Distribution of the Arrival Times">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Conditional Distribution of the Arrival Times</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./Lecture14.html" class="pagination-link" aria-label="Introduction to Queueing Theory">
+        <span class="nav-page-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Introduction to Queueing Theory</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
