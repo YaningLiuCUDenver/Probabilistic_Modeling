@@ -1,0 +1,290 @@
+---
+title: "Introduction to Markov Chains"
+toc: true
+number-sections: true
+format:
+  html:
+    code-fold: false
+jupyter: python3
+execute: 
+  enabled: true
+bibliography: references.bib
+---
+
+## Introduction
+
+Consider a stochastic process $\{X_n, n = 0, 1, 2, \dots\}$ that takes on a finite or countable number of possible values. Unless otherwise mentioned, this set of possible values of the process will be denoted by the set of nonnegative
+integers $\{0, 1, 2, \dots\}$. If $X_n = i$, then the process is said to be in state $i$ at time $n$. We suppose that whenever the process is in state $i$, there is a fixed probability $P_{ij}$ that it will next be in state $j$. That is, we suppose that
+$$
+P\{X_{n+1} = j |X_n=i, X_{n-1}=i_{n-1},\dots,X_1=i_1, X_0=i_0\} = P_{ij}
+$$ {#eq-4-1}
+for all states $i_0, i_1, \dots, i_{n−1}, i, j$ and all $n \ge 0$. Such a stochastic process is known as a **Markov chain**. @eq-4-1 may be interpreted as stating that, for a Markov
+chain, the conditional distribution of any future state $X_{n+1}$ given the past states
+$X_0,X_1, \dots, X_{n−1}$ and the present state $X_n$, is independent of the past states and
+depends only on the present state.
+
+The value $P_{ij}$ represents the probability that the process will, when in state $i$,
+next make a transition into state $j$. Since probabilities are nonnegative and since the process must make a transition into some state, we have that
+$$
+P_{ij} \ge 0,\quad i,j\ge 0; \quad \sum_{j=0}^\infty P_{ij}= 1, \quad i=0,1,\dots
+$$
+
+Let $P$ denote the matrix of one-step transition probabilities $P_{ij}$ , so that
+$$
+P = 
+\begin{bmatrix}
+P_{00} & P_{01} & P_{02} & \cdots \\
+P_{10} & P_{11} & P_{12} & \cdots \\
+\vdots & \vdots & \vdots & \vdots \\
+P_{i0} & P_{i1} & P_{i2} & \cdots \\
+\vdots & \vdots & \vdots & \vdots
+\end{bmatrix}
+$$
+
+::: {#exm-exa1}
+(Forecasting the Weather) Suppose that the chance of rain tomorrow depends on previous weather conditions only through whether or not it is raining today and not on past weather conditions. Suppose also that if it rains today, then it will rain tomorrow with probability $\alpha$; and if it does not rain today, then it will rain tomorrow with probability $\beta$.
+
+If we say that the process is in state $0$ when it rains and state $1$ when it does not rain, then the preceding is a two-state Markov chain whose transition probabilities are given by
+$$
+P = 
+\begin{bmatrix}
+\alpha & 1-\alpha \\
+\beta & 1-\beta
+\end{bmatrix}
+$$
+:::
+
+::: {#exm-exa2}
+(A Random Walk Model) A Markov chain whose state space is given by the integers $i = 0,\pm 1,\pm 2, \dots$ is said to be a random walk if, for some number $0<p<1$,
+$$
+P_{i,i+1} = p = 1-P_{i,i-1}, \quad i=0,\pm 1, \dots
+$$
+The preceding Markov chain is called a **random walk** for we may think of it as being a model for an individual walking on a straight line who at each point of time either takes one step to the right with probability $p$ or one step to the left with probability $1-p$.
+:::
+
+::: {#exm-exa3}
+(A Gambling Model) Consider a gambler who, at each play of the game, either wins $\$1$ with probability $p$ or loses $\$1$ with probability $1 - p$. If we suppose that our gambler quits playing either when he goes broke or he attains a fortune of $\$N$, then the gambler’s fortune is a Markov chain having transition probabilities
+$$
+\begin{aligned}
+P_{i,i+1} &= p = 1-P_{i,i-1}, \quad i=1,2,\dots,N-1 \\
+P_{00} &= P_{NN} = 1
+\end{aligned}
+$$
+States $0$ and $N$ are called **absorbing states** since once entered they are never left. Note that the preceding is a finite state random walk with absorbing barriers (states $0$ and $N$).
+:::
+
+## Chapman–Kolmogorov Equations
+
+We have already defined the one-step transition probabilities $P_{ij}$ . We now define the $n$-step transition probabilities $P^n_{ij}$ to be the probability that a process in state $i$ will be in state $j$ after $n$ additional transitions. That is,
+$$
+P^n_{ij} = P\{X_{n+k}=j | X_k=i\}, \quad n\ge 0, i,j\ge 0
+$$
+Of course $P^1_{ij} = P_{ij}$. The **Chapman–Kolmogorov equations** provide a method for computing these $n$-step transition probabilities. These equations are
+$$
+P^{n+m}_{ij} = \sum_{k=0}^\infty P^n_{ik} P^m_{kj} \quad \text{for all }n, m\ge 0, \text{ all }i,j
+$${#eq-4-2}
+and are most easily understood by noting that $P^n_{ik} P^m_{kj}$ represents the probability
+that starting in $i$ the process will go to state $j$ in $n + m$ transitions through a path which takes it into state $k$ at the $n$th transition. Hence, summing over all intermediate states $k$ yields the probability that the process will be in state $j$ after $n+m$ transitions. Formally, we have
+$$
+\begin{aligned}
+P^{n+m}_{ij} 
+&= \sum_{k=0}^\infty P\{X_{n+m} = j| X_n = k, X_0 = i\} P\{X_{n} = k | X_0 = i\} = \sum_{k=0}^\infty P^n_{ik} P^m_{kj}
+\end{aligned}
+$$
+
+If we let $P^{(n)}$ denote the matrix of $n$-step transition probabilities $P^n_{ij}$ , then @eq-4-2 asserts that
+$$
+P^{(n+m)} = P^{(n)}\cdot P^{(m)}
+$$
+where the dot represents matrix multiplication. Hence, in particular,
+$$
+P^{(2)} = P^{(1+1)} = P\cdot P = P^{2}
+$$
+and by induction
+$$
+P^{(n)} = P^{(n-1+1)} = P^{n-1}\cdot P =  P^{n}
+$$
+That is, the $n$-step transition matrix may be obtained by multiplying the matrix $P$ by itself $n$ times.
+
+:::{#exm-exa4}
+Consider @exm-exa1 in which the weather is considered as a
+two-state Markov chain. If $\alpha = 0.7$ and $\beta = 0.4$, then calculate the probability
+that it will rain four days from today given that it is raining today.
+:::
+
+:::{#sol-exa4}
+The one-step transition probability matrix is given by
+:::
+$$
+P = 
+\begin{bmatrix}
+0.7 & 0.3 \\
+0.4 & 0.6
+\end{bmatrix}
+$$
+Hence,
+$$
+P^{(2)} = P^2 = 
+\begin{bmatrix}
+0.7 & 0.3 \\
+0.4 & 0.6
+\end{bmatrix} \cdot
+\begin{bmatrix}
+0.7 & 0.3 \\
+0.4 & 0.6
+\end{bmatrix} = 
+\begin{bmatrix}
+0.61 & 0.39 \\
+0.52 & 0.48
+\end{bmatrix}
+$$
+$$
+P^{(4)} = (P^2)^2 = 
+\begin{bmatrix}
+0.61 & 0.39 \\
+0.52 & 0.48
+\end{bmatrix} \cdot
+\begin{bmatrix}
+0.61 & 0.39 \\
+0.52 & 0.48
+\end{bmatrix} = 
+\begin{bmatrix}
+0.5749 & 0.4251 \\
+0.5668 & 0.4332
+\end{bmatrix}
+$$
+and the desired probability $P^4_{00}$ equals $0.5749$.
+
+So far, all of the probabilities we have considered are conditional probabilities.
+For instance, $P^n_{ij}$ is the probability that the state at time $n$ is $j$ given that the
+initial state at time $0$ is $i$. If the unconditional distribution of the state at time $n$
+is desired, it is necessary to specify the probability distribution of the initial state.
+Let us denote this by
+$$
+\alpha_i \equiv P\{X_0 = i\}, \quad i\ge 0, \sum_{i=0}^\infty \, \alpha_i=1
+$$
+
+All unconditional probabilities may be computed by conditioning on the initial state. That is,
+$$
+P\{X_n=j\} = \sum_{i=0}^\infty P\{X_n=j|X_0=i\} P\{X_0=i\} = \sum_{i=0}^\infty P^n_{ij}\alpha_i
+$$
+For instance, if $\alpha_0 = 0.4$, $\alpha_1 = 0.6$, in @exm-exa4, then the (unconditional)
+probability that it will rain four days after we begin keeping weather records is
+$$
+P\{X_4=0\} = 0.4 P^4_{00} + 0.6 P^4_{10} = (0.4)(0.5749)+ (0.6)(0.5668) = 0.5700
+$$
+
+Suppose now that you want to determine the probability that a Markov chain enters any of a specified set of states $\mathcal{A}$ by time $n$. One way to accomplish this is to reset the transition probabilities out of states in $\mathcal{A}$ to
+$$
+P\{X_{m+1}=j | X_m=i\} = 
+\begin{cases} 
+1, & \text{if } i\in \mathcal{A}, j=i \\
+0, & \text{if } i\in \mathcal{A}, j\ne i \\ 
+\end{cases}
+$$
+
+That is, transform all states in $\mathcal{A}$ into absorbing states which once entered can never be left. Because the original and transformed Markov chain follows identical probabilities until a state in $\mathcal{A}$ is entered, it follows that the probability the original Markov chain enters a state in $\mathcal{A}$ by time $n$ is equal to the probability that the transformed Markov chain is in one of the states of $\mathcal{A}$ at time $n$.
+
+:::{#exm-exa5}
+A pensioner receives $2$ (thousand dollars) at the beginning of each month. The amount of money he needs to spend during a month is independent of the amount he has and is equal to $i$ with probability $P_i, i = 1, 2, 3, 4, \sum_{i=1}^4 P_i = 1$. If the pensioner has more than $3$ at the end of a month, he gives the amount greater than $3$ to his son. If, after receiving his payment at the beginning of a month, the pensioner has a capital of $5$, what is the probability that his capital is ever $1$ or less at any time within the following four months?
+:::
+
+:::{#sol-exa5}
+To find the desired probability, we consider a Markov chain with the state equal to the amount the pensioner has at the end of a month. Because we are interested in whether this amount ever falls as low as $1$, we will let $1$ mean that the pensioner’s end-of-month fortune has ever been less than or equal to $1$. Because the pensioner will give any end-of-month amount greater
+than $3$ to his son, we need only consider the Markov chain with states $1, 2, 3$ and transition probability matrix $Q = [Q_{i,j}]$ given by
+$$
+\begin{bmatrix}
+1 & 0 & 0 \\
+P_3+P_4 & P_2 & P_1 \\
+P_4 & P_3 & P_1+P_2
+\end{bmatrix}
+$$
+To understand the preceding, consider $Q_{2,1}$, the probability that a month that ends with the pensioner having the amount $2$ will be followed by a month that ends with the pensioner having less than or equal to $1$. Because the pensioner will begin the new month with the amount $2+2 = 4$, his ending capital will be less than or equal to $1$ if his expenses are either $3$ or $4$. Thus, $Q_{2,1} = P_3 + P_4$. The other transition probabilities are similarly explained.
+
+Suppose now that $P_i=1/4, i=1,2,3,4$. The transition probability matrix is
+$$
+\begin{bmatrix}
+1 & 0 & 0 \\
+1/2 & 1/4 & 1/4 \\
+1/4 & 1/4 & 1/2
+\end{bmatrix}
+$$
+Squaring this matrix and then squaring the result gives the matrix
+$$
+\begin{bmatrix}
+1 & 0 & 0 \\
+\frac{222}{256} & \frac{13}{256} & \frac{21}{256} \\
+\frac{201}{256} & \frac{21}{256} & \frac{34}{256} \\
+\end{bmatrix}
+$$
+Because the pensioner’s initial end of month capital was $3$, the desired answer
+is $Q^4_{3,1} = \frac{201}{256}$.
+:::
+
+Let $\{X_n,n\ge 0\}$ be a Markov chain with transition probabilities $P_{i,j}$. If we let
+$Q_{i,j}$ denote the transition probabilities that transform all states in $\mathcal{A}$ into absorbing states, then
+$$
+Q_{i,j} = 
+\begin{cases}
+1, & \text{if } i\in\mathcal{A}, j=i \\
+0, & \text{if } i\in\mathcal{A}, j\ne i \\
+P_{i,j}, & \text{otherwise}
+\end{cases}
+$$
+For $i,j\notin \mathcal{A}$, the $n$ stage transition probability $Q^n_{i,j}$ represents the probability that the original chain, starting in state $i$, will be in state $j$ at time $n$ without ever having entered any of the states in $\mathcal{A}$ . For instance, in @exm-exa5, starting with $5$ at the beginning of January, the probability that the pensioner’s capital is $4$ at the beginning of May without ever having been less than or equal to $1$ in that
+time is $Q^4_{3,2} = 21/256$.
+
+We can also compute the conditional probability of $X_n$ given that the chain starts in state $i$ and has not entered any state in $\mathcal{A}$ by time $n$, as follows. For $i, j \notin \mathcal{A}$,
+$$
+\begin{aligned}
+P\{X_n=j | X_0=i, X_k\notin\mathcal{A}, k=1,\dots,n\} &= \frac{P\{X_n=j, X_k\notin\mathcal{A}, k=1,\dots,n | X_0=i\}}{P\{X_k\notin\mathcal{A}, k=1,\dots,n | X_0=i\}} \\
+&= \frac{Q^n_{i,j}}{\sum_{r\notin\mathcal{A}}Q^n_{i,r}}
+\end{aligned}
+$$
+
+Now we use Python to numerically compute the probability analytically calculated in @exm-exa5.
+
+```{python}
+import numpy as np
+
+def prob_1_or_less(P, sample_size):
+    """
+    Compute the probability that the capital is ever 1 or less at any time 
+    within the following four months
+
+    input:
+    P: a 1d numpy array of shape (4), the probability of spending i, 
+    i=1,2,3,4
+    sample_size: int, sample size for the simulation, i.e., how many 
+    experiments are performed
+
+    output:
+    prob, float, the probability that the capital is ever 1 or less 
+    at any time within the following four months
+    """
+    count = 0  # count the number of times when the capital falls at or below 1
+    P_cumsum = np.cumsum(P)  # cumulative sum of probabilities to simulate expenditures
+    for i in range(sample_size):
+        # initial capital. Use 3 instead of 5, since we add 2 at the beginning of each month
+        capital = 3.0  
+        for j in range(4):  # simulate 4 months
+            capital += 2.0
+            expenditure = np.where((np.random.random()<P_cumsum) == 1)[0][0] + 1
+            capital -= expenditure
+            if capital <= 1.0:  # Check if capital is <= 1, if so, get out of the inner loop
+                count += 1
+                break
+            if capital > 3:
+                capital = 3.0
+    prob = count / sample_size
+    return prob
+```
+
+```{python}
+P = np.array([0.25, 0.25, 0.25, 0.25])
+sample_size = 100000
+prob = prob_1_or_less(P, sample_size)
+print('Computed probability is ', prob, 'and the theoretical probability is ', 201/256)
+```
+
+The numerical result verifies our theoretical result.

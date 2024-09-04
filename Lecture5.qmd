@@ -1,0 +1,272 @@
+---
+title: "Some Markov Chains Applications"
+toc: true
+number-sections: true
+format:
+  html:
+    code-fold: false
+jupyter: python3
+execute: 
+  enabled: true
+bibliography: references.bib
+---
+
+## The Gambler's Ruin Problem
+
+Consider a gambler who at each play of the game has probability $p$ of winning one unit and probability $q = 1 - p$ of losing one unit. Assuming that successive plays of the game are independent, what is the probability that, starting with $i$ units, the gambler’s fortune will reach $N$ before reaching $0$?
+
+If we let $X_n$ denote the player’s fortune at time $n$, then the process $\{X_n, n = 0, 1, 2, \dots\}$ is a Markov chain with transition probabilities
+$$
+\begin{aligned}
+P_{00} &= P_{NN} = 1, \\
+P_{i,i+1} &= p = 1-P_{i,i-1}, \quad i=1,2,\dots,N-1
+\end{aligned}
+$$
+
+This Markov chain has three classes, namely, $\{0\}$, $\{1, 2, \dots, N -1\}$, and $\{N\}$; the
+first and third class being recurrent and the second transient. Since each transient
+state is visited only finitely often, it follows that, after some finite amount of time,
+the gambler will either attain his goal of $N$ or go broke.
+
+Let $P_i, i = 0, 1, \dots, N$, denote the probability that, starting with $i$, the gambler’s
+fortune will eventually reach $N$. By conditioning on the outcome of the initial play of the game we obtain
+$$
+P_i = pP_{i+1} + qP_{i-1}, \quad i=1,2,\dots,N-1
+$$
+or equivalently, since $p+q=1$,
+$$
+pP_i + qP_i = pP_{i+1} + qP_{i-1}
+$$
+or
+$$
+P_{i+1}-P_i=\frac{q}{p}\left(P_i-P_{i-1}\right), \quad i=1,2, \ldots, N-1
+$$
+Hence, since $P_0=0$, we obtain from the preceding line that
+
+$$
+\begin{aligned}
+P_2-P_1 & =\frac{q}{p}\left(P_1-P_0\right)=\frac{q}{p} P_1, \\
+P_3-P_2= & \frac{q}{p}\left(P_2-P_1\right)=\left(\frac{q}{p}\right)^2 P_1, \\
+& \vdots \\
+P_i-P_{i-1}= & \frac{q}{p}\left(P_{i-1}-P_{i-2}\right)=\left(\frac{q}{p}\right)^{i-1} P_1, \\
+& \vdots \\
+P_N-P_{N-1} & =\left(\frac{q}{p}\right)\left(P_{N-1}-P_{N-2}\right)=\left(\frac{q}{p}\right)^{N-1} P_1
+\end{aligned}
+$$
+
+Adding the first $i-1$ of these equations yields
+$$
+P_i-P_1=P_1\left[\left(\frac{q}{p}\right)+\left(\frac{q}{p}\right)^2+\cdots+\left(\frac{q}{p}\right)^{i-1}\right]
+$$
+or
+$$
+P_i= \begin{cases}\frac{1-(q / p)^i}{1-(q / p)} P_1, & \text { if } \frac{q}{p} \neq 1 \\ i P_1, & \text { if } \frac{q}{p}=1\end{cases}
+$$
+Now, using the fact that $P_N=1$, we obtain that
+$$
+P_1= \begin{cases}\frac{1-(q / p)}{1-(q / p)^N}, & \text { if } p \neq \frac{1}{2} \\ \frac{1}{N}, & \text { if } p=\frac{1}{2}\end{cases}
+$$
+
+and hence
+$$
+P_i= \begin{cases}\frac{1-(q / p)^i}{1-(q / p)^N}, & \text { if } p \neq \frac{1}{2} \\ \frac{i}{N}, & \text { if } p=\frac{1}{2}\end{cases}
+$$ {#eq-eq4-14}
+Note that, as $N\rightarrow\infty$,
+$$
+P_i\rightarrow \begin{cases} 1-\left(\frac{q}{p}\right)^i, & \text { if } p > \frac{1}{2} \\ 0, & \text { if } p\le\frac{1}{2}\end{cases}
+$$
+Thus, if $p > \frac{1}{2}$, there is a positive probability that the gambler’s fortune will increase
+indefinitely; while if $p \le \frac{1}{2}$, the gambler will, with probability 1, go broke
+against an infinitely rich adversary.
+
+```{python}
+import numpy as np
+
+def compute_Pi(p, N, i, sample_size):
+    """
+    Compute Pi, i=0,1,...,N, the probability that, starting with i, 
+    the gambler’s fortune will eventually reach N
+
+    input:
+    p: float, the probability p_{i,i+1}
+    N: int, the last state
+    i: int between 0 and N (inclusive), the starting state
+    sample_size: int, the sample size, i.e, 
+    how many experiments are performed
+
+    output:
+    Pi: float, the probability Pi
+    """
+    count = 0
+    for j in range(sample_size):
+        state = i
+        while state != 0 and state != N:
+            if np.random.random() < p:
+                state += 1
+            else:
+                 state -= 1
+        if state == N:
+            count += 1
+    Pi = count / sample_size
+    return Pi
+```
+
+We consider a case where $p=0.5$, so $P_i=\frac{i}{N}$. 
+
+```{python}
+p = 0.5
+N = 10
+i = 3
+sample_size = 10000
+print('The simulated probability is: ', compute_Pi(p, N, i, sample_size), 
+      ' and the theoretical probability is: ', i/N)
+```
+
+Now consider a case where $p=0.3\ne 0.5$. In this case, $P_i= \frac{1-(q / p)^i}{1-(q / p)^N}$.
+
+```{python}
+p = 0.3
+N = 10
+i = 8
+sample_size = 10000
+print('The simulated probability is: ', compute_Pi(p, N, i, sample_size), 
+      ' and the theoretical probability is: ', (1-((1-p)/p)**i)/(1-((1-p)/p)**N))
+```
+
+:::{#exm-exa1}
+Suppose Max and Patty decide to flip pennies; the one coming
+closest to the wall wins. Patty, being the better player, has a probability $0.6$ of winning
+on each flip. (a) If Patty starts with five pennies and Max with ten, what is
+the probability that Patty will wipe Max out? (b) What if Patty starts with 10 and
+Max with 20?
+:::
+
+:::{#sol-sol1}
+(a) The desired probability is obtained from @eq-eq4-14 by letting $i = 5$, $N = 15$, and $p = 0.6$. Hence, the desired probability is
+$$
+\frac{1-\left(\frac{2}{3}\right)^5}{1-\left(\frac{2}{3}\right)^{15}} \approx 0.87
+$$
+
+(b) The desired probability is
+$$
+\frac{1-\left(\frac{2}{3}\right)^{10}}{1-\left(\frac{2}{3}\right)^{30}} \approx 0.98
+$$
+:::
+
+## A Model for Algorithmic Efficiency
+
+The following optimization problem is called a linear program:
+$$
+\begin{aligned}
+&\text{minimize } \boldsymbol{cx}, \\
+&\text{subject to} A\boldsymbol{x} = \boldsymbol{b}, \boldsymbol{x} \ge \boldsymbol{0}
+\end{aligned}
+$$
+where $A$ is an $m \times n$ matrix of fixed constants; $\boldsymbol{c} = (c_1, \dots , c_n)$ and $\boldsymbol{b} = (b_1, \dots, b_m)$ are vectors of fixed constants; and $\boldsymbol{x} = (x_1, \dots , x_n)$ is the $n$-vector of nonnegative values that is to be chosen to minimize $\boldsymbol{cx}=\sum_{i=1}^n c_ix_i$. Supposing that $n > m$, it can be shown that the optimal $\boldsymbol{x}$ can always be chosen to have at
+least $n - m$ components equal to $0$—that is, it can always be taken to be one of the so-called extreme points of the feasibility region.
+
+The simplex algorithm solves this linear program by moving from an extreme point of the feasibility region to a better (in terms of the objective function $\boldsymbol{cx}$) extreme point (via the pivot operation) until the optimal is reached. Because there can be as many as $N=\binom{n}{m}$ such extreme points, it would seem that this method might take many iterations, but, surprisingly to some, this does not appear to be
+the case in practice.
+
+To obtain a feel for whether or not the preceding statement is surprising, let us consider a simple probabilistic (Markov chain) model as to how the algorithm moves along the extreme points. Specifically, we will suppose that if at any time the algorithm is at the $j$th best extreme point then after the next pivot the resulting extreme point is equally likely to be any of the $j-1$ best. Under this assumption, we show that the time to get from the $N$th best to the best extreme point has approximately, for large $N$, a normal distribution with mean and variance equal to the logarithm (base $e$) of $N$.
+
+Consider a Markov chain for which $P_{11} = 1$ and
+$$
+P_{ij} = \frac{1}{i-1},\quad j=1,\dots,i-1, \, i>1
+$$
+and let $T_i$ denote the number of transitions needed to go from state $i$ to state $1$. A recursive formula for $E[T_i]$ can be obtained by conditioning on the initial transition:
+$$
+E[T_i] = 1 + \frac{1}{i-1}\sum_{j=1}^{i-1}E[T_j]
+$$
+Starting with E[T_1] = 0, we successively see that
+$$
+\begin{aligned}
+E[T_2] &= 1, \\
+E[T_3] &= 1+\frac{1}{2}, \\
+E[T_4] &= 1+\frac{1}{3}(1+1+\frac{1}{2}) = 1+\frac{1}{2}+\frac{1}{3}
+\end{aligned}
+$$
+and it is not difficult to guess and then prove inductively that
+$$
+E[T_i] = \sum_{j=1}^{i-1} 1/j
+$$
+However, to obtain a more complete description of $T_N$, we will use the representation
+$$
+T_N = \sum_{j=1}^{N-1} I_j
+$$
+where
+$$
+I_j = 
+\begin{cases}
+1, & \text{ if the process ever enters } j\\
+0, & \text{ otherwise}
+\end{cases}
+$$
+The importance of the preceding representation stems from the following:
+
+:::{#prp-prp1}
+$I_1,\dots,I_{N-1}$ are independent and
+$$
+P\{I_j=1\} = 1/j,\quad 1\le j\le N-1
+$$
+:::
+
+:::{.proof}
+Given $I_{j+1}, \dots , I_N$, let $n = \min\{i:i > j,I_i = 1\}$ denote the lowest numbered state, greater than $j$ , that is entered. Thus we know that the process enters state $n$ and the next state entered is one of the states $1, 2, \dots, j$. Hence, as the next state from state $n$ is equally likely to be any of the lower number states $1, 2, \dots, n-1$ we see that
+$$
+P\{I_j=1 | I_{j+1},\dots,I_N\} = \frac{1/(n-1)}{j/(n-1)} = 1/j
+$$
+Hence, $P\{I_j = 1\} = 1/j$, and independence follows since the preceding conditional probability does not depend on $I_{j+1}, \dots, I_N$.
+:::
+
+:::{#cor-cor1}
+(i) $E[T_N] = \sum_{j=1}^{N-1} 1/j$.
+
+(ii) $\text{Var}(T_N) = \sum_{j=1}^{N-1}(1/j)(1-1/j)$.
+
+(iii) For $N$ large, $T_N$ has approximately a normal distribution with mean $\log N$ and variance $\log N$.
+:::
+
+:::{.proof}
+Parts (i) and (ii) follow from @prp-prp1 and the representation $T_N = \sum_{j=1}^{N-1} I_j$. Part (iii) follows from the central limit theorem since
+$$
+\int_{1}^N\frac{dx}{x} < \sum_{j=1}^{N-1} 1/j < 1+\int_{1}^{N-1}\frac{dx}{x}
+$$
+or
+$$
+\log N < \sum_{j=1}^{N-1} 1/j < 1+\log{(N-1)}
+$$
+and so
+$$
+\log N \approx \sum_{j=1}^{N-1} 1/j
+$$
+:::
+
+Returning to the simplex algorithm, if we assume that $n$, $m$, and $n - m$ are all large, we have by Stirling’s approximation that
+$$
+N = \binom{n}{m} \sim \frac{n^{n+1/2}}{(n-m)^{n-m+1/2} m^{m+1/2} \sqrt{2}\pi}
+$$
+and so, letting $c=n/m$,
+$$
+\begin{aligned}
+\log N &\sim \left(mc+\frac{1}{2}\right)\log{(mc)} - \left(m(c-1)+\frac{1}{2}\right)\log{(m(c-1))} \\
+       &-\left(m+\frac{1}{2}\right)\log m - \frac{1}{2}\log{(2\pi)}
+\end{aligned}
+$$
+or
+$$
+\log N \sim m\left[c\log{\frac{c}{c-1}}+\log{(c-1)}\right]
+$$
+Now, as $\lim_{x\rightarrow\infty} x\log{[x/(x-1)]}=1$, it follows that, when $c$ is large,
+$$
+\log N \sim m[1+\log{(c-1)}]
+$$
+Thus, for instance, if $n = 8000$, $m = 1000$, then the number of necessary transitions
+is approximately normally distributed with mean and variance equal to
+$1000(1 + \log 7) \approx 3000$. Hence, the number of necessary transitions would be
+roughly between
+$$
+3000 \pm 2\sqrt{3000} \text{ or roughly } 3000\pm 110
+$$
+$95$ percent of the time.
+

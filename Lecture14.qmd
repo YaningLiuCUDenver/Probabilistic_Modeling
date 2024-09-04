@@ -1,0 +1,143 @@
+---
+title: Introduction to Queueing Theory
+toc: true
+number-sections: true
+format:
+  html:
+    code-fold: false
+jupyter: python3
+execute:
+  enabled: false
+bibliography: references.bib
+---
+
+ We will study a class of models in which customers arrive in some
+random manner at a service facility. Upon arrival they are made to wait in queue
+until it is their turn to be served. Once served they are generally assumed to leave
+the system. For such models we will be interested in determining, among other
+things, such quantities as the average number of customers in the system (or in the
+queue) and the average time a customer spends in the system (or spends waiting
+in the queue).
+
+## Preliminaries
+
+We will derive certain identities which are valid in the great majority of queueing models.
+
+### Cost Equations
+
+Some fundamental quantities of interest for queueing models are
+
+\begin{array}{lll}
+L, & \text{the average number of customers in the system}; \\
+L_{Q}, & \text{the average number of customers waiting in queue}; \\
+W, & \text{the average amount of time a customer spends in the system}; \\
+W_Q, & \text{the average amount of time a customer spends waiting in queue}.
+\end{array}
+
+A large number of interesting and useful relationships between the preceding and other quantities of interest can be obtained by making use of the following idea: Imagine that entering customers are forced to pay money (according to some rule) to the system. We would then have the following basic cost identity:
+$$
+\begin{align*}
+&\text{average rate at which the system earns} \\
+&=\lambda_a\times \text{ average amount an entering customer pays}
+\end{align*}
+$$ {#eq-eq8-1}
+where $\lambda_a$ is defined to be average arrival rate of entering customers. That is, if
+$N(t)$ denotes the number of customer arrivals by time $t$, then
+$$
+\lambda_a=\lim_{t\to\infty}\frac{N(t)}{t}
+$$
+We now present a heuristic proof of @eq-eq8-1.
+
+**Heuristic Proof of @eq-eq8-1** Let $T$ be a fixed large number. In two different ways, we will compute the average amount of money the system has earned by time $T.$ On one hand, this quantity approximately can be obtained by multiplying the average rate at which the system earns by the length of time $T.$ On the other hand, we can approximately compute it by multiplying the average amount paid by an entering customer by the average number of customers entering by time $T$ (and this latter factor is approximately $\lambda_aT).$ Hence, both sides of @eq-eq8-1 when multiplied by $T$ are approximately equal to the average amount earned by $T.$ The result then follows by letting $T\to\infty.$
+
+By choosing appropriate cost rules, many useful formulas can be obtained as special cases of @eq-eq8-1. For instance, by supposing that each customer pays \$1 per unit time while in the system, @eq-eq8-1 yields the so-called Little’s formula,
+$$
+L=\lambda_{a}W
+$$ {#eq-eq8-2}
+This follows since, under this cost rule, the rate at which the system earns is just the number in the system, and the amount a customer pays is just equal to its time in the system.
+
+Similarly if we suppose that each customer pays \$1 per unit time while in
+queue, then @eq-eq8-1 yields
+$$
+L_Q=\lambda_a W_Q
+$$ {#eq-eq8-3}
+By supposing the cost rule that each customer pays \$1 per unit time while in
+service we obtain from @eq-eq8-1 that the
+$$
+\text{average number of customers in service } =\lambda_a E[S]
+$$ {#eq-eq8-4}
+where $E[S]$ is defined as the average amount of time a customer spends in service. 
+
+It should be emphasized that @eq-eq8-1 through @eq-eq8-4 are valid for almost all queueing models regardless of the arrival process, the number of servers, or queue discipline.
+
+### Steady-State Probabilities
+
+Let $X(t)$ denote the number of customers in the system at time $t$ and define
+$P_n,n\geqslant0$,by
+$$
+P_{n}=\lim_{t\to\infty}P\{X(t)=n\}
+$$
+where we assume the preceding limit exists. In other words, $P_n$ is the limiting or long-run probability that there will be exactly $n$ customers in the system. It is sometimes referred to as the *steady-state probability* of exactly $n$ customers in the system. It also usually turns out that $P_n$ equals the (long-run) proportion of time that the system contains exactly $n$ customers. For example, if $P_0=0.3$, then in the long run, the system will be empty of customers for 30 percent of the time. Similarly, $P_1=0.2$ would imply that for 20 percent of the time the system would contain exactly one customer.
+
+Two other sets of limiting probabilities are $\{a_n,n\geqslant0\}$ and $\{d_n,n\geqslant0\}$, where
+$$
+\begin{align*}
+a_{n} &=\mathrm{proportion~of~customers~that~find~}n\\
+&\mathrm{in~the~system~when~they~arrive,~and}\\
+d_{n} &=\mathrm{proportion~of~customers~leaving~behind~}n\\
+&\mathrm{in~the~system~when~they~depart}
+\end{align*}
+$$
+That is, $P_n$ is the proportion of time during which there are $n$ in the system; $a_n$ is the proportion of arrivals that find $n;$ and $d_n$ is the proportion of departures that leave behind $n.$ That these quantities need not always be equal is illustrated by the following example.
+
+:::{#exm-exa1}
+Consider a queueing model in which all customers have service times equal to 1, and where the times between successive customers are always greater than 1 [for instance, the interarrival times could be uniformly distributed over (1,2)]. Hence, as every arrival finds the system empty and every departure leaves it empty, we have
+$$a_0=d_0=1$$
+However,
+$$
+P_0\neq1
+$$
+as the system is not always empty of customers.
+:::
+
+
+It was, however, no accident that $\alpha_n$ equaled $d_n$ in the previous example. That arrivals and departures always see the same number of customers is always true as is shown in the next proposition.
+
+:::{#prp-prp1}
+In any system in which customers arrive and depart one at a time
+$$
+\text{the rate at which arrivals find } n= \text{ the rate at which departures leave }n
+$$
+and
+$$
+a_n=d_n
+$$
+:::
+
+:::{.proof}
+Proof An arrival will see $n$ in the system whenever the number in the system goes from $n$ to $n+1;$ similarly, a departure will leave behind $n$ whenever the number in the system goes from $n+1$ to $n.$ Now in any interval of time $T$ the number of transitions from $n$ to $n+1$ must equal to within 1 the number from $n+1$ to $n. [$Between any two transitions from $n$ to $n+1$,there must be one from $n+1$ to $n$, and conversely.] Hence, the rate of transitions from $n$ to $n+1$ equals the rate from $n+1$ to $n;$ or, equivalently, the rate at which arrivals find $n$ equals the rate at which departures leave $n.$ Now $a_n$, the proportion of arrivals finding $n$, can be expressed as
+$$
+a_n=\frac{\text{the rate at which arrivals find } n}{\text{overall arrival rate}}
+$$
+Similarly,
+$$
+d_{n}=\frac{\mathrm{the~rate~at~which~departures~leave~}n}{\mathrm{overall~departure~rate}}
+$$
+Thus, if the overall arrival rate is equal to the overall departure rate, then the preceding shows that $a_n=d_n.$ On the other hand, if the overall arrival rate exceeds the overall departure rate, then the queue size will go to infinity, implying that $a_{n}= d_{n}= 0.$
+:::
+
+Hence, on the average, arrivals and departures always see the same number of customers. However, as @exm-exa1 illustrates, they do not, in general, see the time averages. One important exception where they do is in the case of Poisson arrivals.
+
+:::{#prp-prp2}
+Poisson arrivals always see time averages. In particular, for Poisson arrivals,
+$$P_n=a_n$$
+:::
+
+To understand why Poisson arrivals always see time averages, consider an arbitrary Poisson arrival. If we knew that it arrived at time $t$, then the conditional distribution of what it sees upon arrival is the same as the unconditional distribution of the system state at time $t.$ For knowing that an arrival occurs at time $t$ gives us no information about what occurred prior to $t.$ (Since the Poisson process has independent increments, knowing that an event occurred at time $t$ does not affect the distribution of what occurred prior to $t.)$ Hence, an arrival would just see the system according to the limiting probabilities.
+
+Contrast the foregoing with the situation of @exm-exa1 where knowing that an arrival occurred at time $t$ tells us a great deal about the past; in particular it tells us that there have been no arrivals in $(t-1,t).$ Thus, in this case, we cannot conclude that the distribution of what an arrival at time $t$ observes is the same as the distribution of the system state at time $t.$
+
+For a second argument as to why Poisson arrivals see time averages, note that the total time the system is in state $n$ by time $T$ is (roughly) $P_nT.$ Hence, as Poisson arrivals always arrive at rate $\lambda$ no matter what the system state, it follows that the number of arrivals in $[0,T]$ that find the system in state $n$ is (roughly) $\lambda P_nT.$ In the long run, therefore, the rate at which arrivals find the system in state $n$ is $\lambda P_n$ and, as $\lambda$ is the overall arrival rate, it follows that $\lambda P_n/\lambda=P_n$ is the proportion of arrivals that find the system in state $n.$
+
+The result that Poisson arrivals see time averages is called the $PASTA$ principle.
+

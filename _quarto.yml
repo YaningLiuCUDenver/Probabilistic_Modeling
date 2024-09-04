@@ -1,0 +1,43 @@
+project:
+  type: book
+
+execute:
+  freeze: auto
+
+book:
+  title: "MATH 4792/5792 Probabilistic Modeling"
+  author: "Yaning Liu"
+  date: "8/01/2024"
+  chapters:
+    - index.qmd
+    - Lecture1.qmd
+    - Lecture2.qmd
+    - Lecture3.qmd
+    - Lecture4.qmd
+    - Lecture5.qmd
+    - Lecture6.qmd
+    - Lecture7.qmd
+    - Lecture8.qmd
+    - Lecture9.qmd
+    - Lecture10.qmd
+    - Lecture11.qmd
+    - Lecture12.qmd
+    - Lecture13.qmd
+    - Lecture14.qmd
+    - Lecture15.qmd
+    - Lecture16.qmd
+    - Lecture17.qmd
+    - Lecture18.qmd
+    - Lecture19.qmd
+    - Lecture20.qmd
+    - Lecture21.qmd
+    - Lecture22.qmd
+    - Lecture23.qmd
+    - Lecture24.qmd
+    - Lecture25.qmd
+
+bibliography: references.bib
+
+format:
+  html:
+    theme: cosmo

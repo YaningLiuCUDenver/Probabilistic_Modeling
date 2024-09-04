@@ -1,0 +1,419 @@
+---
+title: Introduction to Continuous-Time Markov Chains
+toc: true
+number-sections: true
+format:
+  html:
+    code-fold: false
+jupyter: python3
+execute:
+  enabled: false
+bibliography: references.bib
+---
+
+## Introduction
+
+We consider a class of probability models that has a wide variety of
+applications in the real world. The members of this class are the continuous-time
+analogs of the discrete-time Markov chains and as such are characterized by the
+Markovian property that, given the present state, the future is independent of the
+past.
+
+One example of a continuous-time Markov chain has already been met. This
+is the Poisson process. For if we let the total number of arrivals by
+time $t$ [that is, $N(t)$] be the state of the process at time $t$, then the Poisson process
+is a continuous-time Markov chain having states $0, 1, 2, \dots$ that always proceeds
+from state $n$ to state $n + 1$, where $n \ge 0$. Such a process is known as a pure *birth
+process* since when a transition occurs the state of the system is always increased
+by one. More generally, an exponential model which can go (in one transition)
+only from state $n$ to either state $n - 1$ or state $n + 1$ is called a *birth and death
+model*. For such a model, transitions from state $n$ to state $n + 1$ are designated
+as births, and those from $n$ to $n - 1$ as deaths. Birth and death models have wide
+applicability in the study of biological systems and in the study of waiting line
+systems in which the state represents the number of customers in the system.
+These models will be studied extensively.
+
+Next, we define continuous-time Markov chains and then relate them to
+the discrete-time Markov chains.
+
+## Continuous-Time Markov Chains
+
+Suppose we have a continuous-time stochastic process $\{X(t), t \ge 0\}$ taking on
+values in the set of nonnegative integers. In analogy with the definition of
+a discrete-time Markov chain, we say that the process
+$\{X(t), t \ge 0\}$ is a continuous-time Markov chain if for all $s, t \ge 0$ and nonnegative
+integers $i, j, x(u)$, $0 \le u < s$
+$$
+\begin{align*}
+P\{X(t+s) &= j | X(s) = i, X(u) = x(u), 0\le u \lt s\} \\
+          &= P\{X(t+s) = j | X(s) = i\}
+\end{align*}
+$$
+
+In other words, a continuous-timeMarkov chain is a stochastic process having the
+Markovian property that the conditional distribution of the future $X(t + s)$ given
+the present $X(s$) and the past $X(u), 0\le u < s$, depends only on the present and
+is independent of the past. If, in addition,
+$$
+P\{X(t+s) = j | X(s)=i\}
+$$
+is independent of $s$, then the continuous-time Markov chain is said to have *stationary*
+or *homogeneous* transition probabilities.
+
+All Markov chains considered in this course will be assumed to have stationary
+transition probabilities.
+
+Suppose that a continuous-time Markov chain enters state $i$ at some time, say,
+time $0$, and suppose that the process does not leave state $i$ (that is, a transition does
+not occur) during the next ten minutes. What is the probability that the process will
+not leave state $i$ during the following five minutes? Now since the process is in
+state $i$ at time 10 it follows, by the Markovian property, that the probability that it
+remains in that state during the interval $[10, 15]$ is just the (unconditional) probability
+that it stays in state $i$ for at least five minutes. That is, if we let $T_i$ denote
+the amount of time that the process stays in state $i$ before making a transition into
+a different state, then
+$$
+P\{T_i \gt 15 | T_i\gt 10\} = P\{T_i \gt 5\}
+$$
+or, in general, by the same reasoning,
+$$
+P\{T_i \gt s+t | T_i \gt s\} = P\{T_i \gt t\}
+$$
+for all $s, t \ge 0$. Hence, the random variable $T_i$ is *memoryless* and must thus be exponentially distributed.
+
+In fact, the preceding gives us another way of defining a continuous-time
+Markov chain. Namely, it is a stochastic process having the properties that each
+time it enters state $i$
+
+(i) the amount of time it spends in that state before making a transition into a
+different state is exponentially distributed with mean, say, $1/v_i$ , and
+
+(ii) when the process leaves state $i$, it next enters state $j$ with some probability,
+say, $P_{ij}$. Of course, the $P_{ij}$ must satisfy
+$$
+\begin{align*}
+P_{ii} &= 0, \quad \text{all } i \\
+\sum_j P_{ij} &= 1, \quad \text{all }i
+\end{align*}
+$$
+In other words, a continuous-time Markov chain is a stochastic process that moves
+from state to state in accordance with a (discrete-time) Markov chain, but is such
+that the amount of time it spends in each state, before proceeding to the next state,
+is exponentially distributed. In addition, the amount of time the process spends in
+state $i$, and the next state visited, must be independent random variables. For if
+the next state visited were dependent on $T_i$ , then information as to how long the
+process has already been in state $i$ would be relevant to the prediction of the next
+state—and this contradicts the Markovian assumption.
+
+:::{#exm-exa1}
+(A Shoeshine Shop) Consider a shoeshine establishment consisting
+of two chairs—chair 1 and chair 2. A customer upon arrival goes initially
+to chair 1 where his shoes are cleaned and polish is applied. After this is done
+the customer moves on to chair 2 where the polish is buffed. The service times
+at the two chairs are assumed to be independent random variables that are exponentially
+distributed with respective rates $\mu_1$ and $\mu_2$. Suppose that potential
+customers arrive in accordance with a Poisson process having rate $\lambda$, and that a
+potential customer will enter the system only if both chairs are empty.
+The preceding model can be analyzed as a continuous-time Markov chain, but
+first we must decide upon an appropriate state space. Since a potential customer
+will enter the system only if there are no other customers present, it follows that
+there will always either be 0 or 1 customers in the system. However, if there is
+1 customer in the system, then we would also need to know which chair he was
+presently in. Hence, an appropriate state space might consist of the three states 0,
+1, and 2 where the states have the following interpretation:
+
+\begin{array}
+\text{state}  &  \text{Interpretation} \\
+0 & \text{system is empty} \\
+1 & \text{a customer is in chair } 1 \\
+2 & \text{a customer is in chair } 2
+\end{array}
+We leave it as an exercise for you to verify that
+$$
+v_0 = \lambda, \quad v_1 = \mu_1, \quad v_2=\mu_2
+$$
+$$
+P_{01} = P_{12} = P_{20} = 1
+$$
+:::
+
+## Birth and Death Processes
+
+Consider a system whose state at any time is represented by the number of people
+in the system at that time. Suppose that whenever there are $n$ people in the system,
+then (i) new arrivals enter the system at an exponential rate $\lambda_n$, and (ii) people
+leave the system at an exponential rate $\mu_n$. That is, whenever there are $n$ persons
+in the system, then the time until the next arrival is exponentially distributed with
+mean $1/\lambda_n$ and is independent of the time until the next departure which is itself
+exponentially distributed with mean $1/\mu_n$. Such a system is called a *birth and
+death process*. The parameters $\{\lambda_n\}_{n=0}^\infty$ and $\{\mu_n\}_{n=1}^\infty$ are called, respectively, the
+arrival (or birth) and departure (or death) rates.
+
+Thus, a birth and death process is a continuous-time Markov chain with states
+$\{0, 1, \dots\}$ for which transitions from state $n$ may go only to either state $n - 1$
+or state $n + 1$. The relationships between the birth and death rates and the state
+transition rates and probabilities are
+$$
+\begin{align*}
+v_0 &= \lambda_0, \\
+v_i &= \lambda_i + \mu_i, \quad i\gt 0 \\
+P_{01} &= 1, \\
+P_{i,i+1} &= \frac{\lambda_i}{\lambda_i+\mu_i}, \quad i\gt 0 \\
+P_{i,i-1} &= \frac{\mu_i}{\lambda_i+\mu_i}, \quad i\gt 0
+\end{align*}
+$$
+The preceding follows, because if there are $i$ in the system, then the next state will
+be $i + 1$ if a birth occurs before a death, and the probability that an exponential
+random variable with rate $\lambda_i$ will occur earlier than an (independent) exponential
+with rate $\mu_i$ is $\lambda_i/(\lambda_i + \mu_i )$. Moreover, the time until either a birth or a death
+occurs is exponentially distributed with rate $\lambda_i + \mu_i$ (and so, $v_i = \lambda_i + \mu_i$ ).
+
+:::{#exm-exa2}
+(The Poisson Process) Consider a birth and death process for which
+$$
+\begin{align*}
+\mu_n &= 0, \quad \text{for all } n\ge 0 \\
+\lambda_n &= \lambda, \quad \text{for all } n\ge 0
+\end{align*}
+$$
+This is a process in which departures never occur, and the time between successive
+arrivals is exponential with mean $1/\lambda$. Hence, this is just the Poisson process.
+:::
+
+A birth and death process for which $\mu_n = 0$ for all $n$ is called a pure birth
+process. Another pure birth process is given by the next example.
+
+:::{#exm-exa3}
+(A Birth Process with Linear Birth Rate) Consider a population
+whose members can give birth to new members but cannot die. If each member
+acts independently of the others and takes an exponentially distributed amount of
+time, with mean $1/\lambda$, to give birth, then if $X(t)$ is the population size at time $t$,
+then $\{X(t), t \ge 0\}$ is a pure birth process with $\lambda_n = n\lambda$, $n \ge 0$. This follows since
+if the population consists of $n$ persons and each gives birth at an exponential
+rate $\lambda$, then the total rate at which births occur is $n\lambda$. This pure birth process is
+known as a Yule process after G. Yule, who used it in his mathematical theory of
+evolution.
+:::
+
+:::{#exm-exa4}
+(A Linear Growth Model with Immigration) A model in which
+$$
+\begin{align*}
+\mu_n &= n\mu, \quad n\ge 1\\
+\lambda_n &=n\lambda+\theta, \quad n\ge 0
+\end{align*}
+$$
+is called a linear growth process with immigration. Such processes occur naturally
+in the study of biological reproduction and population growth. Each individual in
+the population is assumed to give birth at an exponential rate $\lambda$; in addition, there
+is an exponential rate of increase $\theta$ of the population due to an external source
+such as immigration. Hence, the total birth rate where there are $n$ persons in the
+system is $n\lambda + \theta$. Deaths are assumed to occur at an exponential rate $\mu$ for each
+member of the population, so $\mu_n = n\mu$.
+:::
+
+Let $X(t)$ denote the population size at time $t$. Suppose that $X(0) = i$ and let
+$$
+M(t) = E[X(t)]
+$$
+We will determine $M(t)$ by deriving and then solving a differential equation that
+it satisfies.
+We start by deriving an equation for $M(t + h)$ by conditioning on $X(t)$. This
+yields
+$$
+M(t + h) = E[X(t+h)] = E[E[X(t + h)|X(t)]]
+$$
+Now, given the size of the population at time $t$ then, ignoring events whose probability
+is $o(h)$, the population at time $t + h$ will either increase in size by $1$ if a
+birth or an immigration occurs in $(t, t + h)$, or decrease by 1 if a death occurs in
+this interval, or remain the same if neither of these two possibilities occurs. That is, given $X(t)$,
+$$
+X(t+h)=
+\begin{cases}
+X(t)+1,\quad\text{with probability}\:[\theta+X(t)\lambda]h+o(h)\\
+X(t)-1,\quad\text{with probability}\:X(t)\mu h+o(h)\\
+X(t),\quad\text{with probability}\:1-[\theta+X(t)\lambda+X(t)\mu
+\end{cases}
+$$
+Therefore,
+$$E[X(t+h)|X(t)]=X(t)+[\theta+X(t)\lambda-X(t)\mu]h+o(h)$$
+Taking expectations yields
+$$M(t+h)=M(t)+(\lambda-\mu)M(t)h+\theta h+o(h)$$
+or, equivalently,
+$$\frac{M(t+h)-M(t)}{h}=(\lambda-\mu)M(t)+\theta+\frac{o(h)}{h}$$
+Taking the limit as $h\to 0$ yields the differential equation
+$$
+M'(t)=(\lambda-\mu)M(t)+\theta
+$$  {#eq-eq6-1}
+If we now define the function $h(t)$ by
+$$h(t)=(\lambda-\mu)M(t)+\theta $$
+then
+$$h'(t)=(\lambda-\mu)M'(t)$$
+Therefore, the differential @eq-eq6-1 can be rewritten as
+$$\frac{h'(t)}{\lambda-\mu}=h(t)$$
+Or
+$$\frac{h'(t)}{h(t)}=\lambda-\mu $$
+Integration yields
+$$\log[h(t)]=(\lambda-\mu)t+c$$
+or
+$$h(t)=Ke^{(\lambda-\mu)t}$$
+Putting this back in terms of $M(t)$ gives
+$$\theta+(\lambda-\mu)M(t)=Ke^{(\lambda-\mu)t}$$
+To determine the value of the constant $K$,we use the fact that $M(0)=i$ and
+evaluate the preceding at $t=0.$ This gives
+$$\theta+(\lambda-\mu)i=K$$
+Substituting this back in the preceding equation for $M(t)$ yields the following
+solution for $M(t)\colon$
+$$M(t)=\frac{\theta}{\lambda-\mu}[e^{(\lambda-\mu)t}-1]+ie^{(\lambda-\mu)t}$$
+Note that we have implicitly assumed that $\lambda\neq\mu.$ If $\lambda=\mu$, then the differential
+equation (6.1) reduces to
+$$
+M^{\prime}(t)=\theta 
+$$ {#eq-eq6-2}
+
+Integrating @eq-eq6-2 and using that $M(0)=i$ gives the solution
+$$M(t)=\theta t+i\quad\blacksquare $$
+
+:::{#exm-exa5}
+(The Queueing System $M/M/1)$ Suppose that customers arrive at a single-server service station in accordance with a Poisson process having rate $\lambda.$ That is, the times between successive arrivals are independent exponential random variables having mean $1/\lambda.$ Upon arrival, each customer goes directly into service if the server is free; if not, then the customer joins the queue (that is, he waits in line). When the server finishes serving a customer, the customer leaves the system and the next customer in line, if there are any waiting, enters the service. The successive service times are assumed to be independent exponential random variables having mean $1/\mu.$
+The preceding is known as the $M/M/1$ queueing system. The first $M$ refers to the fact that the interarrival process is Markovian (since it is a Poisson process) and the second to the fact that the service distribution is exponential (and, hence, Markovian).The 1 refers to the fact that there is a single server.
+If we let $X(t)$ denote the number in the system at time $t$ then $\{X(t),t\geqslant0\}$ is
+a birth and death process with
+$$
+\begin{align*}
+&\mu_{n}=\mu,\quad n\geqslant1\\
+&\lambda_{n}=\lambda\:,\quad n\geqslant0\quad\blacksquare
+\end{align*}
+$$
+:::
+
+:::{#exm-exa6}
+(A Multiserver Exponential Queueing System) Consider an exponential queueing system in which there are s servers available, each serving at rate $\mu.$ An entering customer first waits in line and then goes to the first free server. This is a birth and death process with parameters
+$$
+\mu_n=
+\begin{cases}n\mu,&\quad1\leqslant n\leqslant s\\
+s\mu,&\quad n>s\\\lambda_n=\lambda,&\quad n\geqslant0
+\end{cases}
+$$
+To see why this is true, reason as follows: If there are $n$ customers in the system, where $n\leqslant s$, then $n$ servers will be busy. Since each of these servers works at rate $\mu$, the total departure rate will be $n\mu.$ On the other hand, if there are $n$ customers in the system, where $n>s$, then all s of the servers will be busy, and thus the total departure rate will be $s\mu$.This is known as an $M/M/s$ queueing model.
+:::
+
+Consider now a general birth and death process with birth rates $\{\lambda_n\}$ and death rates $\{\mu _{n}\}$, where $\bar{\mu}_0=0$, and let $T_i$ denote the time, starting from state $i$, it takes for the process to enter state $i+1,i\geqslant0.$ We will recursively compute $E[T_i]$, $i\geqslant0$, by starting with $i=0.$ Since $T_0$ is exponential with rate $\lambda_0$, we have that
+$$E[T_0]=\frac1{\lambda_0}$$
+For $i>0$, we condition whether the first transition takes the process into state
+$i-1$ or $i+1.$ That is, let
+$$
+I_i=
+\begin{cases}1,&\quad\text{if the first transition from}i\text{is to}i+1\\
+0,&\quad\text{if the first transition from}i\text{is to}i-1
+\end{cases}
+$$
+and note that
+$$
+\begin{aligned}
+&E[T_{i}|I_{i}=1]=\frac{1}{\lambda_{i}+\mu_{i}},\\
+&E[T_{i}|I_{i}=0]=\frac{1}{\lambda_{i}+\mu_{i}}+E[T_{i-1}]+E[T_{i}]
+\end{aligned}
+$$  {#eq-eq6-3}
+This follows since, independent of whether the first transition is from a birth or death, the time until it occurs is exponential with rate $\lambda_i+\mu_i;$ now if this first transition is a birth, then the population size is at $i+1$, so no additional time is needed; whereas if it is death, then the population size becomes $i-1$ and the additional time needed to reach $i+1$ is equal to the time it takes to return to state $i$ (and this has mean $E[T_{i-1}])$ plus the additional time it then takes to reach $i+1$ (and this has mean $E[T_i]).$ Hence, since the probability that the first transition is
+a birth is $\lambda_i/(\lambda_i+\mu_i)$, we see that
+$$
+E[T_i]=\frac{1}{\lambda_i+\mu_i}+\frac{\mu_i}{\lambda_i+\mu_i}(E[T_{i-1}]+E[T_i])
+$$
+or, equivalently,
+$$
+E[T_i]=\frac{1}{\lambda_i}+\frac{\mu_i}{\lambda_i}E[T_{i-1}],\quad i\geqslant1
+$$
+Starting with $E[T_0]=1/\lambda_0$, the preceding yields an efficient method to successively compute $E[T_1],E[T_2]$, and so on.
+
+Suppose now that we wanted to determine the expected time to go from state $i$ to state $j$ where $i<j.$ This can be accomplished using the preceding by noting that this quantity will equal $E[T_{i}]+E[T_{i+1}]+\cdots+E[T_{j-1}].$
+
+:::{#exm-exa7}
+For the birth and death process having parameters $\lambda_i\equiv\lambda$,
+$\mu_i\equiv\mu$,
+$$
+\begin{align*}
+E[T_{i}]&=\frac{1}{\lambda}+\frac{\mu}{\lambda}E[T_{i-1}]\\&=\frac{1}{\lambda}(1+\mu E[T_{i-1}])
+\end{align*}
+$$
+Starting with $E[T_0]=1/\lambda$, we see that
+$$
+\begin{align*}
+&E[T_{1}]=\frac{1}{\lambda}\biggl(1+\frac{\mu}{\lambda}\biggr),\\
+&E[T_{2}]=\frac{1}{\lambda}\biggl[1+\frac{\mu}{\lambda}+\biggl(\frac{\mu}{\lambda}\biggr)^{2}\biggr]
+\end{align*}
+$$
+and, in general,
+$$
+E[T_i]=\frac{1}{\lambda}\biggl[1+\frac{\mu}{\lambda}+\biggl(\frac{\mu}{\lambda}\biggr)^2+\cdots+\biggl(\frac{\mu}{\lambda}\biggr)^i\biggr]
+$$
+$$=\frac{1-(\mu/\lambda)^{i+1}}{\lambda-\mu},\quad i\geqslant0$$
+The expected time to reach state $j$, starting at state $k,k<j$, is
+$$
+\begin{align*}
+E[\text{time to go from } k \text{ to } j] &= \sum_i=k^{j-1}E[T_i] \\
+&= =\frac{j-k}{\lambda-\mu}-\frac{(\mu/\lambda)^{k+1}}{\lambda-\mu}\frac{[1-(\mu/\lambda)^{j-k}]}{1-\mu/\lambda}
+\end{align*}
+$$
+The foregoing assumes that $\lambda\neq\mu.$ If $\lambda=\mu$, then
+$$
+\begin{align*}
+E[T_{i}] &= \frac{i+1}{\lambda}, \\
+E[\text{ time to go from } k \text{ to } j] &= \frac {j( j+ 1) - k( k+ 1) }{21} 
+\end{align*}
+$$
+:::
+
+We can also compute the variance of the time to go from 0 to $i+1$ by utilizing the conditional variance formula. First note that @eq-eq6-3 can be written as
+$$
+E[T_i|I_i]=\frac{1}{\lambda_i+\mu_i}+(1-I_i)(E[T_{i-1}]+E[T_i])
+$$
+Thus
+$$
+\begin{align*}
+\mathrm{Var}(E[T_{i}|I_{i}])&=(E[T_{i-1}]+E[T_{i}])^{2}\:\mathrm{Var}(I_{i})\\
+&=(E[T_{i-1}]+E[T_{i}])^{2}\frac{\mu_{i}\lambda_{i}}{(\mu_{i}+\lambda_{i})^{2}}
+\end{align*}
+$$ {#eq-eq6-4}
+
+where $\mathrm{Var}(I_i)$ is as shown since $I_i$ is a Bernoulli random variable with parameter $p=\lambda_{i}/(\lambda_{i}+\mu_{i}).$ Also, note that if we let $X_i$ denote the time until the transition from $i$ occurs, then
+$$
+\begin{align*}
+\mathrm{Var}(T_{i}|I_{i}=1)&=\mathrm{Var}(X_{i}|I_{i}=1)\\
+&=\mathrm{Var}(X_{i})\\&=\frac{1}{(\lambda_{i}+\mu_{i})^{2}}
+\end{align*}
+$$ {#eq-eq6-5}
+
+where the preceding uses the fact that the time until transition is independent of the next state visited. Also,
+$$
+\begin{align*}
+\mathrm{Var}(T_{i}|I_{i}=0)&=\mathrm{Var}(X_{i}+\mathrm{time~to~get~back~to~}i+\mathrm{time~to~then~reach~} i+1)\\
+&=\mathrm{Var}(X_{i})+\mathrm{Var}(T_{i-1})+\mathrm{Var}(T_{i})
+\end{align*}
+$$ {#eq-eq6-6}
+
+where the foregoing uses the fact that the three random variables are independent. We can rewrite @eq-eq6-5 and @eq-eq6-6 as
+$$
+\mathrm{Var}(T_i|I_i)=\mathrm{Var}(X_i)+(1-I_i)[\mathrm{Var}(T_{i-1})+\mathrm{Var}(T_i)]
+$$
+so
+$$
+E[\mathrm{Var}(T_{i}|I_{i})]=\frac{1}{(\mu_{i}+\lambda_{i})^{2}}+\frac{\mu_{i}}{\mu_{i}+\lambda_{i}}[\mathrm{Var}(T_{i-1})+\mathrm{Var}(T_{i})]
+$$ {#eq-eq6-7}
+Hence, using the conditional variance formula, which states that $\mathrm{Var}(T_i)$ is the
+sum of @eq-eq6-7 and @eq-eq6-4, we obtain
+$$
+\begin{align*}
+\mathrm{Var}(T_{i})&=\frac{1}{(\mu_{i}+\lambda_{i})^{2}}+\frac{\mu_{i}}{\mu_{i}+\lambda_{i}}[\mathrm{Var}(T_{i-1})+\mathrm{Var}(T_{i})]\\
+&+\frac{\mu_{i}\lambda_{i}}{(\mu_{i}+\lambda_{i})^{2}}(E[T_{i-1}]+E[T_{i}])^{2}
+\end{align*}
+$$
+or, equivalently,
+$$
+\mathrm{Var}(T_{i})=\frac{1}{\lambda_{i}(\lambda_{i}+\mu_{i})}+\frac{\mu_{i}}{\lambda_{i}}\:\mathrm{Var}(T_{i-1})+\frac{\mu_{i}}{\mu_{i}+\lambda_{i}}(E[T_{i-1}]+E[T_{i}])^{2}
+$$
+Starting with $\mathrm{Var}(T_0)=1/\lambda_0^2$ and using the former recursion to obtain the expectations, we can recursively compute $\mathrm{Var}(T_i).$ In addition, if we want the variance of the time to reach state $j$, starting from state $k, k<j$,then this can be expressed as the time to go from $k$ to $k+1$ plus the additional time to go from $k+1$ to $k+2$, and so on. Since, by the Markovian property, these successive random variables are independent, it follows that
+$$
+\mathrm{Var}(\text{time to go from }k\mathrm{~to~}j)=\sum_{i=k}^{j-1}\mathrm{Var}(T_i)
+$$
+

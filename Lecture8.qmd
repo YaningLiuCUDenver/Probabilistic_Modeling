@@ -1,0 +1,354 @@
+---
+title: The Exponential Distribution
+toc: true
+number-sections: true
+format:
+  html:
+    code-fold: false
+jupyter: python3
+execute:
+  enabled: false
+bibliography: references.bib
+---
+
+## Definition
+
+A continuous random variable $X$ is said to have an exponential distribution with
+parameter $\lambda,\lambda>0$, if its probability density function is given by
+$$
+f(x)=\begin{cases}\lambda e^{-\lambda x},\quad&x\geqslant0\\0,\quad&x<0\end{cases}
+$$
+or, equivalently, if its cdf is given by
+$$
+F(x)=\int_{-\infty}^{x}f(y)\:dy=\begin{cases}1-e^{-\lambda x},\quad&x\geqslant0\\0,\quad&x<0\end{cases}
+$$
+The mean of the exponential distribution, $E[X]$, is given by
+$$
+\begin{align*}
+E[X]&=\int_{-\infty}^\infty xf(x)\:dx\\&=\int_0^\infty\lambda xe^{-\lambda x}\:dx
+\end{align*}
+$$
+Integrating by parts $(u=x,dv=\lambda e^{-\lambda x}dx)$ yields
+$$
+E[X]=-xe^{-\lambda x}\Big|_{0}^{\infty}+\int_{0}^{\infty}e^{-\lambda x}\:dx=\frac{1}{\lambda}
+$$
+The moment generating function $\phi(t)$ of the exponential distribution is given by
+$$
+\begin{align*}
+\phi(t)&=E[e^{tX}]\\
+&=\int_{0}^{\infty}e^{tx}\lambda e^{-\lambda x}\:dx\\
+&=\frac{\lambda}{\lambda-t}\quad\mathrm{for}\:t<\lambda
+\end{align*}
+$$ {#eq-eq5-1}
+
+All the moments of $X$ can now be obtained by differentiating @eq-eq5-1. For
+example,
+$$
+\begin{align*}
+E[X^{2}]&=\frac{d^{2}}{dt^{2}}\phi(t)\bigg|_{t=0}\\
+&=\frac{2\lambda}{(\lambda-t)^{3}}\bigg|_{t=0}\\
+&=\frac{2}{\lambda^{2}}
+\end{align*}
+$$
+Consequently,
+$$
+\begin{align*}
+\operatorname{Var}(X) &= E[X^{2}]-(E[X])^{2}\\
+&=\frac{2}{\lambda^{2}}-\frac{1}{\lambda^{2}}\\
+&=\frac{1}{\lambda^{2}}
+\end{align*}
+$$
+
+:::{#exm-exa1}
+(Exponential Random Variables and Expected Discounted Returns) Suppose that you are receiving rewards at randomly changing rates continuously throughout time. Let $R(x)$ denote the random rate at which you are receiving rewards at time $x.$ For a value $\alpha\geqslant0$, called the discount rate, the quantity
+$$
+R=\int_{0}^{\infty}e^{-\alpha x}R(x)\:dx
+$$
+represents the total discounted reward. (In certain applications, $\alpha$ is a continuously compounded interest rate, and $R$ is the present value of the infinite flow of rewards.) Whereas
+$$
+E[R]=E\biggl[\int_{0}^{\infty}e^{-\alpha x}R(x)\:dx\biggr]=\int_{0}^{\infty}e^{-\alpha x}E[R(x)]\:dx
+$$
+is the expected total discounted reward, we will show that it is also equal to the expected total reward earned up to an exponentially distributed random time with rate $\alpha.$
+
+Let $T$ be an exponential random variable with rate $\alpha$, that is independent of all
+the random variables $R(x).$ We want to argue that
+$$
+\int_0^\infty e^{-\alpha x}E[R(x)]\:dx=E\bigg[\int_0^TR(x)\:dx\bigg]
+$$
+To show this, define for each $x\geqslant0$, a random variable $I(x)$ by
+$$
+I(x)=
+\begin{cases}
+1,\quad&\text{if}\:x\leqslant T\\
+0,\quad&\text{if}\:x>T
+\end{cases}
+$$
+and note that
+$$
+\int_0^TR(x)\:dx=\int_0^\infty R(x)I(x)\:dx
+$$
+Thus,
+$$
+\begin{align*}
+E\bigg[\int_{0}^{T}R(x)\:dx\bigg]&=E\bigg[\int_{0}^{\infty}R(x)I(x)\:dx\bigg]\\
+&=\int_{0}^{\infty}E[R(x)I(x)]dx\\
+&=\int_{0}^{\infty}E[R(x)]E[I(x)]dx&\text{by independence}\\&=\int_{0}^{\infty}E[R(x)]P\{T\geqslant x\}\:dx\\
+&=\int_{0}^{\infty}e^{-\alpha x}E[R(x)]\:dx
+\end{align*}
+$$
+Therefore, the expected total discounted reward is equal to the expected total (undiscounted) reward earned by a random time that is exponentially distributed with a rate equal to the discount factor.
+:::
+
+## Properties of the Exponential Distribution
+
+A random variable $X$ is said to be without memory, or *memoryless*, if
+
+$$
+P\{X>s+t\mid X>t\}=P\{X>s\}\quad\mathrm{for~all~}s,t\geqslant0
+$$ {#eq-eq5-2}
+
+If we think of $X$ as being the lifetime of some instrument, then @eq-eq5-2 states that the probability that the instrument lives for at least $s+t$ hours given that it has survived $t$ hours is the same as the initial probability that it lives for at least $s$ hours. In other words, if the instrument is alive at time $t$,then the distribution of the remaining amount of time that it survives is the same as the original lifetime distribution; that is, the instrument does not remember that it has already been in use for a time $t.$
+The condition in @eq-eq5-2 is equivalent to
+$$
+\frac{P\{X>s+t,\:X>t\}}{P\{X>t\}}=P\{X>s\}
+$$
+or
+$$
+P\{X>s+t\}=P\{X>s\}P\{X>t\}
+$$ {#eq-eq5-3}
+
+Since @eq-eq5-3 is satisfied when $X$ is exponentially distributed (for $e^{-\lambda(s+t)}=e^{-\lambda s}e^{-\lambda I})$, it follows that exponentially distributed random variables are memoryless
+
+:::{#exm-exa2}
+Suppose that the amount of time one spends in a bank is exponentially
+distributed with mean ten minutes, that is, $\lambda = \frac{1}{10}$. What is the probability
+that a customer will spend more than fifteen minutes in the bank? What is the
+probability that a customer will spend more than fifteen minutes in the bank given
+that she is still in the bank after ten minutes?
+:::
+
+:::{#sol-sol2}
+If $X$ represents the amount of time that the customer spends in
+the bank, then the first probability is just
+$$
+P\{X>15\} = e^{-15\lambda} = e^{-3/2} \approx 0.220
+$$
+The second question asks for the probability that a customer who has spent ten
+minutes in the bank will have to spend at least five more minutes. However,
+since the exponential distribution does not "remember" that the customer has
+already spent ten minutes in the bank, this must equal the probability that an
+entering customer spends at least five minutes in the bank. That is, the desired
+probability is just
+$$
+P\{X>5\} = e^{-5\lambda} = e^{-1/2} \approx 0.604
+$$
+:::
+
+Python simulations can be used to estimate these probabilities as shown below.
+
+```{python}
+import numpy as np 
+from scipy.stats import expon
+
+# What is the probability that a customer will spend 
+# more than fifteen minutes in the bank?
+sample_size = 100000
+times = expon.rvs(scale = 10.0, size = sample_size)
+prob = np.sum(times > 15) / sample_size
+print('the probability that a customer will spend more than '
+      'fifteen minutes in the bank is: \n', prob, 
+      ' and the theorectical probability is: ', np.exp(-3/2))
+```
+
+```{python}
+# What is the probability that a customer will spend more than fifteen minutes 
+# in the bank given that she is still in the bank after ten minutes?
+sample_size = 10000
+count = 0
+times_gt_10 = np.zeros(sample_size)  # store all the cases where time is greater than 10
+while count < sample_size:
+    time = expon.rvs(scale = 10.0)
+    if time >= 10:
+        times_gt_10[count] = time
+        count += 1
+
+prob = np.sum(times_gt_10 > 15) / sample_size
+print('the probability that a customer will spend more than fifteen minutes \n '
+      'in the bank given that she is still in the bank after ten minutes is: \n', prob, 
+      ' and the theorectical probability is: ', np.exp(-1/2))
+```
+
+:::{#exm-exa3}
+Consider a post office that is run by two clerks. Suppose that
+when Mr. Smith enters the system he discovers that Mr. Jones is being served by
+one of the clerks and Mr. Brown by the other. Suppose also that Mr. Smith is told
+that his service will begin as soon as either Jones or Brown leaves. If the amount
+of time that a clerk spends with a customer is exponentially distributed with mean
+$1/\lambda$, what is the probability that, of the three customers, Mr. Smith is the last to
+leave the post office?
+:::
+
+The answer is obtained by this reasoning: Consider the time at
+which Mr. Smith first finds a free clerk. At this point either Mr. Jones or
+Mr. Brown would have just left and the other one would still be in service.
+However, by the lack of memory of the exponential, it follows that the amount
+of time that this other man (either Jones or Brown) would still have to spend
+in the post office is exponentially distributed with mean $1/\lambda$. That is, it is the
+same as if he were just starting his service at this point. Hence, by symmetry,
+the probability that he finishes before Smith must equal $\frac{1}{2}$.
+.
+
+Now we numerically simulate the processes and compute the probability.
+
+```{python}
+sample_size = 10000
+lam = 0.1  # arbitrarily picked
+count = 0
+for i in range(sample_size):
+    [t_Jones, t_Brown] = expon.rvs(scale = 1/lam, size=2)  # Generate the service time for Jones and Brown
+    if expon.rvs(scale = 1/lam) > max(t_Jones, t_Brown) - min(t_Jones, t_Brown):  # Mr. Smith last to leave
+        count += 1
+prob = count / sample_size
+print('The probability that Mr. Smith is the last to leave is: ', prob, 
+      '\n and the theoretical probability is: ', 1/2)
+```
+
+:::{#exm-exa4}
+The dollar amount of damage involved in an automobile accident
+is an exponential random variable with mean $1000$. Of this, the insurance
+company only pays that amount exceeding (the deductible amount of) $400$. Find
+the expected value and the standard deviation of the amount the insurance company
+pays per accident.
+:::
+
+:::{#sol-sol2}
+If $X$ is the dollar amount of damage resulting from an accident, then the amount paid by the insurance company is $(X-400)^+$, (where $a^+$ is defined to equal $a$ if $a>0$ and to equal 0 if $a\leqslant0).$ Whereas we could certainly determine the expected value and variance of $(X-400)^+$ from first principles, it is easier to condition on whether $X$ exceeds 400. So,let
+$$
+I=
+\begin{cases}1,&\quad\text{if}X>400\\
+0,&\quad\text{if}X\leqslant400
+\end{cases}
+$$
+Let $Y=(X-400)^+$ be the amount paid. By the lack of memory property of the exponential, it follows that if a damage amount exceeds 400, then the amount by which it exceeds it is exponential with mean 1000. Therefore,
+$$
+\begin{align*}
+E[Y|I&=1]=1000\\
+E[Y|I&=0]=0\\
+\operatorname{Var}(Y|I&=1)=(1000)^{2}\\
+\operatorname{Var}(Y|I&=0)=0
+\end{align*}
+$$
+which can be conveniently written as
+$$
+E[Y|I]=10^{3}I,\quad\mathrm{Var}(Y|I)=10^{6}I
+$$
+Because $I$ is a Bernoulli random variable that is equal to l with probability
+$e^{-0.4}$, we obtain
+$$
+E[Y]=E\Big[E[Y|I]\Big]=10^{3}E[I]=10^{3}e^{-0.4}\approx670.32
+$$
+and, by the conditional variance formula
+$$
+\begin{align*}
+\operatorname{Var}(Y)&=E\Big[\operatorname{Var}(Y|I)\Big]+\operatorname{Var}\big(E[Y|I]\big)\\
+&=10^{6}e^{-0.4}+10^{6}e^{-0.4}(1-e^{-0.4})
+\end{align*}
+$$
+where the final equality used that the variance of a Bernoulli random variable
+with parameter $p$ is $p(1-p).$ Consequently,
+$$
+\sqrt{\mathrm{Var}(Y)}\approx944.09
+$$
+:::
+
+Numerical results are as follows:
+
+```{python}
+n_accidents = 1000000
+deductible = 400
+lam = 1/1000
+payment = expon.rvs(scale=1/lam, size=n_accidents)
+payment[payment <= deductible] = 0.0  # if deductible is >= payment for an accident, payment is 0
+payment[payment > deductible] -= deductible  # otherwise, payment = payment - deductible
+mean = np.mean(payment)
+std = np.std(payment)
+
+print('The expected value of the amount the insurance companypays per accident is: ', mean,
+      '\n and the theoretical probability is: ', 10**3*np.exp(-0.4))
+print('The standard deviation of the amount the insurance companypays per accident is: ', std,
+      '\n and the theoretical probability is: ', np.sqrt(10**6*np.exp(-0.4)+10**6*np.exp(-0.4)*(1-np.exp(-0.4))))
+```
+
+It turns out that not only is the exponential distribution "memoryless" but it is the unique distribution possessing this property. To see this, suppose that $X$ is memoryless and let $\bar{F}(x)=P\{X>x\}.$ Then by @eq-eq5-3 it follows that
+$$
+\bar{F}(s+t)=\bar{F}(s)\bar{F}(t)
+$$
+That is, $\bar{F}(x)$ satisfies the functional equation
+$$
+g(s+t)=g(s)g(t)
+$$
+However, it turns out that the only right continuous solution of this functional
+equation is
+$$
+g(x)=e^{-\lambda x*}
+$$
+and since a distribution function is always right continuous we must have
+$$
+\bar{F}(x)=e^{-\lambda x}
+$$
+or
+$$
+F(x)=P\{X\leqslant x\}=1-e^{-\lambda x}
+$$
+which shows that $X$ is exponentially distributed.
+
+:::{#exm-exa5}
+Let $X_1, \dots, X_n$ be independent exponential random variables
+with respective rates $\lambda_1, \dots, \lambda_n$, where $\lambda_i \ne \lambda_j$ when $i \ne j$. Let $T$ be independent of these random variables and suppose that
+$$
+\sum_{j=1}^nP_j=1\quad\text{where}P_j=P\{T=j\}
+$$
+The random variable $X_T$ is said to be a *hyperexponential* random variable. To see how such a random variable might originate, imagine that a bin contains $n$ different types of batteries, with a type $j$ battery lasting for an exponential distributed time with rate $\lambda_j,j=1,\ldots,n.$ Suppose further that $P_j$ is the proportion of batteries in the bin that are type $j$ for each $j=1,\ldots,n.$ If a battery is randomly chosen, in the sense that it is equally likely to be any of the batteries in the bin, then the lifetime of the battery selected will have the hyperexponential distribution specified in the preceding.
+
+To obtain the distribution function $F$ of $X=X_T$, condition on $T.$ This yields
+$$
+\begin{aligned}
+1-F(t)&=P\{X>t\}\\
+&=\sum_{i=1}^{n}P\{X>t|T=i\}P\{T=i\}\\
+&=\sum_{i=1}^{n}P_{i}e^{-\lambda_{i}t}
+\end{aligned}
+$$
+Differentiation of the preceding yields $f$, the density function of $X.$
+$$
+f(t)=\sum_{i=1}^n\lambda_iP_ie^{-\lambda_it}
+$$
+Consequently, the failure rate function of a hyperexponential random variable is
+$$
+r(t)=\frac{\sum_{j=1}^nP_j\lambda_je^{-\lambda_jt}}{\sum_{i=1}^nP_ie^{-\lambda_it}}
+$$
+By noting that
+$$
+P\{T=j|X>t\}=\frac{P\{X>t|T=j\}P\{T=j\}}{P\{X>t\}}
+$$
+$$
+=\frac{P_je^{-\lambda_jt}}{\sum_{i=1}^nP_ie^{-\lambda_it}}
+$$
+we see that the failure rate function $r(t)$ can also be written as
+$$
+r(t)=\sum_{j=1}^n\lambda_jP\{T=j|X>t\}
+$$
+If $\lambda_1<\lambda_i$, for all $i>1$,then
+$$
+\begin{align*}
+P\{T=1|X>t\}&=\:\frac{P_{1}e^{-\lambda_{1}t}}{P_{1}e^{-\lambda_{1}t}+\sum_{i=2}^{n}P_{i}e^{-\lambda_{i}t}}\\
+&=\:\frac{P_{1}}{P_{1}+\sum_{i=2}^{n}P_{i}e^{-(\lambda_{i}-\lambda_{1})t}}\\
+&\to1\quad\mathrm{as}\:t\to\infty
+\end{align*}
+$$
+Similarly, $P\left\{T=i|X>t\right\}\to0$ when $i\neq1$, thus showing that
+$$
+\lim_{t\to\infty}r(t)=\min_{i}\lambda_{i}
+$$
+That is, as a randomly chosen battery ages its failure rate converges to the failure rate of the exponential type having the smallest failure rate, which is intuitive since the longer the battery lasts, the more likely it is a battery type with the smallest failure rate.
+:::
+

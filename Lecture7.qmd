@@ -1,0 +1,265 @@
+---
+title: Hidden Markov Chains
+toc: true
+number-sections: true
+format:
+  html:
+    code-fold: false
+jupyter: python3
+execute:
+  enabled: false
+bibliography: references.bib
+---
+
+## Hidden Markov Chains
+
+Let ${X_n, n = 1, 2, \dots}$ be a Markov chain with transition probabilities $P_{i,j}$ and
+initial state probabilities $p_i = P\{X_1 = i\}$, $i \ge 0$. Suppose that there is a finite set
+$\mathcal{S}$ of signals, and that a signal from $\mathcal{S}$ is emitted each time the Markov chain
+enters a state. Further, suppose that when the Markov chain enters state $j$ then,
+independently of previous Markov chain states and signals, the signal emitted is $s$
+with probability $p(s|j),\sum_{s\in \mathcal{S}} p(s|j) = 1$. That is, if $S_n$ represents the $n$-th signal
+emitted, then 
+$$
+\begin{align*}
+P\{S_1 = s | X_1 = j\} &= p(s|j) \\
+P\{S_n = s | X_1, S_1,\dots,X_{n-1}, S_{n-1}, X_n=j\} &= p(s|j)
+\end{align*}
+$$
+A model of the preceding type in which the sequence of signals $S_1, S_2, \dots$ is
+observed, while the sequence of underlying Markov chain states $X_1,X_2, \dots$ is
+unobserved, is called a *hidden Markov chain* model.
+
+:::{#exm-exa1}
+Consider a production process that in each period is either
+in a good state (state 1) or in a poor state (state 2). If the process is in state 1
+during a period then, independent of the past, with probability $0.9$ it will be in
+state 1 during the next period and with probability 0.1 it will be in state 2. Once in
+state 2, it remains in that state forever. Suppose that a single item is produced each
+period and that each item produced when the process is in state 1 is of acceptable
+quality with probability $0.99$, while each item produced when the process is in
+state 2 is of acceptable quality with probability 0.96.
+
+If the status, either acceptable or unacceptable, of each successive item is observed,
+while the process states are unobservable, then the preceding is a hidden
+Markov chain model. The signal is the status of the item produced, and has value
+either $a$ or $u$, depending on whether the item is acceptable or unacceptable. The
+signal probabilities are
+$$
+\begin{align*}
+p(u|1) &= 0.01,\quad p(a|1) = 0.99, \\
+p(u|2) &= 0.04,\quad p(a|2) = 0.96, \\
+\end{align*}
+$$
+while the transition probabilities of the underlying Markov chain are
+$$
+P_{1,1} = 0.9 = 1-P_{1,2},\quad P_{2,2} = 1
+$$
+:::
+
+Although $\{S_n, n \ge 1\}$ is not a Markov chain, it should be noted that, conditional
+on the current state $X_n$, the sequence $S_n, X_{n+1}, S_{n+1}, \dots$ of future signals and
+states is independent of the sequence $X_1, S_1, \dots, X_{n−1}, S_{n−1}$ of past states and
+signals.
+
+Let $\boldsymbol{S}^n = (S_1, \dots, S_n)$ be the random vector of the first $n$ signals. For a fixed
+sequence of signals $s_1, \dots, s_n$, let $\boldsymbol{s}_k = (s_1, \dots, s_k)$, $k\le n$. To begin, let us determine
+the conditional probability of the Markov chain state at time $n$ given that $\boldsymbol{S}^n = \boldsymbol{s}_n$. To obtain this probability, let
+$$
+F_n(j) = P\{\boldsymbol{S}^n = \boldsymbol{s}_n, X_n=j\}
+$$
+and note that
+$$
+P\{X_n=j | \boldsymbol{S}^n = \boldsymbol{s}_n\} = \frac{P\{\boldsymbol{S}^n = \boldsymbol{s}_n, X_n=j\}}{P\{\boldsymbol{S}^n = \boldsymbol{s}_n\}} = \frac{F_n(j)}{\sum_{i}F_n(i)}
+$$
+Now,
+$$
+\begin{align*}
+F_n(j) &= P\{\boldsymbol{S}^{n-1} = \boldsymbol{s}_{n-1}, S_n = s_n, X_n=j\} \\
+       &= \sum_{i} P\{\boldsymbol{S}^{n-1} = \boldsymbol{s}_{n-1}, X_{n-1}=i, X_n=j, S_n = s_n,\} \\
+       &= \sum_{i} F_{n-1}(i)P\{X_n=j, S_n = s_n | \boldsymbol{S}^{n-1} = \boldsymbol{s}_{n-1}, X_{n-1}=i\} \\
+       &= \sum_{i} F_{n-1}(i)P\{X_n=j, S_n = s_n | X_{n-1}=i\} \\
+       &= \sum_{i} F_{n-1}(i) P_{i,j}p(s_n|j) \\
+       &= p(s_n|j)\sum_{i} F_{n-1}(i) P_{i,j}
+\end{align*} 
+$$ {#eq-eq4-35}
+where the preceding used that
+$$
+\begin{align*}
+P\{X_n=j, S_n=s_n | X_{n-1}=i\} &= P\{S_n=s_n | X_n=j, X_{n-1}=i\} P\{X_n=j | X_{n-1}=i\} \\
+                                &= P\{S_n=s_n|X_n=j\} P_{i,j} = p(s_n|j)P_{i,j}
+\end{align*}
+$$
+Starting with
+$$
+F_1(i) = P\{X_1=i, S_1=s_1\} = p_ip(s_1|i)
+$$
+we can use Equation @eq-eq4-35 to recursively determine the functions $F_2(i), F_3(i), \dots$ up to $F_n(i)$.
+
+:::{#exm-exa2}
+Suppose in @exm-exa1 that $P\{X_1 = 1\} = 0.8$. Given that the successive conditions of the first 3 items produced are $a$, $u$, $a$,
+
+(i) what is the probability that the process was in its good state when the third item was produced;
+(ii) what is the probability that $X_4$ is $1$;
+(iii) what is the probability that the next item produced is acceptable?
+:::
+
+:::{#sol-sol2}
+With $\mathbf{s}_3=(a, u, a)$, we have
+$$
+\begin{align*}
+& F_1(1)=(0.8)(0.99)=0.792, \\
+& F_1(2)=(0.2)(0.96)=0.192 \\
+& F_2(1)=0.01[0.792(0.9)+0.192(0)]=0.007128, \\
+& F_2(2)=0.04[0.792(0.1)+(0.192)(1)]=0.010848 \\
+& F_3(1)=0.99[(0.007128)(0.9)] \approx 0.006351, \\
+& F_3(2)=0.96[(0.007128)(0.1)+0.010848] \approx 0.011098
+\end{align*}
+$$
+Therefore, the answer to part (i) is
+$$
+P\left\{X_3=1 \mid \mathbf{s}_3\right\} \approx \frac{0.006351}{0.006351+0.011098} \approx 0.364
+$$
+To compute $P\left\{X_4=1 \mid \mathbf{s}_3\right\}$, condition on $X_3$ to obtain
+$$
+\begin{align*}
+P\left\{X_4=1 \mid \mathbf{s}_3\right\}= & P\left\{X_4=1 \mid X_3=1, \mathbf{s}_3\right\} P\left\{X_3=1 \mid \mathbf{s}_3\right\} \\
+& +P\left\{X_4=1 \mid X_3=2, \mathbf{s}_3\right\} P\left\{X_3=2 \mid \mathbf{s}_3\right\} \\
+= & P\left\{X_4=1 \mid X_3=1, \mathbf{s}_3\right\}(0.364)+P\left\{X_4=1 \mid X_3=2, \mathbf{s}_3\right\}(0.636) \\
+= & 0.364 P_{1,1}+0.636 P_{2,1} \\
+= & 0.3276
+\end{align*}
+$$
+To compute $P\left\{S_4=a \mid \mathbf{s}_3\right\}$, condition on $X_4$
+$$
+\begin{align*}
+P\left\{S_4=a \mid \mathbf{s}_3\right\}= & P\left\{S_4=a \mid X_4=1, \mathrm{~s}_3\right\} P\left\{X_4=1 \mid \mathrm{s}_3\right\} \\
+& +P\left\{S_4=a \mid X_4=2, \mathbf{s}_3\right\} P\left\{X_4=2 \mid \mathbf{s}_3\right\} \\
+= & P\left\{S_4=a \mid X_4=1\right\}(0.3276)+P\left\{S_4=a \mid X_4=2\right\}(1-0.3276) \\
+= & (0.99)(0.3276)+(0.96)(0.6724)=0.9698
+\end{align*}
+$$
+:::
+
+We now use Python to simulate the conditional probabilities and compare the simulated results with what we obtained above.
+
+```{python}
+import numpy as np
+
+def HMM_cond_prob(P, p_init, p_signal, s_obs, sample_size):
+    """
+    Compute the conditional probabilities p(X_n=j | S^n=s_n), the probability that X_n=j given the signal observations up to time n.
+
+    input:
+    P: 2d array of shape (#ofstates, #ofstates), transition probability
+    p_init: 1d array of shape (#ofstates), the initial probability of states
+    p_signal: 2d array of shape (#ofstates, #ofsignals), the probability of signal given state, p(s|j),
+              the row sums should be equal to 1
+    s_obs: 1d array of shape (#ofsignalobservations), the collection of observed signals, coded as 1,2,...
+    sample_size: int, the sample size, i.e., how many experiments to perform
+
+    output:
+    prob, 1d array of shape (#ofstates)
+    """
+    n_states = P.shape[0]  # the number of states
+    n = s_obs.size  # the time n
+    count = np.zeros(n_states, dtype='int')  # count how many times each state j happens at t=n
+    for i in range(sample_size):
+        # keep simulating the process until we get exactly the signal observations s_obs
+        # This will count as one successful simulation
+        signals = np.zeros(n, dtype='int')
+        while True:  
+            state = np.where(np.random.random() < np.cumsum(p_init))[0][0] + 1  # initial state
+            signals[0] = np.where(np.random.random() < np.cumsum(p_signal[state-1,:]))[0][0] + 1  # initial state
+            for j in range(n-1):
+                state = np.where(np.random.random() < np.cumsum(P[state-1,:]))[0][0] + 1  # moving the chain
+                signals[j+1] = np.where(np.random.random() < np.cumsum(p_signal[state-1,:]))[0][0] + 1  # new signal
+            if np.array_equal(signals, s_obs):
+                count[state-1] += 1  # one case where X_n=state is found
+                break
+    prob = count / count.sum()
+
+    return prob
+```
+
+```{python}
+# State 1: good state, State 2: poor state
+# Signal 1: unacceptable, Signal 2: acceptable
+P = np.array([[0.9, 0.1], [0.0, 1.0]])
+p_init = np.array([0.8, 0.2])
+p_signal = np.array([[0.01, 0.99], [0.04, 0.96]])
+s_obs = np.array([2, 1, 2], dtype='int')
+sample_size = 10000
+
+prob = HMM_cond_prob(P, p_init, p_signal, s_obs, sample_size)
+
+print('Computed p(X3=1|s3) = ', prob[0], 'Computed p(X3=2|s3) = ', prob[1] )
+```
+
+The probabilities obtained in Part (i) have been verified numerically. Similarly, one can slightly modify the HMM_cond_prob function to compute the probabilities in Parts (ii) and (iii).
+
+To compute $P\left\{\mathbf{S}^n=\mathbf{s}_n\right\}$, use the identity $P\left\{\mathbf{S}^n=\mathbf{s}_n\right\}=\sum_i F_n(i)$ along with the recursion @eq-eq4-35. If there are $N$ states of the Markov chain, this requires computing $n N$ quantities $F_n(i)$, with each computation requiring a summation over $N$ terms. This can be compared with a computation of $P\left\{\mathbf{S}^n=\mathbf{s}_n\right\}$ based on conditioning on the first $n$ states of the Markov chain to obtain
+$$
+\begin{align*}
+P\left\{\mathbf{S}^n=\mathbf{s}_n\right\} & =\sum_{i_1, \ldots, i_n} P\left\{\mathbf{S}^n=\mathbf{s}_n \mid X_1=i_1, \ldots, X_n=i_n\right\} P\left\{X_1=i_1, \ldots, X_n=i_n\right\} \\
+& =\sum_{i_1, \ldots, i_n} p\left(s_1 \mid i_1\right) \cdots p\left(s_n \mid i_n\right) p_{i_1} P_{i_1, i_2} P_{i_2, i_3} \cdots P_{i_{n-1}, i_n}
+\end{align*}
+$$
+
+
+The use of the preceding identity to compute $P\left\{\mathbf{S}^n=\mathbf{s}_n\right\}$ would thus require a summation over $N^n$ terms, with each term being a product of $2 n$ values, indicating that it is not competitive with the previous approach.
+
+The computation of $P\left\{\mathbf{S}^n=\mathrm{s}_n\right\}$ by recursively determining the functions $F_k(i)$ is known as the *forward approach*. There also is a *backward approach*, which is based on the quantities $B_k(i)$, defined by
+$$
+B_k(i)=P\left\{S_{k+1}=s_{k+1}, \ldots, S_n=s_n \mid X_k=i\right\}
+$$
+
+A recursive formula for $B_k(i)$ can be obtained by conditioning on $X_{k+1}$.
+$$
+\begin{align*}
+B_k(i)= & \sum_j P\left\{S_{k+1}=s_{k+1}, \ldots, S_n=s_n \mid X_k=i, X_{k+1}=j\right\} P\left\{X_{k+1}=j \mid X_k=i\right\} \\
+= & \sum_j P\left\{S_{k+1}=s_{k+1}, \ldots, S_n=s_n \mid X_{k+1}=j\right\} P_{i, j} \\
+= & \sum_j P\left\{S_{k+1}=s_{k+1} \mid X_{k+1}=j\right\} \\
+& \times P\left\{S_{k+2}=s_{k+2}, \ldots, S_n=s_n \mid S_{k+1}=s_{k+1}, X_{k+1}=j\right\} P_{i, j} \\
+= & \sum_j p\left(s_{k+1} \mid j\right) P\left\{S_{k+2}=s_{k+2}, \ldots, S_n=s_n \mid X_{k+1}=j\right\} P_{i, j} \\
+= & \sum_j p\left(s_{k+1} \mid j\right) B_{k+1}(j) P_{i, j}
+\end{align*}
+$$ {#eq-eq4-36}
+
+Starting with
+$$
+\begin{align*}
+B_{n-1}(i) & =P\left\{S_n=s_n \mid X_{n-1}=i\right\} \\
+& =\sum_j P_{i, j} p\left(s_n \mid j\right)
+\end{align*}
+$$
+we would then use Equation @eq-eq4-36 to determine the function $B_{n-2}(i)$, then $B_{n-3}(i)$, and so on, down to $B_1(i)$. This would then yield $P\left\{\mathbf{S}^n=\mathbf{s}_n\right\}$ via
+$$
+\begin{align*}
+P\left\{\mathbf{S}^n=\mathrm{s}_n\right\} & =\sum_i P\left\{S_1=s_1, \ldots, S_n=s_n \mid X_1=i\right\} p_i \\
+& =\sum_i P\left\{S_1=s_1 \mid X_1=i\right\} P\left\{S_2=s_2, \ldots, S_n=s_n \mid S_1=s_1, X_1=i\right\} p_i
+\end{align*}
+$$
+$$
+\begin{align*}
+& =\sum_i p\left(s_1 \mid i\right) P\left\{S_2=s_2, \ldots, S_n=s_n \mid X_1=i\right\} p_i \\
+& =\sum_i p\left(s_1 \mid i\right) B_1(i) p_i
+\end{align*}
+$$
+
+Another approach to obtaining $P\left\{\mathbf{S}^n=\mathbf{s}_n\right\}$ is to combine both the forward and backward approaches. Suppose that for some $k$ we have computed both functions $F_k(j)$ and $B_k(j)$. Because
+$$
+\begin{align*}
+P\left\{\mathbf{S}^n=\mathbf{s}_n, X_k=j\right\}= & P\left\{\mathbf{S}^k=\mathbf{s}_k, X_k=j\right\} \\
+& \times P\left\{S_{k+1}=s_{k+1}, \ldots, S_n=s_n \mid \mathbf{S}^k=\mathbf{s}_k, X_k=j\right\} \\
+= & P\left\{\mathbf{S}^k=\mathbf{s}_k, X_k=j\right\} P\left\{S_{k+1}=s_{k+1}, \ldots, S_n=s_n \mid X_k=j\right\} \\
+= & F_k(j) B_k(j)
+\end{align*}
+$$
+we see that
+$$
+P\left\{\mathbf{S}^n=\mathbf{s}_n\right\}=\sum_j F_k(j) B_k(j)
+$$
+
+The beauty of using the preceding identity to determine $P\left\{\mathbf{S}^n=\mathbf{s}_n\right\}$ is that we may simultaneously compute the sequence of forward functions, starting with $F_1$, as well as the sequence of backward functions, starting at $B_{n-1}$. The parallel computations can then be stopped once we have computed both $F_k$ and $B_k$ for some $k$.
+

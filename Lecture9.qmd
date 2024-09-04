@@ -1,0 +1,240 @@
+---
+title: Further Properties of the Exponential Distribution
+toc: true
+number-sections: true
+format:
+  html:
+    code-fold: false
+jupyter: python3
+execute:
+  enabled: false
+bibliography: references.bib
+---
+
+Let $X_1,\ldots,X_n$ be independent and identically distributed exponential random variables having mean $1/\lambda$.  $X_1+\cdots+X_n$ has a gamma distribution with parameters $n$ and $\lambda.$ Let us now give a second verification of this result by using mathematical induction. Because there is nothing to prove when $n=1$, let us start by assuming that $X_1+\cdots+X_{n-1}$ has density given by
+$$
+f_{X_1+\cdots+X_{n-1}}(t)=\lambda e^{-\lambda t}\frac{(\lambda t)^{n-2}}{(n-2)!}
+$$
+Hence,
+$$
+\begin{align*}
+f_{X_{1}+\cdots+X_{n-1}+X_{n}}(t)&=\int_{0}^{\infty}f_{X_{n}}(t-s)f_{X_{1}+\cdots+X_{n-1}}(s)\:ds\\
+&=\int_{0}^{t}\lambda e^{-\lambda(t-s)}\lambda e^{-\lambda s}\frac{(\lambda s)^{n-2}}{(n-2)!}\:ds\\
+&=\lambda e^{-\lambda t}\frac{(\lambda t)^{n-1}}{(n-1)!}
+\end{align*}
+$$
+which proves the result.
+
+Another useful calculation is to determine the probability that one exponential random variable is smaller than another. That is, suppose that $X_{1}$ and $X_{2}$ are independent exponential random variables with respective means $1/\lambda_1$ and $1/\lambda_2;$ what is $P\{X_1<X_2\}?$ This probability is easily calculated by conditioning on $X_1:$
+$$
+\begin{align*}
+P\{X_{1}<X_{2}\}&=\int_{0}^{\infty}P\{X_{1}<X_{2}|X_{1}=x\}\lambda_{1}e^{-\lambda_{1}x}\:dx\\
+&=\int_{0}^{\infty}P\{x<X_{2}\}\lambda_{1}e^{-\lambda_{1}x}\:dx\\
+&=\int_{0}^{\infty}e^{-\lambda_{2}x}\lambda_{1}e^{-\lambda_{1}x}\:dx\\
+&=\int_{0}^{\infty}\lambda_{1}e^{-(\lambda_{1}+\lambda_{2})x}\:dx\\
+&=\frac{\lambda_{1}}{\lambda_{1}+\lambda_{2}}
+\end{align*}
+$$ {#eq-eq5-5}
+
+Suppose that $X_1,X_2,\ldots,X_n$ are independent exponential random variables, with $X_i$ having rate $\mu_i,i=1,\ldots,n.$ It turns out that the smallest of the $X_i$ is exponential with a rate equal to the sum of the $\mu_i.$ This is shown as follows:
+$$
+\begin{align*}
+P\{\mathrm{minimum}(X_{1},\ldots,X_{n})>x\}&=P\{X_{i}>x\mathrm{~for~each~}i=1,\ldots,n\}\\
+&=\prod_{i=1}^{n}P\{X_{i}>x\}\quad\text{(by independence)}\\
+&=\prod_{i=1}^{n}e^{-\mu_{i}x}\\&=\exp\left\{-\left(\sum_{i=1}^{n}\mu_{i}\right)x\right\}
+\end{align*}
+$$ {#eq-eq5-6}
+
+:::{#exm-exa1}
+(Analyzing Greedy Algorithms for the Assignment Problem) A group of $n$ people is to be assigned to a set of $n$ jobs, with one person assigned to each job. For a given set of $n^2$ values $C_{ij},i,j=1,\ldots,n$, a cost $C_{ij}$ is incurred when person $i$ is assigned to job $j.$ The classical assignment problem is to determine the set of assignments that minimizes the sum of the $n$ costs incurred. 
+
+Rather than trying to determine the optimal assignment, let us consider two heuristic algorithms for solving this problem. The first heuristic is as follows. Assign person 1 to the job that results in the least cost. That is, person 1 is assigned to job $j_1$ where $C(1,j_1)=\mathrm{minimum}_jC(1,j).$ Now eliminate that job from consideration and assign person 2 to the job that results in the least cost. That is, person 2 is assigned to job $j_{2}$ where $C(2,j_{2})=\operatorname*{minimum}_{j\neq j_{1}}C(2,j).$ This procedure is then continued until all $n$ persons are assigned. Since this procedure always selects the best job for the person under consideration, we will call it Greedy Algorithm A.
+
+The second algorithm, which we call Greedy Algorithm B, is a more "global" version of the first greedy algorithm. It considers all $n^2$ cost values and chooses the pair $i_1,j_1$ for which $C(i,j)$ is minimal. It then assigns person $i_1$ to job $j_1.$ It then eliminates all cost values involving either person $i_1$ or job $j_1$ [so that $(n-1)^2$ values remain] and continues in the same fashion. That is, at each stage it chooses the person and job that have the smallest cost among all the unassigned people and jobs.
+
+Under the assumption that the $C_{ij}$ constitute a set of $n^2$ independent exponential random variables each having mean 1, which of the two algorithms results in a smaller expected total cost?
+:::
+
+:::{#sol-sol1}
+Suppose first that Greedy Algorithm A is employed. Let $C_i$ denote the cost associated with person $i,i=1,\ldots,n.$ Now $C_1$ is the minimum of $n$ independent exponentials each having rate 1; so by @eq-eq5-6 it will be exponential with rate $n.$ Similarly, $C_2$ is the minimum of $n-1$ independent exponentials with rate l, and so is exponential with rate $n-1.$ Indeed, by the same reasoning $C_i$ will be exponential with rate $n-i+1,i=1,\ldots,n.$ Thus, the expected total cost under Greedy Algorithm A is
+$$
+\begin{align*}
+E_{A}[\mathrm{total~cost}]&=E[C_{1}+\cdots+C_{n}]\\
+&=\sum_{i=1}^{n}1/i
+\end{align*}
+$$
+
+Let us now analyze Greedy Algorithm B. Let $C_i$ be the cost of the $i$ th personjob pair assigned by this algorithm. Since $C_{1}$ is the minimum of all the $n^2$ values $C_{ij}$, it follows from @eq-eq5-6 that $C_1$ is exponential with rate $n^2.$ Now, it follows from the lack of memory property of the exponential that the amounts by which the other $C_{ij}$ exceed $C_1$ will be independent exponentials with rates 1. As a result, $C_2$ is equal to $C_1$ plus the minimum of $(n-1)^2$ independent exponentials with rate l. Similarly, $C_{3}$ is equal to $C_2$ plus the minimum of $(n-2)^2$ independent exponentials with rate 1, and so on. Therefore, we see that
+$$
+\begin{align*}
+&E[C_{1}]=1/n^{2},\\&E[C_{2}]=E[C_{1}]+1/(n-1)^{2},\\
+&E[C_{3}]=E[C_{2}]+1/(n-2)^{2},\\
+&E[C_{j}]=E[C_{j-1}]+1/(n-j+1)^{2},\\
+&E[C_{n}]=E[C_{n-1}]+1
+\end{align*}
+$$
+Therefore,
+$$
+\begin{align*}
+&E[C_{1}]=1/n^{2},\\
+&E[C_{2}]=1/n^{2}+1/(n-1)^{2},\\&E[C_{3}]=1/n^{2}+1/(n-1)^{2}+1/(n-2)^{2},\\
+&E[C_{n}]=1/n^{2}+1/(n-1)^{2}+1/(n-2)^{2}+\cdots+1
+\end{align*}
+$$
+Adding up all the $E[C_{i}]$ yields that
+$$
+\begin{align*}
+E_{B}[\mathrm{total~cost}]&=n/n^{2}+(n-1)/(n-1)^{2}+(n-2)/(n-2)^{2}+\cdots+1\\
+&=\sum_{i=1}^{n}\frac{1}{i}
+\end{align*}
+$$
+The expected cost is thus the same for both greedy algorithms.
+:::
+
+Next, we numerically verify the results.
+
+```{python}
+import numpy as np
+from scipy.stats import expon
+
+def cost_algo_A(C):
+    """
+    Given the cost matrix, compute the cost using greedy algorithm A
+    
+    input:
+    C: 2d square numpy array of shape(#of people, #of people), the costs
+       C will be changed in place inside the cod
+
+    ouptut:
+    min_cost: float, the minimum cost from greedy algorithm A
+    """
+    n_people = C.shape[0]
+    n_job = n_people
+
+    min_cost = 0.0
+    for i in range(n_people):
+        min_cost += np.min(C[i,:])
+        C[:,np.argmin(C[i,:])] = np.inf  # make sure assigned jobs are not assigned again
+    return min_cost
+```
+
+```{python}
+n = 50  # fifty people and jobs
+lam = 1.0
+sample_size = 10000
+EcostA = 0.0  # expectation of cost computed from algo A
+for i in range(sample_size):
+    C = expon.rvs(scale=1/lam, size=(n,n))
+    EcostA += cost_algo_A(C)
+EcostA /= sample_size
+print('For algorithm A, the computed expectation of cost is: ', EcostA,
+      '\n while the theoretical value is: ', np.sum(1/np.arange(1, n+1)))
+```
+
+```{python}
+def cost_algo_B(C):
+    """
+    Given the cost matrix, compute the cost using greedy algorithm B
+    
+    input:
+    C: 2d square numpy array of shape(#of people, #of people), the costs
+       C will be changed in place inside the cod
+
+    ouptut:
+    min_cost: float, the minimum cost from greedy algorithm B
+    """
+    n_people = C.shape[0]
+    n_job = n_people
+
+    min_cost = 0.0
+    for i in range(n_people):
+        min_cost += np.min(C)
+        ind = np.unravel_index(np.argmin(C), C.shape)
+        C[ind[0], :] = np.inf  # eliminate the person
+        C[:, ind[1]] = np.inf  # eliminate the job
+    return min_cost
+```
+
+```{python}
+n = 50  # fifty people and jobs
+lam = 1.0
+sample_size = 10000
+EcostB = 0.0  # expectation of cost computed from algo A
+for i in range(sample_size):
+    C = expon.rvs(scale=1/lam, size=(n,n))
+    EcostB += cost_algo_B(C)
+EcostB /= sample_size
+print('For algorithm B, the computed expectation of cost is: ', EcostB,
+      '\n while the theoretical value is: ', np.sum(1/np.arange(1, n+1)))
+```
+
+Let $X_1,\ldots,X_n$ be independent exponential random variables, with respective rates $\lambda_1,\ldots,\lambda_n.$ A useful result, generalizing @eq-eq5-5, is that $X_i$ is the smallest of these with probability $\lambda_i/\sum_j\lambda_j.$ This is shown as follows:
+$$
+\begin{align*}
+P\left\{X_{i}=\min_{j}X_{j}\right\}&=P\left\{X_{i}<\min_{j\neq i}X_{j}\right\}\\
+&=\frac{\lambda_{i}}{\sum_{j=1}^{n}\lambda_{j}}
+\end{align*}
+$$
+where the final equality uses @eq-eq5-5 along with the fact that $\operatorname*{min}_{j\neq i}X_j$ is
+exponential with rate $\sum_{j\neq i}\lambda_j.$
+
+Another important fact is that $\operatorname*{min}_iX_i$ and the rank ordering of the $X_i$ are independent. To see why this is true, consider the conditional probability that $X_{i_1}<X_{i_2}<\cdots<X_{i_n}$ given that the minimal value is greater than $t.$ Because $\min_iX_i>t$ means that all the $X_i$ are greater than $t$, it follows from the lack of memory property of exponential random variables that their remaining lives beyond $t$ remain independent exponential random variables with their original rates. ${\mathrm{Consequently}}$,
+$$
+\begin{align*}
+P\Big\{X_{i_{1}}<\cdots<X_{i_{n}}\Big|\operatorname*{min}_{i}X_{i}>t\Big\}&=P\Big\{X_{i_{1}}-t<\cdots<X_{i_{n}}-t\Big|\operatorname*{min}_{i}X_{i}>t\Big\}\\
+&=P\{X_{i_{1}}<\cdots<X_{i_{n}}\}
+\end{align*}
+$$
+which proves the result.
+
+:::{#exm-exa2}
+Suppose you arrive at a post office having two clerks at a moment when both are busy but there is no one else waiting in line. You will enter service when either clerk becomes free. If service times for clerk $i$ are exponential with rate $\lambda_i,i=1,2$, find $E[T]$, where $T$ is the amount of time that you spend in the post office.
+:::
+
+:::{#sol-sol2}
+Let $R_i$ denote the remaining service time of the customer with clerk $i, i=1,2$, and note, by the lack of memory property of exponentials, that $R_1$ and $R_2$ are independent exponential random variables with respective rates $\lambda_1$ and $\lambda_2.$ Conditioning on which of $R_1$ or $R_2$ is the smallest yields
+$$
+\begin{align*}
+E[T]&=E[T|R_{1}<R_{2}]P\{R_{1}<R_{2}\}+E[T|R_{2}\leqslant R_{1}]P\{R_{2}\leqslant R_{1}\}\\
+&=E[T|R_{1}<R_{2}]\frac{\lambda_{1}}{\lambda_{1}+\lambda_{2}}+E[T|R_{2}\leqslant R_{1}]\frac{\lambda_{2}}{\lambda_{1}+\lambda_{2}}
+\end{align*}
+$$
+Now, with S denoting your service time
+$$
+\begin{align*}
+E[T|R_{1}<R_{2}]&=E[R_{1}+S|R_{1}<R_{2}]\\
+&=E[R_{1}|R_{1}<R_{2}]+E[S|R_{1}<R_{2}]\\
+&=E[R_{1}|R_{1}<R_{2}]+\frac{1}{\lambda_{1}}\\
+&=\frac{1}{\lambda_{1}+\lambda_{2}}+\frac{1}{\lambda_{1}}
+\end{align*}
+$$
+The final equation used that conditional on $R_1<R_2$ the random variable $R_{1}$ is the minimum of $R_1$ and $R_2$ and is thus exponential with rate $\lambda_1+\lambda_2;$ and also that conditional on $R_1<R_2$ you are served by server 1.
+
+As we can show in a similar fashion that
+$$
+E[T|R_2\leqslant R_1]=\frac{1}{\lambda_1+\lambda_2}+\frac{1}{\lambda_2}
+$$
+we obtain the result
+$$
+E[T]=\frac{3}{\lambda_1+\lambda_2}
+$$
+:::
+
+Another way to obtain $E[T]$ is to write $T$ as a sum, take expectations, and
+then condition where needed. This approach yields
+$$
+\begin{align*}
+E[T]&=E[\min(R_{1},R_{2})+S]\\
+&=E[\min(R_{1},R_{2})]+E[S]\\
+&=\frac{1}{\lambda_{1}+\lambda_{2}}+E[S]
+\end{align*}
+$$
+
+To compute $E[S]$, we condition on which of $R_1$ and $R_2$ is smallest.
+$$
+\begin{align*}
+E[S]&=E[S|R_{1}<R_{2}]\frac{\lambda_{1}}{\lambda_{1}+\lambda_{2}}+E[S|R_{2}\leqslant R_{1}]\frac{\lambda_{2}}{\lambda_{1}+\lambda_{2}}\\
+&=\frac{2}{\lambda_{1}+\lambda_{2}}
+\end{align*}
+$$
+

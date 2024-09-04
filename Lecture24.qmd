@@ -1,0 +1,149 @@
+---
+title: Variance Reduction Techniques-Part II
+toc: true
+number-sections: true
+format:
+  html:
+    code-fold: false
+jupyter: python3
+execute:
+  enabled: false
+bibliography: references.bib
+---
+
+## Variance Reduction by Conditioning
+
+Let us start by recalling the conditional variance formula
+$$
+\mathrm{Var}(Y)=E[\mathrm{Var}(Y|Z)]+\mathrm{Var}(E[Y|Z])
+$$ {#eq-eq11-12}
+
+Now suppose we are interested in estimating $E[g(X_1,\ldots,X_n)]$ by simulating $\mathbf{X}=(X_1,\ldots,X_n)$ and then computing $Y=g(X_1,\ldots,X_n).$ Now, if for some random variable $Z$ we can compute $E[Y|Z]$ then, as Var$(Y|Z)\geqslant0$, it follows from the conditional variance formula that
+$$\mathrm{Var}(E[Y|Z])\leqslant\mathrm{Var}(Y)$$
+implying, since $E[E[Y|Z]]=E[Y]$, that $E[Y|Z]$ is a better estimator of $E[Y]$ than is $Y.$
+
+In many situations, there are a variety of $Z_i$ that can be conditioned on to obtain an improved estimator. Each of these estimators $E[Y|Z_i]$ will have mean $E[Y]$ and smaller variance than does the raw estimator $Y.$ We now show that for any choice of weights $\lambda_i,\lambda_i\geqslant0,\sum_i\lambda_i=1,\sum_i\lambda_iE[Y|Z_i]$ is also an improvement over $Y$.
+
+:::{#prp-prp1}
+For any $\lambda_i\geqslant0,\sum_{i=1}^\infty\lambda_i=1$,
+
+(a) $E[\sum_i\lambda_iE[Y|Z_i]]=E[Y]$,
+
+(b) $\mathrm{Var}(\sum _{i}\lambda _{i}E[ Y| Z_{i}] ) \leqslant\mathrm{Var}(Y).$
+:::
+
+:::{.proof}
+The proof of (a) is immediate. To prove (b), let $N$ denote an integer valued random variable independent of all the other random variables under consideration and such that
+$$P\{N=i\}=\lambda_{i},\quad i\geqslant1$$
+
+Applying the conditional variance formula twice yields
+$$
+\begin{align*}
+\mathrm{Var}(Y)&\geqslant\mathrm{Var}(E[Y|N,Z_{N}])\\&\geqslant\mathrm{Var}\big(E[E[Y|N,Z_{N}]|Z_{1},\ldots]\big)\\&=\mathrm{Var}\sum_{i}\lambda_{i}E[Y|Z_{i}]
+\end{align*}
+$$
+:::
+
+:::{#exm-exa1}
+Considers a queueing system having Poisson arrivals and suppose that any customer arriving when there are already $N$ others in the system is lost. Suppose that we are interested in using simulation to estimate the expected number of lost customers by time $t$. The raw simulation approach would be to
+simulate the system up to time $t$ and determine $L$, the number of lost customers
+for that run. A better estimate, however, can be obtained by conditioning on the
+total time in $[0, t]$ that the system is at capacity. Indeed, if we let $T$ denote the
+time in $[0, t]$ that there are $N$ in the system, then
+$$
+E[L|T] = \lambda T
+$$
+where $\lambda$ is the Poisson arrival rate. Hence, a better estimate for $E[L]$ than the
+average value of $L$ over all simulation runs can be obtained by multiplying the
+average value of $T$ per simulation run by $\lambda$. If the arrival process were a nonhomogeneous
+Poisson process, then we could improve over the raw estimator $L$ by
+keeping track of those time periods for which the system is at capacity. If we let
+$I_1, \dots, I_C$ denote the time intervals in $[0, t]$ in which there are $N$ in the system,
+then
+$$
+E[L | I_1,\dots, I_C] = \sum_{i=1}^C\int_{I_i} \lambda(s)\,ds
+$$
+where $\lambda(s)$ is the intensity function of the nonhomogeneous Poisson arrival
+process. The use of the right side of the preceding would thus lead to a better
+estimate of $E[L]$ than the raw estimator $L$.
+:::
+
+:::{#exm-exa2}
+Suppose that we wanted to estimate the expected sum of the
+times in the system of the first $n$ customers in a queueing system. That is, if $W_i$
+is the time that the ith customer spends in the system, then we are interested in
+estimating
+$$
+\theta = E\left[\sum_{i=1}^n W_i\right]
+$$
+Let $Y_i$ denote the "state of the system" at the moment at which the $i$th customer
+arrives. It can be shown that for a wide class of models the estimator
+$\sum_{i=1}^n E[W_i|Y_i]$ has (the same mean and) a smaller variance than the estimator
+$\sum_{i=1}^nW_i$. (It should be noted that whereas it is immediate that $E[W_i |Y_i]$ has
+smaller variance than $W_i$, because of the covariance terms involved it is not immediately
+apparent that $\sum_{i=1}^n E[W_i|Y_i]$ has smaller variance than $\sum_{i=1}^nW_i$.)
+:::
+
+## Control Variates
+
+Again suppose we want to use simulation to estimate $E[g(\mathbf{X})]$ where $\mathbf{X}=$ $(X_1,\ldots,X_n).$ But now suppose that for some function $f$ the expected value of $f(\mathbf{X})$ is known—say, $E[f(\mathbf{X})]=\mu.$ Then for any constant $a$ we can also use
+$$
+W=g(\mathbf{X})+a(f(\mathbf{X})-\mu)
+$$
+as an estimator of $E[g(\mathbf{X})].$ Now,
+$$
+\mathrm{Var}(W)=\mathrm{Var}(g(\mathbf{X}))+a^{2}\:\mathrm{Var}(f(\mathbf{X}))+2a\:\mathrm{Cov}(g(\mathbf{X}),f(\mathbf{X}))
+$$
+Simple calculus shows that the preceding is minimized when
+$$
+a=\frac{-\operatorname{Cov}(f(\mathbf{X}),g(\mathbf{X}))}{\operatorname{Var}(f(\mathbf{X}))}
+$$
+and, for this value of $a$,
+$$
+\mathrm{Var}(W)=\mathrm{Var}(g(\mathbf{X}))-\frac{[\mathrm{Cov}(f(\mathbf{X}),g(\mathbf{X}))]^{2}}{\mathrm{Var}(f(\mathbf{X}))}
+$$
+Because Var$(f(\mathbf{X}))$ and Cov$(f(\mathbf{X}),g(\mathbf{X}))$ are usually unknown, the simulated
+data should be used to estimate these quantities.
+
+Dividing the preceding equation by $\mathrm{Var}(g(\mathbf{X}))$ shows that
+$$
+\frac{\mathrm{Var}(W)}{\mathrm{Var}(g(\mathbf{X}))}=1-\mathrm{Corr}^{2}(f(\mathbf{X}),g(\mathbf{X}))
+$$
+where $\mathrm{Corr}(X,Y)$ is the correlation between $X$ and $Y.$ Consequently, the use of a control variate will greatly reduce the variance of the simulation estimator whenever $f(\mathbf{X})$ and $g(\mathbf{X})$ are strongly correlated.
+
+:::{#exm-exa3}
+Consider a continuous time Markov chain which, upon entering state $i$, spends an exponential time with rate $v_i$ in that state before making a transition into some other state, with the transition being into state $j$ with probability $P_{i,j},i\geqslant0,j\neq i.$ Suppose that costs are incurred at rate $C(i)\geqslant0$ per unit time whenever the chain is in state $i,i\geqslant0.$ With $X(t)$ equal to the state at time $t$, and $\alpha$ being a constant such that $0<\alpha<1$, the quantity
+$$W=\int_0^\infty e^{-\alpha t}C(X(t))\:dt$$
+represents the total discounted cost. For a given initial state, suppose we want to use simulation to estimate $E[W].$ Whereas at first it might seem that we cannot obtain an unbiased estimator without simulating the continuous time Markov chain for an infinite amount of time (which is clearly impossible), we can make use of the results of Example 1 in Lecture 8 which gives the equivalent expression for $E[W]:$
+$$
+E[W]=E\bigg[\int_0^TC(X(t))\:dt\bigg]
+$$
+where $T$ is an exponential random variable with rate $\alpha$ that is independent of the continuous time Markov chain. Therefore, we can first generate the value of $T$, then generate the states of the continuous time Markov chain up to time $T$, to obtain the unbiased estimator $\int_0^TC(X(t))dt.$ Because all the costs rates are nonnegative this estimator is strongly positively correlated with $T$, which will thus make an effective control variate.
+:::
+
+:::{#exm-exa4}
+(A Queueing System) Let $D_{n+1}$ denote the delay in queue of the $n+1$ customer in a queueing system in which the interarrival times are independent and identically distributed (i.i.d.) with distribution $F$ having mean $\mu_F$ and are independent of the service times which are i.i.d. with distribution $G$ having mean $\mu_G.$ If $X_i$ is the interarrival time between arrival $i$ and $i+1$, and if $S_i$ is the service time of customer $i, i\geqslant1$, we may write
+$$
+D_{n+1}=g(X_{1},\ldots,X_{n},S_{1},\ldots,S_{n})
+$$
+To take into account the possibility that the simulated variables $X_i,S_i$ may by
+chance be quite different from what might be expected we can let
+$$
+f(X_1,\ldots,X_n,S_1,\ldots,S_n)=\sum_{i=1}^n(S_i-X_i)
+$$
+As $E[f(\mathbf{X},\mathbf{S})]=n(\mu_{G}-\mu_{F})$ we could use
+$$
+g(\mathbf{X},\mathbf{S})+a[f(\mathbf{X},\mathbf{S})-n(\mu_{G}-\mu_{F})]
+$$
+as an estimator of $E[D_{n+1}].$ Since $D_{n+1}$ and $f$ are both increasing functions of $S_i,-X_i,i=1,\ldots,n$ it follows from Theorem 1 Lecture 23 that $f(\mathbf{X},\mathbf{S})$ and $D_n+1$ are positively correlated, and so the simulated estimate of $a$ should turn out to be negative.
+
+If we wanted to estimate the expected sum of the delays in queue of the first $N(T)$ arrivals, then we could use $\sum_{i=1}^{N(T)}S_i$ as our control variable. Indeed as the arrival process is usually assumed independent of the service times, it follows that
+$$
+E\Bigg[\sum_{i=1}^{N(T)}S_i\Bigg]=E[S]E[N(T)]
+$$
+This control variable could also be used if the arrival process were a nonhomogeneous Poisson with rate $\lambda(t);$ in this case,
+$$
+E[N(T)]=\int_{0}^{T}\lambda(t)\:dt
+$$
+:::
+

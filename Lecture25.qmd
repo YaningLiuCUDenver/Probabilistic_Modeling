@@ -1,0 +1,261 @@
+---
+title: Variance Reduction Techniques-Part III
+toc: true
+number-sections: true
+format:
+  html:
+    code-fold: false
+jupyter: python3
+execute:
+  enabled: false
+bibliography: references.bib
+---
+
+## Importance Sampling
+
+Let $\mathbf{X}=(X_1,\ldots,X_n)$ denote a vector of random variables having a joint density function (or joint mass function in the discrete case) $f(\mathbf{x})=f(x_1,\ldots,x_n)$, and suppose that we are interested in estimating
+$$
+\theta=E[h(\mathbf{X})]=\int h(\mathbf{x})f(\mathbf{x})\:d\mathbf{x}
+$$
+where the preceding is an $n$-dimensional integral. (If the $X_i$ are discrete, then
+interpret the integral as an $n$-fold summation.)
+
+Suppose that a direct simulation of the random vector $\mathbf{X}$, so as to compute values
+of $h(\mathbf{X})$, is inefficient, possibly because (a) it is difficult to simulate a random
+vector having density function $f(\mathbf{x})$, or (b) the variance of $h(\mathbf{X})$ is large, or (c) a
+combination of (a) and (b).
+
+Another way in which we can use simulation to estimate $\theta$ is to note that if $g(\mathbf{X})$
+is another probability density such that $f (\mathbf{x}) = 0$ whenever $g(\mathbf{x}) = 0$, then we can
+express $\theta$ as
+$$
+\begin{align*}
+\theta &= \int \frac{h(\mathbf{x})f(\mathbf{x})}{g(\mathbf{x})} g(\mathbf{x})\,d\mathbf{x} \\
+&= E_g\left[\frac{h(\mathbf{X})f(\mathbf{X})}{g(\mathbf{X})}\right]
+\end{align*}
+$$ {#eq-eq11-14}
+where we have written $E_g$ to emphasize that the random vector $\mathbf{X}$ has joint density
+$g(\mathbf{x})$.
+
+It follows from @eq-eq11-14 that $\theta$ can be estimated by successively generating
+values of a random vector $\mathbf{X}$ having density function $g(\mathbf{x})$ and then using
+as the estimator the average of the values of $h(\mathbf{X})f(\mathbf{X})/g(\mathbf{X})$. If a density function
+$g(\mathbf{x})$ can be chosen so that the random variable $h(\mathbf{X})f(\mathbf{X})/g(\mathbf{X})$ has a small
+variance then this approach—referred to as *importance sampling*—can result in
+an efficient estimator of $\theta$ .
+
+Let us now try to obtain a feel for why importance sampling can be useful. To
+begin, note that $f(\mathbf{X})$ and $g(\mathbf{X})$ represent the respective likelihoods of obtaining
+the vector $\mathbf{X}$ when $\mathbf{X}$ is a random vector with respective densities $f$ and $g$. Hence,
+if $\mathbf{X}$ is distributed according to $g$, then it will usually be the case that $f(\mathbf{X})$ will
+be small in relation to $g(\mathbf{X})$ and thus when $\mathbf{X}$ is simulated according to $g$ the
+likelihood ratio $f(\mathbf{X})/g(\mathbf{X})$ will usually be small in comparison to $1$. However, it
+is easy to check that its mean is $1$:
+$$
+E_g\left[\frac{f(\mathbf{X})}{g(\mathbf{X})}\right] = \int \frac{f(\mathbf{x})}{g(\mathbf{x})}g(\mathbf{x})\,d\mathbf{x} = \int f(\mathbf{x})\,d\mathbf{x} = 1
+$$
+Thus we see that even though $f(\mathbf{X})/g(\mathbf{X})$ is usually smaller than $1$, its mean is
+equal to $1$; thus implying that it is occasionally large and so will tend to have a
+large variance. So how can $h(\mathbf{X})f(\mathbf{X})/g(\mathbf{X})$ have a small variance? The answer is
+that we can sometimes arrange to choose a density $g$ such that those values of $\mathbf{x}$ for
+which $f(\mathbf{x})/g(\mathbf{x})$ is large are precisely the values for which $h(\mathbf{x})$ is exceedingly
+small, and thus the ratio $h(\mathbf{X})f(\mathbf{X})/g(\mathbf{X})$ is always small. Since this will require
+that $h(\mathbf{x})$ sometimes be small, importance sampling seems to work best when
+estimating a small probability; for in this case the function $h(\mathbf{x})$ is equal to $1$
+when $\mathbf{x}$ lies in some set and is equal to $0$ otherwise.
+
+We will now consider how to select an appropriate density $g.$ We will find that the so-called tilted densities are useful. Let $M(t)=E_f[e^{tX}]=\int e^{tx}f(x)dx$ be the moment generating function corresponding to a one-dimensional density $f.$ 
+
+:::{#def-def1}
+A density function
+$$
+f_t(x)=\frac{e^{tx}f(x)}{M(t)}
+$$
+is called a *tilted* density of $f,-\infty<t<\infty.$
+:::
+
+A random variable with density $f_t$ tends to be larger than one with density $f$ when
+$t>0$ and tends to be smaller when $t<0.$
+
+In certain cases the tilted distributions $f_t$ have the same parametric form as does $f$.
+
+:::{#exm-exa1}
+If $f$ is the exponential density with rate $\lambda$ then
+$$
+f_{t}(x)=Ce^{tx}\lambda e^{-\lambda x}=\lambda Ce^{-(\lambda-t)x}
+$$
+where $C=1/M(t)$ does not depend on $x.$ Therefore, for $t\leqslant\lambda,f_t$ is an exponential density with rate $\lambda-t.$
+
+If $f$ is a Bernoulli probability mass function with parameter $p$, then
+$$
+f(x)=p^x(1-p)^{1-x},\quad x=0,1
+$$
+Hence, $M(t)=E_f[e^{tX}]=pe^{t}+1-p$ and so
+$$
+\begin{align*}
+f_{t}(x)&=\frac{1}{M(t)}(pe^{t})^{x}(1-p)^{1-x}\\
+&=\left(\frac{pe^{t}}{pe^{t}+1-p}\right)^{x}\left(\frac{1-p}{pe^{t}+1-p}\right)^{1-x}
+\end{align*}
+$$
+That is, $f_t$ is the probability mass function of a Bernoulli random variable with
+parameter
+$$
+p_t=\frac{pe^t}{pe^t+1-p}
+$$
+We leave it as an exercise to show that if $f$ is a normal density with parameters $\mu$
+and $\sigma^2$ then $f_t$ is a normal density mean $\mu+\sigma^2t$ and variance $\sigma^2.$
+
+In certain situations the quantity of interest is the sum of the independent random variables $X_1,\ldots,X_n.$ In this case the joint density $f$ is the product of one-dimensional densities. That is,
+$$
+f(x_1,\ldots,x_n)=f_1(x_1)\cdots f_n(x_n)
+$$
+where $f_i$ is the density function of $X_i.$ In this situation it is often useful to generate the $X_i$ according to their tilted densities, with a common choice of $t$ employed.
+:::
+
+:::{#exm-exa2}
+Let $X_1,\ldots,X_n$ be independent random variables having respective probability density (or mass) functions $f_i$, for $i=1,\ldots,n.$ Suppose we are interested in approximating the probability that their sum is at least as large as $a$, where $a$ is much larger than the mean of the sum. That is, we are interested in
+$$
+\theta=P\{S\geqslant a\}
+$$
+where $S=\sum_{i=1}^nX_i$, and where $a>\sum_{i=1}^nE[X_i].$ Letting $I\{S\geqslant a\}$ equal 1 if
+$S\geqslant a$ and letting it be 0 otherwise, we have that
+$$
+\theta=E_{\mathrm{f}}[I\{S\geqslant a\}]
+$$
+where $\mathbf{f}=(f_1,\ldots,f_n).$ Suppose now that we simulate $X_i$ according to the tilted mass function $f_{i,t},i=1,\ldots,n$, with the value of $t,t>0$ left to be determined. The importance sampling estimator of $\theta$ would then be
+$$
+\hat{\theta}=I\{S\geqslant a\}\prod\frac{f_{i}(X_{i})}{f_{i,t}(X_{i})}
+$$
+Now,
+$$
+\frac{f_{i}(X_{i})}{f_{i,t}(X_{i})}=M_{i}(t)e^{-tX_{i}}
+$$
+and so
+$$
+\hat{\theta}=I\{S\geqslant a\}M(t)e^{-tS}
+$$
+where $M(t)=\prod M_i(t)$ is the moment generating function of $S.$ Since $t>0$ and
+$I\{S\geqslant a\}$ is equal to 0 when $S<a$, it follows that
+$$I\{S\geqslant a\}e^{-tS}\leqslant e^{-ta}$$
+and so
+$$\hat{\theta}\leqslant M(t)e^{-ta}$$
+To make the bound on the estimator as small as possible we thus choose $t, t>0$,to minimize $M(t)e^{-ta}.$ In doing so, we will obtain an estimator whose value on each iteration is between 0 and $\mathrm{min}_tM(t)e^{-{ta}}.$ It can be shown that the minimizing $t$, call it $t^*$, is such that
+$$
+E_{t^*}[S]=E_{t^*}\left[\sum_{i=1}^nX_i\right]=a
+$$
+where, in the preceding, we mean that the expected value is to be taken under the
+assumption that the distribution of $X_i$ is $f_{i,t^*}$ for $i=1,\ldots,n.$
+
+For instance, suppose that $X_1,\ldots,X_n$ are independent Bernoulli random variables having respective parameters $p_i$, for $i=1,\ldots,n.$ Then, if we generate the $X_i$ according to their tilted mass functions $p_{i,t}, i=1,\ldots,n$ then the importance sampling estimator of $\theta=P\{S\geqslant a\}$ is
+$$
+\hat{\theta}=I\{S\geqslant a\}e^{-tS}\prod_{i=1}^{n}\bigl(p_{i}e^{t}+1-p_{i}\bigr)
+$$
+Since $p_{i,t}$ is the mass function of a Bernoulli random variable with parameter
+$p_ie^t/(p_ie^t+1-p_i)$ it follows that
+$$
+E_t\biggl[\sum_{i=1}^nX_i\biggr]=\sum_{i=1}^n\frac{p_ie^t}{p_ie^t+1-p_i}
+$$
+The value of $t$ that makes the preceding equal to $a$ can be numerically approximated and then utilized in the simulation.
+
+As an illustration, suppose that $n=20,p_i=0.4$, and $a=16.$ Then
+$$
+E_t[S]=20\frac{0.4e^t}{0.4e^t+0.6}
+$$
+Setting this equal to 16 yields, after a little algebra,
+$$
+e^{t^{*}}=6
+$$
+Thus, if we generate the Bernoullis using the parameter
+$$
+\frac{0.4e^{t^{*}}}{0.4e^{t^{*}}+0.6}=0.8
+$$
+then because
+$$
+M(t^*)=(0.4e^{t^*}+0.6)^{20}\quad\mathrm{and}\quad e^{-t^*S}=(1/6)^S
+$$
+we see that the importance sampling estimator is
+$$
+\hat{\theta}=I\{S\geqslant16\}(1/6)^S3^{20}
+$$
+It follows from the preceding that
+$$
+\hat{\theta}\leqslant(1/6)^{16}3^{20}=81/2^{16}=0.001236
+$$
+That is, on each iteration the value of the estimator is between $0$ and $0.001236$. Since, in this case, $\theta$ is the probability that a binomial random variable with parameters $20, 0.4$ is at least $16$, it can be explicitly computed with the result $\theta=0.0000317.$ Hence, the raw simulation estimator $I$, which on each iteration takes the value $0$ if the sum of the Bernoullis with parameter $0.4$ is less than $16$ and takes the value 1 otherwise, will have variance
+$$
+\mathrm{Var}(I)=\theta(1-\theta)=3.169\times10^{-4}
+$$
+On the other hand, it follows from the fact that $0\leqslant\hat{\theta}\leqslant0.001236$ that
+$$
+\mathrm{Var}(\hat{\theta})\leqslant2.9131\times10^{-7}
+$$
+
+:::{#exm-exa3}
+Consider a single-server queue in which the times between successive customer arrivals have density function $f$ and the service times have density $g$. Let $D_n$ denote the amount of time that the $n$th arrival spends waiting in queue and suppose we are interested in estimating $\alpha=P\{D_n\geqslant a\}$ when $a$ is much larger than $E[D_n].$ Rather than generating the successive interarrival and service times according to $f$ and $g$, respectively, they should be generated according to the densities $f_{-t}$ and $g_t$, where $t$ is a positive number to be determined. Note that using these distributions as opposed to $f$ and $g$ will result in smaller interarrival times (since $-t<0)$ and larger service times. Hence, there will be a greater chance that $D_n>a$ than if we had simulated using the densities $f$ and $g.$ The importance sampling estimator of $\alpha$ would then be
+$$
+\hat{\alpha}=I\{D_{n}>a\}e^{t(S_{n}-Y_{n})}[M_{f}(-t)M_{g}(t)]^{n}
+$$
+where $S_n$ is the sum of the first $n$ interarrival times, $Y_n$ is the sum of the first $n$ service times, and $M_f$ and $M_g$ are the moment generating functions of the densities $f$ and $g$, respectively. The value of $t$ used should be determined by experimenting with a variety of different choices.
+:::
+:::
+
+:::{#exm-exa4}
+Find the probability that a randomly chosen variable $X$ from the standard normal distribution is greater than $3$. We know that one way to solve this is by solving the following integral:
+$$
+P\{X\gt 3\} = \int_3^\infty f_X(t)\,dt = \frac{1}{\sqrt{2\pi}}\int_3^\infty e^{-t^2/2}\,dt
+$$
+We use a normal distribution with $\mu = 4$ and $\sigma = 1$ as $g$.
+:::
+
+```{python}
+import numpy as np
+import scipy.stats as stats 
+
+h = lambda x : x > 3 
+f = lambda x : stats.norm().pdf(x) 
+g = lambda x : stats.norm(loc=4,scale=1).pdf(x) 
+
+# Sample from the N(4,1). 
+N = 10**4
+X = np.random.normal(4,scale=1,size=N) 
+
+# Calculate the estimate for importance sampling
+est_IS = 1./N * np.sum(h(X)*f(X)/g(X))
+# Calculate the estimate for crude Monte Carlo
+X = np.random.normal(size=N)
+est_MC = 1./N * np.sum(h(X))
+# Calculate the true probability
+true_prob = True_value = stats.norm.cdf(-3)
+
+print('Importance sampling error: ', np.abs(est_IS-true_prob),
+'Crude MC error is: ', np.abs(est_MC-true_prob))
+```
+
+Now we visualize the performance of crude Monte Carlo and importance sampling using the following Python code.
+
+```{python}
+import matplotlib.pyplot as plt
+
+True_value = stats.norm.cdf(-3)
+
+num_experiments = 32  # Run the simulations 32 times for each sample size for both crude MC and IS 
+sample_sizes = 2**(np.arange(5,12))  # 32, 64, ..., 2028
+
+err_MC = np.zeros(len(sample_sizes))
+err_IS = np.zeros(len(sample_sizes))
+for i in range(len(sample_sizes)):
+    X = np.random.normal(size=sample_sizes[i])
+    err_MC[i] += 1./N * np.sum(h(X))
+    X = np.random.normal(4,scale=1,size=N) 
+    err_IS[i] += 1./N * np.sum(h(X)*f(X)/g(X))
+    err_MC[i] = np.abs(err_MC[i] - True_value)
+    err_IS[i] = np.abs(err_IS[i] - True_value)
+
+plt.loglog(sample_sizes, err_MC, 'g--', label='MC')
+plt.loglog(sample_sizes, err_IS, 'b-', label='IS')
+plt.xlabel('Sample size')
+plt.ylabel('Error')
+plt.title('Estimating P(X>3) where X is a standard normal with MC and IS')
+plt.legend();
+```
+

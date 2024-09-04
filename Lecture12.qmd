@@ -1,0 +1,296 @@
+---
+title: Conditional Distribution of the Arrival Times
+toc: true
+number-sections: true
+format:
+  html:
+    code-fold: false
+jupyter: python3
+execute:
+  enabled: false
+bibliography: references.bib
+---
+
+## Conditional Distribution of the Arrival Times
+
+Suppose we are told that exactly one event of a Poisson process has taken place
+by time $t$, and we are asked to determine the distribution of the time at which
+the event occurred. Now, since a Poisson process possesses stationary and independent increments it seems reasonable that each interval in $[0, t]$ of equal length
+should have the same probability of containing the event. In other words, the time
+of the event should be uniformly distributed over $[0, t]$. This is easily checked
+since, for $s \le t$,
+$$
+\begin{align*}
+P\{T_{1}<s|N(t)=1\} &= \frac{P\{T_{1}<s,N(t)=1\}}{P\{N(t)=1\}} \\
+                    &=\frac{P\{1\mathrm{~event~in~}[0,s),0\mathrm{~events~in~}[s,t]\}}{P\{N(t)=1\}} \\
+                    &=\frac{P\{1\mathrm{~event~in~}[0,s)\}P\{0\mathrm{~events~in~}[s,t]\}}{P\{N(t)=1\}} \\
+                    &=\frac{\lambda se^{-\lambda s}e^{-\lambda(t-s)}}{\lambda te^{-\lambda t}} \\
+                    &=\frac{s}{t}
+\end{align*}
+$$
+This result may be generalized, but before doing so we need to introduce the concept of order statistics.
+
+Let $Y_1, Y_2, \ldots, Y_n$ be $n$ random variables. We say that $Y_{(1)}, Y_{(2)}, \ldots, Y_{(n)}$ are the order statistics corresponding to $Y_{1}, Y_{2}, \ldots, Y_{n}$ if $Y_{(k) }$ is the $k$th smallest value among $Y_{1}, \ldots, Y_{n}, k= 1, 2, \ldots, n.$ For instance if $n=3$ and $Y_1=4$, $Y_2=5$, $Y_{3}=1$ then $Y_{(1)}=1,Y_{(2)}=4,Y_{(3)}=5.$ If the $Y_i,i=1,\ldots,n$,are independent identically distributed continuous random variables with probability density $f$, then the joint density of the order statistics $Y_{(1)},Y_{(2)},\ldots,\dot{Y}_{(n)}$ is given by
+$$
+f(y_1,y_2,\dots,y_n)=n!\prod\limits_{i=1}^nf(y_i),\quad y_1<y_2<\dots<y_n
+$$
+The preceding follows since
+
+(i) ($Y_{(1)}$, $Y_{(2)}$, $\ldots$, $Y_{(n)}$) will equal ($y_{1}$, $y_{2}$, $\ldots$, $y_{n}$) if ($Y_{1}$, $Y_{2}$, $\ldots$, $Y_{n}$) is equal
+to any of the $n!$ permutations of $(y_1,y_2,\ldots,y_n);$
+
+and
+
+(ii) the probability density that $(Y_1,Y_2,\ldots,Y_n)$ is equal to $y_{i_1},\ldots,y_{i_n}$ is
+$\prod_{j=1}^{n}f(y_{i_j})=\prod_{j=1}^{n}f(y_j)$ when $i_1,\ldots,i_n$ is a permutation of $1,2,\ldots,n$
+
+If the $Y_i,i=1,\ldots,n$, are uniformly distributed over $(0,t)$, then we obtain from the preceding that the joint density function of the order statistics $Y_{(1)},Y_{(2)},\ldots,Y_{(n)}$ is
+$$
+f(y_1,y_2,\ldots,y_n)=\frac{n!}{t^n},\quad0<y_1<y_2<\cdots<y_n<t
+$$
+We are now ready for the following useful theorem.
+
+:::{#thm-thm1}
+Given that $N(t)=n$, the $n$ arrival times $S_1,\ldots,S_n$ have the same distribution as the order statistics corresponding to $n$ independent random variables uniformly distributed on the interval $(0,t).$
+:::
+
+:::{.proof}
+To obtain the conditional density of $S_1,\ldots,S_n$ given that $N(t)=n$ note that for $0<S_1<\cdots<S_n<t$ the event that $S_1=s_1,S_2=s_2,\ldots$, $S_n=s_n,N(t)=n$ is equivalent to the event that the first $n+1$ interarrival times satisfy $T_1=s_1,T_2=s_2-s_1,\ldots,T_n=s_n-s_{n-1},T_{n+1}>t-s_n.$ Hence, using Proposition 1 in Lecture 7, we have that the conditional joint density of $S_1,\ldots,S_n$ given that $N(t)=n$ is as follows:
+$$
+\begin{align*}
+f(s_1,\dots,s_n|n) &= \frac{f(s_1,\dots,s_n,n)}{P\{N(t)=n\}} \\
+                   &= \frac{\lambda e^{-\lambda s_1}\lambda e^{-\lambda (s_2-s_1)}\cdots\lambda e^{-\lambda(s_n-s_{n-1})}e^{-\lambda (t-s_n)}}{e^{-\lambda t}((\lambda t)^n/n!)} \\
+                   &= \frac{n!}{t^n}, \quad 0\lt s_1\lt \cdots \lt s_n\lt t
+\end{align*}
+$$
+which proves the result.
+:::
+
+:::{#rem-rem1}
+The preceding result is usually paraphrased as stating that, under the condition that $n$ events have occurred in $(0,t)$, the times $S_1,\ldots,S_n$ at which events occur, considered as unordered random variables, are distributed independently and uniformly in the interval $(0,t).$
+:::
+
+**Application of @thm-thm1 (Sampling a Poisson Process)** In Proposition 1 Lecture 8 we showed that if each event of a Poisson process is independently classified as a type I event with probability $p$ and as a type II event with probability $1-p$ then the counting processes of type I and type II events are independent Poisson processes with respective rates $\lambda p$ and $\lambda(1-p).$ Suppose now, however, that there are $k$ possible types of events and that the probability that an event is classificd as a type $i$ event, $i=1,\ldots,k$, depends on the time the event occurs. Specifically, suppose that if an event occurs at time y then it will be classified as a type $i$ event, independently of anything that has previously occurred, with probability $P_i(y),i=1,\ldots,k$ where $\sum_{i=1}^kP_i(y)=1.$ Upon using @thm-thm1 we can prove the following useful proposition.
+
+:::{#prp-prp1}
+If $N_i(t),i=1,\ldots,k$, represents the number of type $i$ events
+occurring by time $t$ then $N_i(t),i=1,\ldots,k$, are independent Poisson random
+variables having means
+$$E[N_i(t)]=\lambda\int_0^tP_i(s)\:ds$$
+Before proving this proposition, let us first illustrate its use.
+:::
+
+:::{#exm-exa1}
+(An Infinite Server Queue) Suppose that customers arrive at a service station in accordance with a Poisson process with rate $\lambda.$ Upon arrival the customer is immediately served by one of an infinite number of possible servers, and the service times are assumed to be independent with a common distribution $G.$ What is the distribution of $X(t)$, the number of customers that have completed service by time $t?$ What is the distribution of $Y(t)$, the number of customers that are being served at time $t?$
+:::
+
+To answer the preceding questions let us agree to call an entering customer a type I customer if he completes his service by time $t$ and a type II customer if he does not complete his service by time $t.$ Now, if the customer enters at time s, $s\leqslant t$, then he will be a type I customer if his service time is less than $t-s.$ Since the service time distribution is $G$, the probability of this will be $G(t-s).$ Similarly, a customer entering at time s, $s\leqslant t$, will be a type II customer with probability $\bar{G}(t-s)=1-G(t-s).$ Hence, from @prp-prp1 we obtain that the distribution of $X(t)$, the number of customers that have completed service by time $t$, is Poisson distributed with mean
+$$
+E[X(t)]=\lambda\int_0^tG(t-s)\:ds=\lambda\int_0^tG(y)\:dy
+$$ {#eq-eq5-17}
+Similarly, the distribution of $Y(t)$, the number of customers being served at time $t$
+is Poisson with mean
+$$
+E[Y(t)]=\lambda\int_0^t\bar{G}(t-s)\:ds=\lambda\int_0^t\bar{G}(y)\:dy
+$$ {#eq-eq5-18}
+Furthermore, $X(t)$ and $Y(t)$ are independent.
+
+Suppose now that we are interested in computing the joint distribution of $Y(t)$ and $Y(t+s)$—that is, the joint distribution of the number in the system at time $t$ and at time $t+s.$ To accomplish this, say that an arrival is
+
+type l: if he arrives before time $t$ and completes service between $t$ and $t+s$,
+
+type 2: if he arrives before $t$ and completes service after $t+s$,
+
+type 3: if he arrives between $t$ and $t+s$ and completes service after $t+s$,
+
+type 4: otherwise.
+
+Hence an arrival at time y will be type $i$ with probability $P_i(y)$ given by
+$$
+\begin{align*}
+&P_{1}(y)=\begin{cases}G(t+s-y)-G(t-y),&\quad\text{if }y<t\\0,&\quad\text{otherwise}\end{cases}\\
+&P_{2}(y)=\begin{cases}\tilde{G}(t+s-y),&\quad\text{if }y<t\\0,&\quad\text{otherwise}\end{cases} \\
+&P_3(y)=\begin{cases}\bar G(t+s-y),&\quad\text{if}\:t<y<t+s\\0,&\quad\text{otherwise}\end{cases}\\
+&P_{4}(y)=1-P_{1}(y)-P_{2}(y)-P_{3}(y)
+\end{align*}
+$$
+Hence, if $N_i=N_i(s+t), i=1,2,3$, denotes the number of type $i$ events that occur, then from @prp-prp1, $N_i, i=1,2,3$, are independent Poisson random variables with respective means
+$$
+E[N_i]=\lambda\int_0^{t+s}P_i(y)\:dy,\quad i=1,2,3
+$$
+Because
+$$
+\begin{align*}
+Y(t)&=N_1+N_2,\\
+Y(t+s)&=N_2+N_3
+\end{align*}
+$$
+it is now an easy matter to compute the joint distribution of $Y(t)$ and $Y(t+s).$ For instance,
+$$
+\begin{align*}&\mathrm{Cov}[Y(t),Y(t+s)]\\
+&=\mathrm{Cov}(N_{1}+N_{2},N_{2}+N_{3})\\
+&=\mathrm{Cov}(N_{2},N_{2})\quad\mathrm{by~independence~of~}N_{1},N_{2},N_{3}\\
+&=\mathrm{Var}(N_{2})\\
+&=\lambda\int_{0}^{t}\bar{G}(t+s-y)\:dy=\lambda\int_{0}^{t}\bar{G}(u+s)\:du
+\end{align*}
+$$
+where the last equality follows since the variance of a Poisson random variable equals its mean, and from the substitution $u=t-y.$ Also, the joint distribution of $Y(t)$ and $Y(t+s)$ is as follows:
+$$
+\begin{align*}
+P\{Y(t)&=i,Y(t+s)=j\}=P\{N_{1}+N_{2}=i,N_{2}+N_{3}=j\}\\
+&=\sum_{l=0}^{\min(i,j)}P\{N_{2}=l,N_{1}=i-l,N_{3}=j-l\}\\
+&=\sum_{l=0}^{\min(i,j)}P\{N_{2}=l\}P\{N_{1}=i-l\}P\{N_{3}=j-l\}\quad\blacksquare
+\end{align*}
+$$
+
+:::{#exm-exa2}
+(Tracking the Number of HIV Infections) There is a relatively
+long incubation period from the time when an individual becomes infected with
+the HIV virus, which causes AIDS, until the symptoms of the disease appear.
+
+As a result, it is difficult for public health officials to be certain of the number
+of members of the population that are infected at any given time. We will now
+present a first approximation model for this phenomenon, which can be used to
+obtain a rough estimate of the number of infected individuals.
+
+Let us suppose that individuals contract the HIV virus in accordance with a
+Poisson process whose rate $\lambda$ is unknown. Suppose that the time from when an
+individual becomes infected until symptoms of the disease appear is a random
+variable having a known distribution $G$. Suppose also that the incubation times of
+different infected individuals are independent.
+
+Let $N_1(t)$ denote the number of individuals who have shown symptoms of the
+disease by time $t$. Also, let $N_2(t)$ denote the number who are HIV positive but
+have not yet shown any symptoms by time $t$. Now, since an individual who contracts
+the virus at time $s$ will have symptoms by time $t$ with probability $G(t − s)$
+and will not with probability $\bar{G}(t - s)$, it follows from @prp-prp1 that $N_1(t)$
+and $N_2(t)$ are independent Poisson random variables with respective means
+$$
+E[N_1(t)] = \lambda \int_{0}^t G(t-s) ds = \lambda \int_{0}^t G(y)dy
+$$
+and
+$$
+E[N_2(t)] = \lambda \int_{0}^t \bar{G}(t-s) ds = \lambda \int_{0}^t \bar{G}(y)dy
+$$
+Now, if we knew $\lambda$, then we could use it to estimate N2(t), the number of individuals
+infected but without any outward symptoms at time t , by its mean
+value E[N2(t)]. However, since λ is unknown, we must first estimate it. Now,
+we will presumably know the value of N1(t), and so we can use its known value
+as an estimate of its mean E[N1(t)]. That is, if the number of individuals who
+have exhibited symptoms by time t is n1, then we can estimate that
+$$
+n_1\approx E[N_1(t)] = \lambda \int_{0}^t G(y) dy
+$$
+Therefore, we can estimate $\lambda$ by the quantity $\hat{\lambda}$ given by
+$$
+\hat{\lambda} = n_1 / \int_{0}^t G(y) dy
+$$
+Using this estimate of $\lambda$, we can estimate the number of infected but symptomless
+individuals at time $t$ by
+$$
+\begin{align*}
+\text{estimate of } N_2(t)  &= \hat{\lambda} \int_{0}^t \hat{G}(y) dy \\
+&= \frac{n_1\int_{0}^t\hat{G}(y)dy}{\int_0^t G(y)dy}
+\end{align*}
+$$
+For example, suppose that $G$ is exponential with mean $\mu.$ Then $\bar{G}(y)=e^-y/\mu$
+and a simple integration gives that
+$$
+\text{estimate of }N_2(t)=\frac{n_1\mu(1-e^{-t/\mu})}{t-\mu(1-e^{-t/\mu})}
+$$
+If we suppose that $t=16$ years, $\mu=10$ years, and $n_1=220$ thousand, then the
+estimate of the number of infected but symptomless individuals at time 16 is
+$$
+\text{estimate}=\frac{2,200(1-e^{-1.6})}{16-10(1-e^{-1.6})}=218.96
+$$
+That is, if we suppose that the foregoing model is approximately correct (and we should be aware that the assumption of a constant infection rate $\lambda$ that is unchanging over time is almost certainly a weak point of the model), then if the incubation period is exponential with mean 10 years and if the total number of individuals who have exhibited AIDS symptoms during the first 16 years of the epidemic is $220$ thousand, then we can expect that approximately $219$ thousand individuals are HIV positive though symptomless at time $16$.
+:::
+
+**Proof of Proposition 5.3**
+
+Let us compute the joint probability $P\{N_i(t)=n_i,i=1,\ldots,k\}.$ To do so note first that in order for there to have been $n_i$ type $i$ events for $i=1,\ldots,k$ there must have been a total of $\sum_i=1^kn_i$ events. Hence, conditioning on $N(t)$ yields
+$$
+\begin{align*}&P\{N_{1}(t)=n_{1},\ldots,N_{k}(t)=n_{k}\} \\
+&=P\left\{N_{1}(t)=n_{1},\ldots,N_{k}(t)=n_{k}\:\Big|\:N(t)=\sum_{i=1}^{k}n_{i}\right\} \\
+&\times P\left\{N(t)=\sum_{i=1}^{k}n_{i}\right\}
+\end{align*}
+$$
+Now consider an arbitrary event that occurred in the interval $[0,t].$ If it had occurred at time $s$,then the probability that it would be a type $i$ event would be $P_i(s).$ Hence, since by @thm-thm1 this event will have occurred at some time uniformly distributed on $(0,t)$, it follows that the probability that this event will be a type $i$ event is
+$$
+P_i = \frac{1}{t}\int_0^t P_i(s)ds
+$$
+independently of the other events. Hence,
+$$
+P\left\{N_i(t) = n_i, i = 1,\dots,k | N(t)=\sum_{i=1}^k n_i\right\}
+$$
+will just equal the multinomial probability of $n_i$ type i outcomes for $i = 1, \dots, k$
+when each of $\sum_{i=1}^kn_i$ independent trials results in outcome $i$ with probability
+$P_i, i = 1, \dots, k$. That is,
+$$
+P\left\{N_1(t) = n_1, \dots, N_k(t) = n_k | N(t)=\sum_{i=1}^k n_i\right\} = \frac{(\sum_{i=1}^k n_i)!}{n_1!\cdots n_k!}P_1^{n_1}\cdots P_{k}^{n_k}
+$$
+Consequently,
+$$
+\begin{align*}
+P\{N_1(t) = n_1, \dots, N_k(t) = n_k\} &= \frac{(\sum_{i=1}^k n_i)!}{n_1!\cdots n_k!}P_1^{n_1}\cdots P_{k}^{n_k}e^{-\lambda t}\frac{(\lambda t)\sum_i n_i}{(\sum_i n_i)!} \\
+&= \prod_{i=1}^k e^{-\lambda t}P_i (\lambda t P_i)^{n_i} / n_i!
+\end{align*}
+$$
+and the proof is complete
+
+We now present an additional example of the usefulness of @thm-thm1.
+
+:::{#exm-exa3}
+Insurance claims are made at times distributed according to a
+Poisson process with rate $\lambda$; the successive claim amounts are independent random
+variables having distribution $G$ with mean $\mu$, and are independent of the
+claim arrival times. Let $S_i$ and $C_i$ denote, respectively, the time and the amount
+of the $i$th claim. The total discounted cost of all claims made up to time $t$ , call it
+$D(t)$, is defined by
+$$
+D(t) = \sum_{i=1}^{N(t)} e^{-\alpha S_i}C_i
+$$
+where $\alpha$ is the discount rate and $N(t)$ is the number of claims made by time $t$. To
+determine the expected value of $D(t)$, we condition on $N(t)$ to obtain
+$$
+E[D(t)] = \sum_{n=0}^\infty E[D(t)|N(t)=n]e^{-\lambda t}\frac{(\lambda t)^n}{n!}
+$$
+Now, conditional on $N(t) = n$ the claim arrival times $S_1, \dots, S_n$ are distributed
+as the ordered values $U_{(1)}, \dots, U_{(n)}$ of $n$ independent uniform $(0, t)$ random variables
+$U_1, \dots, U_n$. Therefore,
+$$
+\begin{align*}
+E[D(t)|N(t)=n] &= E\left[\sum_{i=1}^nC_ie^{-\alpha U_{(i)}}\right] \\
+               &= \sum_{i=1}^n E\left[C_ie^{-\alpha U_{(i)}}\right] \\
+               &= \sum_{i=1}^n E\left[C_i\right] E\left[e^{-\alpha U_{(i)}}\right]
+\end{align*}
+$$
+where the final equality used the independence of the claim amounts and their
+arrival times. Because $E[C_i] = \mu$, continuing the preceding gives
+$$
+\begin{align*}
+E[D(t)|N(t)=n] &= \mu  \sum_{i=1}^n E\left[e^{-\alpha U_{(i)}}\right]  \\
+               &= \mu E\left[\sum_{i=1}^n e^{-\alpha U_{(i)}}\right] \\
+               &= \mu E\left[\sum_{i=1}^n e^{-\alpha U_{i}}\right]
+\end{align*}
+$$
+The last equality follows because $U_{(1)}, \dots, U_{(n)}$ are the values $U_1, \dots, U_n$ in
+increasing order, and so $\sum_{i=1}^n e^{-\alpha U_{(i)}} = \sum_{i=1}^n e^{-\alpha U_{i}}$. Continuing the string of
+equalities yields
+$$
+\begin{align*}
+E[D(t)|N(t)=n] &= n\mu E\left[e^{-\alpha U}\right]  \\
+               &= n\frac{\mu}{t}\int_0^t e^{-\alpha x} dx \\
+               &= n\frac{\mu}{\alpha t}(1-e^{-\alpha t})
+\end{align*}
+$$
+Therefore,
+$$
+E[D(t)|N(t)] = N(t)\frac{\mu}{\alpha t}(1-e^{-\alpha t})
+$$
+Taking expectations yields the result
+$$
+E[D(t)] = \frac{\lambda\mu}{\alpha}(1-e^{-\alpha t})
+$$
+:::
+

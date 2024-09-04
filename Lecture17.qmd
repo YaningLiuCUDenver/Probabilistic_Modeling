@@ -1,0 +1,500 @@
+---
+title: Variations on Brownian Motion and Pricing Stock Options
+toc: true
+number-sections: true
+format:
+  html:
+    code-fold: false
+jupyter: python3
+execute:
+  enabled: false
+bibliography: references.bib
+---
+
+## Brownian Motion with Drift
+
+We say that $\{X(t),t\geqslant0\}$ is a Brownian motion process with drift coefficient $\mu$
+and variance parameter $\sigma^2$ if
+
+(i$)X(0)=0;$
+
+(ii) $\{ X( t)$, $t\geqslant 0\}$ has stationary and independent increments;
+
+(iii) $X(t)$ is normally distributed with mean $\mu t$ and variance $t\sigma^2.$
+
+An equivalent definition is to let $\{B(t),t\geqslant0\}$ be standard Brownian motion
+and then define
+$$
+X(t)=\sigma B(t)+\mu t
+$$
+
+## Geometric Brownian Motion
+
+If $\left\{Y(t),\:t\geqslant0\right\}$ is a Brownian motion process with drift coefficient $\mu$ and variance
+parameter $\sigma^2$, then the process $\{ X( t)$, $t\geqslant 0\}$ defined by
+$$
+X(t)=e^{Y(t)}
+$$
+is called *geometric Brownian motion*.
+
+For a geometric Brownian motion process $\{X(t)\}$, let us compute the expected value of the process at time $t$ given the history of the process up to time $s$. That is, for $s<t$, consider $E[X(t)|X(u),0\leqslant u\leqslant s].$ Now,
+$$
+\begin{align*}
+E[X(t)|X(u),\:0\leqslant u\leqslant s]&=E\big[e^{Y(t)}|Y(u),\:0\leqslant u\leqslant s\big]\\
+&=E\big[e^{Y(s)+Y(t)-Y(s)}|Y(u),\:0\leqslant u\leqslant s\big]\\
+&=e^{Y(s)}E\Big[e^{Y(t)-Y(s)}|Y(u),\:0\leqslant u\leqslant s\Big]\\
+&=X(s)E\Big[e^{Y(t)-Y(s)}\Big]
+\end{align*}
+$$
+where the next to last equality follows from the fact that $Y(s)$ is given, and the last equality from the independent increment property of Brownian motion. Now, the moment generating function of a normal random variable $W$ is given by
+$$
+E[e^{aW}]=e^{aE[W]+a^{2}\operatorname{Var}(W)/2}
+$$
+Hence, since $Y(t)-Y(s)$ is normal with mean $\mu(t-s)$ and variance $(t-s)\sigma^2$,
+it follows by setting $a=1$ that
+$$
+E\Big[e^{Y(t)-Y(s)}\Big]=e^{\mu(t-s)+(t-s)\sigma^{2}/2}
+$$
+Thus, we obtain
+$$
+E[X(t)|X(u),\:0\leqslant u\leqslant s]=X(s)e^{(t-s)(\mu+\sigma^{2}/2)}
+$$ {#eq-eq10-8}
+
+Geometric Brownian motion is useful in the modeling of stock prices over time when you feel that the percentage changes are independent and identically distributed. For instance, suppose that $X_n$ is the price of some stock at time $n.$ Then, it might be reasonable to suppose that $X_n/X_{n-1},n\geqslant1$, are independent and identically distributed. Let
+$$
+Y_n=X_n/X_{n-1}
+$$
+and so
+$$
+X_n=Y_nX_{n-1}
+$$
+Iterating this equality gives
+$$
+\begin{align*}
+X_{n}&=Y_{n}Y_{n-1}X_{n-2}\\
+&=Y_{n}Y_{n-1}Y_{n-2}X_{n-3}\\
+&\vdots \\
+&=Y_{n}Y_{n-1}\cdots Y_{1}X_{0}
+\end{align*}
+$$
+Thus,
+$$
+\log(X_n)=\sum_{i=1}^n\log(Y_i)+\log(X_0)
+$$
+
+
+Since $\log(Y_i),i\geqslant1$ are independent and identically distributed, $\{\log(X_n)\}$ will, when suitably normalized, approximately be Brownian motion with a drift, and so $\{X_n\}$ will be approximately geometric Brownian motion.
+
+## Pricing Stock Options
+
+### An Example in Options Pricing {#sec-example}
+
+In situations in which money is to be received or paid out in differing time periods, we must take into account the time value of money. That is, to be given the amount $v$ a time $t$ in the future is not worth as much as being given $v$ immediately. The reason for this is that if we were immediately given $v$, then it could be loaned out with interest and so be worth more than $v$ at time $t$. To take this into account, we
+will suppose that the time 0 value, also called the *present value*, of the amount $v$
+to be earned at time $t$ is $ve^{−αt}$ . The quantity $\alpha$ is often called the discount factor.
+In economic terms, the assumption of the discount function $e^{−αt}$ is equivalent to
+the assumption that we can earn interest at a continuously compounded rate of
+$100\alpha$ percent per unit time.
+![](price.png){width=70%}
+
+We will now consider a simple model for pricing an option to purchase a stock
+at a future time at a fixed price.
+
+Suppose the present price of a stock is \$100 per unit share, and suppose we
+know that after one time period it will be, in present value dollars, either \$200 or
+\$50 (see the figure above). It should be noted that the prices at time 1 are the present
+value (or time 0) prices. That is, if the discount factor is α, then the actual possible
+prices at time 1 are either $200e^\alpha$ or $50e^\alpha$. To keep the notation simple, we will
+suppose that all prices given are time 0 prices.
+
+Suppose that for any $y$, at a cost of $cy$, you can purchase at time 0 the option
+to buy $y$ shares of the stock at time $1$ at a (time 0) cost of \$150 per share. Thus,
+for instance, if you do purchase this option and the stock rises to \$200, then you
+would exercise the option at time 1 and realize a gain of \$200 - \$150 = \$50 for
+each of the $y$ option units purchased. On the other hand, if the price at time 1 was
+\$50, then the option would be worthless at time 1. In addition, at a cost of $100x$
+you can purchase $x$ units of the stock at time 0, and this will be worth either $200x$
+or $50x$ at time 1.
+
+We will suppose that both $x$ or $y$ can be either positive or negative (or zero).
+That is, you can either buy or sell both the stock and the option. For instance, if
+$x$ were negative then you would be selling $-x$ shares of the stock, yielding you a
+return of $-100x$, and you would then be responsible for buying $-x$ shares of the
+stock at time 1 at a cost of either \$200 or \$50 per share.
+
+We are interested in determining the appropriate value of $c$, the unit cost of an
+option. Specifically, we will show that unless $c = 50/3$ there will be a combination
+of purchases that will always result in a positive gain.
+
+To show this, suppose that at time 0 we
+$$
+\begin{align*}
+&\text{buy } x \text{ units of stock, and} \\
+&\text{buy } y \text{ units of options}
+\end{align*}
+$$
+where $x$ and $y$ (which can be either positive or negative) are to be determined.
+The value of our holding at time 1 depends on the price of the stock at that time;
+and it is given by the following
+$$
+\text{value} =
+\begin{cases}
+200x + 50y, & \text{if price is } 200 \\
+50x, & \text{if price is } 50
+\end{cases}
+$$
+
+The preceding formula follows by noting that if the price is 200 then the $x$ units
+of the stock are worth $200x$, and the $y$ units of the option to buy the stock at a unit
+price of $150$ are worth $(200 − 150)y$. On the other hand, if the stock price is $50$,
+then the $x$ units are worth $50x$ and the $y$ units of the option are worthless. Now,
+suppose we choose $y$ to be such that the preceding value is the same no matter
+what the price at time 1. That is, we choose $y$ so that
+$$
+200x + 50y = 50x
+$$
+or
+$$
+y = -3x
+$$
+(Note that $y$ has the opposite sign of $x$, and so if $x$ is positive and as a result $x$
+units of the stock are purchased at time 0, then $3x$ units of stock options are also
+sold at that time. Similarly, if $x$ is negative, then $-x$ units of stock are sold and
+$−3x$ units of stock options are purchased at time 0.)
+
+Thus, with $y =−3x$, the value of our holding at time 1 is
+$$
+\text{value} = 50x
+$$
+Since the original cost of purchasing $x$ units of the stock and $−3x$ units of options is
+$$
+\text{original cost} = 100x - 3xc
+$$
+we see that our gain on the transaction is
+$$
+\text{gain} = 50x − (100x-3xc) = x(3c - 50)
+$$
+Thus, if $3c = 50$, then the gain is 0; on the other hand if $3c \ne 50$, we can guarantee
+a positive gain (no matter what the price of the stock at time 1) by letting $x$ be
+positive when $3c \gt 50$ and letting it be negative when $3c \lt 50$.
+
+For instance, if the unit cost per option is $c = 20$, then purchasing 1 unit of the
+stock $(x = 1)$ and simultaneously selling 3 units of the option $(y = -3)$ initially
+costs us $100-60 = 40$. However, the value of this holding at time 1 is $50$ whether
+the stock goes up to $200$ or down to $50$. Thus, a guaranteed profit of $10$ is attained.
+Similarly, if the unit cost per option is $c = 15$, then selling 1 unit of the stock
+$(x = −1)$ and buying 3 units of the option $(y = 3)$ leads to an initial gain of
+$100 - 45 = 55$. On the other hand, the value of this holding at time 1 is $−50$.
+Thus, a guaranteed profit of $5$ is attained.
+
+A sure win betting scheme is called an *arbitrage*. Thus, as we have just seen,
+the only option cost $c$ that does not result in an arbitrage is $c = 50/3$.
+
+### The Arbitrage Theorem
+
+Consider an experiment whose set of possible outcomes is $S = \{1, 2, \dots, m\}$. Suppose
+that $n$ wagers are available. If the amount $x$ is bet on wager $i$, then the return
+$xr_i(j)$ is earned if the outcome of the experiment is $j$. In other words, $r_i (\cdot)$ is the
+return function for a unit bet on wager $i$. The amount bet on a wager is allowed to
+be either positive or negative or zero.
+
+A betting scheme is a vector $\boldsymbol{x} = (x_1, \dots, x_n)$ with the interpretation that $x_1$
+is bet on wager $1$, $x_2$ on wager $2$, . . . , and $x_n$ on wager $n$. If the outcome of the
+experiment is $j$, then the return from the betting scheme $\boldsymbol{x}$ is
+$$
+\text{return from } \boldsymbol{x} = \sum_{i=1}^n x_ir_i(j)
+$$
+
+The following theorem states that either there exists a probability vector $\boldsymbol{p} =
+(p_1, \dots, p_m)$ on the set of possible outcomes of the experiment under which each
+of the wagers has expected return 0, or else there is a betting scheme that guarantees
+a positive win.
+
+:::{#thm-thm1}
+(The Arbitrage Theorem) Exactly one of the following is true:
+Either
+
+(i) there exists a probability vector $\boldsymbol{p} = (p_1, \dots, p_m)$ for which
+$$
+\sum_{j=1}^m p_j r_i(j) = 0,\quad \text{for all }i=1,\dots,n
+$$
+or
+(ii) there exists a betting scheme $\boldsymbol{x} = (x_1, \dots, x_n)$ for which
+$$
+\sum_{i=1}^n x_i r_i(j) \gt 0,\quad \text{for all }j=1,\dots,m
+$$
+:::
+In other words, if $X$ is the outcome of the experiment, then the arbitrage theorem
+states that either there is a probability vector $\boldsymbol{p}$ for X such that
+$$
+E_{\boldsymbol{p}}[r_i(X)] = 0, \quad \text{ for all  } i = 1, \dots, n
+$$
+or else there is a betting scheme that leads to a sure win.
+
+:::{#rem-rem1}
+This theorem is a consequence of the (linear algebra) theorem of the
+separating hyperplane, which is often used as a mechanism to prove the duality
+theorem of linear programming.
+
+The theory of linear programming can be used to determine a betting strategy
+that guarantees the greatest return. Suppose that the absolute value of the amount
+bet on each wager must be less than or equal to 1. To determine the vector $x$ that
+yields the greatest guaranteed win—call this win $v$—we need to choose $\boldsymbol{x}$ and $v$
+so as to maximize $v$, subject to the constraints
+$$
+\begin{align*}
+\sum_{i=1}^n x_ir_i(j) &\ge v, \quad \text{ for }j =1,\dots,m \\
+-1 \le x_i &\le 1, \quad i=1,\dots,n
+\end{align*}
+$$
+This optimization problem is a linear program and can be solved by standard
+techniques (such as by using the simplex algorithm). The arbitrage theorem yields
+that the optimal $v$ will be positive unless there is a probability vector $\boldsymbol{p}$ for which
+$\sum_{j=1}^m p_j r_i(j ) = 0$ for all $i=1,\dots,n$.
+:::
+
+:::{#exm-exa1}
+In some situations, the only types of wagers allowed are to
+choose one of the outcomes $i, i = 1,\dots, m$, and bet that $i$ is the outcome of the
+experiment. The return from such a bet is often quoted in terms of "odds". If the
+odds for outcome $i$ are $o_i$ (often written as "$o_i$ to $1$") then a 1 unit bet will return
+$o_i$ if the outcome of the experiment is $i$ and will return $-1$ otherwise. That is,
+$$
+r_i(j) = 
+\begin{cases}
+o_i, & \text{ if } j=i \\
+-1 & \text{ otherwise }
+\end{cases}
+$$
+Suppose the odds $o_1, \dots, o_m$ are posted. In order for there not to be a sure win
+there must be a probability vector $\boldsymbol{p} = (p_1, \dots, p_m)$ such that
+$$
+0 \equiv E_{\boldsymbol{p}}[r_i(X)] = o_ip_i - (1-p_i)
+$$
+That is, we must have
+$$
+p_i = \frac{1}{1+o_i}
+$$
+Since the $p_i$ must sum to 1, this means that the condition for there not to be an
+arbitrage is that
+$$
+\sum_{i=1}^m (1+o_i)^{-1} = 1
+$$
+Thus, if the posted odds are such that $\sum_{i=1}^m (1+o_i)^{-1} \ne 1$, then a sure win is possible.
+For instance, suppose there are three possible outcomes and the odds are as follows:
+$$
+\begin{array}{c}
+\text{Outcome} & \text{Odds} \\
+1 & 1 \\
+2 & 2 \\
+3 & 3
+\end{array}
+$$
+That is, the odds for outcome 1 are 1 − 1, the odds for outcome 2 are 2 − 1, and
+that for outcome 3 are 3−1. Since
+$$
+\frac{1}{2} + \frac{1}{3} + \frac{1}{4} \gt 1
+$$
+a sure win is possible. One possibility is to bet \$-1 on outcome 1 (and so you
+either win 1 if the outcome is not 1 and lose 1 if the outcome is 1) and bet $-0.7$
+on outcome 2, and $-0.5$ on outcome 3. If the experiment results in outcome 1,
+then we win $-1 + 0.7 + 0.5 = 0.2$; if it results in outcome 2, then we win $1 -
+1.4+0.5 = 0.1$; if it results in outcome 3, then we win $1+0.7-1.5 = 0.2$. Hence,
+in all cases we win a positive amount.
+:::
+
+:::{#rem-rem2}
+If $\sum_{i} (1+o_i)^{-1} \ne 1$, then the betting scheme
+$$
+x_i = \frac{(1+o_i)^{-1}}{1 - \sum_{i} (1+o_i)^{-1}}, \quad i=1,\dots,n
+$$
+will always yield a gain of exactly 1.
+:::
+
+:::{#exm-exa2}
+Let us reconsider the option pricing example of the previous
+section, where the initial price of a stock is 100 and the present value of the price
+at time 1 is either 200 or 50. At a cost of $c$ per share we can purchase at time 0
+the option to buy the stock at time 1 at a present value price of 150 per share. The
+problem is to set the value of $c$ so that no sure win is possible.
+
+In the context of this section, the outcome of the experiment is the value of
+the stock at time 1. Thus, there are two possible outcomes. There are also two
+different wagers: to buy (or sell) the stock, and to buy (or sell) the option. By
+the arbitrage theorem, there will be no sure win if there is a probability vector
+$(p, 1-p)$ that makes the expected return under both wagers equal to 0.
+
+Now, the return from purchasing 1 unit of the stock is
+$$
+\text{return}=
+\begin{cases}
+200-100=100,&\text{if the price is 200 at time 1}\\
+50-100=-50,&\text{if the price is 50 at time 1}
+\end{cases}
+$$
+Hence, if $p$ is the probability that the price is 200 at time 1, then
+$$
+E[\mathrm{return}]=100p-50(1-p)
+$$
+Setting this equal to 0 yields that
+$$
+p=\frac{1}{3}
+$$
+That is, the only probability vector $(p,1-p)$ for which wager 1 yields an expected return 0 is the vector $(\frac{1}{3},\frac{2}{3}).$
+
+Now, the return from purchasing one share of the option is
+$$
+\text{return}=
+\begin{cases}50-c,&\text{if price is 200}\\[2ex]-c,&\text{if price is 50}
+\end{cases}
+$$
+Hence, the expected return when $p=\frac{1}{3}$ is
+$$
+\begin{align*}
+E[\mathrm{return}]&=(50-c)\frac{1}{3}-c\frac{2}{3}\\
+&=\frac{50}{3}-c
+\end{align*}
+$$
+Thus, it follows from the arbitrage theorem that the only value of $c$ for which there will not be a sure win is $c=\frac{50}{3}$, which verifies the result of @sec-example.
+:::
+
+## The Black-Scholes Option Pricing Formula
+
+Suppose the present price of a stock is $X(0)=x_0$, and let $X(t)$ denote its price at time $t.$ Suppose we are interested in the stock over the time interval 0 to $T.$ Assume that the discount factor is $\alpha$ (equivalently, the interest rate is $100\alpha$ percent compounded continuously), and so the present value of the stock price at time $t$ is $e^{-\alpha t}X(t).$
+
+We can regard the evolution of the price of the stock over time as our experiment, and thus the outcome of the experiment is the value of the function $X(t)$, $0\leqslant t\leqslant T.$ The types of wagers available are that for any $s<t$ we can observe the process for a time $s$ and then buy (or sell) shares of the stock at price $X(s)$ and then sell (or buy) these shares at time $t$ for the price $X(t).$ In addition, we will suppose that we may purchase any of $N$ different options at time 0. Option $i$, costing $c_i$ per share, gives us the option of purchasing shares of the stock at time $t_i$ for the fixed price of $K_i$ per share, $i=1,\ldots,N.$
+
+Suppose we want to determine values of the $c_i$ for which there is no betting strategy that leads to a sure win. Assuming that the arbitrage theorem can be generalized (to handle the preceding situation, where the outcome of the experiment is a function), it follows that there will be no sure win if and only if there exists a probability measure over the set of outcomes under which all of the wagers have expected return 0. Let P be a probability measure on the set of outcomes. Consider first the wager of observing the stock for a time s and then purchasing (or selling) one share with the intention of selling (or purchasing) it at time $t, 0\leqslant s<t\leqslant T.$ The present value of the amount paid for the stock is $e^{-\alpha sX(s)}$, whereas the present value of the amount received is $e^{-\alpha tX(t)}.$ Hence, in order for the expected return of this wager to be 0 when $P$ is the probability measure on $X(t),0\leqslant t\leqslant T$, we must have that
+$$
+E_{\mathbf{P}}[e^{-\alpha t}X(t)|X(u),0\leqslant u\leqslant s]=e^{-\alpha s}X(s)
+$$ {#eq-eq10-9}
+
+Consider now the wager of purchasing an option. Suppose the option gives us the right to buy one share of the stock at time $t$ for a price $K.$ At time $t$, the worth of this option will be as follows:
+$$
+\text{worth of option at time}\:t=
+\begin{cases}
+X(t)-K,&\quad\text{if}\:X(t)\geqslant K\\
+0,&\quad\text{if}\:X(t)<K
+\end{cases}
+$$
+That is, the time $t$ worth of the option is $(X(t)-K)^+.$ Hence, the present value of the worth of the option is $e^{-\alpha t}\left(X\left(t\right)-K\right)^+.$ If $c$ is the (time 0) cost of the option, we see that, in order for purchasing the option to have expected (present value) return 0, we must have that
+$$
+E_\mathbf{P}[e^{-\alpha t}(X(t)-K)^+]=c
+$$ {#eq-eq10-10}
+
+By the arbitrage theorem, if we can find a probability measure P on the set of outcomes that satisfies @eq-eq10-9, then if $c$, the cost of an option to purchase one share at time $t$ at the fixed price $K$ , is as given in @eq-eq10-10, then no arbitrage is possible. On the other hand, if for given prices $c_i, i=1,\ldots,N$, there is no probability measure P that satisfies both @eq-eq10-9 and the equality
+$$
+c_{i}=E_{\mathbf{P}}[e^{-\alpha t_{i}}(X(t_{i})-K_{i})^{+}],\quad i=1,\ldots,N
+$$
+then a sure win is possible.
+
+We will now present a probability measure P on the outcome $X(t),0\leqslant t\leqslant T$,
+that satisfies @eq-eq10-9.
+
+Suppose that
+$$
+X(t)=x_0e^{Y(t)}
+$$
+where $\{Y(t),t\geqslant0\}$ is a Brownian motion process with drift coefficient $\mu$ and variance parameter $\sigma^2.$ That is, $\{X(t),t\geqslant0\}$ is a geometric Brownian motion process. From @eq-eq10-8 we have that, for $s\lt t$,
+$$
+E[X(t)|X(u),0\leqslant u\leqslant s]=X(s)e^{(t-s)(\mu+\sigma^{2}/2)}
+$$
+Hence, if we choose $\mu$ and $\sigma^2$ so that
+$$
+\mu+\sigma^2/2=\alpha
+$$
+then @eq-eq10-9 will be satisfied. That is, by letting P be the probability measure governing the stochastic process $\{x_0e^{Y(t)}, 0\leqslant t\leqslant T\}$, where $\{Y(t)\}$ is Brownian motion with drift parameter $\mu$ and variance parameter $\sigma^2$, and where $\mu+\sigma^2/2=\alpha$, @eq-eq10-9 is satisfied.
+
+It follows from the preceding that if we price an option to purchase a share of
+the stock at time $t$ for a fixed price $K$ by
+$$
+c=E_{\mathbf{P}}[e^{-\alpha t}(X(t)-K)^{+}]
+$$
+then no arbitrage is possible. Since $X(t)=x_0e^{Y(t)}$, where $Y(t)$ is normal with
+mean $\mu t$ and variance $t\sigma^2$,we see that
+$$
+\begin{align*}
+ce^{\alpha t}&=\int_{-\infty}^{\infty}(x_{0}e^{y}-K)^{+}\frac{1}{\sqrt{2\pi t\sigma^{2}}}e^{-(y-\mu t)^{2}/2t\sigma^{2}}\:dy\\
+&=\int_{\log(K/x_{0})}^{\infty}(x_{0}e^{y}-K)\frac{1}{\sqrt{2\pi t\sigma^{2}}}e^{-(y-\mu t)^{2}/2t\sigma^{2}}\:dy
+\end{align*}
+$$
+Making the change of variable $w=(y-\mu t)/(\sigma t^{1/2})$ yields
+$$
+ce^{\alpha t}=x_{0}e^{\mu t}\frac{1}{\sqrt{2\pi}}\int_{a}^{\infty}e^{\sigma w\sqrt{t}}e^{-w^{2}/2}\:dw-K\frac{1}{\sqrt{2\pi}}\int_{a}^{\infty}e^{-w^{2}/2}\:dw
+$$ {#eq-eq10-11}
+where
+$$
+a=\frac{\log(K/x_0)-\mu t}{\sigma\sqrt{t}}
+$$
+Now,
+$$
+\begin{align*}
+\frac{1}{\sqrt{2\pi}}\int_{a}^{\infty}e^{\sigma w\sqrt{t}}e^{-w^{2}/2}\:dw&=e^{t\sigma^{2}/2}\frac{1}{\sqrt{2\pi}}\int_{a}^{\infty}e^{-(w-\sigma\sqrt{t})^{2}/2}\:dw\\
+&=e^{t\sigma^{2}/2}P\{N(\sigma\sqrt{t},1)\geqslant a\}\\
+&=e^{t\sigma^{2}/2}P\{N(0,1)\geqslant a-\sigma\sqrt{t}\}\\
+&=e^{t\sigma^{2}/2}P\{N(0,1)\leqslant-(a-\sigma\sqrt{t})\}\\
+&=e^{t\sigma^{2}/2}\phi\left(\sigma\sqrt{t}-a\right)
+\end{align*}
+$$
+where $N(m,v)$ is a normal random variable with mean $m$ and variance $v$, and $\phi$
+is the standard normal distribution function.
+
+Thus, we see from @eq-eq10-11 that
+$$
+ce^{\alpha t}=x_{0}e^{\mu t+\sigma^{2}t/2}\phi\big(\sigma\sqrt{t}-a\big)-K\phi(-a)
+$$
+Using that
+$$
+\mu+\sigma^2/2=\alpha
+$$
+and letting $b=-a$, we can write this as follows:
+$$
+c=x_0\phi\big(\sigma\sqrt{t}+b\big)-Ke^{-\alpha t}\phi(b)
+$$ {#eq-eq10-12}
+where
+$$
+b=\frac{\alpha t-\sigma^2t/2-\log(K/x_0)}{\sigma\sqrt{t}}
+$$
+
+The option price formula given by @eq-eq10-12 depends on the initial price of the stock $x_0$, the option exercise time $t$, the option exercise price $K$, the discount (or interest rate) factor $\alpha$, and the value $\sigma^2.$ Note that for any value of $\sigma^2$, if the options are priced according to the formula of @eq-eq10-12 then no arbitrage is possible. However, as many people believe that the price of a stock actually follows a geometric Brownian motion—that is, $X(t)=x_0e^{Y(t)}$ where $Y(t)$ is Brownian motion with parameters $\mu$ and $\sigma^2—$it has been suggested that it is natural to price the option according to the formula @eq-eq10-12 with the parameter $\sigma^2$ taken equal to the estimated value (see the remark that follows) of the variance parameter under the assumption of a geometric Brownian motion model. When this is done, the formula @eq-eq10-12 is known as the Black-Scholes option cost valuation. It is interesting that this valuation does not depend on the value of the drift parameter $\mu$ but only on the variance parameter $\sigma^2.$
+
+If the option itself can be traded, then the formula of @eq-eq10-12 can be used to set its price in such a way so that no arbitrage is possible. If at time $s$ the price of the stock is $X(s)=x_s$, then the price of a $(t,K)$ option—that is, an option to purchase one unit of the stock at time $t$ for a price $K$—should be set by replacing $t$ by $t-s$ and $x_0$ by $x_s$ in @eq-eq10-12.
+
+:::{#rem-rem2}
+If we observe a Brownian motion process with variance parameter $\sigma^2$
+over any time interval, then we could theoretically obtain an arbitrarily precise
+estimate of $\sigma^2.$ For suppose we observe such a process $\{Y(s)\}$ for a time $t.$
+Then, for fixed $h$, let $N=[t/h]$ and set
+$$
+\begin{align*}
+&W_{1}=Y(h)-Y(0),\\
+&W_{2}=Y(2h)-Y(h),\\
+&\vdots \\
+&W_{N}=Y(Nh)-Y(Nh-h)
+\end{align*}
+$$
+Then random variables $W_1,\ldots,W_N$ are independent and identically distributed normal random variables having variance $h\sigma^{\dot{2}}.$ We now use the fact that $(N-1)S^2/(\sigma^2h)$ has a chi-squared distribution with $N-1$ degrees of freedom, where $S^2$ is the sample variance defined by
+$$
+S^2=\sum_{i=1}^N(W_i-\overline{W})^2/(N-1)
+$$
+Since the expected value and variance of a chi-squared with $k$ degrees of freedom
+are equal to $k$ and $2k$, respectively, we see that
+$$
+E[(N-1)S^2/(\sigma^2h)]=N-1
+$$
+and
+$$
+\mathrm{Var}[(N-1)S^2/(\sigma^2h)]=2(N-1)
+$$
+From this, we see that
+$$
+E[S^2/h]=\sigma^2
+$$
+and
+$$
+\mathrm{Var}[S^{2}/h]=2\sigma^{4}/(N-1)
+$$
+Hence, as we let $h$ become smaller (and so $N=[t/h]$ becomes larger) the variance of the unbiased estimator of $\sigma^2$ becomes arbitrarily small.
+:::
+
+

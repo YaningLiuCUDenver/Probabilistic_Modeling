@@ -1,0 +1,483 @@
+---
+title: Exponential Models
+toc: true
+number-sections: true
+format:
+  html:
+    code-fold: false
+jupyter: python3
+execute:
+  enabled: false
+bibliography: references.bib
+---
+
+## A Single-Server Exponential Queueing System
+
+Suppose that customers arrive at a single-server service station in accordance with
+a Poisson process having rate λ. That is, the time between successive arrivals are
+independent exponential random variables having mean $1/\lambda$. Each customer, upon
+arrival, goes directly into service if the server is free and, if not, the customer joins
+the queue. When the server finishes serving a customer, the customer leaves the
+system, and the next customer in line, if there is any, enters service. The successive
+service times are assumed to be independent exponential random variables having
+mean $1/\mu$.
+
+The preceding is called the $M/M/1$ queue. The two $M$'s refer to the fact that
+both the interarrival and the service distributions are exponential (and thus memoryless,
+or Markovian), and the 1 to the fact that there is a single server. To analyze
+it, we shall begin by determining the limiting probabilities $P_n$, for $n = 0, 1, \dots$.
+To do so, think along the following lines. Suppose that we have an infinite number
+of rooms numbered $0, 1, 2, \dots$, and suppose that we instruct an individual to
+enter room n whenever there are n customers in the system. That is, he would be
+in room 2 whenever there are two customers in the system; and if another were
+to arrive, then he would leave room 2 and enter room 3. Similarly, if a service
+would take place he would leave room 2 and enter room 1 (as there would now be
+only one customer in the system).
+
+Now suppose that in the long run our individual is seen to have entered room 1
+at the rate of ten times an hour. Then at what rate must he have left room 1?
+Clearly, at this same rate of ten times an hour. For the total number of times that
+he enters room 1 must be equal to (or one greater than) the total number of times
+he leaves room 1. This sort of argument thus yields the general principle which
+will enable us to determine the state probabilities. Namely, for each $n \ge 0$, *the rate
+at which the process enters state $n$ equals the rate at which it leaves state $n$*. Let us
+now determine these rates. Consider first state 0. When in state 0 the process can
+leave only by an arrival as clearly there cannot be a departure when the system
+is empty. Since the arrival rate is $\lambda$ and the proportion of time that the process is
+in state 0 is $P_0$, it follows that the rate at which the process leaves state $0$ is $\lambda P_0$.
+On the other hand, state 0 can only be reached from state 1 via a departure. That
+is, if there is a single customer in the system and he completes service, then the
+system becomes empty. Since the service rate is $\mu$ and the proportion of time that
+the system has exactly one customer is $P_1$, it follows that the rate at which the
+process enters state 0 is $\mu P_1$.
+
+Hence, from our rate-equality principle we get our first equation,
+$$
+\lambda P_0 = \mu P_1
+$$
+
+Now consider state 1. The process can leave this state either by an arrival (which occurs at rate $\lambda)$ or a departure (which occurs at rate $\mu).$ Hence, when in state 1, the process will leave this state at a rate of $\lambda+\mu^*$ Since the proportion of time the process is in state 1 is $P_1$, the rate at which the process leaves state 1 is $(\lambda+\mu)P_1.$ On the other hand, state 1 can be entered either from state 0 via an arrival or from state 2 via a departure. Hence, the rate at which the process enters state 1 is $\lambda P_0+\mu P_2.$ Because the reasoning for other states is similar, we obtain the following set of equations:
+$$
+\begin{array}{c}
+\text{State} & \text{Rate at which the process leaves = rate at which it enters} \\
+0 & \lambda P_{0}=\mu P_{1}\\
+n,n\geqslant1 & (\lambda+\mu)P_{n}=\lambda P_{n-1}+\mu P_{n+1}\\ 
+\end{array}
+$$ {#eq-eq8-5}
+
+The set of @eq-eq8-5 which balances the rate at which the process enters each
+state with the rate at which it leaves that state is known as *balance equations*.
+In order to solve @eq-eq8-5, we rewrite them to obtain
+$$
+\begin{align*}
+P_{1}&=\frac{\lambda}{\mu}P_{0},\\
+P_{n+1}&=\frac{\lambda}{\mu}P_{n}+\left(P_{n}-\frac{\lambda}{\mu}P_{n-1}\right),\quad n\geqslant 1
+\end{align*}
+$$
+Solving in terms of $P_0$ yields
+$$
+\begin{align*}
+&P_{0}=P_{0},\\
+&P_{1}=\frac{\lambda}{\mu}P_{0},\\
+&P_{2}=\frac{\lambda}{\mu}P_{1}+\left(P_{1}-\frac{\lambda}{\mu}P_{0}\right)=\frac{\lambda}{\mu}P_{1}=\left(\frac{\lambda}{\mu}\right)^{2}P_{0},\\
+&P_{3}=\frac{\lambda}{\mu}P_{2}+\left(P_{2}-\frac{\lambda}{\mu}P_{1}\right)=\frac{\lambda}{\mu}P_{2}=\left(\frac{\lambda}{\mu}\right)^{3}P_{0},\\
+&P_{4}=\frac{\lambda}{\mu}P_{3}+\left(P_{3}-\frac{\lambda}{\mu}P_{2}\right)=\frac{\lambda}{\mu}P_{3}=\left(\frac{\lambda}{\mu}\right)^{4}P_{0},\\
+&P_{n+1}=\frac{\lambda}{\mu}P_{n}+\left(P_{n}-\frac{\lambda}{\mu}P_{n-1}\right)=\frac{\lambda}{\mu}P_{n}=\left(\frac{\lambda}{\mu}\right)^{n+1}P_{0}
+\end{align*}
+$$
+
+To determine $P_0$ we use the fact that the $P_n$ must sum to 1, and thus
+$$
+1=\sum_{n=0}^{\infty}P_{n}=\sum_{n=0}^{\infty}\left(\frac{\lambda}{\mu}\right)^{n}P_{0}=\frac{P_{0}}{1-\lambda/\mu}
+$$
+or
+$$
+\begin{align*}
+&P_{0}=1-\frac{\lambda}{\mu},\\
+&P_{n}=\left(\frac{\lambda}{\mu}\right)^{n}\left(1-\frac{\lambda}{\mu}\right),\quad n\geqslant1
+\end{align*}
+$$ {#eq-eq8-6}
+
+Notice that for the preceding equations to make sense, it is necessary for $\lambda/\mu$ to be less than l. For otherwise $\sum_{n=0}^\infty(\lambda/\mu)^n$ would be infinite and all the $P_n$ would be 0. Hence, we shall assume that $\lambda/\mu<1.$ Note that it is quite intuitive that there would be no limiting probabilities if $\lambda>\mu.$ For suppose that $\lambda>\mu.$ Since customers arrive at a Poisson rate $\lambda$, it follows that the expected total number of arrivals by time $t$ is $\lambda t.$ On the other hand, what is the expected number of customers served by time $t?$ If there were always customers present, then the number of customers served would be a Poisson process having rate $\mu$ since the time between successive services would be independent exponentials having mean $1/\mu.$ Hence, the expected number of customers served by time $\iota$ is no greater than $\mu t;$ and, therefore, the expected number in the system at time $t$ is at least
+$$
+\lambda t-\mu t=(\lambda-\mu)t
+$$
+Now if $\lambda>\mu$,then the preceding number goes to infinity as $t$ becomes large. That is, $\lambda/\mu>1$, the queue size increases without limit and there will be no limiting probabilities. Note also that the condition $\lambda/\mu<1$ is equivalent to the condition that the mean service time be less than the mean time between successive arrivals. This is the general condition that must be satisfied for limited probabilities to exist in most single-server queueing systems.
+
+:::{#rem-rem1}
+(i) In solving the balance equations for the $M/M/1$ queue, we obtained as an intermediate step the set of equations
+$$
+\lambda P_{n}=\mu P_{n+1},\quad n\geqslant 0
+$$
+These equations could have been directly argued from the general queueing result (shown in Proposition 1 in Lecture 14) that the rate at which arrivals find $n$ in the system -- namely $\lambda P_n$--is equal to the rate at which departures leave behind $n$--namely, $\mu P_{n+1}.$
+
+(ii) We can also prove that $P_n=(\lambda/\mu)^n(1-\lambda/\mu)$ by using a queueing cost identity. Suppose that, for a fixed $n>0$, whenever there are at least $n$ customers in the system the $n$th oldest customer (with age measured from when the customer arrived) pays 1 per unit time. Letting $X$ be the steady state number of customers in the system, because the system earns 1 per unit time whenever $X$ is at least $n$, it follows that
+$$
+\text{average rate at which the system earns} = P\{X\geqslant n\}
+$$
+Also, because a customer who finds fewer than $n-1$ in the system when it arrives will pay 0, while an arrival who finds at least $n-1$ in the system will pay 1 per unit time for an exponentially distributed time with rate $\mu$
+$$
+\text{average amount a customer pays} =\frac{1}{\mu}P\{X\geqslant n-1\}
+$$
+Therefore, the queueing cost identity yields that
+$$
+P\{X\geqslant n\}=(\lambda/\mu)P\{X\geqslant n-1\},\quad n>0
+$$
+Iterating this gives
+$$
+\begin{align*}
+P\{X\geqslant n\}&=(\lambda/\mu)P\{X\geqslant n-1\}\\
+&=(\lambda/\mu)^{2}P\{X\geqslant n-2\}\\&=\cdots\\
+&=(\lambda/\mu)^{n}P\{X\geqslant0\}\\
+&=(\lambda/\mu)^{n}
+\end{align*}
+$$
+Therefore,
+$$
+P\{X=n\}=P\{X\geqslant n\}-P\{X\geqslant n+1\}=(\lambda/\mu)^{n}(1-\lambda/\mu)
+$$
+:::
+
+Now let us attempt to express the quantities $L,L_Q,W$, and $W_Q$ in terms of the limiting probabilities $P_n.$ Since $P_n$ is the long-run probability that the system contains exactly $n$ customers, the average number of customers in the system clearly is given by
+$$
+\begin{align*}
+\text{L}&=\sum_{n=0}^{\infty}nP_{n}\\
+&=\sum_{n=0}^{\infty}n\left(\frac{\lambda}{\mu}\right)^{n}\left(1-\frac{\lambda}{\mu}\right)\\
+&=\frac{\lambda}{\mu-\lambda}
+\end{align*}
+$$ {#eq-eq8-7}
+where the last equation followed upon application of the algebraic identity
+$$
+\sum_{n=0}^{\infty}nx^n=\frac{x}{(1-x)^2}
+$$
+The quantities $W, W_Q$, and $L_Q$ now can be obtained with the help of Equations (2) and (3) from Lecture 14. That is, since $\lambda_{\alpha}=\lambda$, we have from @eq-eq8-7 that
+$$
+\begin{align*}
+W&=\frac{L}{\lambda}\\&=\frac{1}{\mu-\lambda},\\W_{Q}&=W-E[S]\\
+&=W-\frac{1}{\mu}\\
+&=\frac{\lambda}{\mu(\mu-\lambda)},\\L_{Q}
+&=\lambda W_{Q}\\
+&=\frac{\lambda^{2}}{\mu(\mu-\lambda)}
+\end{align*}
+$$ {#eq-eq8-8}
+
+:::{#exm-exa1}
+Suppose that customers arrive at a Poisson rate of one per every 12 minutes, and that the service time is exponential at a rate of one service per 8 minutes. What are $L$ and $W?$
+:::
+
+:::{#sol-sol1}
+Since $\lambda=\frac{1}{12},\mu=\frac{1}{8}$, we have
+$$
+L=2,\quad W=24
+$$
+Hence, the average number of customers in the system is two, and the average
+time a customer spends in the system is 24 minutes.
+
+Now suppose that the arrival rate increases 20 percent to $\lambda=\frac{1}{10}.$ What is the
+corresponding change in $L$ and $W?$ Again using @eq-eq8-7, we get
+$$
+L=4,\quad W=40
+$$
+Hence, an increase of 20 percent in the arrival rate doubled the average number
+of customers in the system.
+
+To understand this better, write @eq-eq8-7 as
+$$
+\begin{align*}
+L&=\frac{\lambda/\mu}{1-\lambda/\mu},\\
+W&=\frac{1/\mu}{1-\lambda/\mu}
+\end{align*}
+$$
+From these equations we can see that when $\lambda/\mu$ is near 1, a slight increase in
+$\lambda/\mu$ will lead to a large increase in $L$ and $W.$
+:::
+
+:::{#rem-rem2} 
+(**A Technical Remark**)  We have used the fact that if one event occurs at an exponential rate $\lambda$, and another independent event at an exponential rate $\mu$, then together they occur at an exponential rate $\lambda+\mu.$ To check this formally, let $T_{1}$ be the time at which the first event occurs, and $T_{2}$ the time at which the second event occurs. Then
+$$
+\begin{align*}
+P\{T_{1}\leqslant t\}&=1-e^{-\lambda t},\\
+P\{T_{2}\leqslant t\}&=1-e^{-\mu t}
+\end{align*}
+$$
+Now if we are interested in the time until either $T_1$ or $T_2$ occurs, then we are
+interested in $T=\min(T_1,T_2).$ Now
+$$
+\begin{align*}
+P\{T\leqslant t\}&=1-P\{T>t\}\\
+&=1-P\{\min(T_1,T_2)>t\}
+\end{align*}
+$$
+However, $\min(T_1,T_2)>t$ if and only if both $T_1$ and $T_2$ are greater than $t;$ hence,
+$$
+\begin{align*}
+P\{T\leqslant t\}&=1-P\{T_{1}>t,T_{2}>t\}\\
+&=1-P\{T_{1}>t\}P\{T_{2}>t\}\\
+&=1-e^{-\lambda t}e^{-\mu t}\\&=1-e^{-(\lambda+\mu)t}
+\end{align*}
+$$
+Thus, $T$ has an exponential distribution with rate $\lambda+\mu$, and we are justified in
+adding the rates.
+:::
+
+Given that an $M/M/1$ steady-state customer—that is, a customer who arrives after the system has been in operation a long time—spends a total of $t$ time units in the system, let us determine the conditional distribution of $N$, the number of others that were present when that customer arrived. That is, letting $W^*$ be the amount of time a customer spends in the system, we will find $P\{N=n|W^*=t\}.$
+Now, 
+$$
+\begin{align*}
+P\{N=n|W^{*}=t\}&=\frac{f_{N,W^{*}}(n,t)}{f_{W}^{*}(t)}\\
+&=\frac{P\{N=n\}f_{W^{*}|N}(t|n)}{f_{W}^{*}(t)}
+\end{align*}
+$$
+where $f_W^*|N(t|n)$ is the conditional density of $W^*$ given that $N=n$, and $f_W^*(t)$ is the unconditional density of $W^*.$ Now, given that $N=n$, the time that the customer spends in the system is distributed as the sum of $n+1$ independent exponential random variables with a common rate $\mu$, implying that the conditional distribution of $W^*$ given that $N=n$ is the gamma distribution with parameters $n+1$ and $\mu.$ Therefore, with $C=1/f_W^*(t)$
+$$
+\begin{align*}
+P\{N=n|W^{*}=t\}&=CP\{N=n\}\mu e^{-\mu t}\frac{(\mu t)^{n}}{n!}\\
+&=C(\lambda/\mu)^{n}(1-\lambda/\mu)\mu e^{-\mu t}\frac{(\mu t)^{n}}{n!}&\text{(by PASTA)}\\
+&=K\:\frac{(\lambda t)^{n}}{n!}
+\end{align*}
+$$
+where $K=C(1-\lambda/\mu)\mu e^{-\mu t}$ does not depend on $n.$ Summing over $n$ yields
+$$
+1=\sum_{n=0}^{\infty}P\{N=n|T=t\}=K\sum_{n=0}^{\infty}\frac{(\lambda t)^{n}}{n!}=Ke^{\lambda t}
+$$
+Thus, $K=e^{-\lambda I}$, showing that
+$$
+P\{N=n|W^{*}=t\}=e^{-\lambda t}\frac{(\lambda t)^{n}}{n!}
+$$
+Therefore, the conditional distribution of the number seen by an arrival who spends a total of $t$ time units in the system is the Poisson distribution with mean $\lambda t.$ In addition, as a by-product of our analysis, we have that
+$$
+\begin{align*}
+f_{W^{*}}(t)&=1/C\\
+&=\frac{1}{K}(1-\lambda/\mu)\mu e^{-\mu t}\\
+&=(\mu-\lambda)e^{-(\mu-\lambda)t}
+\end{align*}
+$$
+In other words, $W^*$, the amount of time a customer spends in the system, is an exponential random variable with rate $\mu-\lambda.$ (As a check, we note that $E[W^*]=$ $1/(\mu-\lambda)$ which checks with @eq-eq8-8 since W=E[W*].)
+
+:::{#rem-rem3}
+Another argument as to why $W^*$ is exponential with rate $\mu-\lambda$ is as follows. If we let $N$ denote the number of customers in the system as seen by an arrival, then this arrival will spend $N+1$ service times in the system before departing. Now,
+$$
+P\{N+1=j\}=P\{N=j-1\}=(\lambda/\mu)^{j-1}(1-\lambda/\mu),\quad j\geqslant 1
+$$
+In words, the number of services that have to be completed before the arrival departs is a geometric random variable with parameter $1-\lambda/\mu.$ Therefore, after each service completion our customer will be the one departing with probability $1-\lambda/\mu.$ Thus, no matter how long the customer has already spent in the system, the probability he will depart in the next $h$ time units is $\mu h+o(h)$, the probability that a service ends in that time, multiplied by $1-\lambda/\mu.$ That is, the customer will depart in the next $h$ time units with probability $(\mu-\lambda)h+o(h)$, which says that the hazard rate function of $W^*$ is the constant $\mu-\lambda.$ But only the exponential has a constant hazard rate, and so we can conclude that $W^*$ is exponential with rate $\mu-\lambda.$
+:::
+
+## A Single-Server Exponential Queueing System Having Finite Capacity
+
+In the previous model, we assumed that there was no limit on the number of
+customers that could be in the system at the same time. However, in reality there
+is always a finite system capacity $N$, in the sense that there can be no more than $N$
+customers in the system at any time. By this, we mean that if an arriving customer
+finds that there are already $N$ customers present, then he does not enter the system.
+
+As before, we let $P_n, 0 \le n \le N$, denote the limiting probability that there are
+$n$ customers in the system. The rate-equality principle yields the following set of
+balance equations:
+$$
+\begin{array}{c}
+\text{State} & \text{Rate at which the process leaves = rate at which it enters} \\
+0 & \lambda P_0 = \mu P_1 \\
+1\le n \le N-1 & (\lambda+\mu) P_n = \lambda P_{n-1} + \mu P_{n+1} \\
+N & \mu P_N = \lambda P_{N-1}
+\end{array}
+$$
+The argument for state 0 is exactly as before. Namely, when in state 0, the process will leave only via an arrival (which occurs at rate $\lambda$ and hence the rate at which the process leaves state 0 is $\lambda P_0.$ On the other hand, the process can enter state 0 only from state 1 via a departure; hence, the rate at which the process enters state 0 is $\mu P_1.$ The equation for states $n$, where l$\leqslant n<N$, is the same as before. The equation for state $N$ is different because now state $N$ can only be left via a departure since an arriving customer will not enter the system when it is in state $N;$ also, state $N$ can now only be entered from state $N-1$ (as there is no longer a state $N+1)$ via an arrival.
+We could now either solve the balance equations exactly as we did for the infinite capacity model, or we could save a few lines by directly using the result that the rate at which departures leave behind $n-1$ is equal to the rate at which arrivals find $n-1.$ Invoking this result yields that
+$$
+\mu P_{n}=\lambda P_{n-1},\quad n=1,\ldots,N
+$$ {#eq-eq8-9}
+
+giving that
+$$
+P_n=\dfrac{\lambda}{\mu}P_{n-1}=\left(\dfrac{\lambda}{\mu}\right)^2P_{n-2}=\cdots=\left(\dfrac{\lambda}{\mu}\right)^nP_0,\quad n=1,\ldots,N
+$$ {#eq-eq8-10}
+
+
+By using the fact that $\sum_{n=0}^NP_n=1$ we obtain
+$$
+\begin{align*}
+1 &=P_{0}\sum_{n=0}^{N}\left(\frac{\lambda}{\mu}\right)^{n}\\
+  &=P_{0}\left[\frac{1-(\lambda/\mu)^{N+1}}{1-\lambda/\mu}\right]
+\end{align*}
+$$
+or
+$$
+P_0=\frac{(1-\lambda/\mu)}{1-(\lambda/\mu)^{N+1}}
+$$
+and hence from @eq-eq8-10 we obtain
+$$
+P_{n}=\frac{(\lambda/\mu)^{n}(1-\lambda/\mu)}{1-(\lambda/\mu)^{N+1}},\quad n=0,1,\ldots,N
+$$ {#eq-eq8-11}
+
+Note that in this case, there is no need to impose the condition that $\lambda/\mu<1.$ The queue size is, by definition, bounded so there is no possibility of its increasing indefinitely.
+
+As before, $L$ may be expressed in terms of $P_n$ to yield
+$$
+\begin{align*}
+\text{L}&=\sum_{n=0}^{N}n\:P_{n}\\
+&=\frac{(1-\lambda/\mu)}{1-(\lambda/\mu)^{N+1}}\sum_{n=0}^{N}n\left(\frac{\lambda}{\mu}\right)^{n}
+\end{align*}
+$$
+which after some algebra yields
+$$
+L=\frac{\lambda[1+N(\lambda/\mu)^{N+1}-(N+1)(\lambda/\mu)^{N}]}{(\mu-\lambda)(1-(\lambda/\mu)^{N+1})}
+$$ {#eq-eq8-12}
+
+In deriving $W$, the expected amount of time a customer spends in the system, we must be a little carcful about what we mean by a customer. Specifically, are we including those “customers”who arrive to find the system full and thus do not spend any time in the system? Or, do we just want the expected time spent in the system by a customer who actually entered the system? The two questions lead, of course, to differcnt answers. In the first case, we have $\lambda_a=\lambda;$ whereas in the second case, since the fraction of arrivals that actually enter the system is $1-P_N$, it follows that $\lambda_a=\lambda(1-P_N).$ Once it is clear what we mean by a customer, W can be obtained from
+$$
+W=\frac{L}{\lambda_a}
+$$
+
+:::{#exm-exa2}
+Suppose that it costs $c\mu$ dollars per hour to provide service at a rate $\mu.$ Suppose also that we incur a gross profit of $A$ dollars for each customer served. If the system has a capacity $N$, what service rate $\mu$ maximizes our total profit?
+
+:::{#sol-sol2}
+To solve this, suppose that we use rate $\mu.$ Let us determine the amount of money coming in per hour and subtract from this the amount going out each hour. This will give us our profit per hour, and we can choose $\mu$ so as to maximize this.
+
+Now, potential customers arrive at a rate $\lambda.$ However, a certain proportion of them do not join the system—namely, those who arrive when there are $N$ customers already in the system. Hence, since $P_N$ is the proportion of time that the system is full, it follows that entering customers arrive at a rate of $\lambda(1-P_N).$ Since each customer pays \$A, it follows that money comes in at an hourly rate of $\lambda(1-P_N)A$ and since it goes out at an hourly rate of $c\mu$,it follows that our total profit per hour is given by
+$$
+\begin{align*}
+\text{profit per hour}&=\lambda(1-P_{N})A-c\mu\\
+&=\lambda A\biggl[1-\frac{(\lambda/\mu)^{N}(1-\lambda/\mu)}{1-(\lambda/\mu)^{N+1}}\biggr]-c\mu\\
+&=\frac{\lambda A[1-(\lambda/\mu)^{N}]}{1-(\lambda/\mu)^{N+1}}-c\mu
+\end{align*}
+$$
+For instance if $N=2,\lambda=1,A=10,c=1$, then
+$$
+\begin{align*}
+\mathrm{profit~per~hour}&=\frac{10[1-(1/\mu)^{2}]}{1-(1/\mu)^{3}}-\mu\\
+&=\frac{10(\mu^{3}-\mu)}{\mu^{3}-1}-\mu
+\end{align*}
+$$
+in order to maximize profit we differentiate to obtain
+$$
+\frac{d}{d\mu}[\text{profit per hour}]=10\frac{(2\mu^3-3\mu^2+1)}{(\mu^3-1)^2}-1
+$$
+The value of $\mu$ that maximizes our profit now can be obtained by equating to
+zero and solving numerically. 
+:::
+
+### A Shoeshine Shop
+
+Consider a shoeshine shop consisting of two chairs. Suppose that an entering customer first will go to chair 1. When his work is completed in chair l, he will go either to chair $2$ if that chair is empty or else wait in chair 1 until chair 2 becomes empty. Suppose that a potential customer will enter this shop as long as chair 1 is empty. (Thus, for instance, a potential customer might enter even if there is a customer in chair 2.)
+
+If we suppose that potential customers arrive in accordance with a Poisson
+process at rate $\lambda$, and that the service times for the two chairs are independent
+and have respective exponential rates of $\mu_1$ and $\mu_2$, then
+
+(a) what proportion of potential customers enters the system?
+
+(b) what is the mean number of customers in the system?
+
+(c) what is the average amount of time that an entering customer spends in the
+system?
+
+To begin we must first decide upon an appropriate state space. It is clear that
+the state of the system must include more information than merely the number of
+customers in the system. For instance, it would not be enough to specify that there
+is one customer in the system as we would also have to know which chair he was
+in. Further, if we only know that there are two customers in the system, then we
+would not know if the man in chair 1 is still being served or if he is just waiting
+for the person in chair 2 to finish. To account for these points, the following state
+space, consisting of the five states, $(0, 0), (1, 0), (0, 1), (1, 1)$, and $(b, 1)$, will be
+used. The states have the following interpretation:
+
+$$
+\begin{array}{c}
+\text{State}  &  \text{Interpretation} \\
+(0, 0) & \text{There are no customers in the system.} \\
+(1, 0) & \text{There is one customer in the system, and he is in chair 1.} \\
+(0, 1) & \text{There is one customer in the system, and he is in chair 2.} \\
+(1, 1) & \text{There are two customers in the system, and both} \\
+       & \text{are presently being served.} \\
+(b, 1) & \text{There are two customers in the system, but the customer } \\
+       & \text{in the first chair has completed his work in that chair and } \\
+       & \text{is waiting for the second chair to become free.}
+\end{array}
+$$
+It should be noted that when the system is in state $(b, 1)$, the person in chair 1,
+though not being served, is nevertheless “blocking” potential arrivals from entering
+the system.
+
+As a prelude to writing down the balance equations, it is usually worthwhile
+to make a transition diagram. This is done by first drawing a circle for each state
+and then drawing an arrow labeled by the rate at which the process goes from
+one state to another. The transition diagram for this model is shown in the following figure.
+The explanation for the diagram is as follows: The arrow from state $(0, 0)$ to state
+$(1, 0)$ which is labeled $\lambda$ means that when the process is in state $(0, 0)$, that is,
+when the system is empty, then it goes to state $(1, 0)$ at a rate $\lambda$, that is via an
+arrival. The arrow from $(0, 1)$ to $(1, 1)$ is similarly explained.
+
+![A transition diagram.](Shoeshine.png){width=70%}
+
+When the process is in state $(1, 0)$, it will go to state $(0, 1)$ when the customer
+in chair 1 is finished and this occurs at a rate $\mu_1$; hence the arrow from $(1, 0)$ to
+$(0, 1)$ labeled $\mu_1$. The arrow from $(1, 1)$ to $(b, 1)$ is similarly explained.
+
+When in state $(b, 1)$ the process will go to state $(0, 1)$ when the customer in
+chair 2 completes his service (which occurs at rate $\mu_2$); hence the arrow from
+$(b, 1)$ to $(0, 1)$ labeled $\mu_2$. Also when in state $(1, 1)$ the process will go to state
+$(1, 0)$ when the man in chair 2 finishes and hence the arrow from $(1, 1)$ to $(1, 0)$
+labeled $\mu_2$. Finally, if the process is in state $(0, 1)$, then it will go to state $(0, 0)$
+when the man in chair 2 completes his service, hence the arrow from $(0, 1)$ to
+$(0, 0)$ labeled $\mu_2$.
+
+Because there are no other possible transitions, this completes the transition
+diagram.
+
+To write the balance equations we equate the sum of the arrows (multiplied by
+the probability of the states where they originate) coming into a state with the sum
+of the arrows (multiplied by the probability of the state) going out of that state.
+This gives
+$$
+\begin{array}{c}
+\text{State} & \text{Rate that the process leaves = rate that it enters} \\
+(0, 0) & \lambda P_{00} = \mu_2 P_{01} \\
+(1, 0) & \mu_1P_{10} = \lambda P_{00} +\mu_2P_{11} \\
+(0, 1) & (\lambda +\mu_2)P_{01} = \mu_1P_{10} +\mu_2P_{b1} \\
+(1, 1) & (\mu_1 +\mu_2)P_{11} = \lambda P_{01} \\
+(b, 1) & \mu_2P_{b1} = \mu_1P_{11}
+\end{array}
+$$
+These along with the equation
+$$
+P_{00} +P_{10} +P_{01} +P_{11} +P_{b1} = 1
+$$
+may be solved to determine the limiting probabilities. Though it is easy to solve
+the preceding equations, the resulting solutions are quite involved and hence will
+not be explicitly presented. However, it is easy to answer our questions in terms of these limiting probabilities. First, since a potential customer will enter the system when the state is either $(0,0)$ or $(0,1)$, it follows that the proportion of customers entering the system is $P_{00}+P_{01}$. Secondly, since there is one customer in the system whenever the state is $(0, 1)$ or $(1,0)$ and two customers in the system whenever the state is $(1, 1)$ or $(b, 1)$, it follows that $L$, the average number in the system, is given by
+$$
+L=P_{01}+P_{10}+2(P_{11}+P_{b1})
+$$
+To derive the average amount of time that an entering customer spends in the system, we use the relationship $W=L/\lambda_{\alpha}$. Since a potential customer will enter the system when in state $(0,0)$ or $(0,1)$, it follows that $\lambda_a=\lambda(P_{00}+P_{01})$ and hence
+$$
+W=\frac{P_{01}+P_{10}+2(P_{11}+P_{b1})}{\lambda_{(}P_{00}+P_{01})}
+$$
+
+:::{#exm-exa3}
+(a) If $\lambda=1,\mu_{1}=1,\mu_{2}=2$, then calculate the preceding
+quantities of interest.
+
+(b) If $\lambda = 1$, $\mu_{1}= 2$, $\mu_{2}= 1$, then calculate the preceding.
+:::
+
+:::{#sol-sol3}
+(a) Solving the balance equations yields
+$$
+P_{00}=\frac{12}{37},\quad P_{10}=\frac{16}{37},\quad P_{11}=\frac{2}{37},\quad P_{01}=\frac{6}{37},\quad P_{b1}=\frac{1}{37}
+$$
+Hence,
+$$
+L=\frac{28}{37},\quad W=\frac{28}{18}
+$$
+
+(b) Solving the balance equations yields
+$$
+P_{00}=\frac{3}{11},\quad P_{10}=\frac{2}{11},\quad P_{11}=\frac{1}{11},\quad P_{b1}=\frac{2}{11},\quad P_{01}=\frac{3}{11}
+$$
+Hence,
+$$
+L=1,\quad W=\frac{11}{6}
+$$
+:::
+

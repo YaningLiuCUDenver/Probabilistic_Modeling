@@ -1,0 +1,277 @@
+---
+title: Further Properties of Poisson Processes
+toc: true
+number-sections: true
+format:
+  html:
+    code-fold: false
+jupyter: python3
+execute:
+  enabled: false
+bibliography: references.bib
+---
+
+## Further Properties of Poisson Processes
+
+Consider a Poisson process $\{N(t), t \ge 0\}$ having rate $\lambda$, and suppose that each
+time an event occurs it is classified as either a type I or a type II event. Suppose
+further that each event is classified as a type I event with probability $p$ or a type II
+event with probability $1−p$, independently of all other events. For example, suppose
+that customers arrive at a store in accordance with a Poisson process having
+rate $\lambda$; and suppose that each arrival is male with probability $\frac{1}{2}$
+and female with probability $\frac{1}{2}$. Then a type I event would correspond to a male arrival and a type II
+event to a female arrival.
+
+Let $N_1(t)$ and $N_2(t)$ denote respectively the number of type I and type II events occurring in $[0, t]$. Note that $N(t) = N_1(t) +N_2(t)$.
+
+:::{#prp-prp1}
+$\{N_1(t), t \ge 0\}$ and $\{N_2(t), t \ge 0\}$ are both Poisson processes having respective rates $\lambda p$ and $\lambda (1-p)$. Furthermore, the two processes are independent.
+:::
+
+:::{.proof}
+It is easy to verify that $\{N_1(t), t \ge 0\}$ is a Poisson process with rate $\lambda p$ by verifying that it satisfies Definition 3 in Lecture 7.
+
+- $N_1(0) = 0$ follows from the fact that $N(0) = 0$.
+
+- It is easy to see that $\{N_1(t), t \ge 0\}$ inherits the stationary and independent
+increment properties of the process $\{N(t), t \ge 0\}$. This is true because the
+distribution of the number of type I events in an interval can be obtained 
+by conditioning on the number of events in that interval, and the distribution
+of this latter quantity depends only on the length of the interval and is
+independent of what has occurred in any nonoverlapping interval.
+
+- $$
+    \begin{align*}
+        P\{N_1(h) =1\} &= P\{N_1(h) = 1 | N(h) = 1\} P\{N(h) =1\} \\
+                       &+ P\{N_1(h) = 1 | N(h)\ge 2\} P\{N(h) \ge 2\} \\
+                       &= p(\lambda h + o(h) + o(h)) \\
+                       &= \lambda ph + o(h)
+    \end{align*}
+  $$ 
+
+- $P\{N_1(h) \ge 2\} \le P\{N(h) \ge 2\} = o(h)$
+
+Thus we see that $\{N_1(t), t \ge 0\}$ is a Poisson process with rate $\lambda p$ and, by a similar
+argument, that $\{N_2(t), t \ge 0\}$ is a Poisson process with rate $\lambda (1−p)$. Because the
+probability of a type I event in the interval from $t$ to $t + h$ is independent of all
+that occurs in intervals that do not overlap $(t, t + h)$, it is independent of knowledge
+of when type II events occur, showing that the two Poisson processes are
+independent.
+:::
+
+:::{#exm-exa1}
+If immigrants to area $A$ arrive at a Poisson rate of ten per week, and if each immigrant is of English descent with probability $\frac{1}{12}$, then what is the probability that no people of English descent will emigrate to area A during the month of February?
+:::
+
+:::{#sol-sol1}
+By the previous proposition it follows that the number of Englishmen emigrating to area A during the month of February is Poisson distributed with mean $4(10)(\frac{1}{12})=\frac{10}{3}$. Hence the desired probability is $e^{-10/3}$
+:::
+
+```{python}
+import numpy as np
+from scipy.stats import poisson
+
+def generate_immigrating_process(lam, n, p):
+    """
+    Simulate a immigrating Poisson process with Poisson rate lam for n periods. The chance of an immigrant being English is p
+
+    input:
+    lam: float, the Poisson rate
+    n: int, the number of periods to simulate.
+    p: float, probability for an immigrant to be English
+
+    output:
+    E: int, the number of English immigrants during n periods.
+    """
+
+    E = 0
+    for i in range(n):  # simulate n periods
+        n_of_immigrants =  poisson.rvs(mu=lam)
+        E += np.sum(np.random.random(n_of_immigrants) < p )
+    
+    return E
+```
+
+```{python}
+lam = 10
+n = 4  # 4 periods in February
+p = 1/12
+sample_size = 100000
+
+E = np.zeros(sample_size, dtype = 'int')
+for i in range(sample_size):
+    E[i] = generate_immigrating_process(lam, n, p)
+prob = np.sum(E == 0) / sample_size
+print('By simulation, no people of English descent will emigrate to area A during the month of February is: ',
+      prob, ' \n and the theoretical probability is: ', np.exp(-10/3))
+```
+
+:::{#exm-exa2}
+Suppose nonnegative offers to buy an item that you want to sell arrive according to a Poisson process with rate $\lambda$. Assume that each offer is the value of a continuous random variable having density function $f(x)$. Once the
+offer is presented to you, you must either accept it or reject it and wait for the next offer. We suppose that you incur costs at a rate c per unit time until the item is sold,
+and that your objective is to maximize your expected total return, where the total
+return is equal to the amount received minus the total cost incurred. Suppose you
+employ the policy of accepting the first offer that is greater than some specified
+value y. (Such a type of policy, which we call a y-policy, can be shown to be
+optimal.) What is the best value of y?
+:::
+
+:::{#sol-sol2}
+Let us compute the expected total return when you use the y-policy,
+and then choose the value of $y$ that maximizes this quantity. Let $X$ denote
+the value of a random offer, and let $\bar{F}(x) = P\{X\gt x\} = \int_x^\infty f(u)du$ be its
+tail distribution function. Because each offer will be greater than $y$ with probability
+$\bar{F}(y)$, it follows that such offers occur according to a Poisson process
+with rate $λ \bar{F}(y)$. Hence, the time until an offer is accepted is an exponential random variable with rate $λ \bar{F}(y)$. Letting $R(y)$ denote the total return from the
+policy that accepts the first offer that is greater than $y$, we have
+$$
+\begin{align*}
+E[R(y)]&=E[\text{accepted offer}]-cE[\text{time to accept}] \\
+       &=E[X|X>y]-\frac{c}{\lambda\bar{F}(y)} \\
+       &=\int_{0}^{\infty}xf_{X|X>y}(x)\:dx - \frac{c}{\lambda\bar{F}(y)} \\
+       &=\int_{y}^{\infty}x\frac{f(x)}{\bar{F}(y)}\:dx - \frac{c}{\lambda\bar{F}(y)} \\
+       &=\frac{\int_{y}^{\infty}xf(x)\:dx - c/\lambda}{\bar{F}(y)}
+\end{align*}
+$$
+Differentiation yields that
+$$
+\frac{d}{dy}E[R(y)]=0\Leftrightarrow-\bar{F}(y)yf(y)+\left(\int_{y}^{\infty}xf(x)\:dx-\frac{c}{\lambda}\right)f(y)=0
+$$
+Therefore, the optimal value of $y$ satisfies
+$$
+y\bar{F}(y)=\int_{y}^{\infty}xf(x)\:dx-\frac{c}{\lambda}
+$$
+or
+$$
+y\int_y^\infty f(x)\:dx=\int_y^\infty xf(x)\:dx-\frac{c}{\lambda}
+$$
+or
+$$
+\int_{y}^{\infty}(x-y)f(x)\:dx=\frac{c}{\lambda}
+$$ {#eq-eq5-14}
+We now argue that the left-hand side of the preceding is a nonincreasing function of $y$. To do so, note that, with $a^+$ defined to equal $a$ if $a \gt 0$ or to equal $0$ otherwise, we have
+$$
+\int_y^\infty(x-y)f(x)\:dx = E[(X-y)^+]
+$$
+Because $(X-y)^+$ is a nonincreasing function of $y$, so is its expectation, thus showing that the left hand side of @eq-eq5-14 is a nonincreasing function of $y$. Consequently, if $E[X]<c/\lambda—$ in which case there is no solution of @eq-eq5-14—then it is optimal to accept any offer; otherwise, the optimal value y is the unique solution of @eq-eq5-14.
+:::
+
+It follows from @prp-prp1 that if each of a Poisson number of individuals is independently classified into one of two possible groups with respective probabilities $p$ and $1 - p$, then the number of individuals in each of the two groups
+will be independent Poisson random variables. Because this result easily generalizes
+to the case where the classification is into any one of $r$ possible groups,
+we have the following application to a model of employees moving about in an
+organization.
+
+:::{#exm-exa2}
+Consider a system in which individuals at any time are
+classified as being in one of $r$ possible states, and assume that an individual
+changes states in accordance with a Markov chain having transition probabilities
+$P_{ij}, i, j = 1, \dots, r$. That is, if an individual is in state $i$ during a time period
+then, independently of its previous states, it will be in state $j$ during the next time
+period with probability $P_{ij}$. The individuals are assumed to move through the system
+independently of each other. Suppose that the numbers of people initially in
+states $1, 2, \dots, r$ are independent Poisson random variables with respective means
+$\lambda_1, \lambda_2, \dots, \lambda_r$. We are interested in determining the joint distribution of the numbers
+of individuals in states $1, 2, \dots, r$ at some time $n$.
+:::
+
+:::{#sol-sol2}
+For fixed $i$, let $N_j (i), j = 1, \dots, r$ denote the number of those
+individuals, initially in state $i$, that are in state $j$ at time $n$. Now each of the
+(Poisson distributed) number of people initially in state $i$ will, independently of
+each other, be in state $j$ at time $n$ with probability $P^n_{ij} , where $P^n_{ij}$ is the $n$-stage
+transition probability for the Markov chain having transition probabilities $P_{ij}$ .
+Hence, the $N_j(i), j = 1, \dots, r$ will be independent Poisson random variables
+with respective means $λ_iP^n_{ij}, j = 1, \dots, r$. Because the sum of independent
+Poisson random variables is itself a Poisson random variable, it follows that
+the number of individuals in state $j$ at time n—namely $\sum^r_{i=1} N_j(i)$—will be
+independent Poisson random variables with respective means $\sum_i \lambda_iP^n_{ij}$, for $j=1, \dots, r$.
+:::
+
+:::{#exp-exa3}
+(The Coupon Collecting Problem) There are m different types
+of coupons. Each time a person collects a coupon it is, independently of ones
+previously obtained, a type $j$ coupon with probability $p_j , \sum^m_{j=1} p_j = 1$. Let $N$
+denote the number of coupons one needs to collect in order to have a complete
+collection of at least one of each type. Find $E[N]$.
+:::
+
+:::{#sol-sol3}
+If we let $N_j$ denote the number one must collect to obtain a type
+$j$ coupon, then we can express $N$ as
+$$
+N = \max_{1\le j\le m}N_j
+$$
+However, even though each $N_j$ is geometric with parameter $p_j$, the foregoing
+representation of $N$ is not that useful, because the random variables $N_j$ are not
+independent.
+
+We can, however, transform the problem into one of determining the expected
+value of the maximum of independent random variables. To do so,
+suppose that coupons are collected at times chosen according to a Poisson
+process with rate $\lambda = 1$. Say that an event of this Poisson process is of type $j$,
+$1 \le j \le m$, if the coupon obtained at that time is a type $j$ coupon. If we now let
+$N_j(t)$ denote the number of type $j$ coupons collected by time $t$ , then it follows
+from @prp-prp1 that $\{N_j(t ), t \ge 0\}$, $j = 1, \dots, m$ are independent Poisson
+processes with respective rates $\lambda p_j = p_j$. Let $X_j$ denote the time of the first
+event of the $j$th process, and let
+$$
+X=\max_{1\leqslant j\leqslant m}X_j
+$$
+denote the time at which a complete collection is amassed. Since the $X_j$ are independent exponential random variables with respective rates $p_j$, it follows that
+$$
+\begin{align*}
+P\{X<t\}&=P\{\max X_{j}<t\}\\&=P\{X_{j}<t,\mathrm{~for~}j=1,\ldots,m\}\\&=\prod_{j=1}^{m}(1-e^{-p_{j}t})
+\end{align*}
+$$
+Therefore,
+$$
+\begin{align*}
+E[X] &=\int_{0}^{\infty}P\{X>t\}\:dt \\
+     &=\int_{0}^{\infty}\left\{1-\prod_{j=1}^{m}(1-e^{-p_{j}t})\right\}dt
+\end{align*} 
+$${#eq-eq5-15}
+It remains to relate $E[X]$, the expected time until one has a complete set, to $E[N]$, the expected number of coupons it takes. This can be done by letting $T_i$ denote the $i$th interarrival time of the Poisson process that counts the number of coupons obtained. Then it is easy to see that
+$$
+X=\sum_{i=1}^NT_i
+$$
+Since the $T_i$ are independent exponentials with rate $1$, and $N$ is independent of
+the $T_i$, we see that
+$$
+E[X|N]=NE[T_i]=N
+$$
+Therefore,
+$$
+E[X]=E[N]
+$$
+and so $E[N]$ is as given in @eq-eq5-15.
+
+Let us now compute the expected number of types that appear only once in the complete collection. Letting $I_i$ equal l if there is only a single type $i$ coupon in the final set, and letting it equal 0 otherwise, we thus want
+$$
+\begin{align*}
+E\left[\sum_{i=1}^{m}I_{i}\right] &=\sum_{i=1}^mE[I_i] \\
+                                  &=\sum_{i=1}^mP\{I_i=1\}
+\end{align*}
+$$
+
+Now there will be a single type $i$ coupon in the final set if a coupon of each type has appeared before the second coupon of type $i$ is obtained. Thus, letting $S_i$ denote the time at which the second type $i$ coupon is obtained, we have
+$$
+P\{I_i=1\}=P\{X_j<S_i, \text{ for all } j\ne i\}
+$$
+Using that $S_i$ has a gamma distribution with parameters (2, pi), this yields
+$$
+\begin{align*}
+P\{I_{i}=1\} &=\int_{0}^{\infty}P\{X_{j}<S_{i}\mathrm{~for~all~}j\neq i|S_{i}=x\}p_{i}e^{-p_{i}x}\:p_{i}x\:dx \\
+             &=\int_{0}^{\infty}P\{X_{j}<x,\mathrm{~for~all~}j\neq i\}p_{i}^{2}x\:e^{-p_{i}x}\:dx \\
+             &=\int_{0}^{\infty}\prod_{j\neq i}(1-e^{-p_{j}x})\:p_{i}^{2}xe^{-p_{i}x}\:dx
+\end{align*}
+$$
+Therefore, we have the result
+$$
+\begin{align*}
+E\left[\sum_{i=1}^{m}I_{i}\right] &=\int_{0}^{\infty}\sum_{i=1}^{m}\prod_{j\neq i}(1-e^{-p_{j}x})p_{i}^{2}xe^{-p_{i}x}\:dx\\
+&=\int_{0}^{\infty}x\prod_{j=1}^{m}(1-e^{-p_{j}x})\sum_{i=1}^{m}p_{i}^{2}\frac{e^{-p_{i}x}}{1-e^{-p_{i}x}}\:dx\quad\blacksquare
+\end{align*}
+$$
+:::
+

@@ -1,0 +1,282 @@
+---
+title: "Time Reversible Markov Chains"
+toc: true
+number-sections: true
+format:
+  html:
+    code-fold: false
+jupyter: python3
+execute: 
+  enabled: true
+bibliography: references.bib
+---
+
+Consider a stationary ergodic Markov chain (that is, an ergodic Markov chain
+that has been in operation for a long time) having transition probabilities $P_{ij}$ and
+stationary probabilities $\pi_i$, and suppose that starting at some time we trace the
+sequence of states going backward in time. That is, starting at time $n$, consider the
+sequence of states $X_n,X_{n−1},X_{n−2}, \dots$. It turns out that this sequence of states is
+itself a Markov chain with transition probabilities $Q_{ij}$ defined by
+$$
+\begin{aligned}
+Q_{ij} &= P\{X_m=j | X_{m+1}=i\} \\
+       &= \frac{P\{X_m=j, X_{m+1}=i\}}{P\{X_{m+1}=i\}} \\
+       &= \frac{P\{X_m=j\} P\{X_{m+1}=i | X_m=j\}}{P\{X_{m+1}=i\}} \\
+       &= \frac{\pi_j P_{ji}}{\pi_i}
+\end{aligned}
+$$
+
+To prove that the reversed process is indeed a Markov chain, we must verify that
+$$P\{X_{m}=j|X_{m+1}=i,X_{m+2},X_{m+3},\ldots\}=P\{X_{m}=j|X_{m+1}=i\}$$
+To see that this is so, suppose that the present time is $m+1.$ Now, since $X_0,X_1,X_2,\ldots$ is a Markov chain, it follows that the conditional distribution of the future $X_{m+2},X_{m+3},\ldots$ given the present state $X_{m+1}$ is independent of the past state $X_m.$ However, independence is a symmetric relationship (that is, if A is independent of $B$, then $B$ is independent of $A)$, and so this means that given $X_{m+1}, X_m$ is independent of $X_{m+2},X_{m+3},\ldots$ But this is exactly what we had to verify. 
+
+Thus, the reversed process is also a Markov chain with transition probabilities
+given by
+$$Q_{ij}=\frac{\pi_{j}P_{ji}}{\pi_{i}}$$
+If $Q_{ij}=P_{ij}$ for all $i, j$, then the Markov chain is said to be **time reversible**. The
+condition for time reversibility, namely, $Q_{ij}=P_{ij}$, can also be expressed as
+$$
+\pi_{i}\:P_{ij}=\pi_{j}\:P_{ji}\quad\mathrm{for~all}\:i,\:j
+$$ {#eq-eq4-21}
+The condition in @eq-eq4-21 can be stated that, for all states $i$ and $j$, the rate at which the process goes from $i$ to $j$ (namely, $\pi_iP_{ij})$ is equal to the rate at which it goes from $j$ to $i$ (namely, $\pi_jP_{ji}).$ It is worth noting that this is an obvious necessary condition for time reversibility since a transition from $i$ to $j$ going backward in time is equivalent to a transition from $j$ to $i$ going forward in time; that is, if $X_m=i$ and $X_{m-1}=j$, then a transition from $i$ to $j$ is observed if we are looking backward, and one from $j$ to $i$ if we are looking forward in time. Thus, the rate at which the forward process makes a transition from $j$ to $i$ is always equal to the rate at which the reverse process makes a transition from $i$ to $j;$ if time reversible, this must equal the rate at which the forward process makes a transition from $i$ to $j.$
+
+If we can find nonnegative numbers, summing to one, that satisfy @eq-eq4-21, then it follows that the Markov chain is time reversible and the numbers represent the limiting probabilities. This is so since if
+$$
+x_iP_{ij}=x_jP_{ji}\quad\mathrm{for~all}\:i,j,\quad\sum_ix_i=1
+$$ {#eq-eq4-22}
+
+then summing over $i$ yields
+$$
+\sum_{i}x_{i}\:P_{ij}=x_{j}\sum_{i}P_{ji}=x_{j},\quad\sum_{i}x_{i}=1
+$$
+and, because the limiting probabilities $\pi_i$ are the unique solution of the preceding,
+it follows that $x_i=\pi_i$ for all $i.$
+
+:::{#exm-exa1}
+Consider a random walk with states $0,1,\ldots,M$ and transition
+probabilities
+$$
+\begin{aligned}
+&P_{i,i+1}=\alpha_{i}=1-P_{i,i-1},\quad i=1,\ldots,M-1,\\
+&P_{0,1}=\alpha_{0}=1-P_{0,0},\\&P_{M,M}=\alpha_{M}=1-P_{M,M-1}
+\end{aligned}
+$$
+Without the need for any computations, it is possible to argue that this Markov chain, which can only make transitions from a state to one of its two nearest neighbors, is time reversible. This follows by noting that the number of transitions from $i$ to $i+1$ must at all times be within 1 of the number from $i+1$ to $i.$ This is so because between any two transitions from $i$ to $i+1$ there must be one from $i+1$ to $i$ (and conversely) since the only way to reenter $i$ from a higher state is via state $i+1.$ Hence, it follows that the rate of transitions from $i$ to $i+1$ equals the rate from $i+1$ to $i$, and so the process is time reversible.
+:::
+
+We can easily obtain the limiting probabilities by equating for each state $i=$ $0,1,\ldots,M-1$ the rate at which the process goes from $i$ to $i+1$ with the rate at which it goes from $i+1$ to $i.$ This yields
+$$
+\begin{aligned}
+\pi_{0}\alpha_{0}&=\pi_{1}(1-\alpha_{1}),\\
+\pi_{1}\alpha_{1}&=\pi_{2}(1-\alpha_{2}),\\
+&\vdots \\
+\pi_{i}\alpha_{i}&=\pi_{i+1}(1-\alpha_{i+1}),\quad i=0,1,\ldots,M-1
+\end{aligned}
+$$
+Solving in terms of $\pi_{0}$ yields
+$$
+\begin{aligned}
+&\pi_{1}=\frac{\alpha_{0}}{1-\alpha_{1}}\pi_{0},\\
+&\pi_{2}=\frac{\alpha_{1}}{1-\alpha_{2}}\pi_{1}=\frac{\alpha_{1}\alpha_{0}}{(1-\alpha_{2})(1-\alpha_{1})}\pi_{0}
+\end{aligned}
+$$
+and, in general,
+$$
+\pi_{i}=\frac{\alpha_{i-1}\cdots\alpha_{0}}{(1-\alpha_{i})\cdots(1-\alpha_{1})}\pi_{0},\quad i=1,2,\ldots,M
+$$
+Since $\sum_0^M\pi_i=1$, we obtain
+$$
+\pi_0\Bigg[1+\sum_{j=1}^M\frac{\alpha_{j-1}\cdots\alpha_0}{(1-\alpha_j)\cdots(1-\alpha_1)}\Bigg]=1
+$$
+or
+$$
+\pi_0=\left[1+\sum_{j=1}^M\frac{\alpha_{j-1}\cdots\alpha_0}{(1-\alpha_j)\cdots(1-\alpha_1)}\right]^{-1}
+$$ {#eq-eq4-23}
+and
+$$
+\pi_{i}=\frac{\alpha_{i-1}\cdots\alpha_{0}}{(1-\alpha_{i})\cdots(1-\alpha_{1})}\pi_{0},\quad i=1,\ldots,M
+$$ {#eq-eq4-24}
+For instance, if $\alpha_i\equiv\alpha$, then
+$$
+\begin{aligned}
+\pi_{0}&=\left[1+\sum_{j=1}^{M}\biggl(\frac{\alpha}{1-\alpha}\biggr)^{j}\right]^{-1}\\
+&=\frac{1-\beta}{1-\beta^{M+1}}
+\end{aligned}
+$$
+and, in general,
+$$
+\pi_{i}=\frac{\beta^{i}(1-\beta)}{1-\beta^{M+1}},\quad i=0,1,\ldots,M
+$$
+where
+$$
+\beta=\frac{\alpha}{1-\alpha}
+$$
+
+:::{#exm-exa2}
+Consider an arbitrary connected graph having a number $w_{ij}$ associated with arc $(i, j)$ for each arc. One instance
+of such a graph is given by the following figure. Now consider a particle moving
+from node to node in this manner: If at any time the particle resides at node $i$,
+then it will next move to node $j$ with probability $P_{ij}$ where
+$$
+P_{ij} = \frac{w_{ij}}{\sum_jw_{ij}}
+$$
+and where $w_{ij}$ is $0$ if $(i, j)$ is not an arc. For instance, for the graph below,
+$P_{12} = 3/(3+1+2) = \frac{1}{2}$.
+
+![A connected graph with arc weights.](connected_graph.png){width=400}
+:::
+
+The time reversibility equations
+$$
+\pi_{i}P_{ij}=\pi_{j}P_{ji}
+$$
+reduce to
+$$
+\pi_{i}\frac{w_{ij}}{\sum_{j}w_{ij}}=\pi_{j}\frac{w_{ji}}{\sum_{i}w_{ji}}
+$$
+or, equivalently, since $w_{ij}=w_{ji}$
+$$
+\frac{\pi_{i}}{\sum_{j}w_{ij}}=\frac{\pi_{j}}{\sum_{i}w_{ji}}
+$$
+which is equivalent to
+$$
+\frac{\pi_{i}}{\sum_{j}w_{ij}}=c
+$$
+or
+$$
+\pi_i=c\sum_jw_{ij}
+$$
+or, since $1=\sum_i\pi_i$
+$$
+\pi_i=\frac{\sum_jw_{ij}}{\sum_i\sum_jw_{ij}}
+$$
+
+
+
+Because the $\pi_i$'s given by this equation satisfy the time reversibility equations, it follows that the process is time reversible with these limiting probabilities. For the graph above we have that
+$$
+\pi_{1}=\frac{6}{32},\quad\pi_{2}=\frac{3}{32},\quad\pi_{3}=\frac{6}{32},\quad\pi_{4}=\frac{5}{32},\quad\pi_{5}=\frac{12}{32} 
+$$.
+
+If we try to solve @eq-eq4-22 for an arbitrary Markov chain with states $0,1,\ldots,M$, it will usually turn out that no solution exists. For example, from @eq-eq4-22,
+$$
+\begin{aligned}
+x_{i}P_{ij}&=x_{j}P_{ji},\\
+x_{k}P_{kj}&=x_{j}P_{jk}
+\end{aligned}
+$$
+${\mathrm{implying~(if~}P_{ij}P_{jk}>0)\mathrm{~that}}$
+$$
+\frac{x_{i}}{x_{k}}=\frac{P_{ji}P_{kj}}{P_{ij}P_{jk}}
+$$
+which in general need not equal $P_{ki}/P_{ik}.$ Thus, we see that a necessary condition
+for time reversibility is that
+$$
+P_{ik}P_{kj}P_{ji}=P_{ij}P_{jk}P_{ki}\quad\mathrm{for~all~}i,j,k
+$$ {#eq-eq4-25}
+which is equivalent to the statement that, starting in state $i$, the path $i\to k\to j\to$ $i$ has the same probability as the reversed path $i\to j\to k\to i.$ To understand the necessity of this, note that time reversibility implies that the rate at which a sequence of transitions from $i$ to k to $j$ to $i$ occurs must equal the rate of ones from $i$ to $j$ to k to $i$ (why?), and so we must have
+$$\pi_{i}P_{ik}P_{kj}P_{ji}=\pi_{i}P_{ij}P_{jk}P_{ki}$$
+implying @eq-eq4-25 when $\pi_i>0.$ 
+
+In fact, we can show the following.
+
+:::{#thm-thm1}
+An ergodic Markov chain for which $P_{ij}=0$ whenever $P_{ji}=0$ is time reversible if and only if starting in state $i$, any path back to $i$ has the same probability as the reversed path. That is, if
+$$
+P_{i,i_{1}}P_{i_{1},i_{2}}\cdots P_{i_{k},i}=P_{i,i_{k}}P_{i_{k},i_{k-1}}\cdots P_{i_{1},i}
+$$ {#eq-eq4-26}
+for all states $i,i_1,\ldots,i_k.$
+:::
+
+:::{.proof}
+We have already proven necessity. To prove sufficiency, fix states $i$ and $j$
+and rewrite @eq-eq4-26 as
+$$
+P_{i,i_{1}}P_{i_{1},i_{2}}\cdots P_{i_{k},j}P_{ji}=P_{ij}P_{j,i_{k}}\cdots P_{i_{1},i}
+$$
+Summing the preceding over all states $i_1,\ldots,i_k$ yields
+$$
+P_{ij}^{k+1}P_{ji}=P_{ij}P_{ji}^{k+1}
+$$
+Letting $k\to\infty$ yields
+$$
+\pi_{j}P_{ji}=P_{ij}\pi_{i}
+$$
+which proves the theorem.
+:::
+
+The concept of the reversed chain is useful even when the process is not time
+reversible. To illustrate this, we start with the following proposition whose proof
+is left as an exercise.
+
+:::{#prp-prp1}
+Consider an irreducible Markov chain with transition probabilities
+$P_{ij}$. If we can find positive numbers $\pi_i, i \ge 0$, summing to one, and a
+transition probability matrix $Q = [Q_{ij}]$ such that
+$$
+\pi_i P_{ij} = \pi_jQ_{ji}
+$$ {#eq-eq4-29}
+then the $Q_{ij}$ are the transition probabilities of the reversed chain and the $\pi_i$ are
+the stationary probabilities both for the original and reversed chain.
+
+The importance of the preceding proposition is that, by thinking backward, we
+can sometimes guess at the nature of the reversed chain and then use the set of
+@eq-eq4-29 to obtain both the stationary probabilities and the $Q_{ij}$.
+:::
+
+:::{#exm-exa3}
+A single bulb is necessary to light a given room. When the bulb in use fails, it is replaced by a new one at the beginning of the next day. Let $X_n$ equal $i$ if the bulb in use at the beginning of day $n$ is in its $i$th day of use (that is, if its present age is $i).$ For instance, if a bulb fails on day $n-1$, then a new bulb will be put in use at the beginning of day $n$ and so $X_n=1.$ If we suppose that each bulb, independently, fails on its $i$th day of use with probability $p_i,i\geqslant1$, then it is easy to see that $\{X_n,n\geqslant1\}$ is a Markov chain whose transition probabilities are as follows:
+$$
+\begin{aligned}
+P_{i,1}&=P\{\mathrm{~bulb,~on~its~}i\mathrm{th~day~of~use,~fails}\}\\
+&=P\{\mathrm{life~of~bulb}=i|\mathrm{life~of~bulb}\geqslant i\}\\
+&=\frac{P\{L=i\}}{P\{L\geqslant i\}}
+\end{aligned}
+$$
+where $L$, a random variable representing the lifetime of a bulb, is such that
+$P\{L=i\}=p_i.$ Also,
+$$
+P_{i,i+1}=1-P_{i,1}
+$$
+Suppose now that this chain has been in operation for a long (in theory, an infinite) time and consider the sequence of states going backward in time. Since, in the forward direction, the state is always increasing by 1 until it reaches the age at which the item fails, it is easy to see that the reverse chain will always decrease by 1 until it reaches 1 and then it will jump to a random value representing the lifetime of the (in real time) previous bulb. Thus, it seems that the reverse chain should have transition probabilities given by
+$$
+\begin{aligned}
+Q_{i,i-1}&=1,\quad i>1 \\
+Q_{1,i}&=p_{i},\quad i\geqslant1
+\end{aligned}
+$$
+To check this, and at the same time determine the stationary probabilities, we must see if we can find, with the $Q_{i,j}$ as previously given, positive numbers $\{\pi_i\}$ such that
+$$
+\pi_{i}P_{i,j}=\pi_{j}Q_{j,i}
+$$
+To begin, let $j=1$ and consider the resulting equations:
+$$
+\pi_{i}\:P_{i,1}=\pi_{1}\:Q_{1,i}
+$$
+This is equivalent to
+$$
+\pi_{i}\frac{P\{L=i\}}{P\{L\geqslant i\}}=\pi_{1}P\{L=i\}
+$$
+or
+$$
+\pi_i=\pi_1P\{L\geqslant i\}
+$$
+Summing over all $i$ yields
+$$
+1=\sum_{i=1}^\infty\pi_i=\pi_1\sum_{i=1}^\infty P\{L\geqslant i\}=\pi_1E[L]
+$$
+and so, for the preceding $Q_{ij}$ to represent the reverse transition probabilities, it is
+necessary for the stationary probabilities to be
+$$
+\pi_{i}=\frac{P\{L\geqslant i\}}{E[L]},\quad i\geqslant1
+$$
+To finish the proof that the reverse transition probabilities and stationary probabilities are as given, all that remains is to show that they satisfy
+$$
+\pi_{i}P_{i,i+1}=\pi_{i+1}Q_{i+1,i}
+$$
+which is equivalent to
+$$
+\frac{P\{L\geqslant i\}}{E[L]}\biggl(1-\frac{P\{L=i\}}{P\{L\geqslant i\}}\biggr)=\frac{P\{L\geqslant i+1\}}{E[L]}
+$$
+and which is true since $P\{ L\geqslant i\} - P\{ L= i\} = P\{ L\geqslant i+ 1\}$.
+:::

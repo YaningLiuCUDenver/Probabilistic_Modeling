@@ -1,0 +1,165 @@
+---
+title: Simulating from Discrete Distributions
+toc: true
+number-sections: true
+format:
+  html:
+    code-fold: false
+jupyter: python3
+execute:
+  enabled: false
+bibliography: references.bib
+---
+
+All of the general methods for simulating from continuous distributions have analogs in the discrete case. For instance, if we want to simulate a random variable $X$ having probability mass function
+$$
+P\{X=x_{j}\}=P_{j},\quad j=1,2,\ldots,\quad\sum_{j}P_{j}=1
+$$
+We can use the following discrete time analog of the inverse transform technique.
+
+$$
+\begin{align*}
+&\text{To simulate } X \text{ for which } P\{X=x_j\}=P_j \\
+&\text{let } U \text{ be uniformly distributed over } (0,1), \text{ and set } \\
+&X=
+\begin{cases}
+x_1,&\quad\text{if}\:U<P_1\\
+x_2,&\quad\text{if}\:P_1<U<P_1+P_2\\
+\vdots\\
+x_j,&\quad\text{if}\:\sum_1^{j-1}P_i<U<\sum_i^jP_i\\
+\vdots
+\end{cases}
+\end{align*}
+$$
+As,
+$$
+P\{X=x_j\}=P\left\{\sum_1^{j-1}P_i<U<\sum_1^jP_i\right\}=P_j
+$$
+we see that $X$ has the desired distribution.
+
+:::{#exm-exa1}
+(The Geometric Distribution) Suppose we want to simulate $X$ such that
+$$
+P\{X=i\}=p(1-p)^{i-1},\quad i\geqslant1
+$$
+As
+$$
+\sum_{i=1}^{j-1}P\{X=i\}=1-P\{X>j-1\}=1-(1-p)^{j-1}
+$$
+we can simulate such a random variable by generating a random number $U$ and
+then setting $X$ equal to that value $j$ for which
+$$1-(1-p)^{j-1}<U<1-(1-p)^{j}$$
+or, equivalently, for which
+$$(1-p)^j<1-U<(1-p)^{j-1}$$
+As $1-U$ has the same distribution as $U$,we can thus define $X$ by
+$$
+\begin{align*}
+\text{X}&=\min\{j\colon(1-p)^{j}<U\}=\min\left\{j\colon j>\frac{\log U}{\log(1-p)}\right\}\\
+&=1+\left[\frac{\log U}{\log(1-p)}\right]
+\end{align*}
+$$
+As in the continuous case, special simulation techniques have been developed for
+the more common discrete distributions. We now present some of these.
+:::
+
+```{python}
+import numpy as np
+from scipy.stats import geom
+import matplotlib.pyplot as plt
+
+def generate_geometric(sample_size, p):
+    """
+    Simulate an array of geometric variables with hyperparameter p
+    
+    Input
+    sample_size: int, number of geometric variables to generate
+    p: the hyperparameter p for the geometric distribution
+
+    Ouput
+    geo_rvs: 1d array of shape (sample_size, ), the array of generated geometric variables
+    """
+    U = np.random.rand(sample_size)
+    geo_rvs = 1 + np.floor(np.log(U)/np.log(1-p))
+    return geo_rvs
+```
+
+```{python}
+sample_size = 100000
+p = 0.5
+geo_samples = generate_geometric(sample_size, p)
+
+fig, ax = plt.subplots(1, 1)
+p = 0.5
+x = np.arange(1, 7)
+ax.plot(x, geom.pmf(x, p), 'bo', ms=8, label='geom pmf')
+ax.vlines(x, 0, geom.pmf(x, p), colors='b', lw=5, alpha=0.5);
+
+ax.hist(geo_samples, bins=x, density=True, color='g', label='hist')
+ax.legend()
+ax.set_xlabel('i')
+ax.set_ylabel('probability')
+```
+
+:::{#exm-exa2} 
+(Simulating a Binomial Random Variable) A binomial $(n,p)$ random variable can be most easily simulated by recalling that it can be expressed as the sum of $n$ independent Bernoulli random variables.That is, if $U_1,\ldots,U_n$ are independent uniform (0,1) variables, then letting
+$$
+X_i=\begin{cases}
+1,\quad&\mathrm{if}\:U_i<p\\
+0,\quad&\mathrm{otherwise}
+\end{cases}
+$$
+it follows that $X\equiv\sum_{i=1}^nX_i$ is a binomial random variable with parameters $n$ and $p$.
+
+One difficulty with this procedure is that it requires the generation of $n$ random numbers. To show how to reduce the number of random numbers needed, note first that this procedure does not use the actual value of a random number $U$ but only whether or not it exceeds $p.$ Using this and the result that the conditional distribution of $U$ given that $U<p$ is uniform on $(0,p)$ and the conditional distribution of $U$ given that $U>p$ is uniform on $(p,1)$,we now show how we can simulate a binomial $(n,p)$ random variable using only a single random number:
+
+Step 1: Let $\alpha=1/p, \beta=1/(1-p).$
+
+Step2: Set $k=0.$
+
+Step 3: Generate a uniform random number $U.$
+
+Step4: If $k=n$ stop. Otherwise reset $k$ to equal $k+1.$
+
+Step 5: If $U\leqslant p$ set $X_k=1$ and reset $U$ to equal $\alpha U.$ If $U>p$ set $X_k=0$
+and reset $U$ to equal $\beta(U-p).$ Return to step 4.
+
+This procedure generates $X_1,\ldots,X_n$ and $X=\sum_{i=1}^nX_i$ is the desired random variable. It works by noting whether $U_k\leqslant p$ or $U_k>p;$ in the former case it takes $U_{k+1}$ to equal $U_k/p$, and in the latter case it takes $U_{k+1}$ to equal $(U_k-p)/$ $( 1- p)$.
+
+:::{#exm-exa3}
+(Simulating a Poisson Random Variable) To simulate a Poisson random variable with mean $\lambda$, generate independent uniform $(0,1)$ random variables $U_1, U_2, \ldots$ stopping at
+$$
+N+1=\min\left\{n\colon\prod\limits_{i=1}^nU_i<e^{-\lambda}\right\}
+$$
+The random variable $N$ has the desired distribution, which can be seen by noting that
+$$
+N=\max\left\{n\colon\sum_{i=1}^n-\log U_i<\lambda\right\}
+$$
+But $-\log U_i$ is exponential with rate 1, and so if we interpret $-\log U_i, i\geqslant1$, as the interarrival times of a Poisson process having rate 1, we see that $N=N(\lambda)$ would equal the number of events by time $\lambda.$ Hence $N$ is Poisson with mean $\lambda.$ 
+
+When $\lambda$ is large we can reduce the amount of computation in the preceding simulation of $N(\lambda)$, the number of events by time $\lambda$ of a Poisson process having rate 1, by first choosing an integer $m$ and simulating $S_m$, the time of the $m$th event of the Poisson process and then simulating $N(\lambda)$ according to the conditional distribution of $N(\lambda)$ given $S_m.$ Now the conditional distribution of $N(\lambda)$ given $S_m$ is as follows:
+$$
+\begin{array}{c}
+N(\lambda)|S_m=s\sim m+ \mathrm{ Poisson}(\lambda-s) & \text{ if } s \lt \lambda \\
+N(\lambda)|S_m=s\sim\mathrm{Binomial}\bigg(m-1,\frac{\lambda}{s}\bigg) & \text{ if } s \gt \lambda
+\end{array}
+$$
+where~ means “has the distribution of." This follows since if the $m$th event occurs at time s, where $s<\lambda$, then the number of events by time $\lambda$ is $m$ plus the number of events in $(s, \lambda)$. On the other hand given that $S_m = s$ the set of times
+at which the first $m - 1$ events occur has the same distribution as a set of $m - 1$
+uniform $(0, s)$ random variables. Hence, when $\lambda \lt s$, the number
+of these which occur by time $\lambda$ is binomial with parameters $m - 1$ and $\lambda/s$.
+Hence, we can simulate $N(\lambda)$ by first simulating $S_m$ and then simulate either
+$P(\lambda - S_m)$, a Poisson random variable with mean $\lambda - S_m$ when $S_m < \lambda$, or simulate
+$\mathrm{Bin}(m - 1, \lambda/S_m)$, a binomial random variable with parameters $m - 1$, and
+$\lambda/S_m$, when $S_m \gt \lambda$; and then setting
+$$
+N(\lambda) = 
+\begin{cases}
+m + P(\lambda-S_m), & \text{ if } S_m\lt \lambda \\
+\mathrm{Bin}(m - 1, \lambda/S_m), & \text{ if } S_m\gt \lambda
+\end{cases}
+$$
+In the preceding it has been found computationally effective to let $m$ be approximately
+$\frac{7}{8}\lambda$. Of course, $S_m$ is simulated by simulating from a $\text{gamma}(m, \lambda)$ distribution
+via an approach that is computationally fast when $m$ is large.
+:::
+

@@ -1,0 +1,362 @@
+---
+title: "Classification of States for Markov Chains"
+toc: true
+number-sections: true
+format:
+  html:
+    code-fold: false
+jupyter: python3
+execute: 
+  enabled: true
+bibliography: references.bib
+---
+
+## Classification of States
+
+State $j$ is said to be accessible from state $i$ if $P^n_{ij} > 0$ for some $n \ge 0$. Note that
+this implies that state $j$ is accessible from state $i$ if and only if, starting in $i$, it is possible that the process will ever enter state $j$ . This is true since if $j$ is not accessible from $i$, then
+$$
+\begin{aligned}
+P\{\text{ever enter }j|\text{start in }i\} &= P\left\{\cup_{n=0}^\infty\{X_n=j\}|X_0=i\right\} \\
+&\le \sum_{n=0}^\infty P\{X_n=j|X_0=i\} = \sum_{n=0}^\infty P^n_{ij} = 0
+\end{aligned}
+$$
+
+Two states $i$ and $j$ that are accessible to each other are said to **communicate**, and
+we write $i \leftrightarrow j$. 
+
+Note that any state communicates with itself since, by definition,
+$$
+P^0_{ii} = P\{X_0=i | X_0=i\} = 1
+$$
+
+The relation of communication satisfies the following three properties:
+
+1. State $i$ communicates with state $i$, all $i \ge 0$.
+2. If state $i$ communicates with state $j$, then state $j$ communicates with state $i$.
+3. If state $i$ communicates with state $j$, and state $j$ communicates with state $k$, then state $i$ communicates with state $k$.
+
+Properties 1 and 2 follow immediately from the definition of communication. To prove 3, suppose that $i$ communicates with $j$ , and $j$ communicates with $k$. Thus, there exist integers $n$ and $m$ such that $P^n_{ij} > 0$, $P^m_{jk} > 0$. Now by the Chapman–Kolmogorov equations, we have that
+$$
+P^{n+m}_{ik} = \sum_{r=0}^\infty P^n_{ir} P^m_{rk} \ge P^n_{ij} P^m_{jk} > 0
+$$
+Hence, state $k$ is accessible from state $i$. Similarly, we can show that state $i$ is accessible from state $k$. Hence, states $i$ and $k$ communicate.
+
+Two states that communicate are said to be in the same **class**. It is an easy consequence of 1, 2, and 3 that any two classes of states are either identical or disjoint. In other words, the concept of communication divides the state space up into a number of separate classes. The Markov chain is said to be **irreducible** if there is only one class, that is, if all states communicate with each other.
+
+:::{#exm-exa1}
+Consider the Markov chain consisting of the three states 0, 1, 2 and having transition probability matrix
+$$
+P = 
+\begin{bmatrix}
+\frac{1}{2} & \frac{1}{2} & 0 \\
+\frac{1}{2} & \frac{1}{4} & \frac{1}{4} \\
+0 & \frac{1}{3} & \frac{2}{3}
+\end{bmatrix}
+$$
+It is easy to verify that this Markov chain is irreducible. For example, it is possible to go from state 0 to state 2 since
+$$
+0 \rightarrow 1 \rightarrow 2
+$$
+That is, one way of getting from state 0 to state 2 is to go from state 0 to state 1 (with probability $\frac{1}{2}$) and then go from state 1 to state 2 (with probability $\frac{1}{4}$).
+:::
+
+:::{#exm-exa2}
+Consider a Markov chain consisting of the four states 0, 1, 2, 3 and having transition probability matrix
+$$
+P = 
+\begin{bmatrix}
+\frac{1}{2} & \frac{1}{2} & 0 & 0 \\
+\frac{1}{2} & \frac{1}{2} & 0 & 0 \\
+\frac{1}{4} & \frac{1}{4} & \frac{1}{4} & \frac{1}{4} \\
+0 & 0 & 0 & 1
+\end{bmatrix}
+$$
+The classes of this Markov chain are $\{0, 1\}$, $\{2\}$, and $\{3\}$. Note that while state
+0 (or 1) is accessible from state 2, the reverse is not true. Since state 3 is an
+absorbing state, that is, $P_{33} = 1$, no other state is accessible from it.
+:::
+
+For any state $i$ we let $f_i$ denote the probability that, starting in state $i$, the
+process will ever reenter state $i$. State $i$ is said to be **recurrent** if $f_i = 1$ and **transient**
+if $f_i < 1$.
+
+Suppose that the process starts in state $i$ and $i$ is recurrent. Hence, with probability 1, the process will eventually reenter state $i$. However, by the definition of a Markov chain, it follows that the process will be starting over again when it reenters state $i$ and, therefore, state $i$ will eventually be visited again. Continual repetition of this argument leads to the conclusion that if state $i$ is recurrent then, starting in state $i$, the process will reenter state $i$ again and again and again—in fact, infinitely often.
+
+On the other hand, suppose that state $i$ is transient. Hence, each time the process
+enters state $i$ there will be a positive probability, namely, $1−f_i$ , that it will never
+again enter that state. Therefore, starting in state $i$, the probability that the process
+will be in state $i$ for exactly $n$ time periods equals $f^{n−1}_i (1 − f_i )$, $n\ge 1$. In other words, if state $i$ is transient then, starting in state $i$, the number of time periods that the process will be in state $i$ has a geometric distribution with finite mean $1/(1 -f_i)$.
+
+From the preceding two paragraphs, it follows that state $i$ is recurrent if and only if, starting in state $i$, the expected number of time periods that the process is in state $i$ is infinite. But, letting
+$$
+I_n = 
+\begin{cases}
+1, & \text{if } X_n=i \\
+0, & \text{if } X_n\ne i
+\end{cases}
+$$
+we have that $\sum_{n=0}^\infty I_n$ represents the number of periods that the process is in
+state $i$. Also,
+$$
+\begin{aligned}
+E\left[\sum_{n=0}^\infty I_n | X_0=i\right] &= \sum_{n=0}^\infty E[I_n | X_0=i] \\
+&= \sum_{n=0}^\infty P\{X_n=i | X_0 = i\} = \sum_{n=0}^\infty P^n_{ii}
+\end{aligned}
+$$
+We have thus proven the following.
+
+:::{#prp-prp1}
+State $i$ is
+$$
+\begin{aligned}
+\text{recurrent if } \sum_{n=1}^\infty P^n_{ii} &= \infty, \\
+\text{transient if } \sum_{n=1}^\infty P^n_{ii} &< \infty, \\
+\end{aligned}
+$$
+:::
+
+The argument leading to the preceding proposition is doubly important because
+it also shows that a transient state will only be visited a finite number of
+times (hence the name transient). This leads to the conclusion that in a finite-state
+Markov chain not all states can be transient. To see this, suppose the states are
+$0, 1, \dots , M$ and suppose that they are all transient. Then after a finite amount of
+time (say, after time $T_0$) state 0 will never be visited, and after a time (say, $T_1$) state
+1 will never be visited, and after a time (say, $T_2$) state 2 will never be visited, and
+so on. Thus, after a finite time $T = \max{\{T_0,T_1, \dots , T_M\}}$ no states will be visited.
+But as the process must be in some state after time $T$ we arrive at a contradiction,
+which shows that at least one of the states must be recurrent.
+
+Another use of @prp-prp1 is that it enables us to show that recurrence is a
+class property.
+
+:::{#cor-cor1}
+If state $i$ is recurrent, and state $i$ communicates with state $j$, then state $j$ is recurrent.
+:::
+
+:::{.proof}
+To prove this we first note that, since state $i$ communicates with state $j$, there exist integers $k$ and $m$ such that $P^k_{ij} > 0$, $P^m_{ji} > 0$. Now, for any integer $n$
+$$
+P^{m+n+k}_{jj} \ge P^m_{ji} P^n_{ii} P^k_{ij}
+$$
+This follows since the left side of the preceding is the probability of going from
+$j$ to $j$ in $m+n+k$ steps, while the right side is the probability of going from $j$ to $j$
+in $m + n + k$ steps via a path that goes from $j$ to $i$ in $m$ steps, then from $i$ to $i$ in
+an additional $n$ steps, then from $i$ to $j$ in an additional $k$ steps.
+
+From the preceding we obtain, by summing over $n$, that
+$$
+\sum_{n=1}^\infty P^{m+n+k}_{jj} \ge P^m_{ji} P^k_{ij} \sum_{n=1}^\infty P^n_{ii} = \infty
+$$
+since $P^m_{ji} P^k_{ij} > 0$ and $\sum_{n=1}^\infty P^n_{ii}$ is infinite since state $i$ is recurrent. Thus, by @prp-prp1 it follows that state $j$ is also recurrent.
+:::
+
+:::{#rem-rem1}
+1. @cor-cor1 also implies that transience is a class property. For
+if state $i$ is transient and communicates with state $j$ , then state $j$ must also be
+transient. For if $j$ were recurrent then, by @cor-cor1, $i$ would also be recurrent
+and hence could not be transient.
+2. @cor-cor1 along with our previous result that not all states in a finite
+Markov chain can be transient leads to the conclusion that all states of a finite
+irreducible Markov chain are recurrent.
+:::
+
+:::{#exm-exa3}
+Let the Markov chain consisting of the states $0, 1, 2, 3$ have the transition probability matrix
+$$
+P = 
+\begin{bmatrix}
+0 & 0 & \frac{1}{2} & \frac{1}{2} \\
+1 & 0 & 0 & 0 \\
+0 & 1 & 0 & 0 \\
+0 & 1 & 0 & 0
+\end{bmatrix}
+$$
+Determine which states are transient and which are recurrent.
+:::
+
+:::{#sol-sol3}
+It is a simple matter to check that all states communicate and, hence, since this is a finite chain, all states must be recurrent.
+:::
+
+:::{#exm-exa4}
+Consider the Markov chain having states $0, 1, 2, 3, 4$ and
+$$
+P = 
+\begin{bmatrix}
+\frac{1}{2} & \frac{1}{2} & 0 & 0 & 0 \\
+\frac{1}{2} & \frac{1}{2} & 0 & 0 & 0 \\
+0 & 0 & \frac{1}{2} & \frac{1}{2} & 0 \\
+0 & 0 & \frac{1}{2} & \frac{1}{2} & 0 \\
+\frac{1}{4} & \frac{1}{4} & 0 & 0 & \frac{1}{2}
+\end{bmatrix}
+$$
+Determine the recurrent state.
+:::
+
+:::{#sol-sol4}
+This chain consists of the three classes $\{0, 1\}$, $\{2, 3\}$, and $\{4\}$. The
+first two classes are recurrent and the third transient.
+:::
+
+:::{#exm-exa5}
+(A Random Walk) Consider a Markov chain whose state space consists of the integers $i = 0, \pm 1,\pm 2, \dots$, and have transition probabilities given by
+$$
+P_{i,i+1} = p = 1 - P_{i,i−1}, \quad i = 0,\pm 1,\pm 2, \dots 
+$$
+where $0<p<1$. In other words, on each transition the process either moves one
+step to the right (with probability $p$) or one step to the left (with probability $1−p$).
+One colorful interpretation of this process is that it represents the wanderings of
+a drunken man as he walks along a straight line. Another is that it represents the
+winnings of a gambler who on each play of the game either wins or loses one
+dollar.
+:::
+
+Since all states clearly communicate, it follows from @cor-cor1 that they are either all transient or all recurrent. So let us consider state 0 and attempt to determine if $\sum_{n=1}^\infty P^n_{00}$ is finite or infinite.
+
+Since it is impossible to be even (using the gambling model interpretation) after an odd number of plays we must, of course, have that
+$$
+P^{2n-1}_{00} = 0, \quad n = 1,2,\dots
+$$
+
+On the other hand, we would be even after $2n$ trials if and only if we won $n$ of these and lost $n$ of these. Because each play of the game results in a win with probability $p$ and a loss with probability $1-p$, the desired probability is thus the binomial probability
+$$
+P^{2n}_{00} = \binom{2n}{n}p^n(1-p)^n = \frac{(2n)!}{n!n!}(p(1-p))^n,\quad n=1,2,3,\dots
+$$
+By using an approximation, due to Stirling, which asserts that
+$$
+n!\sim n^{n+1/2}e^{-n}\sqrt{2\pi}
+$$ {#eq-eq4-3}
+where we say that $a_n\sim b_n$ when $\lim_{n\rightarrow\infty} a_n/b_n = 1$, we obtain
+$$
+P^{2n}_{00} \sim \frac{(4p(1-p))^n}{\sqrt{\pi n}}
+$$
+Now it is easy to verify, for positive $a_n, b_n$, that if $a_n \sim b_n$, then $\sum_n a_n <\infty$ if and only if $\sum_n b_n <\infty$. Hence, $\sum_{n=1}^\infty P^n_{00}$ will converge if and only if
+$$
+\sum_{n=1}^\infty \frac{(4p(1-p))^n}{\sqrt{\pi n}}
+$$
+does. However, $4p(1−p) \le 1$ with equality holding if and only if $p = \frac{1}{2}$. Hence,
+$\sum_{n=1}^\infty P^n_{00} = \infty$ if and only if $p = \frac{1}{2}$. Thus, the chain is recurrent when $p = \frac{1}{2}$ and transient if $p \ne \frac{1}{2}$.
+
+When $p = \frac{1}{2}$, the preceding process is called a **symmetric random walk**. We could also look at symmetric random walks in more than one dimension. For instance, in the two-dimensional symmetric random walk the process would, at each transition, either take one step to the left, right, up, or down, each having probability $\frac{1}{4}$. That is, the state is the pair of integers $(i, j)$ and the transition probabilities are given by
+$$
+P_{(i,j), (i+1,j)} = P_{(i,j), (i-1,j)} = P_{(i,j), (i,j+1)} = P_{(i,j), (i,j-1)} = \frac{1}{4}
+$$
+By using the same method as in the one-dimensional case, we now show that this Markov chain is also recurrent.
+
+Since the preceding chain is irreducible, it follows that all states will be recurrent
+if state $\boldsymbol{0} = (0, 0)$ is recurrent. So consider$P^{2n}_{\boldsymbol{0}\boldsymbol{0}}$. Now after $2n$ steps, the chain will be back in its original location if for some $i$, $0 \le i \le n$, the $2n$ steps consist of $i$ steps to the left, $i$ to the right, $n−i$ up, and $n−i$ down. Since each step will be either of these four types with probability $\frac{1}{4}$, it follows that the desired probability is a multinomial probability. That is,
+$$
+\begin{aligned}
+P^{2n}_{\boldsymbol{0}\boldsymbol{0}} &= \sum_{i=0}^n \frac{(2n)!}{i!i!(n-i)!(n-i)!}\left(\frac{1}{4}\right)^{2n} = \sum_{i=0}^n \frac{(2n)!}{n!n!}\frac{n!}{(n-i)!i!}\frac{n!}{(n-i)!i!}\left(\frac{1}{4}\right)^{2n} \nonumber \\
+&= \left(\frac{1}{4}\right)^{2n}\binom{2n}{n}\sum_{i=0}^n\binom{n}{i}\binom{n}{n-i} = \left(\frac{1}{4}\right)^{2n}\binom{2n}{n}\binom{2n}{n}
+\end{aligned}
+$$ {#eq-eq4-4}
+where the last equality uses the combinatorial identity
+$$
+\binom{2n}{n} = \sum_{i=0}^n\binom{n}{i}\binom{n}{n-i}
+$$
+which follows upon noting that both sides represent the number of subgroups of size $n$ one can select from a set of $n$ white and $n$ black objects. Now,
+$$
+\binom{2n}{n} = \frac{(2n)!}{n!n!} \sim \frac{(2n)^{2n+1/2}e^{-2n}\sqrt{2\pi}}{n^{2n+1}e^{-2n}(2\pi)} = \frac{4^n}{\sqrt{\pi n}}
+$$
+where we used Stirling's approximation in the second step. Hence from @eq-eq4-4 we see that
+$$
+P^{2n}_{00} \sim \frac{1}{\pi n}
+$$ {#eq-prob}
+which shows that $\sum_{n}P^{2n}_{00} = \infty$, and thus all states are recurrent.
+
+Interestingly enough, whereas the symmetric random walks in one and two dimensions are both recurrent, all higher-dimensional symmetric random walks turn out to be transient. (For instance, the three-dimensional symmetric random walk is at each transition equally likely to move in any of six ways—either to the left, right, up, down, in, or out.)
+
+The following Python code verifies @eq-prob.
+
+```{python}
+import numpy as np
+
+def p_00_2n(n, sample_size):
+    """
+    The function computes P^{2n}_{00} for a 2D symmetric random walk, 
+    the probability that state 0 is visited again in 2n steps. 
+    The probability is known to be about 1/(pi n) when n is large.
+
+    input:
+    n: int, 2n is the number of steps
+    sample_size: int, sample size, the number of experiments performed
+
+    output:
+    prob: P^{2n}_{00}, the probability that state 0 is visited again in 2n steps.
+    """
+    count = 0
+    for i in range(sample_size):
+        current_state = np.array([0,0])
+        for j in range(2*n):
+            rn = np.random.random()  # simulate a random number
+            # Decide where to move
+            if rn <= 0.25:
+                current_state[0] -= 1
+            elif rn <= 0.5:
+                current_state[0] += 1
+            elif rn <= 0.75:
+                current_state[1] -= 1
+            else:
+                current_state[1] += 1
+        if np.array_equal(current_state, np.array([0,0])):
+            count += 1
+    prob = count / sample_size
+    return prob
+```
+
+```{python}
+n = 1000
+sample_size = 100000
+print('Computed probability is: ', p_00_2n(n, sample_size),
+      'and analytical probability is: ', 1/(np.pi*n))
+```
+
+:::{#exm-exa6}
+(On the Ultimate Instability of the Aloha Protocol) Consider a communications facility in which the numbers of messages arriving during each of the time periods $n = 1, 2, \dots$ are independent and identically distributed random variables. Let $a_i = P\{i \text{ arrivals}\}$, and suppose that $a_0+a_1 < 1$. Each arriving message will transmit at the end of the period in which it arrives. If exactly one message is transmitted, then the transmission is successful and the message leaves the system. However, if at any time two or more messages simultaneously transmit, then a collision is deemed to occur and these messages remain in the system. Once a message is involved in a collision it will, independently of all else, transmit at the end of each additional period with probability $p$—the so-called Aloha protocol (because it was first instituted at the University of Hawaii). We will show that such a system is asymptotically unstable in the sense that the number of successful transmissions will, with probability 1, be finite.
+
+To begin let $X_n$ denote the number of messages in the facility at the beginning of the $n$th period, and note that $\{X_n,n \ge 0\}$ is a Markov chain. Now for $k \ge 0$ define the indicator variables $I_k$ by
+$$
+I_k = 
+\begin{cases}
+1, & \text{if the first time that the chain departs state k it directly goes to state k −1} \\
+0, &\text{otherwise}
+\end{cases}
+$$
+and let it be 0 if the system is never in state $k$, $k \ge 0$. (For instance, if the successive
+states are $0, 1, 3, 4, \dots$ , then $I_3 = 0$ since when the chain first departs state 3 it
+goes to state 4; whereas, if they are $0, 3, 3, 2, \dots$ , then $I_3 = 1$ since this time it
+goes to state 2.) Now,
+$$
+E\left[\sum_{k=0}^\infty I_k\right] = \sum_{k=0}^\infty E[I_k] = \sum_{k=0}^\infty P\{I_k=1\} \le \sum_{k=0}^\infty P\{I_k=1 | k \text{ is ever visited}\}
+$$ {#eq-eq4-6}
+
+Now, $P\{I_k=1 | k \text{ is ever visited}\}$ is the probability that when state $k$ is departed
+the next state is $k - 1$. That is, it is the conditional probability that a transition
+from $k$ is to $k-1$ given that it is not back into $k$, and so
+$$
+P\{I_k=1 | k \text{ is ever visited}\} = \frac{P_{k,k-1}}{1-P_{kk}}
+$$
+Because
+$$
+\begin{aligned}
+P_{k,k-1} &= a_0kp(1-p)^{k-1}, \\
+P_{k,k} &= a_0[1-kp(1-p)^{k-1}] + a_1(1-p)^k
+\end{aligned}
+$$
+which is seen by noting that if there are $k$ messages present on the beginning of a day, then (a) there will be $k - 1$ at the beginning of the next day if there are no new messages that day and exactly one of the $k$ messages transmits; and (b) there will be $k$ at the beginning of the next day if either
+
+1. there are no new messages and it is not the case that exactly one of the existing $k$ messages transmits (otherwise the transmission would be successful), or
+
+2. there is exactly one new message (which automatically transmits) and none of the other $k$ messages transmits.
+
+Substitution of the preceding into @eq-eq4-6 yields
+$$
+E\left[\sum_{k=0}^\infty I_k\right] \le \sum_{k=0}^\infty \frac{a_0kp(1-p)^{k-1}}{1-a_0[1-kp(1-p)^{k-1}]-a_1(1-p)^k} < \infty
+$$
+where the convergence follows by noting that when $k$ is large the denominator of the expression in the preceding sum converges to $1 − a_0$ and so the convergence or divergence of the sum is determined by whether or not the sum of the terms in the numerator converge and $\sum_{k=0}^\infty k(1-p)^{k-1}<\infty$.
+
+Hence, $E\left[\sum_{k=0}^\infty I_k\right]< \infty$, which implies that $\sum_{k=0}^\infty I_k < \infty$
+with probability 1 (for if there was a positive probability that $\sum_{k=0}^\infty I_k$ could be $\infty$, then its mean would be $\infty$). Hence, with probability 1, there will be only a finite number of states that are initially departed via a successful transmission; or equivalently, there will be some finite integer $N$ such that whenever there are $N$ or more messages in the system, there will never again be a successful transmission. From this
+(and the fact that such higher states will eventually be reached—why?) it follows that, with probability 1, there will only be a finite number of successful transmissions.

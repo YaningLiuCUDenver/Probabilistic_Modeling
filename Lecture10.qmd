@@ -1,0 +1,416 @@
+---
+title: The Poisson Process
+toc: true
+number-sections: true
+format:
+  html:
+    code-fold: false
+jupyter: python3
+execute:
+  enabled: false
+bibliography: references.bib
+---
+
+## The Poisson Process
+
+### Counting Processes
+
+A stochastic process $\{N(t), t \ge 0\}$ is said to be a counting process if $N(t)$ represents
+the total number of "events" that occur by time $t$. Some examples of counting
+processes are the following:
+
+(a) If we let $N(t)$ equal the number of persons who enter a particular store at
+or prior to time $t$, then $\{N(t), t \ge 0\}$ is a counting process in which an event
+corresponds to a person entering the store. Note that if we had let $N(t)$ equal
+the number of persons in the store at time $t$, then $\{N(t), t \ge 0\}$ would not be a
+counting process (why not?).
+
+(b) If we say that an event occurs whenever a child is born, then $\{N(t), t \ge 0\}$
+is a counting process when $N(t)$ equals the total number of people who were
+born by time $t$. [Does $N(t)$ include persons who have died by time t? Explain
+why it must.]
+
+(c) If $N(t)$ equals the number of goals that a given soccer player scores by
+time $t$, then $\{N(t), t \ge 0\}$ is a counting process. An event of this process will
+occur whenever the soccer player scores a goal.
+
+From its definition we see that for a counting process $N(t)$ must satisfy:
+
+(i) $N(t)\ge 0$.
+
+(ii) $N(t)$ is integer valued.
+
+(iii) If $s<t$, then $N(s)\le N(t)$
+
+(iii) For $s<t$, $N(t)-N(s)$ equals the number of events that occur in the
+interval $(s, t]$.
+
+A counting process is said to possess *independent increments* if the numbers
+of events that occur in disjoint time intervals are independent. For example, this
+means that the number of events that occur by time 10 [that is, $N(10)$] must be
+independent of the number of events that occur between times $10$ and $15$ [that is,
+$N(15)−N(10)$].
+
+The assumption of independent increments might be reasonable for example
+(a), but it probably would be unreasonable for example (b). The reason for
+this is that if in example (b) $N(t)$ is very large, then it is probable that there are
+many people alive at time $t$; this would lead us to believe that the number of new
+births between time $t$ and time $t+s$ would also tend to be large [that is, it does not
+seem reasonable that $N(t)$ is independent of $N(t+s)-N(t)$, and so $\{N(t), t \ge 0\}$
+would not have independent increments in example (b)]. The assumption of independent
+increments in example (c) would be justified if we believed that the soccer
+player’s chances of scoring a goal today do not depend on “how he’s been going.”
+It would not be justified if we believed in “hot streaks” or “slumps.”
+
+A counting process is said to possess *stationary increments* if the distribution
+of the number of events that occur in any interval of time depends only on the
+length of the time interval. In other words, the process has stationary increments
+if the number of events in the interval $(s, s +t)$ has the same distribution for all $s$.
+
+The assumption of stationary increments would only be reasonable in example
+(a) if there were no times of day at which people were more likely to enter
+the store. Thus, for instance, if there was a rush hour (say, between 12 P.M. and
+1 P.M.) each day, then the stationarity assumption would not be justified. If we believed
+that the earth’s population is basically constant (a belief not held at present
+by most scientists), then the assumption of stationary increments might be reasonable
+in example (b). Stationary increments do not seem to be a reasonable
+assumption in example (c) since, for one thing, most people would agree that the
+soccer player would probably score more goals while in the age bracket 25–30
+than he would while in the age bracket 35–40. It may, however, be reasonable
+over a smaller time horizon, such as one year.
+
+### Definition of the Poisson Process
+
+One of the most important counting processes is the Poisson process which is
+defined as follows:
+
+:::{#def-def1}
+The counting process $\{N(t), t \ge 0\}$ is said to be a *Poisson process having rate $\lambda$*, $\lambda \gt 0$, if
+
+(i) $N(0) = 0$
+
+(ii) The process has independent increments.
+
+(iii) The number of events in any interval of length $t$ is Poisson distributed with mean $\lambda t$. That is, for all $s, t\ge 0$
+$$
+P\{N(t+s)-N(s)=n\} = e^{-\lambda t}\frac{(\lambda t)^n}{n!}, \quad n=0,1,\dots
+$$
+:::
+
+Note that it follows from condition (iii) that a Poisson process has stationary
+increments and also that
+$$
+E[N(t)] = \lambda t
+$$
+which explains why $\lambda$ is called the rate of the process.
+
+To determine if an arbitrary counting process is actually a Poisson process,
+we must show that conditions (i), (ii), and (iii) are satisfied. Condition (i), which
+simply states that the counting of events begins at time $t = 0$, and condition (ii)
+can usually be directly verified from our knowledge of the process. However, it
+is not at all clear how we would determine that condition (iii) is satisfied, and for
+this reason an equivalent definition of a Poisson process would be useful.
+
+As a prelude to giving a second definition of a Poisson process we shall define
+the concept of a function $f(\cdot)$ being $o(h)$.
+
+:::{#def-def2}
+The function $f(\cdot)$ is said to be $o(h)$ if
+$$
+\lim_{h\rightarrow 0}\frac{f(h)}{h} = 0
+$$
+:::
+
+:::{#exm-exa1}
+(i) The function $f(x)=x^2$ is $o(h)$ since
+$$
+\lim_{h\rightarrow 0}\frac{f(h)}{h} = \lim_{h\rightarrow 0}\frac{h^2}{h} = \lim_{h\rightarrow 0}h = 0
+$$
+
+(ii) The function $f(x)=x$ is not $o(h)$ since
+$$
+\lim_{h\rightarrow 0}\frac{f(h)}{h} = \lim_{h\rightarrow 0}\frac{h}{h} = \lim_{h\rightarrow 0}1 = 1 \ne 0
+$$
+
+(iii) If $f(\cdot)$ is $o(h)$ and $g(\cdot)$ is $o(h)$, then so is $f(\cdot)+g(\cdot)$. This follows since
+$$
+\lim_{h\rightarrow 0}\frac{f(h)+g(h)}{h} = \lim_{h\rightarrow 0}\frac{f(h)}{h} + \lim_{h\rightarrow 0}\frac{g(h)}{h} = 0+0 = 0
+$$
+
+(iv) If $f(\cdot)$ is $o(h)$, then so is $g(\cdot)=cf(\cdot)$. This follows since
+$$
+\lim_{h\rightarrow 0}\frac{cf(h)}{h} = c\lim_{h\rightarrow 0}\frac{f(h)}{h} = c\cdot 0 = 0
+$$
+
+(v) From (iii) and (iv) it follows that any finite linear combination of functions, each of which is $o(h)$, is $o(h)$.
+:::
+
+In order for the function $f(\cdot)$ to be $o(h)$ it is necessary that $f(h)/h$ go to zero
+as $h$ goes to zero. But if $h$ goes to zero, the only way for $f(h)/h$ to go to zero is
+for $f(h)$ to go to zero faster than $h$ does. That is, for $h$ small, $f(h)$ must be small
+compared with $h$.
+
+We are now in a position to give an alternate definition of a Poisson process.
+
+:::{#def-def3}
+The counting process $\{N(t), t \ge 0\}$ is said to be a Poisson process having rate $\lambda, \lambda \gt 0$, if
+
+(i) $N(0) = 0$.
+
+(ii) The process has stationary and independent increments.
+
+(iii) $P\{N(h)=1\} = \lambda h + o(h)$.
+
+(iv) $P\{N(h)\ge 2\} = o(h)$.
+:::
+
+:::{#thm-thm1}
+@def-def1 and @def-def3 are equivalent.
+:::
+
+:::{.proof}
+We show that @def-def3 implies @def-def1, and leave it to you to prove the reverse. To start, fix $u\ge 0$ and let
+$$
+g(t) = E[\exp\{-uN(t)\}]
+$$
+We derive a differential equation for $g(t)$ as follows:
+$$
+\begin{align*}
+g(t+h) &= E[\exp\{-uN(t+h)\}] \\
+       &= E[\exp\{-uN(t)\} \exp\{-u(N(t+h)-N(t))\}] \\
+       &= E[\exp\{-uN(t)\}]  E[\exp\{-u(N(t+h)-N(t))\}] \quad \text{ by independent increments} \\
+       &= g(t)E[\exp\{-uN(h)\}] \quad \text{ by stationary increments}
+\end{align*}
+$$ {#eq-eq5-10}
+Now, assumptions (iii) and (iv) imply that
+$$
+P\{N(h)=0\} = 1-\lambda h + o(h)
+$$
+Hence, conditioning on whether $N(h) = 0$ or $N(h) = 1$ or $N(h) \ge 2$ yields
+$$
+\begin{align*}
+E[\exp\{-uN(h)\}] &= 1-\lambda h +o(h) +e^{-u}(\lambda h +o(h)) + o(h) \\
+                  &= 1-\lambda h + e^{-u}\lambda h +o(h)
+\end{align*}
+$$ {#eq-eq5-11}
+Therefore, from @eq-eq5-10 and @eq-eq5-11 we obtain that
+$$
+g(t+h) = g(t)(1-\lambda h + e^{-u}\lambda h) + o(h)
+$$
+implying that
+$$
+\frac{g(t+h)-g(t)}{h} = g(t)\lambda (e^{-u}-1) + \frac{o(h)}{h}
+$$
+Letting $h \rightarrow 0$ gives
+$$
+g'(t) = g(t)\lambda (e^{-u}-1)
+$$
+or, equivalently,
+$$
+\frac{g'(t)}{g(t)} = \lambda (e^{-u}-1)
+$$
+Integrating, and using $g(0) = 1$, shows that
+$$
+\log{g(t)} = \lambda t(e^{-u}-1)
+$$
+or
+$$
+g(t) = \exp\{\lambda t(e^{-u}-1)\}
+$$
+or
+$$
+g(t) = \exp\{\lambda t (e^{-u}-1)\}
+$$
+That is, the Laplace transform of $N(t)$ evaluated at $u$ is $e^{\lambda t (e^{-u}−1)}$. Since that is
+also the Laplace transform of a Poisson random variable with mean $\lambda t$, the result
+follows from the fact that the distribution of a nonnegative random variable is
+uniquely determined by its Laplace transform.
+:::
+
+### Interarrival and Waiting Time Distributions
+
+Consider a Poisson process, and let us denote the time of the first event by $T_1$.
+Further, for $n \gt 1$, let $T_n$ denote the elapsed time between the $(n − 1)$st and the
+$n$th event. The sequence $\{T_n, n = 1, 2, \dots\}$ is called the sequence of interarrival
+times. For instance, if $T_1 = 5$ and $T_2 = 10$, then the first event of the Poisson
+process would have occurred at time $5$ and the second at time $15$.
+
+We shall now determine the distribution of the $T_n$. To do so, we first note that
+the event $\{T_1 \gt t\}$ takes place if and only if no events of the Poisson process occur in the interval $[0, t]$ and thus,
+$$
+P\{T_1\gt t\} = P\{N(t)=0\} = e^{-\lambda t}
+$$
+Hence, $T_1$ has an exponential distribution with mean $1/\lambda$. 
+
+(Recall: A continuous random variable $X$ is said to have an exponential distribution with
+parameter $\lambda$, $\lambda \gt 0$, if its probability density function is given by
+$$
+f(x) = 
+\begin{cases}
+\lambda e^{-\lambda x}, & x \ge 0 \\
+0, & x \lt 0
+\end{cases}
+$$
+or, equivalently, if its cdf is given by
+$$
+F(x) = \int_{-\infty}^x f(y) dy = 
+\begin{cases}
+1-e^{-\lambda x}, & x\ge 0 \\
+0, & x \lt 0
+\end{cases}
+$$
+)
+
+Now,
+$$
+P\{T_2 \gt t\} = E[P\{T_2\gt t|T_1]\}]
+$$
+However,
+$$
+\begin{align*}
+P\{T_2>t | T_1=s\} &= P\{0 \text{ events in } (s,s+t] | T_1=s\} \\
+                   &= P\{0 \text{ events in } (s,s+t]\} \\
+                   &= e^{-\lambda t}
+\end{align*}
+$$ {#eq-eq5-12}
+where the last two equations followed from independent and stationary increments.
+Therefore, from @eq-eq5-12 we conclude that $T_2$ is also an exponential
+random variable with mean $1/\lambda$ and, furthermore, that $T_2$ is independent of $T_1$.
+Repeating the same argument yields the following.
+
+:::{#prp-prp1}
+$T_n, n = 1, 2, \dots$, are independent identically distributed exponential
+random variables having mean $1/\lambda$.
+:::
+
+:::{#rem-rem1}
+The proposition should not surprise us. The assumption of stationary
+and independent increments is basically equivalent to asserting that, at any point
+in time, the process probabilistically restarts itself. That is, the process from any
+point on is independent of all that has previously occurred (by independent increments),
+and also has the same distribution as the original process (by stationary
+increments). In other words, the process has no memory, and hence exponential
+interarrival times are to be expected.
+:::
+
+Another quantity of interest is $S_n$, the arrival time of the $n$th event, also called
+the *waiting time* until the $n$th event. It is easily seen that
+$$
+S_n = \sum_{i=1}^nT_i, \quad n\ge 1
+$$
+and hence from @prp-prp1 and a property related to the exponential distribution it follows that $S_n$
+has a gamma distribution with parameters $n$ and $\lambda$. That is, the probability density
+of $S_n$ is given by
+$$
+f_{S_n}(t) = \lambda e^{-\lambda t}\frac{(\lambda t)^{n-1}}{(n-1)!}, \quad t\ge 0
+$$ {#eq-eq5-13}
+
+@eq-eq5-13 may also be derived by noting that the $n$th event will occur prior
+to or at time $t$ if and only if the number of events occurring by time t is at least n.
+That is,
+$$
+N(t) \ge n \Leftrightarrow S_n\le t
+$$
+Hence,
+$$
+F_{S_n}(t) = P\{S_n\le t\} = P\{N(t)\ge n\} = \sum_{j=n}^\infty e^{-\lambda t}\frac{(\lambda t)^j}{j!}
+$$
+which, upon differentiation, yields
+$$
+\begin{align*}
+f_{S_n}(t) &= -\sum_{j=n}^\infty \lambda e^{-\lambda t}\frac{(\lambda t)^j}{j!} + \sum_{j=n}^\infty \lambda e^{-\lambda t}\frac{(\lambda t)^{j-1}}{(j-1)!} \\
+&= \lambda e^{-\lambda t}\frac{(\lambda t)^{n-1}}{(n-1)!} + \sum_{j=n+1}^\infty \lambda e^{-\lambda t}\frac{(\lambda t)^{j-1}}{(j-1)!} - \sum_{j=n}^\infty \lambda e^{-\lambda t}\frac{(\lambda t)^j}{j!} \\
+&= \lambda e^{-\lambda t}\frac{(\lambda t)^{n-1}}{(n-1)!}
+\end{align*}
+$$
+
+:::{#exm-exa2}
+Suppose that people immigrate into a territory at a Poisson
+rate $\lambda = 1$ per day.
+
+(a) What is the expected time until the tenth immigrant arrives?
+
+(b) What is the probability that the elapsed time between the tenth and the
+eleventh arrival exceeds two days?
+:::
+
+:::{#sol-sol2}
+(a) $E[S_{10}] = 10/\lambda = 10$ days.
+
+(b) $P\{T_{11} > 2\} = e^{-2\lambda} = e^{-2} \approx 0.133$.
+:::
+
+Now we numerically derive the results using Python.
+
+```{python}
+import numpy as np
+from scipy.stats import expon
+
+def generate_Poisson_process(lam, n):
+    """
+    Simulate a Poisson process with Poisson rate lam until the nth event happens. 
+
+    input:
+    lam: float, the Poisson rate
+    n: int, the process ends when the nth event happens.
+
+    output:
+    T: a 1d array that contains all the interarrival times
+    """
+
+    T = expon.rvs(scale = 1/lam, size=n)
+    return T
+```
+
+```{python}
+# Part (a)
+sample_size = 10000  # sample size for calculating probabilities
+n = 10  # 10th event happens
+lam = 1.0
+S10 = np.zeros(sample_size)  # S10 stores all the simulated S_{10}
+for i in range(sample_size):
+    S10[i] = np.sum(generate_Poisson_process(lam, n))
+print('By simulation, the expected time until the tenth immigrant arrives is: ', S10.mean(), 
+      ' days, and the theoretical result is 10 days')
+```
+
+```{python}
+# Part (b)
+sample_size = 10000  # sample size for calculating probabilities
+n = 11  # 11th event happens
+lam = 1.0
+T11 = np.zeros(sample_size)  # T11 stores all the simulated T_{11}
+for i in range(sample_size):
+    T11[i] = generate_Poisson_process(lam, n)[-1]
+P_T11_gt_2 = np.sum(T11>2) / sample_size
+print('The simulated probability that the elapsed time between the 10th and 11th arrival exceeds two days is: ', 
+      P_T11_gt_2, ' days, and the theoretical result is ', np.exp(-2))
+```
+
+@prp-prp1 also gives us another way of defining a Poisson process.
+Suppose we start with a sequence $\{T_n, n \ge 1\}$ of independent identically distributed
+exponential random variables each having mean $1/\lambda$. Now let us define a
+counting process by saying that the $n$th event of this process occurs at time
+$$
+S_n \equiv T_1 + T_2 + \cdots + T_n
+$$
+The resultant counting process $\{N(t), t \ge 0\}$ will be Poisson with rate $\lambda$.
+
+:::{#rem-rem1}
+Another way of obtaining the density function of $S_n$ is to note that because $S_n$ is the time of the $n$th event,
+$$
+\begin{align*}
+P\{t < S_n < t+h\}  &= P\{N(t) = n-1, \text{ one event in } (t, t+h)\} + o(h) \\
+                    &= P\{N(t) = n-1\}, P\{\text{one event in } (t, t+h)\} + o(h) \\
+                    &= e^{-\lambda t}\frac{(\lambda t)^{n-1}}{(n-1)!} [\lambda h+o(h)] + o(h) \\
+                    &= \lambda e^{-\lambda t}\frac{(\lambda t)^{n-1}}{(n-1)!}h + o(h)
+\end{align*}
+$$
+where the first equality uses the fact that the probability of 2 or more events in
+$(t, t + h)$ is $o(h)$. If we now divide both sides of the preceding equation by $h$ and
+then let $h\rightarrow 0$, we obtain
+$$
+f_{S_n}(t) = \lambda e^{-\lambda t}\frac{(\lambda t)^{n-1}}{(n-1)!}
+$$
+:::
+

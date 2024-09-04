@@ -1,0 +1,255 @@
+---
+title: Simulating Stochastic Processes
+toc: true
+number-sections: true
+format:
+  html:
+    code-fold: false
+jupyter: python3
+execute:
+  enabled: false
+bibliography: references.bib
+---
+
+We can easily simulate a stochastic process by simulating a sequence of random
+variables. For instance, We have seen that a Poisson process is a counting process for which the times between
+successive events are independent and identically distributed exponential
+random variables. One possible generalization is to consider a counting process
+for which the times between successive events are independent and identically
+distributed with an arbitrary distribution. Such a counting process is called a *renewal
+process*.
+Let $\{N(t), t \ge 0\}$ be a counting process and let $X_n$ denote the time between
+the $(n-1)$st and the $n$th event of this process, $n \ge 1$.
+
+:::{#def-def1}
+If the sequence of nonnegative random variables $\{X_1X_2, \dots\}$
+is independent and identically distributed, then the counting process $\{N(t), t \ge 0\}$
+is said to be a renewal process.
+:::
+
+To simulate the first $t$ time units of a renewal process
+having interarrival distribution $F$ we can simulate independent random variables
+$X_1, X_2, \dots$ having distribution $F$, stopping at
+$$
+N = \min\{n: X_1 +\cdots+X_n > t\}
+$$
+The $X_i, i \ge 1$, represent the interarrival times of the renewal process and so the
+preceding simulation yields $N-1$ events by time $t$—the events occurring at times
+$X_1, X_1 + X_2, \dots, X_1 +\cdots+X_{N−1}$.
+
+Actually there is another approach for simulating a Poisson process that is quite
+efficient. Suppose we want to simulate the first $t$ time units of a Poisson process
+having rate $\lambda$. To do so, we can first simulate $N(t)$, the number of events by $t$ ,
+and then use the result that given the value of $N(t)$, the set of $N(t)$ event times is
+distributed as a set of $n$ independent uniform $(0, t)$ random variables. Hence, we
+start by simulating $N(t)$, a Poisson random variable with mean $\lambda t$ (by one of the
+methods given in Example 2 Lecture 21). Then, if $N(t) = n$, generate a new set of $n$ random
+numbers—call them $U_1, \dots, U_n$—and ${tU_1, \dots, tU_n}$ will represent the set
+of $N(t)$ event times. If we could stop here this would be much more efficient than
+simulating the exponentially distributed interarrival times. However, we usually
+desire the event times in increasing order—for instance, for $s\lt t$,
+$$
+N(s) = \text{ number of } U_i: tU_i \le s
+$$
+and so to compute the function $N(s), s \le t$, it is best to first order the values
+$U_i, i = 1, \dots, n$ before multiplying by $t$. However, in doing so you should not
+use an all-purpose sorting algorithm, such as quick sort, but
+rather one that takes into account that the elements to be sorted come from a
+uniform $(0, 1)$ population. Such a sorting algorithm, of $n$ uniform $(0, 1)$ variables,
+is as follows: Rather than a single list to be sorted of length $n$ we will consider
+$n$ ordered, or linked, lists of random size. The value $U$ will be put in list $i$ if
+its value is between $(i − 1)/n$ and $i/n$—that is, $U$ is put in list $[nU] + 1$. The
+individual lists are then ordered, and the total linkage of all the lists is the desired
+ordering. As almost all of the $n$ lists will be of relatively small size [for instance,
+if $n = 1000$ the mean number of lists of size greater than $4$ is (using the Poisson
+approximation to the binomial) approximately equal to $1000(1-\frac{65}{24}e^{-1}) \approx 4$] the
+sorting of individual lists will be quite quick, and so the running time of such an
+algorithm will be proportional to $n$ (rather than to $n\log n$ as in the best all-purpose
+sorting algorithms).
+
+An extremely important counting process for modeling purposes is the nonhomogeneous
+Poisson process, which relaxes the Poisson process assumption of
+stationary increments. Thus it allows for the possibility that the arrival rate need
+not be constant but can vary with time. However, there are few analytical studies
+that assume a nonhomogeneous Poisson arrival process for the simple reason that
+such models are not usually mathematically tractable. (For example, there is no
+known expression for the average customer delay in the single-server exponential
+service distribution queueing model which assumes a nonhomogeneous arrival
+process.) Clearly such models are strong candidates for simulation studies.
+
+## Simulating a Nonhomogeneous Poisson Process
+
+We now present three methods for simulating a nonhomogeneous Poisson process
+having intensity function $\lambda(t), 0 \le t \lt \infty$.
+
+### Conditional Distribution of the Arrival Times
+
+Recall the result for a Poisson process having rate $\lambda$ that given the number of events by time $T$ the set of event times are independent and identically distributed uniform $(0,T)$ random variables. Now suppose that each of these events is independently counted with a probability that is equal to $\lambda(t)/\lambda$ when the event occurred at time $t.$ Hence, given the number of counted events, it follows that the set of times of these counted events are independent with a common distribution given by $F(s)$, where
+$$
+\begin{align*}
+F(s)&=P\{\mathrm{time}\leqslant s|\mathrm{counted}\}\\
+&=\frac{P\{\mathrm{time}\leqslant s,\mathrm{counted}\}}{P\{\mathrm{counted}\}}\\
+&=\frac{\int_{0}^{T}P\{\mathrm{time}\leqslant s,\mathrm{counted}|\mathrm{time}=x\}\:dx/T}{P\{\mathrm{counted}\}}\\
+&=\frac{\int_{0}^{s}\lambda(x)\:dx}{\int_{0}^{T}\lambda(x)\:dx}
+\end{align*}
+$$
+The preceding (somewhat heuristic) argument thus shows that given $n$ events of a nonhomogeneous Poisson process by time $T$ the $n$ event times are independent with a common density function
+$$
+f(s)=\frac{\lambda(s)}{m(T)},\quad0<s<T,\quad m(T)=\int_{0}^{T}\lambda(s)\:ds
+$$ {#eq-eq11-10}
+Since $N(T)$, the number of events by time $T$, is Poisson distributed with mean $m(T)$, we can simulate the nonhomogeneous Poisson process by first simulating $N(T)$ and then simulating $N(T)$ random variables from the density @eq-eq11-10.
+
+:::{#exm-exa1}
+If $\lambda(s)=cs$, then we can simulate the first $T$ time units of the nonhomogeneous Poisson process by first simulating $N(T)$, a Poisson random variable having mean $m( T) = \int _0^Tcs$ $ds= CT^2/ 2$, and then simulating $N(T)$ random variables having distribution
+$$
+F(s)=\frac{s^{2}}{T^{2}},\quad0<s<T
+$$
+Random variables having the preceding distribution either can be simulated by use of the inverse transform method (since $F^{-1}(U)=T\sqrt{U})$ or by noting that $F$ is the distribution function of $\max(TU_1,TU_2)$ when $U_1$ and $U_2$ are independent random numbers.
+:::
+
+If the distribution function specified by @eq-eq11-10 is not easily invertible, we can always simulate from @eq-eq11-10 by using the rejection method where we either accept or reject simulated values of uniform $(0,T)$ random variables. That is, let $h(s)=1/T,0<s<T.$ Then
+$$
+\frac{f(s)}{h(s)}=\frac{T\lambda(s)}{m(T)}\leqslant\frac{\lambda T}{m(T)}\equiv C
+$$
+where $\lambda$ is a bound on $\lambda(s),0\leqslant s\leqslant T.$ Hence, the rejection method is to generate
+random numbers $U_1$ and $U_2$ then accept $TU_1$ if
+$$
+U_2\leqslant\frac{f(TU_1)}{Ch(TU_1)}
+$$
+or, equivalently, if
+$$
+U_2\leqslant\frac{\lambda(TU_1)}{\lambda}
+$$
+
+## Simulating a Two-Dimensional Poisson Process
+
+A point process consisting of randomly occurring points in the plane is said to be
+a two-dimensional Poisson process having rate $\lambda$ if
+
+(a) the number of points in any given region of area $A$ is Poisson
+distributed with mean $\lambda A;$ and
+
+(b) the numbers of points in disjoint regions are independent.
+
+For a given fixed point $\mathbf{O}$ in the plane, we now show how to simulate events occurring according to a two-dimensional Poisson process with rate $\lambda$ in a circular region of radius $r$ centered about $\mathbf{O}$. Let $R_i,i\geqslant1$, denote the distance between $\mathbf{O}$ and its $i$th nearest Poisson point, and let $C(a)$ denote the circle of radius $a$ centered at $\mathbf{O}$. Then
+$$
+P\big\{\pi\:R_1^2>b\big\}=P\left\{R_1>\sqrt{\frac{b}{\pi}}\right\}=P\big\{\text{no points in}\:C\big(\sqrt{b/\pi}\big)\big\}=e^{-\lambda b}
+$$
+Also, with $C(a_2)-C(a_1)$ denoting the region between $C(a_2)$ and $C(a_1);$
+$$
+\begin{align*}
+&P\big\{\pi\:R_{2}^{2}-\pi\:R_{1}^{2}>b\big|R_{1}=r\big\}\\
+&=P\left\{R_{2}>\sqrt{(b+\pi r^{2})/\pi}\big|R_{1}=r\right\}\\
+&=P\left\{\text{no points in }C\left(\sqrt{(b+\pi r^{2})/\pi}\right)-C(r)\big|R_{1}=r\right\}\\
+&=P\left\{\text{no points in }C\left(\sqrt{(b+\pi r^{2})/\pi}\right)-C(r)\right\}\quad\text{by (b)}\\
+&=e^{-\lambda b}
+\end{align*}
+$$
+In fact, the same argument can be repeated to obtain the following
+
+:::{#prp-prp1}
+With $R_0=0$,
+$$
+\pi\:R_{i}^{2}-\pi\:R_{i-1}^{2},\quad i\geqslant1,
+$$
+are independent exponentials with rate $\lambda.$
+:::
+
+```{python}
+import numpy as np
+from scipy.stats import expon
+
+def Poisson_circle(lam, r):
+    """
+    Generate a 2D Poisson process for a circular region
+
+    Inputs:
+    lam: float, the lambda
+    r: float, the radius of the circle
+
+    Ouputs:
+    poisson_points: 2d array of shape (N-1, 2), (where N is the number of Poisson points to be determined by the algorithm) the polar coordinates of Poisson points
+    """
+    sum = 0.0
+    N = 0
+    X = np.array([])
+    while sum <= r**2:
+        Xi = expon.rvs()
+        sum += Xi/(lam*np.pi)
+        N += 1
+        X = np.append(X, Xi)
+    if N == 1:
+        print('There are no points in the circle!')
+        return
+    else:
+        poisson_points = np.zeros((N-1, 2))
+        R = np.zeros(N-1)
+        for i in range(N-1):
+            R[i] = np.sqrt(X[:i+1].sum()/(lam*np.pi))
+        U = np.random.rand(N-1)
+        poisson_points[:, 0] = R
+        poisson_points[:, 1] = 2*np.pi*U
+        return poisson_points
+```
+
+```{python}
+import matplotlib.pyplot as plt
+
+lam = 1.0
+r = 10.0
+
+pts = Poisson_circle(lam, r)
+plt.plot(pts[:,0]*np.cos(pts[:,1]), pts[:,0]*np.sin(pts[:,1]), 'bo')
+plt.title('Realization of a 2D Poisson porocess in a circular regions')
+plt.show()
+```
+
+In other words, the amount of area that needs to be traversed to encompass a Poisson point is exponential with rate $\lambda.$ Since, by symmetry, the respective angles of the Poisson points are independent and uniformly distributed over $(0,2\pi)$, we thus have the following algorithm for simulating the Poisson process over a circular region of radius $r$ about $\mathbf{O}$:
+
+Step 1: Generate independent exponentials with rate $1$, $X_1, X_2, \ldots$, stopping at
+$$
+N=\min\left\{n\colon\frac{X_1+\cdots+X_n}{\lambda\pi}>r^2\right\}
+$$
+
+Step2: If $N=1$, stop. There are no points in $C(r).$ Otherwise, for $i=1, \ldots, N-1$, set
+$$
+R_i=\sqrt{(X_1+\cdots+X_i)/\lambda\pi}
+$$
+
+Step 3: Generate independent uniform $(0,1)$ random variables $U_{1}, \ldots, U_{N-1}.$
+
+Step 4: Return the $N-1$ Poisson points in $C(r)$ whose polar coordinates are
+$$
+(R_{i},2\pi U_{i}),\quad i=1,\ldots,N-1
+$$
+
+The preceding algorithm requires, on average, $1+\lambda\pi r^2$ exponentials and an equal number of uniform random numbers. Another approach to simulating points in $C(r)$ is to first simulate $N$, the number of such points, and then use the fact that, given $N$, the points are uniformly distributed in $C(r).$ This latter procedure requires the simulation of $N$, a Poisson random variable with mean $\lambda\pi r^2;$ we must then simulate $N$ uniform points on $C(r)$, by simulating $R$ from the distribution $F_R(a)=a^2/r^2$ and $\theta$ from uniform $(0,2\pi)$ and must then sort these $N$ uniform values in increasing order of $R.$ The main advantage of the first procedure is that it eliminates the need to sort.
+
+![](gx.png)
+
+The preceding algorithm can be thought of as the fanning out of a circle centered at $\mathbf{O}$ with a radius that expands continuously from $0$ to $r$. The successive radii at which Poisson points are encountered is simulated by noting that the additional area necessary to encompass a Poisson point is always, independent of the past, exponential with rate $\lambda.$ This technique can be used to simulate the process over noncircular regions. For instance, consider a nonnegative function $g(x)$, and suppose we are interested in simulating the Poisson process in the region between the $x$-axis and $g$ with $x$ going from $0$ to $T$ (see Figure above). To do so we can start at the left-hand end and fan vertically to the right by considering the successive areas $\int_0^ag(x)dx.$ Now if $X_1<X_2<\cdots$ denote the successive projections of the Poisson points on the $x$-axis, then analogous to @prp-prp1, it will follow that (with $X_0=0)\lambda\int_{X_{i-1}}^{X_{i}}g(x)dx,i\geqslant1$, will be independent exponentials with rate 1. Hence, we should simulate $\epsilon_1,\epsilon_2,\ldots$, independent exponentials with rate 1, stopping at
+$$
+N=\min\left\{n\colon\epsilon_1+\cdots+\epsilon_n>\lambda\int_0^Tg(x)\:dx\right\}
+$$
+and determine $X_1,\ldots,X_{N-1}$ by
+$$
+\begin{align*}
+\lambda\int_{0}^{X_{1}}g(x)\:dx&=\epsilon_{1},\\
+\lambda\int_{X_{1}}^{X_{2}}g(x)\:dx&=\epsilon_{2}, \\
+&\vdots \\
+\lambda\int_{X_{N-2}}^{X_{N-1}}g(x)\:dx&=\epsilon_{N-1}
+\end{align*}
+$$
+If we now simulate $U_1,\ldots,U_{N-1}—$independent uniform $(0,1)$ random numbers —then as the projection on the $y$-axis of the Poisson point whose $x$-coordinate is $X_i$, is uniform on $(0,g(X_i))$, it follows that the simulated Poisson points in the interval are $(X_i,U_ig(X_i)),i=1,\ldots,N-1.$
+
+Of course, the preceding technique is most useful when $g$ is regular enough so that the foregoing equations can be solved for the $X_i.$ For instance, if $g(x)=y$ (and so the region of interest is a rectangle), then
+$$
+X_i = 
+\frac{\epsilon_1 + \cdots + \epsilon_i}{\lambda y}, \quad i=1, \dots, N-1
+$$
+and the Poisson points are
+$$
+(X_i, yU_i), \quad i=1, \dots, N-1
+$$
+
+
