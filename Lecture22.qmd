@@ -47,7 +47,7 @@ methods given in Example 2 Lecture 21). Then, if $N(t) = n$, generate a new set 
 numbers—call them $U_1, \dots, U_n$—and ${tU_1, \dots, tU_n}$ will represent the set
 of $N(t)$ event times. If we could stop here this would be much more efficient than
 simulating the exponentially distributed interarrival times. However, we usually
-desire the event times in increasing order—for instance, for $s\lt t$,
+desire the event times in increasing order—for instance, for $s< t$,
 $$
 N(s) = \text{ number of } U_i: tU_i \le s
 $$
@@ -80,18 +80,18 @@ process.) Clearly such models are strong candidates for simulation studies.
 ## Simulating a Nonhomogeneous Poisson Process
 
 We now present three methods for simulating a nonhomogeneous Poisson process
-having intensity function $\lambda(t), 0 \le t \lt \infty$.
+having intensity function $\lambda(t), 0 \le t < \infty$.
 
 ### Conditional Distribution of the Arrival Times
 
 Recall the result for a Poisson process having rate $\lambda$ that given the number of events by time $T$ the set of event times are independent and identically distributed uniform $(0,T)$ random variables. Now suppose that each of these events is independently counted with a probability that is equal to $\lambda(t)/\lambda$ when the event occurred at time $t.$ Hence, given the number of counted events, it follows that the set of times of these counted events are independent with a common distribution given by $F(s)$, where
 $$
-\begin{align*}
+\begin{aligned}
 F(s)&=P\{\mathrm{time}\leqslant s|\mathrm{counted}\}\\
 &=\frac{P\{\mathrm{time}\leqslant s,\mathrm{counted}\}}{P\{\mathrm{counted}\}}\\
 &=\frac{\int_{0}^{T}P\{\mathrm{time}\leqslant s,\mathrm{counted}|\mathrm{time}=x\}\:dx/T}{P\{\mathrm{counted}\}}\\
 &=\frac{\int_{0}^{s}\lambda(x)\:dx}{\int_{0}^{T}\lambda(x)\:dx}
-\end{align*}
+\end{aligned}
 $$
 The preceding (somewhat heuristic) argument thus shows that given $n$ events of a nonhomogeneous Poisson process by time $T$ the $n$ event times are independent with a common density function
 $$
@@ -137,13 +137,13 @@ P\big\{\pi\:R_1^2>b\big\}=P\left\{R_1>\sqrt{\frac{b}{\pi}}\right\}=P\big\{\text{
 $$
 Also, with $C(a_2)-C(a_1)$ denoting the region between $C(a_2)$ and $C(a_1);$
 $$
-\begin{align*}
+\begin{aligned}
 &P\big\{\pi\:R_{2}^{2}-\pi\:R_{1}^{2}>b\big|R_{1}=r\big\}\\
 &=P\left\{R_{2}>\sqrt{(b+\pi r^{2})/\pi}\big|R_{1}=r\right\}\\
 &=P\left\{\text{no points in }C\left(\sqrt{(b+\pi r^{2})/\pi}\right)-C(r)\big|R_{1}=r\right\}\\
 &=P\left\{\text{no points in }C\left(\sqrt{(b+\pi r^{2})/\pi}\right)-C(r)\right\}\quad\text{by (b)}\\
 &=e^{-\lambda b}
-\end{align*}
+\end{aligned}
 $$
 In fact, the same argument can be repeated to obtain the following
 
@@ -225,7 +225,7 @@ $$
 
 The preceding algorithm requires, on average, $1+\lambda\pi r^2$ exponentials and an equal number of uniform random numbers. Another approach to simulating points in $C(r)$ is to first simulate $N$, the number of such points, and then use the fact that, given $N$, the points are uniformly distributed in $C(r).$ This latter procedure requires the simulation of $N$, a Poisson random variable with mean $\lambda\pi r^2;$ we must then simulate $N$ uniform points on $C(r)$, by simulating $R$ from the distribution $F_R(a)=a^2/r^2$ and $\theta$ from uniform $(0,2\pi)$ and must then sort these $N$ uniform values in increasing order of $R.$ The main advantage of the first procedure is that it eliminates the need to sort.
 
-![](gx.png)
+![](images/gx.png)
 
 The preceding algorithm can be thought of as the fanning out of a circle centered at $\mathbf{O}$ with a radius that expands continuously from $0$ to $r$. The successive radii at which Poisson points are encountered is simulated by noting that the additional area necessary to encompass a Poisson point is always, independent of the past, exponential with rate $\lambda.$ This technique can be used to simulate the process over noncircular regions. For instance, consider a nonnegative function $g(x)$, and suppose we are interested in simulating the Poisson process in the region between the $x$-axis and $g$ with $x$ going from $0$ to $T$ (see Figure above). To do so we can start at the left-hand end and fan vertically to the right by considering the successive areas $\int_0^ag(x)dx.$ Now if $X_1<X_2<\cdots$ denote the successive projections of the Poisson points on the $x$-axis, then analogous to @prp-prp1, it will follow that (with $X_0=0)\lambda\int_{X_{i-1}}^{X_{i}}g(x)dx,i\geqslant1$, will be independent exponentials with rate 1. Hence, we should simulate $\epsilon_1,\epsilon_2,\ldots$, independent exponentials with rate 1, stopping at
 $$
@@ -233,12 +233,12 @@ N=\min\left\{n\colon\epsilon_1+\cdots+\epsilon_n>\lambda\int_0^Tg(x)\:dx\right\}
 $$
 and determine $X_1,\ldots,X_{N-1}$ by
 $$
-\begin{align*}
+\begin{aligned}
 \lambda\int_{0}^{X_{1}}g(x)\:dx&=\epsilon_{1},\\
 \lambda\int_{X_{1}}^{X_{2}}g(x)\:dx&=\epsilon_{2}, \\
 &\vdots \\
 \lambda\int_{X_{N-2}}^{X_{N-1}}g(x)\:dx&=\epsilon_{N-1}
-\end{align*}
+\end{aligned}
 $$
 If we now simulate $U_1,\ldots,U_{N-1}—$independent uniform $(0,1)$ random numbers —then as the projection on the $y$-axis of the Poisson point whose $x$-coordinate is $X_i$, is uniform on $(0,g(X_i))$, it follows that the simulated Poisson points in the interval are $(X_i,U_ig(X_i)),i=1,\ldots,N-1.$
 

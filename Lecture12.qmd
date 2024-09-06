@@ -20,13 +20,13 @@ should have the same probability of containing the event. In other words, the ti
 of the event should be uniformly distributed over $[0, t]$. This is easily checked
 since, for $s \le t$,
 $$
-\begin{align*}
+\begin{aligned}
 P\{T_{1}<s|N(t)=1\} &= \frac{P\{T_{1}<s,N(t)=1\}}{P\{N(t)=1\}} \\
                     &=\frac{P\{1\mathrm{~event~in~}[0,s),0\mathrm{~events~in~}[s,t]\}}{P\{N(t)=1\}} \\
                     &=\frac{P\{1\mathrm{~event~in~}[0,s)\}P\{0\mathrm{~events~in~}[s,t]\}}{P\{N(t)=1\}} \\
                     &=\frac{\lambda se^{-\lambda s}e^{-\lambda(t-s)}}{\lambda te^{-\lambda t}} \\
                     &=\frac{s}{t}
-\end{align*}
+\end{aligned}
 $$
 This result may be generalized, but before doing so we need to introduce the concept of order statistics.
 
@@ -57,11 +57,11 @@ Given that $N(t)=n$, the $n$ arrival times $S_1,\ldots,S_n$ have the same distri
 :::{.proof}
 To obtain the conditional density of $S_1,\ldots,S_n$ given that $N(t)=n$ note that for $0<S_1<\cdots<S_n<t$ the event that $S_1=s_1,S_2=s_2,\ldots$, $S_n=s_n,N(t)=n$ is equivalent to the event that the first $n+1$ interarrival times satisfy $T_1=s_1,T_2=s_2-s_1,\ldots,T_n=s_n-s_{n-1},T_{n+1}>t-s_n.$ Hence, using Proposition 1 in Lecture 7, we have that the conditional joint density of $S_1,\ldots,S_n$ given that $N(t)=n$ is as follows:
 $$
-\begin{align*}
+\begin{aligned}
 f(s_1,\dots,s_n|n) &= \frac{f(s_1,\dots,s_n,n)}{P\{N(t)=n\}} \\
                    &= \frac{\lambda e^{-\lambda s_1}\lambda e^{-\lambda (s_2-s_1)}\cdots\lambda e^{-\lambda(s_n-s_{n-1})}e^{-\lambda (t-s_n)}}{e^{-\lambda t}((\lambda t)^n/n!)} \\
-                   &= \frac{n!}{t^n}, \quad 0\lt s_1\lt \cdots \lt s_n\lt t
-\end{align*}
+                   &= \frac{n!}{t^n}, \quad 0< s_1< \cdots < s_n< t
+\end{aligned}
 $$
 which proves the result.
 :::
@@ -107,12 +107,12 @@ type 4: otherwise.
 
 Hence an arrival at time y will be type $i$ with probability $P_i(y)$ given by
 $$
-\begin{align*}
+\begin{aligned}
 &P_{1}(y)=\begin{cases}G(t+s-y)-G(t-y),&\quad\text{if }y<t\\0,&\quad\text{otherwise}\end{cases}\\
 &P_{2}(y)=\begin{cases}\tilde{G}(t+s-y),&\quad\text{if }y<t\\0,&\quad\text{otherwise}\end{cases} \\
 &P_3(y)=\begin{cases}\bar G(t+s-y),&\quad\text{if}\:t<y<t+s\\0,&\quad\text{otherwise}\end{cases}\\
 &P_{4}(y)=1-P_{1}(y)-P_{2}(y)-P_{3}(y)
-\end{align*}
+\end{aligned}
 $$
 Hence, if $N_i=N_i(s+t), i=1,2,3$, denotes the number of type $i$ events that occur, then from @prp-prp1, $N_i, i=1,2,3$, are independent Poisson random variables with respective means
 $$
@@ -120,27 +120,27 @@ E[N_i]=\lambda\int_0^{t+s}P_i(y)\:dy,\quad i=1,2,3
 $$
 Because
 $$
-\begin{align*}
+\begin{aligned}
 Y(t)&=N_1+N_2,\\
 Y(t+s)&=N_2+N_3
-\end{align*}
+\end{aligned}
 $$
 it is now an easy matter to compute the joint distribution of $Y(t)$ and $Y(t+s).$ For instance,
 $$
-\begin{align*}&\mathrm{Cov}[Y(t),Y(t+s)]\\
+\begin{aligned}&\mathrm{Cov}[Y(t),Y(t+s)]\\
 &=\mathrm{Cov}(N_{1}+N_{2},N_{2}+N_{3})\\
 &=\mathrm{Cov}(N_{2},N_{2})\quad\mathrm{by~independence~of~}N_{1},N_{2},N_{3}\\
 &=\mathrm{Var}(N_{2})\\
 &=\lambda\int_{0}^{t}\bar{G}(t+s-y)\:dy=\lambda\int_{0}^{t}\bar{G}(u+s)\:du
-\end{align*}
+\end{aligned}
 $$
 where the last equality follows since the variance of a Poisson random variable equals its mean, and from the substitution $u=t-y.$ Also, the joint distribution of $Y(t)$ and $Y(t+s)$ is as follows:
 $$
-\begin{align*}
+\begin{aligned}
 P\{Y(t)&=i,Y(t+s)=j\}=P\{N_{1}+N_{2}=i,N_{2}+N_{3}=j\}\\
 &=\sum_{l=0}^{\min(i,j)}P\{N_{2}=l,N_{1}=i-l,N_{3}=j-l\}\\
 &=\sum_{l=0}^{\min(i,j)}P\{N_{2}=l\}P\{N_{1}=i-l\}P\{N_{3}=j-l\}\quad\blacksquare
-\end{align*}
+\end{aligned}
 $$
 
 :::{#exm-exa2}
@@ -188,10 +188,10 @@ $$
 Using this estimate of $\lambda$, we can estimate the number of infected but symptomless
 individuals at time $t$ by
 $$
-\begin{align*}
+\begin{aligned}
 \text{estimate of } N_2(t)  &= \hat{\lambda} \int_{0}^t \hat{G}(y) dy \\
 &= \frac{n_1\int_{0}^t\hat{G}(y)dy}{\int_0^t G(y)dy}
-\end{align*}
+\end{aligned}
 $$
 For example, suppose that $G$ is exponential with mean $\mu.$ Then $\bar{G}(y)=e^-y/\mu$
 and a simple integration gives that
@@ -210,10 +210,10 @@ That is, if we suppose that the foregoing model is approximately correct (and we
 
 Let us compute the joint probability $P\{N_i(t)=n_i,i=1,\ldots,k\}.$ To do so note first that in order for there to have been $n_i$ type $i$ events for $i=1,\ldots,k$ there must have been a total of $\sum_i=1^kn_i$ events. Hence, conditioning on $N(t)$ yields
 $$
-\begin{align*}&P\{N_{1}(t)=n_{1},\ldots,N_{k}(t)=n_{k}\} \\
+\begin{aligned}&P\{N_{1}(t)=n_{1},\ldots,N_{k}(t)=n_{k}\} \\
 &=P\left\{N_{1}(t)=n_{1},\ldots,N_{k}(t)=n_{k}\:\Big|\:N(t)=\sum_{i=1}^{k}n_{i}\right\} \\
 &\times P\left\{N(t)=\sum_{i=1}^{k}n_{i}\right\}
-\end{align*}
+\end{aligned}
 $$
 Now consider an arbitrary event that occurred in the interval $[0,t].$ If it had occurred at time $s$,then the probability that it would be a type $i$ event would be $P_i(s).$ Hence, since by @thm-thm1 this event will have occurred at some time uniformly distributed on $(0,t)$, it follows that the probability that this event will be a type $i$ event is
 $$
@@ -231,10 +231,10 @@ P\left\{N_1(t) = n_1, \dots, N_k(t) = n_k | N(t)=\sum_{i=1}^k n_i\right\} = \fra
 $$
 Consequently,
 $$
-\begin{align*}
+\begin{aligned}
 P\{N_1(t) = n_1, \dots, N_k(t) = n_k\} &= \frac{(\sum_{i=1}^k n_i)!}{n_1!\cdots n_k!}P_1^{n_1}\cdots P_{k}^{n_k}e^{-\lambda t}\frac{(\lambda t)\sum_i n_i}{(\sum_i n_i)!} \\
 &= \prod_{i=1}^k e^{-\lambda t}P_i (\lambda t P_i)^{n_i} / n_i!
-\end{align*}
+\end{aligned}
 $$
 and the proof is complete
 
@@ -259,30 +259,30 @@ Now, conditional on $N(t) = n$ the claim arrival times $S_1, \dots, S_n$ are dis
 as the ordered values $U_{(1)}, \dots, U_{(n)}$ of $n$ independent uniform $(0, t)$ random variables
 $U_1, \dots, U_n$. Therefore,
 $$
-\begin{align*}
+\begin{aligned}
 E[D(t)|N(t)=n] &= E\left[\sum_{i=1}^nC_ie^{-\alpha U_{(i)}}\right] \\
                &= \sum_{i=1}^n E\left[C_ie^{-\alpha U_{(i)}}\right] \\
                &= \sum_{i=1}^n E\left[C_i\right] E\left[e^{-\alpha U_{(i)}}\right]
-\end{align*}
+\end{aligned}
 $$
 where the final equality used the independence of the claim amounts and their
 arrival times. Because $E[C_i] = \mu$, continuing the preceding gives
 $$
-\begin{align*}
+\begin{aligned}
 E[D(t)|N(t)=n] &= \mu  \sum_{i=1}^n E\left[e^{-\alpha U_{(i)}}\right]  \\
                &= \mu E\left[\sum_{i=1}^n e^{-\alpha U_{(i)}}\right] \\
                &= \mu E\left[\sum_{i=1}^n e^{-\alpha U_{i}}\right]
-\end{align*}
+\end{aligned}
 $$
 The last equality follows because $U_{(1)}, \dots, U_{(n)}$ are the values $U_1, \dots, U_n$ in
 increasing order, and so $\sum_{i=1}^n e^{-\alpha U_{(i)}} = \sum_{i=1}^n e^{-\alpha U_{i}}$. Continuing the string of
 equalities yields
 $$
-\begin{align*}
+\begin{aligned}
 E[D(t)|N(t)=n] &= n\mu E\left[e^{-\alpha U}\right]  \\
                &= n\frac{\mu}{t}\int_0^t e^{-\alpha x} dx \\
                &= n\frac{\mu}{\alpha t}(1-e^{-\alpha t})
-\end{align*}
+\end{aligned}
 $$
 Therefore,
 $$

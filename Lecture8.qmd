@@ -24,9 +24,9 @@ F(x)=\int_{-\infty}^{x}f(y)\:dy=\begin{cases}1-e^{-\lambda x},\quad&x\geqslant0\
 $$
 The mean of the exponential distribution, $E[X]$, is given by
 $$
-\begin{align*}
+\begin{aligned}
 E[X]&=\int_{-\infty}^\infty xf(x)\:dx\\&=\int_0^\infty\lambda xe^{-\lambda x}\:dx
-\end{align*}
+\end{aligned}
 $$
 Integrating by parts $(u=x,dv=\lambda e^{-\lambda x}dx)$ yields
 $$
@@ -34,29 +34,29 @@ E[X]=-xe^{-\lambda x}\Big|_{0}^{\infty}+\int_{0}^{\infty}e^{-\lambda x}\:dx=\fra
 $$
 The moment generating function $\phi(t)$ of the exponential distribution is given by
 $$
-\begin{align*}
+\begin{aligned}
 \phi(t)&=E[e^{tX}]\\
 &=\int_{0}^{\infty}e^{tx}\lambda e^{-\lambda x}\:dx\\
 &=\frac{\lambda}{\lambda-t}\quad\mathrm{for}\:t<\lambda
-\end{align*}
+\end{aligned}
 $$ {#eq-eq5-1}
 
 All the moments of $X$ can now be obtained by differentiating @eq-eq5-1. For
 example,
 $$
-\begin{align*}
+\begin{aligned}
 E[X^{2}]&=\frac{d^{2}}{dt^{2}}\phi(t)\bigg|_{t=0}\\
 &=\frac{2\lambda}{(\lambda-t)^{3}}\bigg|_{t=0}\\
 &=\frac{2}{\lambda^{2}}
-\end{align*}
+\end{aligned}
 $$
 Consequently,
 $$
-\begin{align*}
+\begin{aligned}
 \operatorname{Var}(X) &= E[X^{2}]-(E[X])^{2}\\
 &=\frac{2}{\lambda^{2}}-\frac{1}{\lambda^{2}}\\
 &=\frac{1}{\lambda^{2}}
-\end{align*}
+\end{aligned}
 $$
 
 :::{#exm-exa1}
@@ -89,12 +89,12 @@ $$
 $$
 Thus,
 $$
-\begin{align*}
+\begin{aligned}
 E\bigg[\int_{0}^{T}R(x)\:dx\bigg]&=E\bigg[\int_{0}^{\infty}R(x)I(x)\:dx\bigg]\\
 &=\int_{0}^{\infty}E[R(x)I(x)]dx\\
 &=\int_{0}^{\infty}E[R(x)]E[I(x)]dx&\text{by independence}\\&=\int_{0}^{\infty}E[R(x)]P\{T\geqslant x\}\:dx\\
 &=\int_{0}^{\infty}e^{-\alpha x}E[R(x)]\:dx
-\end{align*}
+\end{aligned}
 $$
 Therefore, the expected total discounted reward is equal to the expected total (undiscounted) reward earned by a random time that is exponentially distributed with a rate equal to the discount factor.
 :::
@@ -231,12 +231,12 @@ I=
 $$
 Let $Y=(X-400)^+$ be the amount paid. By the lack of memory property of the exponential, it follows that if a damage amount exceeds 400, then the amount by which it exceeds it is exponential with mean 1000. Therefore,
 $$
-\begin{align*}
+\begin{aligned}
 E[Y|I&=1]=1000\\
 E[Y|I&=0]=0\\
 \operatorname{Var}(Y|I&=1)=(1000)^{2}\\
 \operatorname{Var}(Y|I&=0)=0
-\end{align*}
+\end{aligned}
 $$
 which can be conveniently written as
 $$
@@ -249,10 +249,10 @@ E[Y]=E\Big[E[Y|I]\Big]=10^{3}E[I]=10^{3}e^{-0.4}\approx670.32
 $$
 and, by the conditional variance formula
 $$
-\begin{align*}
+\begin{aligned}
 \operatorname{Var}(Y)&=E\Big[\operatorname{Var}(Y|I)\Big]+\operatorname{Var}\big(E[Y|I]\big)\\
 &=10^{6}e^{-0.4}+10^{6}e^{-0.4}(1-e^{-0.4})
-\end{align*}
+\end{aligned}
 $$
 where the final equality used that the variance of a Bernoulli random variable
 with parameter $p$ is $p(1-p).$ Consequently,
@@ -339,11 +339,11 @@ r(t)=\sum_{j=1}^n\lambda_jP\{T=j|X>t\}
 $$
 If $\lambda_1<\lambda_i$, for all $i>1$,then
 $$
-\begin{align*}
+\begin{aligned}
 P\{T=1|X>t\}&=\:\frac{P_{1}e^{-\lambda_{1}t}}{P_{1}e^{-\lambda_{1}t}+\sum_{i=2}^{n}P_{i}e^{-\lambda_{i}t}}\\
 &=\:\frac{P_{1}}{P_{1}+\sum_{i=2}^{n}P_{i}e^{-(\lambda_{i}-\lambda_{1})t}}\\
 &\to1\quad\mathrm{as}\:t\to\infty
-\end{align*}
+\end{aligned}
 $$
 Similarly, $P\left\{T=i|X>t\right\}\to0$ when $i\neq1$, thus showing that
 $$

@@ -31,10 +31,10 @@ $$
 $$
 then
 $$
-\begin{align*}
+\begin{aligned}
 E[\bar{Y}]&=\theta, \\
 E\Big[(\bar{Y}-\theta)^2\Big]&=\mathrm{Var}(\bar{Y})
-\end{align*}
+\end{aligned}
 $$
 Hence, we can use $\bar{Y}$ as an estimate of $\theta.$ As the expected square of the difference between $\bar{Y}$ and $\theta$ is equal to the variance of $\bar{Y}$, we would like this quantity to be as small as possible. [In the preceding situation, $\mathrm{Var}(\bar{Y}) = \mathrm{Var}(Y_i)/k$, usually not known in advance but must be estimated from the generated values $Y_1,\ldots,Y_n$.] We now present three general techniques for reducing the variance of our estimator.
 
@@ -43,10 +43,10 @@ Hence, we can use $\bar{Y}$ as an estimate of $\theta.$ As the expected square o
 In the preceding situation, suppose that we have generated $Y_1$ and $Y_2$, identically
 distributed random variables having mean $\theta.$ Now,
 $$
-\begin{align*}
+\begin{aligned}
 \mathrm{Var}\biggl(\frac{Y_{1}+Y_{2}}{2}\biggr)&=\frac{1}{4}[\mathrm{Var}(Y_{1})+\mathrm{Var}(Y_{2})+2\mathrm{Cov}(Y_{1},Y_{2})]\\
 &=\frac{\mathrm{Var}(Y_{1})}{2}+\frac{\mathrm{Cov}(Y_{1},Y_{2})}{2}
-\end{align*}
+\end{aligned}
 $$
 Hence, it would be advantageous (in the sense that the variance would be reduced) if $Y_1$ and $Y_2$ rather than being independent were negatively correlated. To see how we could arrange this, let us suppose that the random variables $X_1,\ldots,X_n$ are independent and, in addition, that each is simulated via the inverse transform technique. That is, $X_i$ is simulated from $F_i^{-1}(U_i)$ where $U_i$ is a random number and $F_i$ is the distribution of $X_i.$ Hence, $Y_1$ can be expressed as
 $$
@@ -89,23 +89,23 @@ $$
 If we suppose that $X$ and $Y$ are independent and identically distributed then, as in
 this case,
 $$
-\begin{align*}
+\begin{aligned}
 E[f(X)g(X)]&=E[f(Y)g(Y)], \\
 E[f(X)g(Y)]&=E[f(Y)g(X)]=E[f(X)]E[g(X)]
-\end{align*}
+\end{aligned}
 $$
 we obtain the result when $n=1.$
 
 So assume that @eq-eq11-11 holds for $n-1$ variables, and now suppose that
 $X_1,\ldots,X_n$ are independent and $f$ and $g$ are increasing functions. Then
 $$
-\begin{align*}
+\begin{aligned}
 &E[f(\mathbf{X})g(\mathbf{X})|X_n = x_n] \\
 &=E[f(X_{1},\ldots,X_{n-1},x_{n})g(X_{1},\ldots,X_{n-1},x_{n})|X_{n}=x] \\
 &= E[ f( X_1, \ldots , X_{n- 1}, x_n) g( X_1, \ldots , X_{n- 1}, x_n) ] \quad \text{by independence} \\
 &\geqslant E[f(X_1,\ldots,X_{n-1},x_n)]E[g(X_1,\ldots,X_{n-1},x_n)] quad \text{by the induction hypothesis} \\
 &=E[f(\mathbf{X})|X_{n}=x_{n}]E[g(\mathbf{X})|X_{n}=x_{n}]
-\end{align*}
+\end{aligned}
 $$
 Hence,
 $$
@@ -113,17 +113,17 @@ E[f(\mathbf{X})g(\mathbf{X})|X_n]\geqslant E[f(\mathbf{X})|X_n]E[g(\mathbf{X})|X
 $$
 and, upon taking expectations of both sides,
 $$
-\begin{align*}
+\begin{aligned}
 E[f(\mathbf{X})g(\mathbf{X})]&\geqslant E\big[E[f(\mathbf{X})|X_{n}]E[g(\mathbf{X})|X_{n}]\big]\\
 &\geqslant E[f(\mathbf{X})]E[g(\mathbf{X})]
-\end{align*}
+\end{aligned}
 $$
 The last inequality follows because $E[f(\mathbf{X})|X_n]$ and $E[g(\mathbf{X})|X_n]$ are both increasing functions of $X_n$, and so, by the result for $n=1$,
 $$
-\begin{align*}
+\begin{aligned}
 E\Big[E[f(\mathbf{X})|X_{n}]E[g(\mathbf{X})|X_{n}]\Big]&\geqslant E\Big[E[f(\mathbf{X})|X_{n}]\Big]E\Big[E[g(\mathbf{X})|X_{n}]\Big]\\
 &=E[f(\mathbf{X})]E[g(\mathbf{X})]\:
-\end{align*}
+\end{aligned}
 $$
 :::
 

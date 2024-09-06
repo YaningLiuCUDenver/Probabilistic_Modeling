@@ -124,14 +124,14 @@ has density function $f$.
 Let $X$ be the value obtained, and let $N$ denote the number of necessary
 iterations. Then
 $$
-\begin{align*}
+\begin{aligned}
 P\{X\leqslant x\}&=P\{Y_{N}\leqslant x\}\\
 &=P\{Y\leqslant x|U\leqslant f(Y)/cg(Y)\}\\
 &=\frac{P\{Y\leqslant x,U\leqslant f(Y)/cg(Y)\}}{K}\\
 &=\frac{\int P\{Y\leqslant x,U\leqslant f(Y)/cg(Y)|Y=y\}g(y)\:dy}{K}\\
 &=\frac{\int_{-\infty}^{x}(f(y)/cg(y))g(y)\:dy}{K}\\
 &=\frac{\int_{-\infty}^{x}f(y)\:dy}{Kc}
-\end{align*}
+\end{aligned}
 $$
 where $K= P\{ U\leqslant f( Y) / cg( Y) \}$. Letting $x\to \infty$ shows that $K= 1/ c$ and the proof is complete.
 :::

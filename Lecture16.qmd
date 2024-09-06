@@ -35,10 +35,10 @@ P\{X_i=1\}=P\{X_i=-1\}=\frac{1}{2}
 $$
 As $E[X_i]=0$, Var$(X_i)=E[X_i^2]=1$, we see from @eq-eq10-1 that
 $$
-\begin{align*}
+\begin{aligned}
 E[X(t)] &= 0 \\
 \mathrm{Var}(X(t))&=(\Delta x)^{2}\biggl[\frac{t}{\Delta t}\biggr]
-\end{align*}
+\end{aligned}
 $$ {#eq-eq10-2}
 
 We shall now let $\Delta x$ and $\Delta t$ go to 0. However, we must do it in a way such that the resulting limiting process is nontrivial (for instance, if we let $\Delta x=\Delta t$ and let $\Delta t\to 0$, then from the preceding we see that $E[X(t)]$ and $\mathrm{Var}(X(t))$ would both converge to 0 and thus $X(t)$ would equal 0 with probability 1). If we let $\Delta x=\sigma\sqrt{\Delta t}$ for some positive constant $\sigma$ then from @eq-eq10-2 we see that $as~\Delta t\to 0$
@@ -87,46 +87,46 @@ $$
 To obtain the joint density function of $X(t_1),X(t_2),\ldots,X(t_n)$ for $t_1<\cdots<t_n$,
 note first that the set of equalities 
 $$
-\begin{align*}
+\begin{aligned}
 X(t_1) &= x_1, \\
 X(t_2) &= x_2, \\
 &\vdots \\
 X(t_n) &= x_n
-\end{align*}
+\end{aligned}
 $$
 is equivalent to
 $$
-\begin{align*}
+\begin{aligned}
 X(t_1) &= x_1, \\
 X(t_2) - X(t_1) &= x_2 - x_1, \\
 &\vdots \\
 X(t_n) - X(t_{n-1}) &= x_n - x_{n-1}
-\end{align*}
+\end{aligned}
 $$
 
 However, by the independent increment assumption it follows that $X(t_1)$, $X(t_2)-X(t_1), \ldots, X(t_n)-X(t_{n-1})$, are independent and, by the stationary increment assumption, that $X(t_k)-X(t_{k-1})$ is normal with mean 0 and variance $t_k-t_{k-1}$. Hence, the joint density of $X(t_1),\ldots,X(t_n)$ is given by
 $$
-\begin{align*}
+\begin{aligned}
 &f(x_{1},x_{2},\ldots,x_{n})=f_{t_{1}}(x_{1})f_{t_{2}-t_{1}}(x_{2}-x_{1})\cdots f_{t_{n}-t_{n-1}}(x_{n}-x_{n-1})\\
 &=\frac{\exp\left\{-\frac{1}{2}\biggl[\frac{x_{1}^{2}}{t_{1}}+\frac{(x_{2}-x_{1})^{2}}{t_{2}-t_{1}}+\cdots+\frac{(x_{n}-x_{n-1})^{2}}{t_{n}-t_{n-1}}\biggr]\right\}}{(2\pi)^{n/2}[t_{1}(t_{2}-t_{1})\cdots(t_{n}-t_{n-1})]^{1/2}}
-\end{align*}
+\end{aligned}
 $$ {#eq-eq10-3}
 From this equation, we can compute in principle any desired probabilities. For instance, suppose we require the conditional distribution of $X(s)$ given that $X(t)=B$ where $s<t.$ The conditional density is
 $$
-\begin{align*}
+\begin{aligned}
 f_{s|t}(x|B)&=\frac{f_{s}(x)\:f_{t-s}(B-x)}{f_{t}(B)}\\
 &=K_{1}\exp\{-x^{2}/2s-(B-x)^{2}/2(t-s)\}\\
 &=K_{2}\exp\biggl\{-x^{2}\biggl(\frac{1}{2s}+\frac{1}{2(t-s)}\biggr)+\frac{Bx}{t-s}\biggr\}\\
 &=K_{2}\exp\biggl\{-\frac{t}{2s(t-s)}\biggl(x^{2}-2\frac{sB}{t}x\biggr)\biggr\}\\
 &=K_{3}\exp\biggl\{-\frac{(x-Bs/t)^{2}}{2s(t-s)/t}\biggr\}
-\end{align*}
+\end{aligned}
 $$
 where $K_1,K_2$, and $K_3$ do not depend on $x.$ Hence, we see from the preceding that the conditional distribution of $X(s)$ given that $X(t)=B$ is, for $s<t$, normal with mean and variance given by
 $$
-\begin{align*}
+\begin{aligned}
 E[X(s)|X(t)=B]&=\frac{s}{t}B,\\
 \mathrm{Var}[X(s)|X(t)=B]&=\frac{s}{t}(t-s)
-\end{align*}
+\end{aligned}
 $$ {#eq-eq10-4}
 
 :::{#exm-exa1}
@@ -142,7 +142,7 @@ probability that she was ahead at the midpoint?
 :::{#sol-sol1}
 (a)
 $$
-\begin{align*}
+\begin{aligned}
 &P\{Y(1)>0|Y(1/2)=\sigma\} \\
 &=P\{Y(1)-Y(1/2)>-\sigma|Y(1/2)=\sigma\}\\
 &= P\{ Y( 1) - Y( 1/ 2) > - \sigma \}\quad \text{by independent increments} \\
@@ -150,17 +150,17 @@ $$
 &=P\left\{\frac{Y(1/2)}{\sigma/\sqrt{2}}>-\sqrt{2}\right\}\\
 &=\Phi(\sqrt{2})\\
 &\approx0.9213
-\end{align*}
+\end{aligned}
 $$
 where $\Phi(x)=P\{N(0,1)\leqslant x\}$ is the standard normal distribution function. 
 
 (b) Because we must compute $P\{Y(1/2)>0|Y(1)=\sigma\}$, let us first determine the conditional distribution of $Y(s)$ given that $Y(t)=C$, when $s<t.$ Now, since $\{X(t),t\geqslant0\}$ is standard Brownian motion when $X(t)=Y(t)/\sigma$, we obtain from @eq-eq10-4 that the conditional distribution of $X(s)$, given that $X(t)=C/\sigma$, is normal with mean $sC/t\sigma$ and variance $s(t-s)/t.$ Hence, the conditional distribution of $Y(s)=\sigma X(s)$ given that $Y(t)=C$ is normal with mean $sC/t$ and variance $\sigma^2s(t-s)/t.$ Hence,
 $$
-\begin{align*}
+\begin{aligned}
 P\{Y(1/2)>0|Y(1)=\sigma\}&=P\{N(\sigma/2,\sigma^2/4)>0\}\\
 &=\Phi(1)\\
 &\approx0.8413
-\end{align*}
+\end{aligned}
 $$
 :::
 
@@ -168,10 +168,10 @@ $$
 
 Let $T_a$ denote the first time the Brownian motion process hits $a.$ When $a>0$ we will compute $P\{T_a\leqslant t\}$ by considering $P\{X(t)\geqslant a\}$ and conditioning on whether or not $T_a\leqslant t.$ This gives
 $$
-\begin{align*}
+\begin{aligned}
 P\{X(t)\geqslant a\}&=P\{X(t)\geqslant a|T_a\leqslant t\}P\{T_a\leqslant t\} \\
 &+P\{X(t)\geqslant a|T_{a}>t\}P\{T_{a}>t\}
-\end{align*}
+\end{aligned}
 $$ {#eq-eq10-5}
 
 Now if $T_a\leqslant t$, then the process hits $a$ at some point in $[0,t]$ and, by symmetry, it
@@ -182,11 +182,11 @@ $$
 
 As the second right-hand term of @eq-eq10-5 is clearly equal to 0 (since, by continuity, the process value cannot be greater than $a$ without having yet hit $a)$, we see that
 $$
-\begin{align*}
+\begin{aligned}
 P\{T_{a}\leqslant t\}&=2P\{X(t)\geqslant a\}\\
 &=\frac{2}{\sqrt{2\pi t}}\int_{a}^{\infty}e^{-x^{2}/2t}\:dx\\
 &=\frac{2}{\sqrt{2\pi}}\int_{a/\sqrt{t}}^{\infty}e^{-y^{2}/2}\:dy,\quad a>0
-\end{align*}
+\end{aligned}
 $$ {#eq-eq10-6}
 
 For $a<0$, the distribution of $T_a$ is, by symmetry, the same as that of $T_{-a}.$
@@ -198,11 +198,11 @@ $$ {#eq-eq-10-7}
 Another random variable of interest is the maximum value the process attains
 in $[0,t].$ Its distribution is obtained as follows: For $a>0$
 $$
-\begin{align*}
+\begin{aligned}
 P\left\{\max_{0\leqslant s\leqslant t}X(s)\geqslant a\right\}&=P\{T_{a}\leqslant t\}\quad\mathrm{by~continuity}\\
 &=2P\{X(t)\geqslant a\}\quad\mathrm{from~} (6)\\
 &=\frac{2}{\sqrt{2\pi}}\int_{a/\sqrt{t}}^{\infty}e^{-y^{2}/2}\:dy
-\end{align*}
+\end{aligned}
 $$
 Let us now consider the probability that Brownian motion hits A before $-B$ where $A>0,B>0.$ To compute this we shall make use of the interpretation of Brownian motion as being a limit of the symmetric random walk. To start let us recall from the results of the gambler's ruin problem that the probability that the symmetric random walk goes up $A$ before going down $B$ when each step is equally likely to be either up or down a distance $\Delta x$ is with $N= (A+ B) / \Delta x, i= B/ \Delta x]$ equal to $B\Delta x/(A+B)\Delta x=$ $B/(A+B).$
 

@@ -41,12 +41,12 @@ of this latter quantity depends only on the length of the interval and is
 independent of what has occurred in any nonoverlapping interval.
 
 - $$
-    \begin{align*}
+    \begin{aligned}
         P\{N_1(h) =1\} &= P\{N_1(h) = 1 | N(h) = 1\} P\{N(h) =1\} \\
                        &+ P\{N_1(h) = 1 | N(h)\ge 2\} P\{N(h) \ge 2\} \\
                        &= p(\lambda h + o(h) + o(h)) \\
                        &= \lambda ph + o(h)
-    \end{align*}
+    \end{aligned}
   $$ 
 
 - $P\{N_1(h) \ge 2\} \le P\{N(h) \ge 2\} = o(h)$
@@ -119,19 +119,19 @@ optimal.) What is the best value of y?
 :::{#sol-sol2}
 Let us compute the expected total return when you use the y-policy,
 and then choose the value of $y$ that maximizes this quantity. Let $X$ denote
-the value of a random offer, and let $\bar{F}(x) = P\{X\gt x\} = \int_x^\infty f(u)du$ be its
+the value of a random offer, and let $\bar{F}(x) = P\{X> x\} = \int_x^\infty f(u)du$ be its
 tail distribution function. Because each offer will be greater than $y$ with probability
 $\bar{F}(y)$, it follows that such offers occur according to a Poisson process
 with rate $λ \bar{F}(y)$. Hence, the time until an offer is accepted is an exponential random variable with rate $λ \bar{F}(y)$. Letting $R(y)$ denote the total return from the
 policy that accepts the first offer that is greater than $y$, we have
 $$
-\begin{align*}
+\begin{aligned}
 E[R(y)]&=E[\text{accepted offer}]-cE[\text{time to accept}] \\
        &=E[X|X>y]-\frac{c}{\lambda\bar{F}(y)} \\
        &=\int_{0}^{\infty}xf_{X|X>y}(x)\:dx - \frac{c}{\lambda\bar{F}(y)} \\
        &=\int_{y}^{\infty}x\frac{f(x)}{\bar{F}(y)}\:dx - \frac{c}{\lambda\bar{F}(y)} \\
        &=\frac{\int_{y}^{\infty}xf(x)\:dx - c/\lambda}{\bar{F}(y)}
-\end{align*}
+\end{aligned}
 $$
 Differentiation yields that
 $$
@@ -149,7 +149,7 @@ or
 $$
 \int_{y}^{\infty}(x-y)f(x)\:dx=\frac{c}{\lambda}
 $$ {#eq-eq5-14}
-We now argue that the left-hand side of the preceding is a nonincreasing function of $y$. To do so, note that, with $a^+$ defined to equal $a$ if $a \gt 0$ or to equal $0$ otherwise, we have
+We now argue that the left-hand side of the preceding is a nonincreasing function of $y$. To do so, note that, with $a^+$ defined to equal $a$ if $a > 0$ or to equal $0$ otherwise, we have
 $$
 \int_y^\infty(x-y)f(x)\:dx = E[(X-y)^+]
 $$
@@ -220,16 +220,16 @@ X=\max_{1\leqslant j\leqslant m}X_j
 $$
 denote the time at which a complete collection is amassed. Since the $X_j$ are independent exponential random variables with respective rates $p_j$, it follows that
 $$
-\begin{align*}
+\begin{aligned}
 P\{X<t\}&=P\{\max X_{j}<t\}\\&=P\{X_{j}<t,\mathrm{~for~}j=1,\ldots,m\}\\&=\prod_{j=1}^{m}(1-e^{-p_{j}t})
-\end{align*}
+\end{aligned}
 $$
 Therefore,
 $$
-\begin{align*}
+\begin{aligned}
 E[X] &=\int_{0}^{\infty}P\{X>t\}\:dt \\
      &=\int_{0}^{\infty}\left\{1-\prod_{j=1}^{m}(1-e^{-p_{j}t})\right\}dt
-\end{align*} 
+\end{aligned} 
 $${#eq-eq5-15}
 It remains to relate $E[X]$, the expected time until one has a complete set, to $E[N]$, the expected number of coupons it takes. This can be done by letting $T_i$ denote the $i$th interarrival time of the Poisson process that counts the number of coupons obtained. Then it is easy to see that
 $$
@@ -248,10 +248,10 @@ and so $E[N]$ is as given in @eq-eq5-15.
 
 Let us now compute the expected number of types that appear only once in the complete collection. Letting $I_i$ equal l if there is only a single type $i$ coupon in the final set, and letting it equal 0 otherwise, we thus want
 $$
-\begin{align*}
+\begin{aligned}
 E\left[\sum_{i=1}^{m}I_{i}\right] &=\sum_{i=1}^mE[I_i] \\
                                   &=\sum_{i=1}^mP\{I_i=1\}
-\end{align*}
+\end{aligned}
 $$
 
 Now there will be a single type $i$ coupon in the final set if a coupon of each type has appeared before the second coupon of type $i$ is obtained. Thus, letting $S_i$ denote the time at which the second type $i$ coupon is obtained, we have
@@ -260,18 +260,18 @@ P\{I_i=1\}=P\{X_j<S_i, \text{ for all } j\ne i\}
 $$
 Using that $S_i$ has a gamma distribution with parameters (2, pi), this yields
 $$
-\begin{align*}
+\begin{aligned}
 P\{I_{i}=1\} &=\int_{0}^{\infty}P\{X_{j}<S_{i}\mathrm{~for~all~}j\neq i|S_{i}=x\}p_{i}e^{-p_{i}x}\:p_{i}x\:dx \\
              &=\int_{0}^{\infty}P\{X_{j}<x,\mathrm{~for~all~}j\neq i\}p_{i}^{2}x\:e^{-p_{i}x}\:dx \\
              &=\int_{0}^{\infty}\prod_{j\neq i}(1-e^{-p_{j}x})\:p_{i}^{2}xe^{-p_{i}x}\:dx
-\end{align*}
+\end{aligned}
 $$
 Therefore, we have the result
 $$
-\begin{align*}
+\begin{aligned}
 E\left[\sum_{i=1}^{m}I_{i}\right] &=\int_{0}^{\infty}\sum_{i=1}^{m}\prod_{j\neq i}(1-e^{-p_{j}x})p_{i}^{2}xe^{-p_{i}x}\:dx\\
 &=\int_{0}^{\infty}x\prod_{j=1}^{m}(1-e^{-p_{j}x})\sum_{i=1}^{m}p_{i}^{2}\frac{e^{-p_{i}x}}{1-e^{-p_{i}x}}\:dx\quad\blacksquare
-\end{align*}
+\end{aligned}
 $$
 :::
 

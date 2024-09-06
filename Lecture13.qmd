@@ -44,10 +44,10 @@ a discrete-time Markov chain, we say that the process
 $\{X(t), t \ge 0\}$ is a continuous-time Markov chain if for all $s, t \ge 0$ and nonnegative
 integers $i, j, x(u)$, $0 \le u < s$
 $$
-\begin{align*}
-P\{X(t+s) &= j | X(s) = i, X(u) = x(u), 0\le u \lt s\} \\
+\begin{aligned}
+P\{X(t+s) &= j | X(s) = i, X(u) = x(u), 0\le u < s\} \\
           &= P\{X(t+s) = j | X(s) = i\}
-\end{align*}
+\end{aligned}
 $$
 
 In other words, a continuous-timeMarkov chain is a stochastic process having the
@@ -73,11 +73,11 @@ that it stays in state $i$ for at least five minutes. That is, if we let $T_i$ d
 the amount of time that the process stays in state $i$ before making a transition into
 a different state, then
 $$
-P\{T_i \gt 15 | T_i\gt 10\} = P\{T_i \gt 5\}
+P\{T_i > 15 | T_i> 10\} = P\{T_i > 5\}
 $$
 or, in general, by the same reasoning,
 $$
-P\{T_i \gt s+t | T_i \gt s\} = P\{T_i \gt t\}
+P\{T_i > s+t | T_i > s\} = P\{T_i > t\}
 $$
 for all $s, t \ge 0$. Hence, the random variable $T_i$ is *memoryless* and must thus be exponentially distributed.
 
@@ -91,10 +91,10 @@ different state is exponentially distributed with mean, say, $1/v_i$ , and
 (ii) when the process leaves state $i$, it next enters state $j$ with some probability,
 say, $P_{ij}$. Of course, the $P_{ij}$ must satisfy
 $$
-\begin{align*}
+\begin{aligned}
 P_{ii} &= 0, \quad \text{all } i \\
 \sum_j P_{ij} &= 1, \quad \text{all }i
-\end{align*}
+\end{aligned}
 $$
 In other words, a continuous-time Markov chain is a stochastic process that moves
 from state to state in accordance with a (discrete-time) Markov chain, but is such
@@ -121,13 +121,14 @@ there will always either be 0 or 1 customers in the system. However, if there is
 1 customer in the system, then we would also need to know which chair he was
 presently in. Hence, an appropriate state space might consist of the three states 0,
 1, and 2 where the states have the following interpretation:
-
-\begin{array}
+$$
+\begin{array}{cc}
 \text{state}  &  \text{Interpretation} \\
 0 & \text{system is empty} \\
 1 & \text{a customer is in chair } 1 \\
-2 & \text{a customer is in chair } 2
+2 & \text{a customer is in chair } 2 \\
 \end{array}
+$$
 We leave it as an exercise for you to verify that
 $$
 v_0 = \lambda, \quad v_1 = \mu_1, \quad v_2=\mu_2
@@ -154,13 +155,13 @@ $\{0, 1, \dots\}$ for which transitions from state $n$ may go only to either sta
 or state $n + 1$. The relationships between the birth and death rates and the state
 transition rates and probabilities are
 $$
-\begin{align*}
+\begin{aligned}
 v_0 &= \lambda_0, \\
-v_i &= \lambda_i + \mu_i, \quad i\gt 0 \\
+v_i &= \lambda_i + \mu_i, \quad i> 0 \\
 P_{01} &= 1, \\
-P_{i,i+1} &= \frac{\lambda_i}{\lambda_i+\mu_i}, \quad i\gt 0 \\
-P_{i,i-1} &= \frac{\mu_i}{\lambda_i+\mu_i}, \quad i\gt 0
-\end{align*}
+P_{i,i+1} &= \frac{\lambda_i}{\lambda_i+\mu_i}, \quad i> 0 \\
+P_{i,i-1} &= \frac{\mu_i}{\lambda_i+\mu_i}, \quad i> 0
+\end{aligned}
 $$
 The preceding follows, because if there are $i$ in the system, then the next state will
 be $i + 1$ if a birth occurs before a death, and the probability that an exponential
@@ -171,10 +172,10 @@ occurs is exponentially distributed with rate $\lambda_i + \mu_i$ (and so, $v_i 
 :::{#exm-exa2}
 (The Poisson Process) Consider a birth and death process for which
 $$
-\begin{align*}
+\begin{aligned}
 \mu_n &= 0, \quad \text{for all } n\ge 0 \\
 \lambda_n &= \lambda, \quad \text{for all } n\ge 0
-\end{align*}
+\end{aligned}
 $$
 This is a process in which departures never occur, and the time between successive
 arrivals is exponential with mean $1/\lambda$. Hence, this is just the Poisson process.
@@ -198,10 +199,10 @@ evolution.
 :::{#exm-exa4}
 (A Linear Growth Model with Immigration) A model in which
 $$
-\begin{align*}
+\begin{aligned}
 \mu_n &= n\mu, \quad n\ge 1\\
 \lambda_n &=n\lambda+\theta, \quad n\ge 0
-\end{align*}
+\end{aligned}
 $$
 is called a linear growth process with immigration. Such processes occur naturally
 in the study of biological reproduction and population growth. Each individual in
@@ -280,10 +281,10 @@ The preceding is known as the $M/M/1$ queueing system. The first $M$ refers to t
 If we let $X(t)$ denote the number in the system at time $t$ then $\{X(t),t\geqslant0\}$ is
 a birth and death process with
 $$
-\begin{align*}
+\begin{aligned}
 &\mu_{n}=\mu,\quad n\geqslant1\\
 &\lambda_{n}=\lambda\:,\quad n\geqslant0\quad\blacksquare
-\end{align*}
+\end{aligned}
 $$
 :::
 
@@ -332,16 +333,16 @@ Suppose now that we wanted to determine the expected time to go from state $i$ t
 For the birth and death process having parameters $\lambda_i\equiv\lambda$,
 $\mu_i\equiv\mu$,
 $$
-\begin{align*}
+\begin{aligned}
 E[T_{i}]&=\frac{1}{\lambda}+\frac{\mu}{\lambda}E[T_{i-1}]\\&=\frac{1}{\lambda}(1+\mu E[T_{i-1}])
-\end{align*}
+\end{aligned}
 $$
 Starting with $E[T_0]=1/\lambda$, we see that
 $$
-\begin{align*}
+\begin{aligned}
 &E[T_{1}]=\frac{1}{\lambda}\biggl(1+\frac{\mu}{\lambda}\biggr),\\
 &E[T_{2}]=\frac{1}{\lambda}\biggl[1+\frac{\mu}{\lambda}+\biggl(\frac{\mu}{\lambda}\biggr)^{2}\biggr]
-\end{align*}
+\end{aligned}
 $$
 and, in general,
 $$
@@ -350,17 +351,17 @@ $$
 $$=\frac{1-(\mu/\lambda)^{i+1}}{\lambda-\mu},\quad i\geqslant0$$
 The expected time to reach state $j$, starting at state $k,k<j$, is
 $$
-\begin{align*}
+\begin{aligned}
 E[\text{time to go from } k \text{ to } j] &= \sum_i=k^{j-1}E[T_i] \\
 &= =\frac{j-k}{\lambda-\mu}-\frac{(\mu/\lambda)^{k+1}}{\lambda-\mu}\frac{[1-(\mu/\lambda)^{j-k}]}{1-\mu/\lambda}
-\end{align*}
+\end{aligned}
 $$
 The foregoing assumes that $\lambda\neq\mu.$ If $\lambda=\mu$, then
 $$
-\begin{align*}
+\begin{aligned}
 E[T_{i}] &= \frac{i+1}{\lambda}, \\
 E[\text{ time to go from } k \text{ to } j] &= \frac {j( j+ 1) - k( k+ 1) }{21} 
-\end{align*}
+\end{aligned}
 $$
 :::
 
@@ -370,26 +371,26 @@ E[T_i|I_i]=\frac{1}{\lambda_i+\mu_i}+(1-I_i)(E[T_{i-1}]+E[T_i])
 $$
 Thus
 $$
-\begin{align*}
+\begin{aligned}
 \mathrm{Var}(E[T_{i}|I_{i}])&=(E[T_{i-1}]+E[T_{i}])^{2}\:\mathrm{Var}(I_{i})\\
 &=(E[T_{i-1}]+E[T_{i}])^{2}\frac{\mu_{i}\lambda_{i}}{(\mu_{i}+\lambda_{i})^{2}}
-\end{align*}
+\end{aligned}
 $$ {#eq-eq6-4}
 
 where $\mathrm{Var}(I_i)$ is as shown since $I_i$ is a Bernoulli random variable with parameter $p=\lambda_{i}/(\lambda_{i}+\mu_{i}).$ Also, note that if we let $X_i$ denote the time until the transition from $i$ occurs, then
 $$
-\begin{align*}
+\begin{aligned}
 \mathrm{Var}(T_{i}|I_{i}=1)&=\mathrm{Var}(X_{i}|I_{i}=1)\\
 &=\mathrm{Var}(X_{i})\\&=\frac{1}{(\lambda_{i}+\mu_{i})^{2}}
-\end{align*}
+\end{aligned}
 $$ {#eq-eq6-5}
 
 where the preceding uses the fact that the time until transition is independent of the next state visited. Also,
 $$
-\begin{align*}
+\begin{aligned}
 \mathrm{Var}(T_{i}|I_{i}=0)&=\mathrm{Var}(X_{i}+\mathrm{time~to~get~back~to~}i+\mathrm{time~to~then~reach~} i+1)\\
 &=\mathrm{Var}(X_{i})+\mathrm{Var}(T_{i-1})+\mathrm{Var}(T_{i})
-\end{align*}
+\end{aligned}
 $$ {#eq-eq6-6}
 
 where the foregoing uses the fact that the three random variables are independent. We can rewrite @eq-eq6-5 and @eq-eq6-6 as
@@ -403,10 +404,10 @@ $$ {#eq-eq6-7}
 Hence, using the conditional variance formula, which states that $\mathrm{Var}(T_i)$ is the
 sum of @eq-eq6-7 and @eq-eq6-4, we obtain
 $$
-\begin{align*}
+\begin{aligned}
 \mathrm{Var}(T_{i})&=\frac{1}{(\mu_{i}+\lambda_{i})^{2}}+\frac{\mu_{i}}{\mu_{i}+\lambda_{i}}[\mathrm{Var}(T_{i-1})+\mathrm{Var}(T_{i})]\\
 &+\frac{\mu_{i}\lambda_{i}}{(\mu_{i}+\lambda_{i})^{2}}(E[T_{i-1}]+E[T_{i}])^{2}
-\end{align*}
+\end{aligned}
 $$
 or, equivalently,
 $$

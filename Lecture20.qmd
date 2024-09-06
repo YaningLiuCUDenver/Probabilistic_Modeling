@@ -22,14 +22,14 @@ $$
 f(x,y)=\frac{1}{2\pi}e^{-(x^{2}+y^{2})/2},\quad-\infty<x<\infty,-\infty<y<\infty
 $$
 
-![An elephant](box_muller.png){#fig-fig1}
+![An elephant](images/box_muller.png){#fig-fig1}
 
 Consider now the polar coordinates of the point $(X,Y).$  As shown in @fig-fig1,
 $$
-\begin{align*}
+\begin{aligned}
 R^{2}&=X^{2}+Y^{2},\\
 \Theta&=\tan^{-1}Y/X
-\end{align*}
+\end{aligned}
 $$
 To obtain the joint density of $R^2$ and $\Theta$, consider the transformation
 $$
@@ -47,10 +47,10 @@ $$
 $$
 Hence, the joint density of $R^{2}$ and $\Theta$ is given by
 $$
-\begin{align*}
+\begin{aligned}
 f_{R^{2},\Theta}(d,\theta)&=\frac{1}{2\pi}e^{-d/2}\frac{1}{2}\\
 &=\frac{1}{2}e^{-d/2}\frac{1}{2\pi},\quad 0<d<\infty, 0<\theta<2\pi
-\end{align*}
+\end{aligned}
 $$
 Thus, we can conclude that $R^2$ and $\Theta$ are independent with $R^2$ having an exponential distribution with rate $\frac{1}{2}$ and $\Theta$ being uniform on $(0,2\pi).$
 
@@ -65,14 +65,14 @@ are independent standard normal random variables.
 
 The preceding approach to generating standard normal random variables is called the *Box-Muller* approach. Its efficiency suffers somewhat from its need to compute the preceding sine and cosine values. There is, however, a way to get around this potentially time-consuming difficulty. To begin, note that if $U$ is uniform on $(0,1)$, then $2U$ is uniform on $(0,2)$, and so $2U-1$ is uniform on $(-1,1)$.
 
-![](box_muller2.png){#fig-fig2}
+![](images/box_muller2.png){#fig-fig2}
 
 Thus, if we generate random numbers $U_1$ and $U_2$ and set
 $$
-\begin{align*}
+\begin{aligned}
 V_1 &= 2U_1-1, \\
 V_{2} &= 2U_{2}-1
-\end{align*}
+\end{aligned}
 $$
 then $(V_1,V_2)$ is uniformly distributed in the square of area 4 centered at $(0,0)$ (see @fig-fig2).
 
@@ -80,24 +80,24 @@ Suppose now that we continually generate such pairs $(V_1,V_2)$ until we obtain 
 
 Since
 $$
-\begin{align*}
+\begin{aligned}
 \sin\bar{\Theta}&=V_{2}/\bar{R}=\frac{V_{2}}{\sqrt{V_{1}^{2}+V_{2}^{2}}},\\
 \cos\bar{\Theta}&=V_{1}/\bar{R}=\frac{V_{1}}{\sqrt{V_{1}^{2}+V_{2}^{2}}}
-\end{align*}
+\end{aligned}
 $$
 it follows from @eq-eq11-4 that we can generate independent standard normals $X$ and $Y$ by generating another random number $U$ and setting
 $$
-\begin{align*}
+\begin{aligned}
 X &= (-2\log U)^{1/2}V_{1}/\bar{R},\\ 
 Y &= (-2\log U)^{1/2}V_{2}/\bar{R}
-\end{align*}
+\end{aligned}
 $$
 In fact, since (conditional on $V_1^2+V_2^2\leqslant1$) $\bar{R}^2$ is uniform on $(0,1)$ and is independent of $\bar{\Theta}$, we can use it instead of generating a new random number $U;$ thus showing that
 $$
-\begin{align*}
+\begin{aligned}
 X&=(-2\log\bar{R}^{2})^{1/2}V_{1}/\bar{R}=\sqrt{\frac{-2\log S}{S}}V_{1},\\
 Y&=(-2\log\bar{R}^{2})^{1/2}V_{2}/\bar{R}=\sqrt{\frac{-2\log S}{S}}V_{2}
-\end{align*}
+\end{aligned}
 $$
 are independent standard normals, where
 $$

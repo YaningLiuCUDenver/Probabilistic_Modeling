@@ -1,13 +1,6 @@
 ---
 title: "Stochastic Processes"
-toc: true
-number-sections: true
-format:
-  html:
-    code-fold: false
 jupyter: python3
-execute: 
-  enabled: true
 bibliography: references.bib
 ---
 
@@ -47,7 +40,7 @@ P\{i \text{ is the last node visited} \} = 1/m, i=1,\dots,m
 $$
 :::
 
-```{dot}
+<!-- ```{dot}
 graph G {
     layout=circo
     node_0 [label="0"]
@@ -68,7 +61,9 @@ graph G {
     node_6 -- node_7;
     node_7 -- node_0;
 }
-```
+``` -->
+
+![](images/nodes.png){width=70%}
 
 ::: {#rem-exa1}
 The argument used in @exm-exa1 also shows that a gambler who is equally likely to either win or lose one unit on each gamble will be down $n$ before being up $1$ with probability $1/(n+1)$; or equivalently

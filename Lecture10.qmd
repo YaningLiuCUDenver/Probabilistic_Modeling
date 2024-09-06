@@ -85,7 +85,7 @@ One of the most important counting processes is the Poisson process which is
 defined as follows:
 
 :::{#def-def1}
-The counting process $\{N(t), t \ge 0\}$ is said to be a *Poisson process having rate $\lambda$*, $\lambda \gt 0$, if
+The counting process $\{N(t), t \ge 0\}$ is said to be a *Poisson process having rate $\lambda$*, $\lambda > 0$, if
 
 (i) $N(0) = 0$
 
@@ -153,7 +153,7 @@ compared with $h$.
 We are now in a position to give an alternate definition of a Poisson process.
 
 :::{#def-def3}
-The counting process $\{N(t), t \ge 0\}$ is said to be a Poisson process having rate $\lambda, \lambda \gt 0$, if
+The counting process $\{N(t), t \ge 0\}$ is said to be a Poisson process having rate $\lambda, \lambda > 0$, if
 
 (i) $N(0) = 0$.
 
@@ -175,12 +175,12 @@ g(t) = E[\exp\{-uN(t)\}]
 $$
 We derive a differential equation for $g(t)$ as follows:
 $$
-\begin{align*}
+\begin{aligned}
 g(t+h) &= E[\exp\{-uN(t+h)\}] \\
        &= E[\exp\{-uN(t)\} \exp\{-u(N(t+h)-N(t))\}] \\
        &= E[\exp\{-uN(t)\}]  E[\exp\{-u(N(t+h)-N(t))\}] \quad \text{ by independent increments} \\
        &= g(t)E[\exp\{-uN(h)\}] \quad \text{ by stationary increments}
-\end{align*}
+\end{aligned}
 $$ {#eq-eq5-10}
 Now, assumptions (iii) and (iv) imply that
 $$
@@ -188,10 +188,10 @@ P\{N(h)=0\} = 1-\lambda h + o(h)
 $$
 Hence, conditioning on whether $N(h) = 0$ or $N(h) = 1$ or $N(h) \ge 2$ yields
 $$
-\begin{align*}
+\begin{aligned}
 E[\exp\{-uN(h)\}] &= 1-\lambda h +o(h) +e^{-u}(\lambda h +o(h)) + o(h) \\
                   &= 1-\lambda h + e^{-u}\lambda h +o(h)
-\end{align*}
+\end{aligned}
 $$ {#eq-eq5-11}
 Therefore, from @eq-eq5-10 and @eq-eq5-11 we obtain that
 $$
@@ -230,25 +230,25 @@ uniquely determined by its Laplace transform.
 ### Interarrival and Waiting Time Distributions
 
 Consider a Poisson process, and let us denote the time of the first event by $T_1$.
-Further, for $n \gt 1$, let $T_n$ denote the elapsed time between the $(n − 1)$st and the
+Further, for $n > 1$, let $T_n$ denote the elapsed time between the $(n − 1)$st and the
 $n$th event. The sequence $\{T_n, n = 1, 2, \dots\}$ is called the sequence of interarrival
 times. For instance, if $T_1 = 5$ and $T_2 = 10$, then the first event of the Poisson
 process would have occurred at time $5$ and the second at time $15$.
 
 We shall now determine the distribution of the $T_n$. To do so, we first note that
-the event $\{T_1 \gt t\}$ takes place if and only if no events of the Poisson process occur in the interval $[0, t]$ and thus,
+the event $\{T_1 > t\}$ takes place if and only if no events of the Poisson process occur in the interval $[0, t]$ and thus,
 $$
-P\{T_1\gt t\} = P\{N(t)=0\} = e^{-\lambda t}
+P\{T_1> t\} = P\{N(t)=0\} = e^{-\lambda t}
 $$
 Hence, $T_1$ has an exponential distribution with mean $1/\lambda$. 
 
 (Recall: A continuous random variable $X$ is said to have an exponential distribution with
-parameter $\lambda$, $\lambda \gt 0$, if its probability density function is given by
+parameter $\lambda$, $\lambda > 0$, if its probability density function is given by
 $$
 f(x) = 
 \begin{cases}
 \lambda e^{-\lambda x}, & x \ge 0 \\
-0, & x \lt 0
+0, & x < 0
 \end{cases}
 $$
 or, equivalently, if its cdf is given by
@@ -256,22 +256,22 @@ $$
 F(x) = \int_{-\infty}^x f(y) dy = 
 \begin{cases}
 1-e^{-\lambda x}, & x\ge 0 \\
-0, & x \lt 0
+0, & x < 0
 \end{cases}
 $$
 )
 
 Now,
 $$
-P\{T_2 \gt t\} = E[P\{T_2\gt t|T_1]\}]
+P\{T_2 > t\} = E[P\{T_2> t|T_1]\}]
 $$
 However,
 $$
-\begin{align*}
+\begin{aligned}
 P\{T_2>t | T_1=s\} &= P\{0 \text{ events in } (s,s+t] | T_1=s\} \\
                    &= P\{0 \text{ events in } (s,s+t]\} \\
                    &= e^{-\lambda t}
-\end{align*}
+\end{aligned}
 $$ {#eq-eq5-12}
 where the last two equations followed from independent and stationary increments.
 Therefore, from @eq-eq5-12 we conclude that $T_2$ is also an exponential
@@ -317,11 +317,11 @@ F_{S_n}(t) = P\{S_n\le t\} = P\{N(t)\ge n\} = \sum_{j=n}^\infty e^{-\lambda t}\f
 $$
 which, upon differentiation, yields
 $$
-\begin{align*}
+\begin{aligned}
 f_{S_n}(t) &= -\sum_{j=n}^\infty \lambda e^{-\lambda t}\frac{(\lambda t)^j}{j!} + \sum_{j=n}^\infty \lambda e^{-\lambda t}\frac{(\lambda t)^{j-1}}{(j-1)!} \\
 &= \lambda e^{-\lambda t}\frac{(\lambda t)^{n-1}}{(n-1)!} + \sum_{j=n+1}^\infty \lambda e^{-\lambda t}\frac{(\lambda t)^{j-1}}{(j-1)!} - \sum_{j=n}^\infty \lambda e^{-\lambda t}\frac{(\lambda t)^j}{j!} \\
 &= \lambda e^{-\lambda t}\frac{(\lambda t)^{n-1}}{(n-1)!}
-\end{align*}
+\end{aligned}
 $$
 
 :::{#exm-exa2}
@@ -399,12 +399,12 @@ The resultant counting process $\{N(t), t \ge 0\}$ will be Poisson with rate $\l
 :::{#rem-rem1}
 Another way of obtaining the density function of $S_n$ is to note that because $S_n$ is the time of the $n$th event,
 $$
-\begin{align*}
+\begin{aligned}
 P\{t < S_n < t+h\}  &= P\{N(t) = n-1, \text{ one event in } (t, t+h)\} + o(h) \\
                     &= P\{N(t) = n-1\}, P\{\text{one event in } (t, t+h)\} + o(h) \\
                     &= e^{-\lambda t}\frac{(\lambda t)^{n-1}}{(n-1)!} [\lambda h+o(h)] + o(h) \\
                     &= \lambda e^{-\lambda t}\frac{(\lambda t)^{n-1}}{(n-1)!}h + o(h)
-\end{align*}
+\end{aligned}
 $$
 where the first equality uses the fact that the probability of 2 or more events in
 $(t, t + h)$ is $o(h)$. If we now divide both sides of the preceding equation by $h$ and

@@ -58,7 +58,7 @@ $$
 
 Now consider state 1. The process can leave this state either by an arrival (which occurs at rate $\lambda)$ or a departure (which occurs at rate $\mu).$ Hence, when in state 1, the process will leave this state at a rate of $\lambda+\mu^*$ Since the proportion of time the process is in state 1 is $P_1$, the rate at which the process leaves state 1 is $(\lambda+\mu)P_1.$ On the other hand, state 1 can be entered either from state 0 via an arrival or from state 2 via a departure. Hence, the rate at which the process enters state 1 is $\lambda P_0+\mu P_2.$ Because the reasoning for other states is similar, we obtain the following set of equations:
 $$
-\begin{array}{c}
+\begin{array}{cc}
 \text{State} & \text{Rate at which the process leaves = rate at which it enters} \\
 0 & \lambda P_{0}=\mu P_{1}\\
 n,n\geqslant1 & (\lambda+\mu)P_{n}=\lambda P_{n-1}+\mu P_{n+1}\\ 
@@ -69,21 +69,21 @@ The set of @eq-eq8-5 which balances the rate at which the process enters each
 state with the rate at which it leaves that state is known as *balance equations*.
 In order to solve @eq-eq8-5, we rewrite them to obtain
 $$
-\begin{align*}
+\begin{aligned}
 P_{1}&=\frac{\lambda}{\mu}P_{0},\\
 P_{n+1}&=\frac{\lambda}{\mu}P_{n}+\left(P_{n}-\frac{\lambda}{\mu}P_{n-1}\right),\quad n\geqslant 1
-\end{align*}
+\end{aligned}
 $$
 Solving in terms of $P_0$ yields
 $$
-\begin{align*}
+\begin{aligned}
 &P_{0}=P_{0},\\
 &P_{1}=\frac{\lambda}{\mu}P_{0},\\
 &P_{2}=\frac{\lambda}{\mu}P_{1}+\left(P_{1}-\frac{\lambda}{\mu}P_{0}\right)=\frac{\lambda}{\mu}P_{1}=\left(\frac{\lambda}{\mu}\right)^{2}P_{0},\\
 &P_{3}=\frac{\lambda}{\mu}P_{2}+\left(P_{2}-\frac{\lambda}{\mu}P_{1}\right)=\frac{\lambda}{\mu}P_{2}=\left(\frac{\lambda}{\mu}\right)^{3}P_{0},\\
 &P_{4}=\frac{\lambda}{\mu}P_{3}+\left(P_{3}-\frac{\lambda}{\mu}P_{2}\right)=\frac{\lambda}{\mu}P_{3}=\left(\frac{\lambda}{\mu}\right)^{4}P_{0},\\
 &P_{n+1}=\frac{\lambda}{\mu}P_{n}+\left(P_{n}-\frac{\lambda}{\mu}P_{n-1}\right)=\frac{\lambda}{\mu}P_{n}=\left(\frac{\lambda}{\mu}\right)^{n+1}P_{0}
-\end{align*}
+\end{aligned}
 $$
 
 To determine $P_0$ we use the fact that the $P_n$ must sum to 1, and thus
@@ -92,10 +92,10 @@ $$
 $$
 or
 $$
-\begin{align*}
+\begin{aligned}
 &P_{0}=1-\frac{\lambda}{\mu},\\
 &P_{n}=\left(\frac{\lambda}{\mu}\right)^{n}\left(1-\frac{\lambda}{\mu}\right),\quad n\geqslant1
-\end{align*}
+\end{aligned}
 $$ {#eq-eq8-6}
 
 Notice that for the preceding equations to make sense, it is necessary for $\lambda/\mu$ to be less than l. For otherwise $\sum_{n=0}^\infty(\lambda/\mu)^n$ would be infinite and all the $P_n$ would be 0. Hence, we shall assume that $\lambda/\mu<1.$ Note that it is quite intuitive that there would be no limiting probabilities if $\lambda>\mu.$ For suppose that $\lambda>\mu.$ Since customers arrive at a Poisson rate $\lambda$, it follows that the expected total number of arrivals by time $t$ is $\lambda t.$ On the other hand, what is the expected number of customers served by time $t?$ If there were always customers present, then the number of customers served would be a Poisson process having rate $\mu$ since the time between successive services would be independent exponentials having mean $1/\mu.$ Hence, the expected number of customers served by time $\iota$ is no greater than $\mu t;$ and, therefore, the expected number in the system at time $t$ is at least
@@ -125,12 +125,12 @@ P\{X\geqslant n\}=(\lambda/\mu)P\{X\geqslant n-1\},\quad n>0
 $$
 Iterating this gives
 $$
-\begin{align*}
+\begin{aligned}
 P\{X\geqslant n\}&=(\lambda/\mu)P\{X\geqslant n-1\}\\
 &=(\lambda/\mu)^{2}P\{X\geqslant n-2\}\\&=\cdots\\
 &=(\lambda/\mu)^{n}P\{X\geqslant0\}\\
 &=(\lambda/\mu)^{n}
-\end{align*}
+\end{aligned}
 $$
 Therefore,
 $$
@@ -140,11 +140,11 @@ $$
 
 Now let us attempt to express the quantities $L,L_Q,W$, and $W_Q$ in terms of the limiting probabilities $P_n.$ Since $P_n$ is the long-run probability that the system contains exactly $n$ customers, the average number of customers in the system clearly is given by
 $$
-\begin{align*}
+\begin{aligned}
 \text{L}&=\sum_{n=0}^{\infty}nP_{n}\\
 &=\sum_{n=0}^{\infty}n\left(\frac{\lambda}{\mu}\right)^{n}\left(1-\frac{\lambda}{\mu}\right)\\
 &=\frac{\lambda}{\mu-\lambda}
-\end{align*}
+\end{aligned}
 $$ {#eq-eq8-7}
 where the last equation followed upon application of the algebraic identity
 $$
@@ -152,13 +152,13 @@ $$
 $$
 The quantities $W, W_Q$, and $L_Q$ now can be obtained with the help of Equations (2) and (3) from Lecture 14. That is, since $\lambda_{\alpha}=\lambda$, we have from @eq-eq8-7 that
 $$
-\begin{align*}
+\begin{aligned}
 W&=\frac{L}{\lambda}\\&=\frac{1}{\mu-\lambda},\\W_{Q}&=W-E[S]\\
 &=W-\frac{1}{\mu}\\
 &=\frac{\lambda}{\mu(\mu-\lambda)},\\L_{Q}
 &=\lambda W_{Q}\\
 &=\frac{\lambda^{2}}{\mu(\mu-\lambda)}
-\end{align*}
+\end{aligned}
 $$ {#eq-eq8-8}
 
 :::{#exm-exa1}
@@ -183,10 +183,10 @@ of customers in the system.
 
 To understand this better, write @eq-eq8-7 as
 $$
-\begin{align*}
+\begin{aligned}
 L&=\frac{\lambda/\mu}{1-\lambda/\mu},\\
 W&=\frac{1/\mu}{1-\lambda/\mu}
-\end{align*}
+\end{aligned}
 $$
 From these equations we can see that when $\lambda/\mu$ is near 1, a slight increase in
 $\lambda/\mu$ will lead to a large increase in $L$ and $W.$
@@ -195,26 +195,26 @@ $\lambda/\mu$ will lead to a large increase in $L$ and $W.$
 :::{#rem-rem2} 
 (**A Technical Remark**)  We have used the fact that if one event occurs at an exponential rate $\lambda$, and another independent event at an exponential rate $\mu$, then together they occur at an exponential rate $\lambda+\mu.$ To check this formally, let $T_{1}$ be the time at which the first event occurs, and $T_{2}$ the time at which the second event occurs. Then
 $$
-\begin{align*}
+\begin{aligned}
 P\{T_{1}\leqslant t\}&=1-e^{-\lambda t},\\
 P\{T_{2}\leqslant t\}&=1-e^{-\mu t}
-\end{align*}
+\end{aligned}
 $$
 Now if we are interested in the time until either $T_1$ or $T_2$ occurs, then we are
 interested in $T=\min(T_1,T_2).$ Now
 $$
-\begin{align*}
+\begin{aligned}
 P\{T\leqslant t\}&=1-P\{T>t\}\\
 &=1-P\{\min(T_1,T_2)>t\}
-\end{align*}
+\end{aligned}
 $$
 However, $\min(T_1,T_2)>t$ if and only if both $T_1$ and $T_2$ are greater than $t;$ hence,
 $$
-\begin{align*}
+\begin{aligned}
 P\{T\leqslant t\}&=1-P\{T_{1}>t,T_{2}>t\}\\
 &=1-P\{T_{1}>t\}P\{T_{2}>t\}\\
 &=1-e^{-\lambda t}e^{-\mu t}\\&=1-e^{-(\lambda+\mu)t}
-\end{align*}
+\end{aligned}
 $$
 Thus, $T$ has an exponential distribution with rate $\lambda+\mu$, and we are justified in
 adding the rates.
@@ -223,18 +223,18 @@ adding the rates.
 Given that an $M/M/1$ steady-state customer—that is, a customer who arrives after the system has been in operation a long time—spends a total of $t$ time units in the system, let us determine the conditional distribution of $N$, the number of others that were present when that customer arrived. That is, letting $W^*$ be the amount of time a customer spends in the system, we will find $P\{N=n|W^*=t\}.$
 Now, 
 $$
-\begin{align*}
+\begin{aligned}
 P\{N=n|W^{*}=t\}&=\frac{f_{N,W^{*}}(n,t)}{f_{W}^{*}(t)}\\
 &=\frac{P\{N=n\}f_{W^{*}|N}(t|n)}{f_{W}^{*}(t)}
-\end{align*}
+\end{aligned}
 $$
 where $f_W^*|N(t|n)$ is the conditional density of $W^*$ given that $N=n$, and $f_W^*(t)$ is the unconditional density of $W^*.$ Now, given that $N=n$, the time that the customer spends in the system is distributed as the sum of $n+1$ independent exponential random variables with a common rate $\mu$, implying that the conditional distribution of $W^*$ given that $N=n$ is the gamma distribution with parameters $n+1$ and $\mu.$ Therefore, with $C=1/f_W^*(t)$
 $$
-\begin{align*}
+\begin{aligned}
 P\{N=n|W^{*}=t\}&=CP\{N=n\}\mu e^{-\mu t}\frac{(\mu t)^{n}}{n!}\\
 &=C(\lambda/\mu)^{n}(1-\lambda/\mu)\mu e^{-\mu t}\frac{(\mu t)^{n}}{n!}&\text{(by PASTA)}\\
 &=K\:\frac{(\lambda t)^{n}}{n!}
-\end{align*}
+\end{aligned}
 $$
 where $K=C(1-\lambda/\mu)\mu e^{-\mu t}$ does not depend on $n.$ Summing over $n$ yields
 $$
@@ -246,11 +246,11 @@ P\{N=n|W^{*}=t\}=e^{-\lambda t}\frac{(\lambda t)^{n}}{n!}
 $$
 Therefore, the conditional distribution of the number seen by an arrival who spends a total of $t$ time units in the system is the Poisson distribution with mean $\lambda t.$ In addition, as a by-product of our analysis, we have that
 $$
-\begin{align*}
+\begin{aligned}
 f_{W^{*}}(t)&=1/C\\
 &=\frac{1}{K}(1-\lambda/\mu)\mu e^{-\mu t}\\
 &=(\mu-\lambda)e^{-(\mu-\lambda)t}
-\end{align*}
+\end{aligned}
 $$
 In other words, $W^*$, the amount of time a customer spends in the system, is an exponential random variable with rate $\mu-\lambda.$ (As a check, we note that $E[W^*]=$ $1/(\mu-\lambda)$ which checks with @eq-eq8-8 since W=E[W*].)
 
@@ -274,7 +274,7 @@ As before, we let $P_n, 0 \le n \le N$, denote the limiting probability that the
 $n$ customers in the system. The rate-equality principle yields the following set of
 balance equations:
 $$
-\begin{array}{c}
+\begin{array}{cc}
 \text{State} & \text{Rate at which the process leaves = rate at which it enters} \\
 0 & \lambda P_0 = \mu P_1 \\
 1\le n \le N-1 & (\lambda+\mu) P_n = \lambda P_{n-1} + \mu P_{n+1} \\
@@ -295,10 +295,10 @@ $$ {#eq-eq8-10}
 
 By using the fact that $\sum_{n=0}^NP_n=1$ we obtain
 $$
-\begin{align*}
+\begin{aligned}
 1 &=P_{0}\sum_{n=0}^{N}\left(\frac{\lambda}{\mu}\right)^{n}\\
   &=P_{0}\left[\frac{1-(\lambda/\mu)^{N+1}}{1-\lambda/\mu}\right]
-\end{align*}
+\end{aligned}
 $$
 or
 $$
@@ -313,10 +313,10 @@ Note that in this case, there is no need to impose the condition that $\lambda/\
 
 As before, $L$ may be expressed in terms of $P_n$ to yield
 $$
-\begin{align*}
+\begin{aligned}
 \text{L}&=\sum_{n=0}^{N}n\:P_{n}\\
 &=\frac{(1-\lambda/\mu)}{1-(\lambda/\mu)^{N+1}}\sum_{n=0}^{N}n\left(\frac{\lambda}{\mu}\right)^{n}
-\end{align*}
+\end{aligned}
 $$
 which after some algebra yields
 $$
@@ -336,18 +336,18 @@ To solve this, suppose that we use rate $\mu.$ Let us determine the amount of mo
 
 Now, potential customers arrive at a rate $\lambda.$ However, a certain proportion of them do not join the system—namely, those who arrive when there are $N$ customers already in the system. Hence, since $P_N$ is the proportion of time that the system is full, it follows that entering customers arrive at a rate of $\lambda(1-P_N).$ Since each customer pays \$A, it follows that money comes in at an hourly rate of $\lambda(1-P_N)A$ and since it goes out at an hourly rate of $c\mu$,it follows that our total profit per hour is given by
 $$
-\begin{align*}
+\begin{aligned}
 \text{profit per hour}&=\lambda(1-P_{N})A-c\mu\\
 &=\lambda A\biggl[1-\frac{(\lambda/\mu)^{N}(1-\lambda/\mu)}{1-(\lambda/\mu)^{N+1}}\biggr]-c\mu\\
 &=\frac{\lambda A[1-(\lambda/\mu)^{N}]}{1-(\lambda/\mu)^{N+1}}-c\mu
-\end{align*}
+\end{aligned}
 $$
 For instance if $N=2,\lambda=1,A=10,c=1$, then
 $$
-\begin{align*}
+\begin{aligned}
 \mathrm{profit~per~hour}&=\frac{10[1-(1/\mu)^{2}]}{1-(1/\mu)^{3}}-\mu\\
 &=\frac{10(\mu^{3}-\mu)}{\mu^{3}-1}-\mu
-\end{align*}
+\end{aligned}
 $$
 in order to maximize profit we differentiate to obtain
 $$
@@ -383,7 +383,7 @@ space, consisting of the five states, $(0, 0), (1, 0), (0, 1), (1, 1)$, and $(b,
 used. The states have the following interpretation:
 
 $$
-\begin{array}{c}
+\begin{array}{cc}
 \text{State}  &  \text{Interpretation} \\
 (0, 0) & \text{There are no customers in the system.} \\
 (1, 0) & \text{There is one customer in the system, and he is in chair 1.} \\
@@ -408,7 +408,7 @@ $(1, 0)$ which is labeled $\lambda$ means that when the process is in state $(0,
 when the system is empty, then it goes to state $(1, 0)$ at a rate $\lambda$, that is via an
 arrival. The arrow from $(0, 1)$ to $(1, 1)$ is similarly explained.
 
-![A transition diagram.](Shoeshine.png){width=70%}
+![A transition diagram.](images/Shoeshine.png){width=70%}
 
 When the process is in state $(1, 0)$, it will go to state $(0, 1)$ when the customer
 in chair 1 is finished and this occurs at a rate $\mu_1$; hence the arrow from $(1, 0)$ to
@@ -430,7 +430,7 @@ the probability of the states where they originate) coming into a state with the
 of the arrows (multiplied by the probability of the state) going out of that state.
 This gives
 $$
-\begin{array}{c}
+\begin{array}{cc}
 \text{State} & \text{Rate that the process leaves = rate that it enters} \\
 (0, 0) & \lambda P_{00} = \mu_2 P_{01} \\
 (1, 0) & \mu_1P_{10} = \lambda P_{00} +\mu_2P_{11} \\

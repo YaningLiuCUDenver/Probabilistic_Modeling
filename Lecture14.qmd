@@ -26,20 +26,21 @@ We will derive certain identities which are valid in the great majority of queue
 ### Cost Equations
 
 Some fundamental quantities of interest for queueing models are
-
+$$
 \begin{array}{lll}
 L, & \text{the average number of customers in the system}; \\
 L_{Q}, & \text{the average number of customers waiting in queue}; \\
 W, & \text{the average amount of time a customer spends in the system}; \\
 W_Q, & \text{the average amount of time a customer spends waiting in queue}.
 \end{array}
+$$
 
 A large number of interesting and useful relationships between the preceding and other quantities of interest can be obtained by making use of the following idea: Imagine that entering customers are forced to pay money (according to some rule) to the system. We would then have the following basic cost identity:
 $$
-\begin{align*}
+\begin{aligned}
 &\text{average rate at which the system earns} \\
 &=\lambda_a\times \text{ average amount an entering customer pays}
-\end{align*}
+\end{aligned}
 $$ {#eq-eq8-1}
 where $\lambda_a$ is defined to be average arrival rate of entering customers. That is, if
 $N(t)$ denotes the number of customer arrivals by time $t$, then
@@ -81,12 +82,12 @@ where we assume the preceding limit exists. In other words, $P_n$ is the limitin
 
 Two other sets of limiting probabilities are $\{a_n,n\geqslant0\}$ and $\{d_n,n\geqslant0\}$, where
 $$
-\begin{align*}
+\begin{aligned}
 a_{n} &=\mathrm{proportion~of~customers~that~find~}n\\
 &\mathrm{in~the~system~when~they~arrive,~and}\\
 d_{n} &=\mathrm{proportion~of~customers~leaving~behind~}n\\
 &\mathrm{in~the~system~when~they~depart}
-\end{align*}
+\end{aligned}
 $$
 That is, $P_n$ is the proportion of time during which there are $n$ in the system; $a_n$ is the proportion of arrivals that find $n;$ and $d_n$ is the proportion of departures that leave behind $n.$ That these quantities need not always be equal is illustrated by the following example.
 

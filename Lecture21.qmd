@@ -18,7 +18,7 @@ $$
 We can use the following discrete time analog of the inverse transform technique.
 
 $$
-\begin{align*}
+\begin{aligned}
 &\text{To simulate } X \text{ for which } P\{X=x_j\}=P_j \\
 &\text{let } U \text{ be uniformly distributed over } (0,1), \text{ and set } \\
 &X=
@@ -29,7 +29,7 @@ x_2,&\quad\text{if}\:P_1<U<P_1+P_2\\
 x_j,&\quad\text{if}\:\sum_1^{j-1}P_i<U<\sum_i^jP_i\\
 \vdots
 \end{cases}
-\end{align*}
+\end{aligned}
 $$
 As,
 $$
@@ -53,10 +53,10 @@ or, equivalently, for which
 $$(1-p)^j<1-U<(1-p)^{j-1}$$
 As $1-U$ has the same distribution as $U$,we can thus define $X$ by
 $$
-\begin{align*}
+\begin{aligned}
 \text{X}&=\min\{j\colon(1-p)^{j}<U\}=\min\left\{j\colon j>\frac{\log U}{\log(1-p)}\right\}\\
 &=1+\left[\frac{\log U}{\log(1-p)}\right]
-\end{align*}
+\end{aligned}
 $$
 As in the continuous case, special simulation techniques have been developed for
 the more common discrete distributions. We now present some of these.
@@ -138,24 +138,24 @@ But $-\log U_i$ is exponential with rate 1, and so if we interpret $-\log U_i, i
 
 When $\lambda$ is large we can reduce the amount of computation in the preceding simulation of $N(\lambda)$, the number of events by time $\lambda$ of a Poisson process having rate 1, by first choosing an integer $m$ and simulating $S_m$, the time of the $m$th event of the Poisson process and then simulating $N(\lambda)$ according to the conditional distribution of $N(\lambda)$ given $S_m.$ Now the conditional distribution of $N(\lambda)$ given $S_m$ is as follows:
 $$
-\begin{array}{c}
-N(\lambda)|S_m=s\sim m+ \mathrm{ Poisson}(\lambda-s) & \text{ if } s \lt \lambda \\
-N(\lambda)|S_m=s\sim\mathrm{Binomial}\bigg(m-1,\frac{\lambda}{s}\bigg) & \text{ if } s \gt \lambda
+\begin{array}{cc}
+N(\lambda)|S_m=s\sim m+ \mathrm{ Poisson}(\lambda-s) & \text{ if } s < \lambda \\
+N(\lambda)|S_m=s\sim\mathrm{Binomial}\bigg(m-1,\frac{\lambda}{s}\bigg) & \text{ if } s > \lambda
 \end{array}
 $$
 where~ means “has the distribution of." This follows since if the $m$th event occurs at time s, where $s<\lambda$, then the number of events by time $\lambda$ is $m$ plus the number of events in $(s, \lambda)$. On the other hand given that $S_m = s$ the set of times
 at which the first $m - 1$ events occur has the same distribution as a set of $m - 1$
-uniform $(0, s)$ random variables. Hence, when $\lambda \lt s$, the number
+uniform $(0, s)$ random variables. Hence, when $\lambda < s$, the number
 of these which occur by time $\lambda$ is binomial with parameters $m - 1$ and $\lambda/s$.
 Hence, we can simulate $N(\lambda)$ by first simulating $S_m$ and then simulate either
 $P(\lambda - S_m)$, a Poisson random variable with mean $\lambda - S_m$ when $S_m < \lambda$, or simulate
 $\mathrm{Bin}(m - 1, \lambda/S_m)$, a binomial random variable with parameters $m - 1$, and
-$\lambda/S_m$, when $S_m \gt \lambda$; and then setting
+$\lambda/S_m$, when $S_m > \lambda$; and then setting
 $$
 N(\lambda) = 
 \begin{cases}
-m + P(\lambda-S_m), & \text{ if } S_m\lt \lambda \\
-\mathrm{Bin}(m - 1, \lambda/S_m), & \text{ if } S_m\gt \lambda
+m + P(\lambda-S_m), & \text{ if } S_m< \lambda \\
+\mathrm{Bin}(m - 1, \lambda/S_m), & \text{ if } S_m> \lambda
 \end{cases}
 $$
 In the preceding it has been found computationally effective to let $m$ be approximately

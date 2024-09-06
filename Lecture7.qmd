@@ -21,10 +21,10 @@ independently of previous Markov chain states and signals, the signal emitted is
 with probability $p(s|j),\sum_{s\in \mathcal{S}} p(s|j) = 1$. That is, if $S_n$ represents the $n$-th signal
 emitted, then 
 $$
-\begin{align*}
+\begin{aligned}
 P\{S_1 = s | X_1 = j\} &= p(s|j) \\
 P\{S_n = s | X_1, S_1,\dots,X_{n-1}, S_{n-1}, X_n=j\} &= p(s|j)
-\end{align*}
+\end{aligned}
 $$
 A model of the preceding type in which the sequence of signals $S_1, S_2, \dots$ is
 observed, while the sequence of underlying Markov chain states $X_1,X_2, \dots$ is
@@ -46,10 +46,10 @@ Markov chain model. The signal is the status of the item produced, and has value
 either $a$ or $u$, depending on whether the item is acceptable or unacceptable. The
 signal probabilities are
 $$
-\begin{align*}
+\begin{aligned}
 p(u|1) &= 0.01,\quad p(a|1) = 0.99, \\
 p(u|2) &= 0.04,\quad p(a|2) = 0.96, \\
-\end{align*}
+\end{aligned}
 $$
 while the transition probabilities of the underlying Markov chain are
 $$
@@ -74,21 +74,21 @@ P\{X_n=j | \boldsymbol{S}^n = \boldsymbol{s}_n\} = \frac{P\{\boldsymbol{S}^n = \
 $$
 Now,
 $$
-\begin{align*}
+\begin{aligned}
 F_n(j) &= P\{\boldsymbol{S}^{n-1} = \boldsymbol{s}_{n-1}, S_n = s_n, X_n=j\} \\
        &= \sum_{i} P\{\boldsymbol{S}^{n-1} = \boldsymbol{s}_{n-1}, X_{n-1}=i, X_n=j, S_n = s_n,\} \\
        &= \sum_{i} F_{n-1}(i)P\{X_n=j, S_n = s_n | \boldsymbol{S}^{n-1} = \boldsymbol{s}_{n-1}, X_{n-1}=i\} \\
        &= \sum_{i} F_{n-1}(i)P\{X_n=j, S_n = s_n | X_{n-1}=i\} \\
        &= \sum_{i} F_{n-1}(i) P_{i,j}p(s_n|j) \\
        &= p(s_n|j)\sum_{i} F_{n-1}(i) P_{i,j}
-\end{align*} 
+\end{aligned} 
 $$ {#eq-eq4-35}
 where the preceding used that
 $$
-\begin{align*}
+\begin{aligned}
 P\{X_n=j, S_n=s_n | X_{n-1}=i\} &= P\{S_n=s_n | X_n=j, X_{n-1}=i\} P\{X_n=j | X_{n-1}=i\} \\
                                 &= P\{S_n=s_n|X_n=j\} P_{i,j} = p(s_n|j)P_{i,j}
-\end{align*}
+\end{aligned}
 $$
 Starting with
 $$
@@ -107,14 +107,14 @@ Suppose in @exm-exa1 that $P\{X_1 = 1\} = 0.8$. Given that the successive condit
 :::{#sol-sol2}
 With $\mathbf{s}_3=(a, u, a)$, we have
 $$
-\begin{align*}
+\begin{aligned}
 & F_1(1)=(0.8)(0.99)=0.792, \\
 & F_1(2)=(0.2)(0.96)=0.192 \\
 & F_2(1)=0.01[0.792(0.9)+0.192(0)]=0.007128, \\
 & F_2(2)=0.04[0.792(0.1)+(0.192)(1)]=0.010848 \\
 & F_3(1)=0.99[(0.007128)(0.9)] \approx 0.006351, \\
 & F_3(2)=0.96[(0.007128)(0.1)+0.010848] \approx 0.011098
-\end{align*}
+\end{aligned}
 $$
 Therefore, the answer to part (i) is
 $$
@@ -122,22 +122,22 @@ P\left\{X_3=1 \mid \mathbf{s}_3\right\} \approx \frac{0.006351}{0.006351+0.01109
 $$
 To compute $P\left\{X_4=1 \mid \mathbf{s}_3\right\}$, condition on $X_3$ to obtain
 $$
-\begin{align*}
+\begin{aligned}
 P\left\{X_4=1 \mid \mathbf{s}_3\right\}= & P\left\{X_4=1 \mid X_3=1, \mathbf{s}_3\right\} P\left\{X_3=1 \mid \mathbf{s}_3\right\} \\
 & +P\left\{X_4=1 \mid X_3=2, \mathbf{s}_3\right\} P\left\{X_3=2 \mid \mathbf{s}_3\right\} \\
 = & P\left\{X_4=1 \mid X_3=1, \mathbf{s}_3\right\}(0.364)+P\left\{X_4=1 \mid X_3=2, \mathbf{s}_3\right\}(0.636) \\
 = & 0.364 P_{1,1}+0.636 P_{2,1} \\
 = & 0.3276
-\end{align*}
+\end{aligned}
 $$
 To compute $P\left\{S_4=a \mid \mathbf{s}_3\right\}$, condition on $X_4$
 $$
-\begin{align*}
+\begin{aligned}
 P\left\{S_4=a \mid \mathbf{s}_3\right\}= & P\left\{S_4=a \mid X_4=1, \mathrm{~s}_3\right\} P\left\{X_4=1 \mid \mathrm{s}_3\right\} \\
 & +P\left\{S_4=a \mid X_4=2, \mathbf{s}_3\right\} P\left\{X_4=2 \mid \mathbf{s}_3\right\} \\
 = & P\left\{S_4=a \mid X_4=1\right\}(0.3276)+P\left\{S_4=a \mid X_4=2\right\}(1-0.3276) \\
 = & (0.99)(0.3276)+(0.96)(0.6724)=0.9698
-\end{align*}
+\end{aligned}
 $$
 :::
 
@@ -200,10 +200,10 @@ The probabilities obtained in Part (i) have been verified numerically. Similarly
 
 To compute $P\left\{\mathbf{S}^n=\mathbf{s}_n\right\}$, use the identity $P\left\{\mathbf{S}^n=\mathbf{s}_n\right\}=\sum_i F_n(i)$ along with the recursion @eq-eq4-35. If there are $N$ states of the Markov chain, this requires computing $n N$ quantities $F_n(i)$, with each computation requiring a summation over $N$ terms. This can be compared with a computation of $P\left\{\mathbf{S}^n=\mathbf{s}_n\right\}$ based on conditioning on the first $n$ states of the Markov chain to obtain
 $$
-\begin{align*}
+\begin{aligned}
 P\left\{\mathbf{S}^n=\mathbf{s}_n\right\} & =\sum_{i_1, \ldots, i_n} P\left\{\mathbf{S}^n=\mathbf{s}_n \mid X_1=i_1, \ldots, X_n=i_n\right\} P\left\{X_1=i_1, \ldots, X_n=i_n\right\} \\
 & =\sum_{i_1, \ldots, i_n} p\left(s_1 \mid i_1\right) \cdots p\left(s_n \mid i_n\right) p_{i_1} P_{i_1, i_2} P_{i_2, i_3} \cdots P_{i_{n-1}, i_n}
-\end{align*}
+\end{aligned}
 $$
 
 
@@ -216,45 +216,45 @@ $$
 
 A recursive formula for $B_k(i)$ can be obtained by conditioning on $X_{k+1}$.
 $$
-\begin{align*}
+\begin{aligned}
 B_k(i)= & \sum_j P\left\{S_{k+1}=s_{k+1}, \ldots, S_n=s_n \mid X_k=i, X_{k+1}=j\right\} P\left\{X_{k+1}=j \mid X_k=i\right\} \\
 = & \sum_j P\left\{S_{k+1}=s_{k+1}, \ldots, S_n=s_n \mid X_{k+1}=j\right\} P_{i, j} \\
 = & \sum_j P\left\{S_{k+1}=s_{k+1} \mid X_{k+1}=j\right\} \\
 & \times P\left\{S_{k+2}=s_{k+2}, \ldots, S_n=s_n \mid S_{k+1}=s_{k+1}, X_{k+1}=j\right\} P_{i, j} \\
 = & \sum_j p\left(s_{k+1} \mid j\right) P\left\{S_{k+2}=s_{k+2}, \ldots, S_n=s_n \mid X_{k+1}=j\right\} P_{i, j} \\
 = & \sum_j p\left(s_{k+1} \mid j\right) B_{k+1}(j) P_{i, j}
-\end{align*}
+\end{aligned}
 $$ {#eq-eq4-36}
 
 Starting with
 $$
-\begin{align*}
+\begin{aligned}
 B_{n-1}(i) & =P\left\{S_n=s_n \mid X_{n-1}=i\right\} \\
 & =\sum_j P_{i, j} p\left(s_n \mid j\right)
-\end{align*}
+\end{aligned}
 $$
 we would then use Equation @eq-eq4-36 to determine the function $B_{n-2}(i)$, then $B_{n-3}(i)$, and so on, down to $B_1(i)$. This would then yield $P\left\{\mathbf{S}^n=\mathbf{s}_n\right\}$ via
 $$
-\begin{align*}
+\begin{aligned}
 P\left\{\mathbf{S}^n=\mathrm{s}_n\right\} & =\sum_i P\left\{S_1=s_1, \ldots, S_n=s_n \mid X_1=i\right\} p_i \\
 & =\sum_i P\left\{S_1=s_1 \mid X_1=i\right\} P\left\{S_2=s_2, \ldots, S_n=s_n \mid S_1=s_1, X_1=i\right\} p_i
-\end{align*}
+\end{aligned}
 $$
 $$
-\begin{align*}
+\begin{aligned}
 & =\sum_i p\left(s_1 \mid i\right) P\left\{S_2=s_2, \ldots, S_n=s_n \mid X_1=i\right\} p_i \\
 & =\sum_i p\left(s_1 \mid i\right) B_1(i) p_i
-\end{align*}
+\end{aligned}
 $$
 
 Another approach to obtaining $P\left\{\mathbf{S}^n=\mathbf{s}_n\right\}$ is to combine both the forward and backward approaches. Suppose that for some $k$ we have computed both functions $F_k(j)$ and $B_k(j)$. Because
 $$
-\begin{align*}
+\begin{aligned}
 P\left\{\mathbf{S}^n=\mathbf{s}_n, X_k=j\right\}= & P\left\{\mathbf{S}^k=\mathbf{s}_k, X_k=j\right\} \\
 & \times P\left\{S_{k+1}=s_{k+1}, \ldots, S_n=s_n \mid \mathbf{S}^k=\mathbf{s}_k, X_k=j\right\} \\
 = & P\left\{\mathbf{S}^k=\mathbf{s}_k, X_k=j\right\} P\left\{S_{k+1}=s_{k+1}, \ldots, S_n=s_n \mid X_k=j\right\} \\
 = & F_k(j) B_k(j)
-\end{align*}
+\end{aligned}
 $$
 we see that
 $$

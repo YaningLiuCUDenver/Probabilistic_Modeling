@@ -29,10 +29,10 @@ Another way in which we can use simulation to estimate $\theta$ is to note that 
 is another probability density such that $f (\mathbf{x}) = 0$ whenever $g(\mathbf{x}) = 0$, then we can
 express $\theta$ as
 $$
-\begin{align*}
+\begin{aligned}
 \theta &= \int \frac{h(\mathbf{x})f(\mathbf{x})}{g(\mathbf{x})} g(\mathbf{x})\,d\mathbf{x} \\
 &= E_g\left[\frac{h(\mathbf{X})f(\mathbf{X})}{g(\mathbf{X})}\right]
-\end{align*}
+\end{aligned}
 $$ {#eq-eq11-14}
 where we have written $E_g$ to emphasize that the random vector $\mathbf{X}$ has joint density
 $g(\mathbf{x})$.
@@ -92,10 +92,10 @@ f(x)=p^x(1-p)^{1-x},\quad x=0,1
 $$
 Hence, $M(t)=E_f[e^{tX}]=pe^{t}+1-p$ and so
 $$
-\begin{align*}
+\begin{aligned}
 f_{t}(x)&=\frac{1}{M(t)}(pe^{t})^{x}(1-p)^{1-x}\\
 &=\left(\frac{pe^{t}}{pe^{t}+1-p}\right)^{x}\left(\frac{1-p}{pe^{t}+1-p}\right)^{1-x}
-\end{align*}
+\end{aligned}
 $$
 That is, $f_t$ is the probability mass function of a Bernoulli random variable with
 parameter
@@ -202,7 +202,7 @@ where $S_n$ is the sum of the first $n$ interarrival times, $Y_n$ is the sum of 
 :::{#exm-exa4}
 Find the probability that a randomly chosen variable $X$ from the standard normal distribution is greater than $3$. We know that one way to solve this is by solving the following integral:
 $$
-P\{X\gt 3\} = \int_3^\infty f_X(t)\,dt = \frac{1}{\sqrt{2\pi}}\int_3^\infty e^{-t^2/2}\,dt
+P\{X> 3\} = \int_3^\infty f_X(t)\,dt = \frac{1}{\sqrt{2\pi}}\int_3^\infty e^{-t^2/2}\,dt
 $$
 We use a normal distribution with $\mu = 4$ and $\sigma = 1$ as $g$.
 :::

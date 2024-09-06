@@ -38,9 +38,9 @@ $$P\{N=i\}=\lambda_{i},\quad i\geqslant1$$
 
 Applying the conditional variance formula twice yields
 $$
-\begin{align*}
+\begin{aligned}
 \mathrm{Var}(Y)&\geqslant\mathrm{Var}(E[Y|N,Z_{N}])\\&\geqslant\mathrm{Var}\big(E[E[Y|N,Z_{N}]|Z_{1},\ldots]\big)\\&=\mathrm{Var}\sum_{i}\lambda_{i}E[Y|Z_{i}]
-\end{align*}
+\end{aligned}
 $$
 :::
 

@@ -39,12 +39,12 @@ is called *geometric Brownian motion*.
 
 For a geometric Brownian motion process $\{X(t)\}$, let us compute the expected value of the process at time $t$ given the history of the process up to time $s$. That is, for $s<t$, consider $E[X(t)|X(u),0\leqslant u\leqslant s].$ Now,
 $$
-\begin{align*}
+\begin{aligned}
 E[X(t)|X(u),\:0\leqslant u\leqslant s]&=E\big[e^{Y(t)}|Y(u),\:0\leqslant u\leqslant s\big]\\
 &=E\big[e^{Y(s)+Y(t)-Y(s)}|Y(u),\:0\leqslant u\leqslant s\big]\\
 &=e^{Y(s)}E\Big[e^{Y(t)-Y(s)}|Y(u),\:0\leqslant u\leqslant s\Big]\\
 &=X(s)E\Big[e^{Y(t)-Y(s)}\Big]
-\end{align*}
+\end{aligned}
 $$
 where the next to last equality follows from the fact that $Y(s)$ is given, and the last equality from the independent increment property of Brownian motion. Now, the moment generating function of a normal random variable $W$ is given by
 $$
@@ -70,12 +70,12 @@ X_n=Y_nX_{n-1}
 $$
 Iterating this equality gives
 $$
-\begin{align*}
+\begin{aligned}
 X_{n}&=Y_{n}Y_{n-1}X_{n-2}\\
 &=Y_{n}Y_{n-1}Y_{n-2}X_{n-3}\\
 &\vdots \\
 &=Y_{n}Y_{n-1}\cdots Y_{1}X_{0}
-\end{align*}
+\end{aligned}
 $$
 Thus,
 $$
@@ -95,7 +95,7 @@ to be earned at time $t$ is $ve^{−αt}$ . The quantity $\alpha$ is often calle
 In economic terms, the assumption of the discount function $e^{−αt}$ is equivalent to
 the assumption that we can earn interest at a continuously compounded rate of
 $100\alpha$ percent per unit time.
-![](price.png){width=70%}
+![](images/price.png){width=70%}
 
 We will now consider a simple model for pricing an option to purchase a stock
 at a future time at a fixed price.
@@ -128,10 +128,10 @@ of purchases that will always result in a positive gain.
 
 To show this, suppose that at time 0 we
 $$
-\begin{align*}
+\begin{aligned}
 &\text{buy } x \text{ units of stock, and} \\
 &\text{buy } y \text{ units of options}
-\end{align*}
+\end{aligned}
 $$
 where $x$ and $y$ (which can be either positive or negative) are to be determined.
 The value of our holding at time 1 depends on the price of the stock at that time;
@@ -176,7 +176,7 @@ $$
 $$
 Thus, if $3c = 50$, then the gain is 0; on the other hand if $3c \ne 50$, we can guarantee
 a positive gain (no matter what the price of the stock at time 1) by letting $x$ be
-positive when $3c \gt 50$ and letting it be negative when $3c \lt 50$.
+positive when $3c > 50$ and letting it be negative when $3c < 50$.
 
 For instance, if the unit cost per option is $c = 20$, then purchasing 1 unit of the
 stock $(x = 1)$ and simultaneously selling 3 units of the option $(y = -3)$ initially
@@ -221,7 +221,7 @@ $$
 or
 (ii) there exists a betting scheme $\boldsymbol{x} = (x_1, \dots, x_n)$ for which
 $$
-\sum_{i=1}^n x_i r_i(j) \gt 0,\quad \text{for all }j=1,\dots,m
+\sum_{i=1}^n x_i r_i(j) > 0,\quad \text{for all }j=1,\dots,m
 $$
 :::
 In other words, if $X$ is the outcome of the experiment, then the arbitrage theorem
@@ -242,10 +242,10 @@ bet on each wager must be less than or equal to 1. To determine the vector $x$ t
 yields the greatest guaranteed win—call this win $v$—we need to choose $\boldsymbol{x}$ and $v$
 so as to maximize $v$, subject to the constraints
 $$
-\begin{align*}
+\begin{aligned}
 \sum_{i=1}^n x_ir_i(j) &\ge v, \quad \text{ for }j =1,\dots,m \\
 -1 \le x_i &\le 1, \quad i=1,\dots,n
-\end{align*}
+\end{aligned}
 $$
 This optimization problem is a linear program and can be solved by standard
 techniques (such as by using the simplex algorithm). The arbitrage theorem yields
@@ -283,7 +283,7 @@ $$
 Thus, if the posted odds are such that $\sum_{i=1}^m (1+o_i)^{-1} \ne 1$, then a sure win is possible.
 For instance, suppose there are three possible outcomes and the odds are as follows:
 $$
-\begin{array}{c}
+\begin{array}{cc}
 \text{Outcome} & \text{Odds} \\
 1 & 1 \\
 2 & 2 \\
@@ -293,7 +293,7 @@ $$
 That is, the odds for outcome 1 are 1 − 1, the odds for outcome 2 are 2 − 1, and
 that for outcome 3 are 3−1. Since
 $$
-\frac{1}{2} + \frac{1}{3} + \frac{1}{4} \gt 1
+\frac{1}{2} + \frac{1}{3} + \frac{1}{4} > 1
 $$
 a sure win is possible. One possibility is to bet \$-1 on outcome 1 (and so you
 either win 1 if the outcome is not 1 and lose 1 if the outcome is 1) and bet $-0.7$
@@ -350,10 +350,10 @@ $$
 $$
 Hence, the expected return when $p=\frac{1}{3}$ is
 $$
-\begin{align*}
+\begin{aligned}
 E[\mathrm{return}]&=(50-c)\frac{1}{3}-c\frac{2}{3}\\
 &=\frac{50}{3}-c
-\end{align*}
+\end{aligned}
 $$
 Thus, it follows from the arbitrage theorem that the only value of $c$ for which there will not be a sure win is $c=\frac{50}{3}$, which verifies the result of @sec-example.
 :::
@@ -395,7 +395,7 @@ Suppose that
 $$
 X(t)=x_0e^{Y(t)}
 $$
-where $\{Y(t),t\geqslant0\}$ is a Brownian motion process with drift coefficient $\mu$ and variance parameter $\sigma^2.$ That is, $\{X(t),t\geqslant0\}$ is a geometric Brownian motion process. From @eq-eq10-8 we have that, for $s\lt t$,
+where $\{Y(t),t\geqslant0\}$ is a Brownian motion process with drift coefficient $\mu$ and variance parameter $\sigma^2.$ That is, $\{X(t),t\geqslant0\}$ is a geometric Brownian motion process. From @eq-eq10-8 we have that, for $s< t$,
 $$
 E[X(t)|X(u),0\leqslant u\leqslant s]=X(s)e^{(t-s)(\mu+\sigma^{2}/2)}
 $$
@@ -413,10 +413,10 @@ $$
 then no arbitrage is possible. Since $X(t)=x_0e^{Y(t)}$, where $Y(t)$ is normal with
 mean $\mu t$ and variance $t\sigma^2$,we see that
 $$
-\begin{align*}
+\begin{aligned}
 ce^{\alpha t}&=\int_{-\infty}^{\infty}(x_{0}e^{y}-K)^{+}\frac{1}{\sqrt{2\pi t\sigma^{2}}}e^{-(y-\mu t)^{2}/2t\sigma^{2}}\:dy\\
 &=\int_{\log(K/x_{0})}^{\infty}(x_{0}e^{y}-K)\frac{1}{\sqrt{2\pi t\sigma^{2}}}e^{-(y-\mu t)^{2}/2t\sigma^{2}}\:dy
-\end{align*}
+\end{aligned}
 $$
 Making the change of variable $w=(y-\mu t)/(\sigma t^{1/2})$ yields
 $$
@@ -428,13 +428,13 @@ a=\frac{\log(K/x_0)-\mu t}{\sigma\sqrt{t}}
 $$
 Now,
 $$
-\begin{align*}
+\begin{aligned}
 \frac{1}{\sqrt{2\pi}}\int_{a}^{\infty}e^{\sigma w\sqrt{t}}e^{-w^{2}/2}\:dw&=e^{t\sigma^{2}/2}\frac{1}{\sqrt{2\pi}}\int_{a}^{\infty}e^{-(w-\sigma\sqrt{t})^{2}/2}\:dw\\
 &=e^{t\sigma^{2}/2}P\{N(\sigma\sqrt{t},1)\geqslant a\}\\
 &=e^{t\sigma^{2}/2}P\{N(0,1)\geqslant a-\sigma\sqrt{t}\}\\
 &=e^{t\sigma^{2}/2}P\{N(0,1)\leqslant-(a-\sigma\sqrt{t})\}\\
 &=e^{t\sigma^{2}/2}\phi\left(\sigma\sqrt{t}-a\right)
-\end{align*}
+\end{aligned}
 $$
 where $N(m,v)$ is a normal random variable with mean $m$ and variance $v$, and $\phi$
 is the standard normal distribution function.
@@ -466,12 +466,12 @@ over any time interval, then we could theoretically obtain an arbitrarily precis
 estimate of $\sigma^2.$ For suppose we observe such a process $\{Y(s)\}$ for a time $t.$
 Then, for fixed $h$, let $N=[t/h]$ and set
 $$
-\begin{align*}
+\begin{aligned}
 &W_{1}=Y(h)-Y(0),\\
 &W_{2}=Y(2h)-Y(h),\\
 &\vdots \\
 &W_{N}=Y(Nh)-Y(Nh-h)
-\end{align*}
+\end{aligned}
 $$
 Then random variables $W_1,\ldots,W_N$ are independent and identically distributed normal random variables having variance $h\sigma^{\dot{2}}.$ We now use the fact that $(N-1)S^2/(\sigma^2h)$ has a chi-squared distribution with $N-1$ degrees of freedom, where $S^2$ is the sample variance defined by
 $$
