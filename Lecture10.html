@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.47">
+<meta name="generator" content="quarto-1.5.57">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -392,7 +392,7 @@ window.Quarto = {
 <h3 data-number="10.1.2" class="anchored" data-anchor-id="definition-of-the-poisson-process"><span class="header-section-number">10.1.2</span> Definition of the Poisson Process</h3>
 <p>One of the most important counting processes is the Poisson process which is defined as follows:</p>
 <div id="def-def1" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 10.1</strong></span> The counting process <span class="math inline">\(\{N(t), t \ge 0\}\)</span> is said to be a <em>Poisson process having rate <span class="math inline">\(\lambda\)</span></em>, <span class="math inline">\(\lambda \gt 0\)</span>, if</p>
+<p><span class="theorem-title"><strong>Definition 10.1</strong></span> The counting process <span class="math inline">\(\{N(t), t \ge 0\}\)</span> is said to be a <em>Poisson process having rate <span class="math inline">\(\lambda\)</span></em>, <span class="math inline">\(\lambda &gt; 0\)</span>, if</p>
 <ol type="i">
 <li><p><span class="math inline">\(N(0) = 0\)</span></p></li>
 <li><p>The process has independent increments.</p></li>
@@ -432,7 +432,7 @@ E[N(t)] = \lambda t
 <p>In order for the function <span class="math inline">\(f(\cdot)\)</span> to be <span class="math inline">\(o(h)\)</span> it is necessary that <span class="math inline">\(f(h)/h\)</span> go to zero as <span class="math inline">\(h\)</span> goes to zero. But if <span class="math inline">\(h\)</span> goes to zero, the only way for <span class="math inline">\(f(h)/h\)</span> to go to zero is for <span class="math inline">\(f(h)\)</span> to go to zero faster than <span class="math inline">\(h\)</span> does. That is, for <span class="math inline">\(h\)</span> small, <span class="math inline">\(f(h)\)</span> must be small compared with <span class="math inline">\(h\)</span>.</p>
 <p>We are now in a position to give an alternate definition of a Poisson process.</p>
 <div id="def-def3" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 10.3</strong></span> The counting process <span class="math inline">\(\{N(t), t \ge 0\}\)</span> is said to be a Poisson process having rate <span class="math inline">\(\lambda, \lambda \gt 0\)</span>, if</p>
+<p><span class="theorem-title"><strong>Definition 10.3</strong></span> The counting process <span class="math inline">\(\{N(t), t \ge 0\}\)</span> is said to be a Poisson process having rate <span class="math inline">\(\lambda, \lambda &gt; 0\)</span>, if</p>
 <ol type="i">
 <li><p><span class="math inline">\(N(0) = 0\)</span>.</p></li>
 <li><p>The process has stationary and independent increments.</p></li>
@@ -447,19 +447,19 @@ E[N(t)] = \lambda t
 <p><span class="proof-title"><em>Proof</em>. </span>We show that <a href="#def-def3" class="quarto-xref">Definition&nbsp;<span>10.3</span></a> implies <a href="Lecture25.html#def-def1" class="quarto-xref">Definition&nbsp;<span>25.1</span></a>, and leave it to you to prove the reverse. To start, fix <span class="math inline">\(u\ge 0\)</span> and let <span class="math display">\[
 g(t) = E[\exp\{-uN(t)\}]
 \]</span> We derive a differential equation for <span class="math inline">\(g(t)\)</span> as follows: <span id="eq-eq5-10"><span class="math display">\[
-\begin{align*}
+\begin{aligned}
 g(t+h) &amp;= E[\exp\{-uN(t+h)\}] \\
        &amp;= E[\exp\{-uN(t)\} \exp\{-u(N(t+h)-N(t))\}] \\
        &amp;= E[\exp\{-uN(t)\}]  E[\exp\{-u(N(t+h)-N(t))\}] \quad \text{ by independent increments} \\
        &amp;= g(t)E[\exp\{-uN(h)\}] \quad \text{ by stationary increments}
-\end{align*}
+\end{aligned}
 \tag{10.1}\]</span></span> Now, assumptions (iii) and (iv) imply that <span class="math display">\[
 P\{N(h)=0\} = 1-\lambda h + o(h)
 \]</span> Hence, conditioning on whether <span class="math inline">\(N(h) = 0\)</span> or <span class="math inline">\(N(h) = 1\)</span> or <span class="math inline">\(N(h) \ge 2\)</span> yields <span id="eq-eq5-11"><span class="math display">\[
-\begin{align*}
+\begin{aligned}
 E[\exp\{-uN(h)\}] &amp;= 1-\lambda h +o(h) +e^{-u}(\lambda h +o(h)) + o(h) \\
                   &amp;= 1-\lambda h + e^{-u}\lambda h +o(h)
-\end{align*}
+\end{aligned}
 \tag{10.2}\]</span></span> Therefore, from <a href="#eq-eq5-10" class="quarto-xref">Equation&nbsp;<span>10.1</span></a> and <a href="#eq-eq5-11" class="quarto-xref">Equation&nbsp;<span>10.2</span></a> we obtain that <span class="math display">\[
 g(t+h) = g(t)(1-\lambda h + e^{-u}\lambda h) + o(h)
 \]</span> implying that <span class="math display">\[
@@ -479,31 +479,31 @@ g(t) = \exp\{\lambda t (e^{-u}-1)\}
 </section>
 <section id="interarrival-and-waiting-time-distributions" class="level3" data-number="10.1.3">
 <h3 data-number="10.1.3" class="anchored" data-anchor-id="interarrival-and-waiting-time-distributions"><span class="header-section-number">10.1.3</span> Interarrival and Waiting Time Distributions</h3>
-<p>Consider a Poisson process, and let us denote the time of the first event by <span class="math inline">\(T_1\)</span>. Further, for <span class="math inline">\(n \gt 1\)</span>, let <span class="math inline">\(T_n\)</span> denote the elapsed time between the <span class="math inline">\((n − 1)\)</span>st and the <span class="math inline">\(n\)</span>th event. The sequence <span class="math inline">\(\{T_n, n = 1, 2, \dots\}\)</span> is called the sequence of interarrival times. For instance, if <span class="math inline">\(T_1 = 5\)</span> and <span class="math inline">\(T_2 = 10\)</span>, then the first event of the Poisson process would have occurred at time <span class="math inline">\(5\)</span> and the second at time <span class="math inline">\(15\)</span>.</p>
-<p>We shall now determine the distribution of the <span class="math inline">\(T_n\)</span>. To do so, we first note that the event <span class="math inline">\(\{T_1 \gt t\}\)</span> takes place if and only if no events of the Poisson process occur in the interval <span class="math inline">\([0, t]\)</span> and thus, <span class="math display">\[
-P\{T_1\gt t\} = P\{N(t)=0\} = e^{-\lambda t}
+<p>Consider a Poisson process, and let us denote the time of the first event by <span class="math inline">\(T_1\)</span>. Further, for <span class="math inline">\(n &gt; 1\)</span>, let <span class="math inline">\(T_n\)</span> denote the elapsed time between the <span class="math inline">\((n − 1)\)</span>st and the <span class="math inline">\(n\)</span>th event. The sequence <span class="math inline">\(\{T_n, n = 1, 2, \dots\}\)</span> is called the sequence of interarrival times. For instance, if <span class="math inline">\(T_1 = 5\)</span> and <span class="math inline">\(T_2 = 10\)</span>, then the first event of the Poisson process would have occurred at time <span class="math inline">\(5\)</span> and the second at time <span class="math inline">\(15\)</span>.</p>
+<p>We shall now determine the distribution of the <span class="math inline">\(T_n\)</span>. To do so, we first note that the event <span class="math inline">\(\{T_1 &gt; t\}\)</span> takes place if and only if no events of the Poisson process occur in the interval <span class="math inline">\([0, t]\)</span> and thus, <span class="math display">\[
+P\{T_1&gt; t\} = P\{N(t)=0\} = e^{-\lambda t}
 \]</span> Hence, <span class="math inline">\(T_1\)</span> has an exponential distribution with mean <span class="math inline">\(1/\lambda\)</span>.</p>
-<p>(Recall: A continuous random variable <span class="math inline">\(X\)</span> is said to have an exponential distribution with parameter <span class="math inline">\(\lambda\)</span>, <span class="math inline">\(\lambda \gt 0\)</span>, if its probability density function is given by <span class="math display">\[
+<p>(Recall: A continuous random variable <span class="math inline">\(X\)</span> is said to have an exponential distribution with parameter <span class="math inline">\(\lambda\)</span>, <span class="math inline">\(\lambda &gt; 0\)</span>, if its probability density function is given by <span class="math display">\[
 f(x) =
 \begin{cases}
 \lambda e^{-\lambda x}, &amp; x \ge 0 \\
-0, &amp; x \lt 0
+0, &amp; x &lt; 0
 \end{cases}
 \]</span> or, equivalently, if its cdf is given by <span class="math display">\[
 F(x) = \int_{-\infty}^x f(y) dy =
 \begin{cases}
 1-e^{-\lambda x}, &amp; x\ge 0 \\
-0, &amp; x \lt 0
+0, &amp; x &lt; 0
 \end{cases}
 \]</span> )</p>
 <p>Now, <span class="math display">\[
-P\{T_2 \gt t\} = E[P\{T_2\gt t|T_1]\}]
+P\{T_2 &gt; t\} = E[P\{T_2&gt; t|T_1]\}]
 \]</span> However, <span id="eq-eq5-12"><span class="math display">\[
-\begin{align*}
+\begin{aligned}
 P\{T_2&gt;t | T_1=s\} &amp;= P\{0 \text{ events in } (s,s+t] | T_1=s\} \\
                    &amp;= P\{0 \text{ events in } (s,s+t]\} \\
                    &amp;= e^{-\lambda t}
-\end{align*}
+\end{aligned}
 \tag{10.3}\]</span></span> where the last two equations followed from independent and stationary increments. Therefore, from <a href="#eq-eq5-12" class="quarto-xref">Equation&nbsp;<span>10.3</span></a> we conclude that <span class="math inline">\(T_2\)</span> is also an exponential random variable with mean <span class="math inline">\(1/\lambda\)</span> and, furthermore, that <span class="math inline">\(T_2\)</span> is independent of <span class="math inline">\(T_1\)</span>. Repeating the same argument yields the following.</p>
 <div id="prp-prp1" class="theorem proposition">
 <p><span class="theorem-title"><strong>Proposition 10.1</strong></span> <span class="math inline">\(T_n, n = 1, 2, \dots\)</span>, are independent identically distributed exponential random variables having mean <span class="math inline">\(1/\lambda\)</span>.</p>
@@ -521,11 +521,11 @@ N(t) \ge n \Leftrightarrow S_n\le t
 \]</span> Hence, <span class="math display">\[
 F_{S_n}(t) = P\{S_n\le t\} = P\{N(t)\ge n\} = \sum_{j=n}^\infty e^{-\lambda t}\frac{(\lambda t)^j}{j!}
 \]</span> which, upon differentiation, yields <span class="math display">\[
-\begin{align*}
+\begin{aligned}
 f_{S_n}(t) &amp;= -\sum_{j=n}^\infty \lambda e^{-\lambda t}\frac{(\lambda t)^j}{j!} + \sum_{j=n}^\infty \lambda e^{-\lambda t}\frac{(\lambda t)^{j-1}}{(j-1)!} \\
 &amp;= \lambda e^{-\lambda t}\frac{(\lambda t)^{n-1}}{(n-1)!} + \sum_{j=n+1}^\infty \lambda e^{-\lambda t}\frac{(\lambda t)^{j-1}}{(j-1)!} - \sum_{j=n}^\infty \lambda e^{-\lambda t}\frac{(\lambda t)^j}{j!} \\
 &amp;= \lambda e^{-\lambda t}\frac{(\lambda t)^{n-1}}{(n-1)!}
-\end{align*}
+\end{aligned}
 \]</span></p>
 <div id="exm-exa2" class="theorem example">
 <p><span class="theorem-title"><strong>Example 10.2</strong></span> Suppose that people immigrate into a territory at a Poisson rate <span class="math inline">\(\lambda = 1\)</span> per day.</p>
@@ -542,7 +542,7 @@ f_{S_n}(t) &amp;= -\sum_{j=n}^\infty \lambda e^{-\lambda t}\frac{(\lambda t)^j}{
 </ol>
 </div>
 <p>Now we numerically derive the results using Python.</p>
-<div id="c6e6989c" class="cell">
+<div id="53c43306" class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> expon</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -561,7 +561,7 @@ f_{S_n}(t) &amp;= -\sum_{j=n}^\infty \lambda e^{-\lambda t}\frac{(\lambda t)^j}{
 <span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    T <span class="op">=</span> expon.rvs(scale <span class="op">=</span> <span class="dv">1</span><span class="op">/</span>lam, size<span class="op">=</span>n)</span>
 <span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> T</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="d8fa0716" class="cell">
+<div id="2e7721a1" class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Part (a)</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>sample_size <span class="op">=</span> <span class="dv">10000</span>  <span class="co"># sample size for calculating probabilities</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="dv">10</span>  <span class="co"># 10th event happens</span></span>
@@ -572,7 +572,7 @@ f_{S_n}(t) &amp;= -\sum_{j=n}^\infty \lambda e^{-\lambda t}\frac{(\lambda t)^j}{
 <span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'By simulation, the expected time until the tenth immigrant arrives is: '</span>, S10.mean(), </span>
 <span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>      <span class="st">' days, and the theoretical result is 10 days'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="ff4a54f1" class="cell">
+<div id="943d4d07" class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Part (b)</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>sample_size <span class="op">=</span> <span class="dv">10000</span>  <span class="co"># sample size for calculating probabilities</span></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="dv">11</span>  <span class="co"># 11th event happens</span></span>
@@ -589,12 +589,12 @@ S_n \equiv T_1 + T_2 + \cdots + T_n
 \]</span> The resultant counting process <span class="math inline">\(\{N(t), t \ge 0\}\)</span> will be Poisson with rate <span class="math inline">\(\lambda\)</span>.</p>
 <div id="rem-rem1" class="proof remark">
 <p><span class="proof-title"><em>Remark 10.2</em>. </span>Another way of obtaining the density function of <span class="math inline">\(S_n\)</span> is to note that because <span class="math inline">\(S_n\)</span> is the time of the <span class="math inline">\(n\)</span>th event, <span class="math display">\[
-\begin{align*}
+\begin{aligned}
 P\{t &lt; S_n &lt; t+h\}  &amp;= P\{N(t) = n-1, \text{ one event in } (t, t+h)\} + o(h) \\
                     &amp;= P\{N(t) = n-1\}, P\{\text{one event in } (t, t+h)\} + o(h) \\
                     &amp;= e^{-\lambda t}\frac{(\lambda t)^{n-1}}{(n-1)!} [\lambda h+o(h)] + o(h) \\
                     &amp;= \lambda e^{-\lambda t}\frac{(\lambda t)^{n-1}}{(n-1)!}h + o(h)
-\end{align*}
+\end{aligned}
 \]</span> where the first equality uses the fact that the probability of 2 or more events in <span class="math inline">\((t, t + h)\)</span> is <span class="math inline">\(o(h)\)</span>. If we now divide both sides of the preceding equation by <span class="math inline">\(h\)</span> and then let <span class="math inline">\(h\rightarrow 0\)</span>, we obtain <span class="math display">\[
 f_{S_n}(t) = \lambda e^{-\lambda t}\frac{(\lambda t)^{n-1}}{(n-1)!}
 \]</span></p>

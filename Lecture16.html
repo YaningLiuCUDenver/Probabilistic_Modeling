@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.47">
+<meta name="generator" content="quarto-1.5.57">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -343,10 +343,10 @@ X_i=
 \]</span> and <span class="math inline">\([t/\Delta t]\)</span> is the largest integer less than or equal to <span class="math inline">\(t/\Delta t\)</span>, and where the <span class="math inline">\(X_i\)</span> are assumed independent with <span class="math display">\[
 P\{X_i=1\}=P\{X_i=-1\}=\frac{1}{2}
 \]</span> As <span class="math inline">\(E[X_i]=0\)</span>, Var<span class="math inline">\((X_i)=E[X_i^2]=1\)</span>, we see from <a href="#eq-eq10-1" class="quarto-xref">Equation&nbsp;<span>16.1</span></a> that <span id="eq-eq10-2"><span class="math display">\[
-\begin{align*}
+\begin{aligned}
 E[X(t)] &amp;= 0 \\
 \mathrm{Var}(X(t))&amp;=(\Delta x)^{2}\biggl[\frac{t}{\Delta t}\biggr]
-\end{align*}
+\end{aligned}
 \tag{16.2}\]</span></span></p>
 <p>We shall now let <span class="math inline">\(\Delta x\)</span> and <span class="math inline">\(\Delta t\)</span> go to 0. However, we must do it in a way such that the resulting limiting process is nontrivial (for instance, if we let <span class="math inline">\(\Delta x=\Delta t\)</span> and let <span class="math inline">\(\Delta t\to 0\)</span>, then from the preceding we see that <span class="math inline">\(E[X(t)]\)</span> and <span class="math inline">\(\mathrm{Var}(X(t))\)</span> would both converge to 0 and thus <span class="math inline">\(X(t)\)</span> would equal 0 with probability 1). If we let <span class="math inline">\(\Delta x=\sigma\sqrt{\Delta t}\)</span> for some positive constant <span class="math inline">\(\sigma\)</span> then from <a href="#eq-eq10-2" class="quarto-xref">Equation&nbsp;<span>16.2</span></a> we see that <span class="math inline">\(as~\Delta t\to 0\)</span> <span class="math display">\[
 E[X(t)]=0,\\
@@ -375,38 +375,38 @@ X(t_{n})-X(t_{n-1}),X(t_{n-1})-X(t_{n-2}),\ldots,X(t_{2})-X(t_{1}),X(t_{1})
 <p>As <span class="math inline">\(X(t)\)</span> is normal with mean 0 and variance <span class="math inline">\(t\)</span>, its density function is given by <span class="math display">\[
 f_t(x)=\frac{1}{\sqrt{2\pi t}}e^{-x^2/2t}
 \]</span> To obtain the joint density function of <span class="math inline">\(X(t_1),X(t_2),\ldots,X(t_n)\)</span> for <span class="math inline">\(t_1&lt;\cdots&lt;t_n\)</span>, note first that the set of equalities <span class="math display">\[
-\begin{align*}
+\begin{aligned}
 X(t_1) &amp;= x_1, \\
 X(t_2) &amp;= x_2, \\
 &amp;\vdots \\
 X(t_n) &amp;= x_n
-\end{align*}
+\end{aligned}
 \]</span> is equivalent to <span class="math display">\[
-\begin{align*}
+\begin{aligned}
 X(t_1) &amp;= x_1, \\
 X(t_2) - X(t_1) &amp;= x_2 - x_1, \\
 &amp;\vdots \\
 X(t_n) - X(t_{n-1}) &amp;= x_n - x_{n-1}
-\end{align*}
+\end{aligned}
 \]</span></p>
 <p>However, by the independent increment assumption it follows that <span class="math inline">\(X(t_1)\)</span>, <span class="math inline">\(X(t_2)-X(t_1), \ldots, X(t_n)-X(t_{n-1})\)</span>, are independent and, by the stationary increment assumption, that <span class="math inline">\(X(t_k)-X(t_{k-1})\)</span> is normal with mean 0 and variance <span class="math inline">\(t_k-t_{k-1}\)</span>. Hence, the joint density of <span class="math inline">\(X(t_1),\ldots,X(t_n)\)</span> is given by <span id="eq-eq10-3"><span class="math display">\[
-\begin{align*}
+\begin{aligned}
 &amp;f(x_{1},x_{2},\ldots,x_{n})=f_{t_{1}}(x_{1})f_{t_{2}-t_{1}}(x_{2}-x_{1})\cdots f_{t_{n}-t_{n-1}}(x_{n}-x_{n-1})\\
 &amp;=\frac{\exp\left\{-\frac{1}{2}\biggl[\frac{x_{1}^{2}}{t_{1}}+\frac{(x_{2}-x_{1})^{2}}{t_{2}-t_{1}}+\cdots+\frac{(x_{n}-x_{n-1})^{2}}{t_{n}-t_{n-1}}\biggr]\right\}}{(2\pi)^{n/2}[t_{1}(t_{2}-t_{1})\cdots(t_{n}-t_{n-1})]^{1/2}}
-\end{align*}
+\end{aligned}
 \tag{16.3}\]</span></span> From this equation, we can compute in principle any desired probabilities. For instance, suppose we require the conditional distribution of <span class="math inline">\(X(s)\)</span> given that <span class="math inline">\(X(t)=B\)</span> where <span class="math inline">\(s&lt;t.\)</span> The conditional density is <span class="math display">\[
-\begin{align*}
+\begin{aligned}
 f_{s|t}(x|B)&amp;=\frac{f_{s}(x)\:f_{t-s}(B-x)}{f_{t}(B)}\\
 &amp;=K_{1}\exp\{-x^{2}/2s-(B-x)^{2}/2(t-s)\}\\
 &amp;=K_{2}\exp\biggl\{-x^{2}\biggl(\frac{1}{2s}+\frac{1}{2(t-s)}\biggr)+\frac{Bx}{t-s}\biggr\}\\
 &amp;=K_{2}\exp\biggl\{-\frac{t}{2s(t-s)}\biggl(x^{2}-2\frac{sB}{t}x\biggr)\biggr\}\\
 &amp;=K_{3}\exp\biggl\{-\frac{(x-Bs/t)^{2}}{2s(t-s)/t}\biggr\}
-\end{align*}
+\end{aligned}
 \]</span> where <span class="math inline">\(K_1,K_2\)</span>, and <span class="math inline">\(K_3\)</span> do not depend on <span class="math inline">\(x.\)</span> Hence, we see from the preceding that the conditional distribution of <span class="math inline">\(X(s)\)</span> given that <span class="math inline">\(X(t)=B\)</span> is, for <span class="math inline">\(s&lt;t\)</span>, normal with mean and variance given by <span id="eq-eq10-4"><span class="math display">\[
-\begin{align*}
+\begin{aligned}
 E[X(s)|X(t)=B]&amp;=\frac{s}{t}B,\\
 \mathrm{Var}[X(s)|X(t)=B]&amp;=\frac{s}{t}(t-s)
-\end{align*}
+\end{aligned}
 \tag{16.4}\]</span></span></p>
 <div id="exm-exa1" class="theorem example">
 <p><span class="theorem-title"><strong>Example 16.1</strong></span> In a bicycle race between two competitors, let <span class="math inline">\(Y(t)\)</span> denote the amount of time (in seconds) by which the racer that started in the inside position is ahead when 100t percent of the race has been completed, and suppose that <span class="math inline">\(\{Y(t),~0\leqslant t\leqslant1\}\)</span> can be effectively modeled as a Brownian motion process with variance parameter <span class="math inline">\(\sigma^2.\)</span></p>
@@ -419,7 +419,7 @@ E[X(s)|X(t)=B]&amp;=\frac{s}{t}B,\\
 <p><span class="proof-title"><em>Solution 16.1</em>. </span></p>
 <ol type="a">
 <li><p><span class="math display">\[
-\begin{align*}
+\begin{aligned}
 &amp;P\{Y(1)&gt;0|Y(1/2)=\sigma\} \\
 &amp;=P\{Y(1)-Y(1/2)&gt;-\sigma|Y(1/2)=\sigma\}\\
 &amp;= P\{ Y( 1) - Y( 1/ 2) &gt; - \sigma \}\quad \text{by independent increments} \\
@@ -427,14 +427,14 @@ E[X(s)|X(t)=B]&amp;=\frac{s}{t}B,\\
 &amp;=P\left\{\frac{Y(1/2)}{\sigma/\sqrt{2}}&gt;-\sqrt{2}\right\}\\
 &amp;=\Phi(\sqrt{2})\\
 &amp;\approx0.9213
-\end{align*}
+\end{aligned}
 \]</span> where <span class="math inline">\(\Phi(x)=P\{N(0,1)\leqslant x\}\)</span> is the standard normal distribution function.</p></li>
 <li><p>Because we must compute <span class="math inline">\(P\{Y(1/2)&gt;0|Y(1)=\sigma\}\)</span>, let us first determine the conditional distribution of <span class="math inline">\(Y(s)\)</span> given that <span class="math inline">\(Y(t)=C\)</span>, when <span class="math inline">\(s&lt;t.\)</span> Now, since <span class="math inline">\(\{X(t),t\geqslant0\}\)</span> is standard Brownian motion when <span class="math inline">\(X(t)=Y(t)/\sigma\)</span>, we obtain from <a href="#eq-eq10-4" class="quarto-xref">Equation&nbsp;<span>16.4</span></a> that the conditional distribution of <span class="math inline">\(X(s)\)</span>, given that <span class="math inline">\(X(t)=C/\sigma\)</span>, is normal with mean <span class="math inline">\(sC/t\sigma\)</span> and variance <span class="math inline">\(s(t-s)/t.\)</span> Hence, the conditional distribution of <span class="math inline">\(Y(s)=\sigma X(s)\)</span> given that <span class="math inline">\(Y(t)=C\)</span> is normal with mean <span class="math inline">\(sC/t\)</span> and variance <span class="math inline">\(\sigma^2s(t-s)/t.\)</span> Hence, <span class="math display">\[
-\begin{align*}
+\begin{aligned}
 P\{Y(1/2)&gt;0|Y(1)=\sigma\}&amp;=P\{N(\sigma/2,\sigma^2/4)&gt;0\}\\
 &amp;=\Phi(1)\\
 &amp;\approx0.8413
-\end{align*}
+\end{aligned}
 \]</span></p></li>
 </ol>
 </div>
@@ -442,30 +442,30 @@ P\{Y(1/2)&gt;0|Y(1)=\sigma\}&amp;=P\{N(\sigma/2,\sigma^2/4)&gt;0\}\\
 <section id="hitting-times-maximum-variable-and-the-gamblers-ruin-problem" class="level2" data-number="16.2">
 <h2 data-number="16.2" class="anchored" data-anchor-id="hitting-times-maximum-variable-and-the-gamblers-ruin-problem"><span class="header-section-number">16.2</span> Hitting Times, Maximum Variable, and the Gambler’s Ruin Problem</h2>
 <p>Let <span class="math inline">\(T_a\)</span> denote the first time the Brownian motion process hits <span class="math inline">\(a.\)</span> When <span class="math inline">\(a&gt;0\)</span> we will compute <span class="math inline">\(P\{T_a\leqslant t\}\)</span> by considering <span class="math inline">\(P\{X(t)\geqslant a\}\)</span> and conditioning on whether or not <span class="math inline">\(T_a\leqslant t.\)</span> This gives <span id="eq-eq10-5"><span class="math display">\[
-\begin{align*}
+\begin{aligned}
 P\{X(t)\geqslant a\}&amp;=P\{X(t)\geqslant a|T_a\leqslant t\}P\{T_a\leqslant t\} \\
 &amp;+P\{X(t)\geqslant a|T_{a}&gt;t\}P\{T_{a}&gt;t\}
-\end{align*}
+\end{aligned}
 \tag{16.5}\]</span></span></p>
 <p>Now if <span class="math inline">\(T_a\leqslant t\)</span>, then the process hits <span class="math inline">\(a\)</span> at some point in <span class="math inline">\([0,t]\)</span> and, by symmetry, it is just as likely to be above <span class="math inline">\(a\)</span> or below <span class="math inline">\(a\)</span> at time <span class="math inline">\(t.\)</span> That is <span class="math display">\[
 P\{X(t)\geqslant a|T_a\leqslant t\}=\frac{1}{2}
 \]</span></p>
 <p>As the second right-hand term of <a href="#eq-eq10-5" class="quarto-xref">Equation&nbsp;<span>16.5</span></a> is clearly equal to 0 (since, by continuity, the process value cannot be greater than <span class="math inline">\(a\)</span> without having yet hit <span class="math inline">\(a)\)</span>, we see that <span id="eq-eq10-6"><span class="math display">\[
-\begin{align*}
+\begin{aligned}
 P\{T_{a}\leqslant t\}&amp;=2P\{X(t)\geqslant a\}\\
 &amp;=\frac{2}{\sqrt{2\pi t}}\int_{a}^{\infty}e^{-x^{2}/2t}\:dx\\
 &amp;=\frac{2}{\sqrt{2\pi}}\int_{a/\sqrt{t}}^{\infty}e^{-y^{2}/2}\:dy,\quad a&gt;0
-\end{align*}
+\end{aligned}
 \tag{16.6}\]</span></span></p>
 <p>For <span class="math inline">\(a&lt;0\)</span>, the distribution of <span class="math inline">\(T_a\)</span> is, by symmetry, the same as that of <span class="math inline">\(T_{-a}.\)</span> Hence, from <a href="#eq-eq10-6" class="quarto-xref">Equation&nbsp;<span>16.6</span></a> we obtain <span id="eq-eq-10-7"><span class="math display">\[
 P\{T_{a}\leqslant t\}=\frac{2}{\sqrt{2\pi}}\int_{|a|/\sqrt{t}}^{\infty}e^{-y^{2}/2}\:dy
 \tag{16.7}\]</span></span></p>
 <p>Another random variable of interest is the maximum value the process attains in <span class="math inline">\([0,t].\)</span> Its distribution is obtained as follows: For <span class="math inline">\(a&gt;0\)</span> <span class="math display">\[
-\begin{align*}
+\begin{aligned}
 P\left\{\max_{0\leqslant s\leqslant t}X(s)\geqslant a\right\}&amp;=P\{T_{a}\leqslant t\}\quad\mathrm{by~continuity}\\
 &amp;=2P\{X(t)\geqslant a\}\quad\mathrm{from~} (6)\\
 &amp;=\frac{2}{\sqrt{2\pi}}\int_{a/\sqrt{t}}^{\infty}e^{-y^{2}/2}\:dy
-\end{align*}
+\end{aligned}
 \]</span> Let us now consider the probability that Brownian motion hits A before <span class="math inline">\(-B\)</span> where <span class="math inline">\(A&gt;0,B&gt;0.\)</span> To compute this we shall make use of the interpretation of Brownian motion as being a limit of the symmetric random walk. To start let us recall from the results of the gambler’s ruin problem that the probability that the symmetric random walk goes up <span class="math inline">\(A\)</span> before going down <span class="math inline">\(B\)</span> when each step is equally likely to be either up or down a distance <span class="math inline">\(\Delta x\)</span> is with <span class="math inline">\(N= (A+ B) / \Delta x, i= B/ \Delta x]\)</span> equal to <span class="math inline">\(B\Delta x/(A+B)\Delta x=\)</span> <span class="math inline">\(B/(A+B).\)</span></p>
 <p>Hence, upon letting <span class="math inline">\(\Delta x\to0\)</span>, we see that <span class="math display">\[
 P\{\text{up }A\text{ before down }B\}=\frac{B}{A+B}

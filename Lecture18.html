@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.47">
+<meta name="generator" content="quarto-1.5.57">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -382,7 +382,7 @@ P\{I = i\} = P\{[kU] = i −1\} = P\{i −1 &lt; kU &lt;i\} = \frac{1}{k}
 <p>One very important property of the preceding algorithm is that it can also be used to generate a random subset, say of size <span class="math inline">\(r\)</span>, of the integers <span class="math inline">\(1, \dots, n\)</span>. Namely, just follow the algorithm until the positions <span class="math inline">\(n, n−1, \dots, n−r +1\)</span> are filled. The elements in these positions constitute the random subset.</p>
 </div>
 <p>The algorithm can be realized with Python as follows.</p>
-<div id="f1483b5f" class="cell">
+<div id="38093fd1" class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> int_perm(n):</span>
@@ -405,7 +405,7 @@ P\{I = i\} = P\{[kU] = i −1\} = P\{i −1 &lt; kU &lt;i\} = \frac{1}{k}
 <span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>        k <span class="op">-=</span> <span class="dv">1</span></span>
 <span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> perm</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="76df29b1" class="cell">
+<div id="126f4680" class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="dv">10</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'A permutation of integers from '</span>, <span class="dv">1</span> , <span class="st">' to '</span>, n, <span class="st">' is: '</span>, int_perm(n))</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Another permutation of integers from '</span>, <span class="dv">1</span> , <span class="st">' to '</span>, n, <span class="st">' is: '</span>, int_perm(n))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>

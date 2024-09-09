@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.47">
+<meta name="generator" content="quarto-1.5.57">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -374,12 +374,12 @@ window.Quarto = {
 <li><p><span class="math inline">\(N_1(0) = 0\)</span> follows from the fact that <span class="math inline">\(N(0) = 0\)</span>.</p></li>
 <li><p>It is easy to see that <span class="math inline">\(\{N_1(t), t \ge 0\}\)</span> inherits the stationary and independent increment properties of the process <span class="math inline">\(\{N(t), t \ge 0\}\)</span>. This is true because the distribution of the number of type I events in an interval can be obtained by conditioning on the number of events in that interval, and the distribution of this latter quantity depends only on the length of the interval and is independent of what has occurred in any nonoverlapping interval.</p></li>
 <li><p><span class="math display">\[
-  \begin{align*}
+  \begin{aligned}
       P\{N_1(h) =1\} &amp;= P\{N_1(h) = 1 | N(h) = 1\} P\{N(h) =1\} \\
                      &amp;+ P\{N_1(h) = 1 | N(h)\ge 2\} P\{N(h) \ge 2\} \\
                      &amp;= p(\lambda h + o(h) + o(h)) \\
                      &amp;= \lambda ph + o(h)
-  \end{align*}
+  \end{aligned}
 \]</span></p></li>
 <li><p><span class="math inline">\(P\{N_1(h) \ge 2\} \le P\{N(h) \ge 2\} = o(h)\)</span></p></li>
 </ul>
@@ -391,7 +391,7 @@ window.Quarto = {
 <div id="sol-sol1" class="proof solution">
 <p><span class="proof-title"><em>Solution 11.1</em>. </span>By the previous proposition it follows that the number of Englishmen emigrating to area A during the month of February is Poisson distributed with mean <span class="math inline">\(4(10)(\frac{1}{12})=\frac{10}{3}\)</span>. Hence the desired probability is <span class="math inline">\(e^{-10/3}\)</span></p>
 </div>
-<div id="f89f383e" class="cell">
+<div id="aca2492d" class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> poisson</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -415,7 +415,7 @@ window.Quarto = {
 <span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>    </span>
 <span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> E</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="48fd11f8" class="cell">
+<div id="f070948c" class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>lam <span class="op">=</span> <span class="dv">10</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="dv">4</span>  <span class="co"># 4 periods in February</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>p <span class="op">=</span> <span class="dv">1</span><span class="op">/</span><span class="dv">12</span></span>
@@ -432,14 +432,14 @@ window.Quarto = {
 <p><span class="theorem-title"><strong>Example 11.2</strong></span> Suppose nonnegative offers to buy an item that you want to sell arrive according to a Poisson process with rate <span class="math inline">\(\lambda\)</span>. Assume that each offer is the value of a continuous random variable having density function <span class="math inline">\(f(x)\)</span>. Once the offer is presented to you, you must either accept it or reject it and wait for the next offer. We suppose that you incur costs at a rate c per unit time until the item is sold, and that your objective is to maximize your expected total return, where the total return is equal to the amount received minus the total cost incurred. Suppose you employ the policy of accepting the first offer that is greater than some specified value y. (Such a type of policy, which we call a y-policy, can be shown to be optimal.) What is the best value of y?</p>
 </div>
 <div id="sol-sol2" class="proof solution">
-<p><span class="proof-title"><em>Solution 11.3</em>. </span>Let us compute the expected total return when you use the y-policy, and then choose the value of <span class="math inline">\(y\)</span> that maximizes this quantity. Let <span class="math inline">\(X\)</span> denote the value of a random offer, and let <span class="math inline">\(\bar{F}(x) = P\{X\gt x\} = \int_x^\infty f(u)du\)</span> be its tail distribution function. Because each offer will be greater than <span class="math inline">\(y\)</span> with probability <span class="math inline">\(\bar{F}(y)\)</span>, it follows that such offers occur according to a Poisson process with rate <span class="math inline">\(λ \bar{F}(y)\)</span>. Hence, the time until an offer is accepted is an exponential random variable with rate <span class="math inline">\(λ \bar{F}(y)\)</span>. Letting <span class="math inline">\(R(y)\)</span> denote the total return from the policy that accepts the first offer that is greater than <span class="math inline">\(y\)</span>, we have <span class="math display">\[
-\begin{align*}
+<p><span class="proof-title"><em>Solution 11.3</em>. </span>Let us compute the expected total return when you use the y-policy, and then choose the value of <span class="math inline">\(y\)</span> that maximizes this quantity. Let <span class="math inline">\(X\)</span> denote the value of a random offer, and let <span class="math inline">\(\bar{F}(x) = P\{X&gt; x\} = \int_x^\infty f(u)du\)</span> be its tail distribution function. Because each offer will be greater than <span class="math inline">\(y\)</span> with probability <span class="math inline">\(\bar{F}(y)\)</span>, it follows that such offers occur according to a Poisson process with rate <span class="math inline">\(λ \bar{F}(y)\)</span>. Hence, the time until an offer is accepted is an exponential random variable with rate <span class="math inline">\(λ \bar{F}(y)\)</span>. Letting <span class="math inline">\(R(y)\)</span> denote the total return from the policy that accepts the first offer that is greater than <span class="math inline">\(y\)</span>, we have <span class="math display">\[
+\begin{aligned}
 E[R(y)]&amp;=E[\text{accepted offer}]-cE[\text{time to accept}] \\
        &amp;=E[X|X&gt;y]-\frac{c}{\lambda\bar{F}(y)} \\
        &amp;=\int_{0}^{\infty}xf_{X|X&gt;y}(x)\:dx - \frac{c}{\lambda\bar{F}(y)} \\
        &amp;=\int_{y}^{\infty}x\frac{f(x)}{\bar{F}(y)}\:dx - \frac{c}{\lambda\bar{F}(y)} \\
        &amp;=\frac{\int_{y}^{\infty}xf(x)\:dx - c/\lambda}{\bar{F}(y)}
-\end{align*}
+\end{aligned}
 \]</span> Differentiation yields that <span class="math display">\[
 \frac{d}{dy}E[R(y)]=0\Leftrightarrow-\bar{F}(y)yf(y)+\left(\int_{y}^{\infty}xf(x)\:dx-\frac{c}{\lambda}\right)f(y)=0
 \]</span> Therefore, the optimal value of <span class="math inline">\(y\)</span> satisfies <span class="math display">\[
@@ -448,7 +448,7 @@ y\bar{F}(y)=\int_{y}^{\infty}xf(x)\:dx-\frac{c}{\lambda}
 y\int_y^\infty f(x)\:dx=\int_y^\infty xf(x)\:dx-\frac{c}{\lambda}
 \]</span> or <span id="eq-eq5-14"><span class="math display">\[
 \int_{y}^{\infty}(x-y)f(x)\:dx=\frac{c}{\lambda}
-\tag{11.1}\]</span></span> We now argue that the left-hand side of the preceding is a nonincreasing function of <span class="math inline">\(y\)</span>. To do so, note that, with <span class="math inline">\(a^+\)</span> defined to equal <span class="math inline">\(a\)</span> if <span class="math inline">\(a \gt 0\)</span> or to equal <span class="math inline">\(0\)</span> otherwise, we have <span class="math display">\[
+\tag{11.1}\]</span></span> We now argue that the left-hand side of the preceding is a nonincreasing function of <span class="math inline">\(y\)</span>. To do so, note that, with <span class="math inline">\(a^+\)</span> defined to equal <span class="math inline">\(a\)</span> if <span class="math inline">\(a &gt; 0\)</span> or to equal <span class="math inline">\(0\)</span> otherwise, we have <span class="math display">\[
 \int_y^\infty(x-y)f(x)\:dx = E[(X-y)^+]
 \]</span> Because <span class="math inline">\((X-y)^+\)</span> is a nonincreasing function of <span class="math inline">\(y\)</span>, so is its expectation, thus showing that the left hand side of <a href="#eq-eq5-14" class="quarto-xref">Equation&nbsp;<span>11.1</span></a> is a nonincreasing function of <span class="math inline">\(y\)</span>. Consequently, if <span class="math inline">\(E[X]&lt;c/\lambda—\)</span> in which case there is no solution of <a href="#eq-eq5-14" class="quarto-xref">Equation&nbsp;<span>11.1</span></a>—then it is optimal to accept any offer; otherwise, the optimal value y is the unique solution of <a href="#eq-eq5-14" class="quarto-xref">Equation&nbsp;<span>11.1</span></a>.</p>
 </div>
@@ -469,14 +469,14 @@ N = \max_{1\le j\le m}N_j
 <p>We can, however, transform the problem into one of determining the expected value of the maximum of independent random variables. To do so, suppose that coupons are collected at times chosen according to a Poisson process with rate <span class="math inline">\(\lambda = 1\)</span>. Say that an event of this Poisson process is of type <span class="math inline">\(j\)</span>, <span class="math inline">\(1 \le j \le m\)</span>, if the coupon obtained at that time is a type <span class="math inline">\(j\)</span> coupon. If we now let <span class="math inline">\(N_j(t)\)</span> denote the number of type <span class="math inline">\(j\)</span> coupons collected by time <span class="math inline">\(t\)</span> , then it follows from <a href="Lecture24.html#prp-prp1" class="quarto-xref">Proposition&nbsp;<span>24.1</span></a> that <span class="math inline">\(\{N_j(t ), t \ge 0\}\)</span>, <span class="math inline">\(j = 1, \dots, m\)</span> are independent Poisson processes with respective rates <span class="math inline">\(\lambda p_j = p_j\)</span>. Let <span class="math inline">\(X_j\)</span> denote the time of the first event of the <span class="math inline">\(j\)</span>th process, and let <span class="math display">\[
 X=\max_{1\leqslant j\leqslant m}X_j
 \]</span> denote the time at which a complete collection is amassed. Since the <span class="math inline">\(X_j\)</span> are independent exponential random variables with respective rates <span class="math inline">\(p_j\)</span>, it follows that <span class="math display">\[
-\begin{align*}
+\begin{aligned}
 P\{X&lt;t\}&amp;=P\{\max X_{j}&lt;t\}\\&amp;=P\{X_{j}&lt;t,\mathrm{~for~}j=1,\ldots,m\}\\&amp;=\prod_{j=1}^{m}(1-e^{-p_{j}t})
-\end{align*}
+\end{aligned}
 \]</span> Therefore, <span id="eq-eq5-15"><span class="math display">\[
-\begin{align*}
+\begin{aligned}
 E[X] &amp;=\int_{0}^{\infty}P\{X&gt;t\}\:dt \\
      &amp;=\int_{0}^{\infty}\left\{1-\prod_{j=1}^{m}(1-e^{-p_{j}t})\right\}dt
-\end{align*}
+\end{aligned}
 \tag{11.2}\]</span></span> It remains to relate <span class="math inline">\(E[X]\)</span>, the expected time until one has a complete set, to <span class="math inline">\(E[N]\)</span>, the expected number of coupons it takes. This can be done by letting <span class="math inline">\(T_i\)</span> denote the <span class="math inline">\(i\)</span>th interarrival time of the Poisson process that counts the number of coupons obtained. Then it is easy to see that <span class="math display">\[
 X=\sum_{i=1}^NT_i
 \]</span> Since the <span class="math inline">\(T_i\)</span> are independent exponentials with rate <span class="math inline">\(1\)</span>, and <span class="math inline">\(N\)</span> is independent of the <span class="math inline">\(T_i\)</span>, we see that <span class="math display">\[
@@ -485,24 +485,24 @@ E[X|N]=NE[T_i]=N
 E[X]=E[N]
 \]</span> and so <span class="math inline">\(E[N]\)</span> is as given in <a href="#eq-eq5-15" class="quarto-xref">Equation&nbsp;<span>11.2</span></a>.</p>
 <p>Let us now compute the expected number of types that appear only once in the complete collection. Letting <span class="math inline">\(I_i\)</span> equal l if there is only a single type <span class="math inline">\(i\)</span> coupon in the final set, and letting it equal 0 otherwise, we thus want <span class="math display">\[
-\begin{align*}
+\begin{aligned}
 E\left[\sum_{i=1}^{m}I_{i}\right] &amp;=\sum_{i=1}^mE[I_i] \\
                                   &amp;=\sum_{i=1}^mP\{I_i=1\}
-\end{align*}
+\end{aligned}
 \]</span></p>
 <p>Now there will be a single type <span class="math inline">\(i\)</span> coupon in the final set if a coupon of each type has appeared before the second coupon of type <span class="math inline">\(i\)</span> is obtained. Thus, letting <span class="math inline">\(S_i\)</span> denote the time at which the second type <span class="math inline">\(i\)</span> coupon is obtained, we have <span class="math display">\[
 P\{I_i=1\}=P\{X_j&lt;S_i, \text{ for all } j\ne i\}
 \]</span> Using that <span class="math inline">\(S_i\)</span> has a gamma distribution with parameters (2, pi), this yields <span class="math display">\[
-\begin{align*}
+\begin{aligned}
 P\{I_{i}=1\} &amp;=\int_{0}^{\infty}P\{X_{j}&lt;S_{i}\mathrm{~for~all~}j\neq i|S_{i}=x\}p_{i}e^{-p_{i}x}\:p_{i}x\:dx \\
              &amp;=\int_{0}^{\infty}P\{X_{j}&lt;x,\mathrm{~for~all~}j\neq i\}p_{i}^{2}x\:e^{-p_{i}x}\:dx \\
              &amp;=\int_{0}^{\infty}\prod_{j\neq i}(1-e^{-p_{j}x})\:p_{i}^{2}xe^{-p_{i}x}\:dx
-\end{align*}
+\end{aligned}
 \]</span> Therefore, we have the result <span class="math display">\[
-\begin{align*}
+\begin{aligned}
 E\left[\sum_{i=1}^{m}I_{i}\right] &amp;=\int_{0}^{\infty}\sum_{i=1}^{m}\prod_{j\neq i}(1-e^{-p_{j}x})p_{i}^{2}xe^{-p_{i}x}\:dx\\
 &amp;=\int_{0}^{\infty}x\prod_{j=1}^{m}(1-e^{-p_{j}x})\sum_{i=1}^{m}p_{i}^{2}\frac{e^{-p_{i}x}}{1-e^{-p_{i}x}}\:dx\quad\blacksquare
-\end{align*}
+\end{aligned}
 \]</span></p>
 </div>
 

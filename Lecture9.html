@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.47">
+<meta name="generator" content="quarto-1.5.57">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -358,27 +358,27 @@ window.Quarto = {
 <p>Let <span class="math inline">\(X_1,\ldots,X_n\)</span> be independent and identically distributed exponential random variables having mean <span class="math inline">\(1/\lambda\)</span>. <span class="math inline">\(X_1+\cdots+X_n\)</span> has a gamma distribution with parameters <span class="math inline">\(n\)</span> and <span class="math inline">\(\lambda.\)</span> Let us now give a second verification of this result by using mathematical induction. Because there is nothing to prove when <span class="math inline">\(n=1\)</span>, let us start by assuming that <span class="math inline">\(X_1+\cdots+X_{n-1}\)</span> has density given by <span class="math display">\[
 f_{X_1+\cdots+X_{n-1}}(t)=\lambda e^{-\lambda t}\frac{(\lambda t)^{n-2}}{(n-2)!}
 \]</span> Hence, <span class="math display">\[
-\begin{align*}
+\begin{aligned}
 f_{X_{1}+\cdots+X_{n-1}+X_{n}}(t)&amp;=\int_{0}^{\infty}f_{X_{n}}(t-s)f_{X_{1}+\cdots+X_{n-1}}(s)\:ds\\
 &amp;=\int_{0}^{t}\lambda e^{-\lambda(t-s)}\lambda e^{-\lambda s}\frac{(\lambda s)^{n-2}}{(n-2)!}\:ds\\
 &amp;=\lambda e^{-\lambda t}\frac{(\lambda t)^{n-1}}{(n-1)!}
-\end{align*}
+\end{aligned}
 \]</span> which proves the result.</p>
 <p>Another useful calculation is to determine the probability that one exponential random variable is smaller than another. That is, suppose that <span class="math inline">\(X_{1}\)</span> and <span class="math inline">\(X_{2}\)</span> are independent exponential random variables with respective means <span class="math inline">\(1/\lambda_1\)</span> and <span class="math inline">\(1/\lambda_2;\)</span> what is <span class="math inline">\(P\{X_1&lt;X_2\}?\)</span> This probability is easily calculated by conditioning on <span class="math inline">\(X_1:\)</span> <span id="eq-eq5-5"><span class="math display">\[
-\begin{align*}
+\begin{aligned}
 P\{X_{1}&lt;X_{2}\}&amp;=\int_{0}^{\infty}P\{X_{1}&lt;X_{2}|X_{1}=x\}\lambda_{1}e^{-\lambda_{1}x}\:dx\\
 &amp;=\int_{0}^{\infty}P\{x&lt;X_{2}\}\lambda_{1}e^{-\lambda_{1}x}\:dx\\
 &amp;=\int_{0}^{\infty}e^{-\lambda_{2}x}\lambda_{1}e^{-\lambda_{1}x}\:dx\\
 &amp;=\int_{0}^{\infty}\lambda_{1}e^{-(\lambda_{1}+\lambda_{2})x}\:dx\\
 &amp;=\frac{\lambda_{1}}{\lambda_{1}+\lambda_{2}}
-\end{align*}
+\end{aligned}
 \tag{9.1}\]</span></span></p>
 <p>Suppose that <span class="math inline">\(X_1,X_2,\ldots,X_n\)</span> are independent exponential random variables, with <span class="math inline">\(X_i\)</span> having rate <span class="math inline">\(\mu_i,i=1,\ldots,n.\)</span> It turns out that the smallest of the <span class="math inline">\(X_i\)</span> is exponential with a rate equal to the sum of the <span class="math inline">\(\mu_i.\)</span> This is shown as follows: <span id="eq-eq5-6"><span class="math display">\[
-\begin{align*}
+\begin{aligned}
 P\{\mathrm{minimum}(X_{1},\ldots,X_{n})&gt;x\}&amp;=P\{X_{i}&gt;x\mathrm{~for~each~}i=1,\ldots,n\}\\
 &amp;=\prod_{i=1}^{n}P\{X_{i}&gt;x\}\quad\text{(by independence)}\\
 &amp;=\prod_{i=1}^{n}e^{-\mu_{i}x}\\&amp;=\exp\left\{-\left(\sum_{i=1}^{n}\mu_{i}\right)x\right\}
-\end{align*}
+\end{aligned}
 \tag{9.2}\]</span></span></p>
 <div id="exm-exa1" class="theorem example">
 <p><span class="theorem-title"><strong>Example 9.1</strong></span> (Analyzing Greedy Algorithms for the Assignment Problem) A group of <span class="math inline">\(n\)</span> people is to be assigned to a set of <span class="math inline">\(n\)</span> jobs, with one person assigned to each job. For a given set of <span class="math inline">\(n^2\)</span> values <span class="math inline">\(C_{ij},i,j=1,\ldots,n\)</span>, a cost <span class="math inline">\(C_{ij}\)</span> is incurred when person <span class="math inline">\(i\)</span> is assigned to job <span class="math inline">\(j.\)</span> The classical assignment problem is to determine the set of assignments that minimizes the sum of the <span class="math inline">\(n\)</span> costs incurred.</p>
@@ -388,33 +388,33 @@ P\{\mathrm{minimum}(X_{1},\ldots,X_{n})&gt;x\}&amp;=P\{X_{i}&gt;x\mathrm{~for~ea
 </div>
 <div id="sol-sol1" class="proof solution">
 <p><span class="proof-title"><em>Solution 9.1</em>. </span>Suppose first that Greedy Algorithm A is employed. Let <span class="math inline">\(C_i\)</span> denote the cost associated with person <span class="math inline">\(i,i=1,\ldots,n.\)</span> Now <span class="math inline">\(C_1\)</span> is the minimum of <span class="math inline">\(n\)</span> independent exponentials each having rate 1; so by <a href="#eq-eq5-6" class="quarto-xref">Equation&nbsp;<span>9.2</span></a> it will be exponential with rate <span class="math inline">\(n.\)</span> Similarly, <span class="math inline">\(C_2\)</span> is the minimum of <span class="math inline">\(n-1\)</span> independent exponentials with rate l, and so is exponential with rate <span class="math inline">\(n-1.\)</span> Indeed, by the same reasoning <span class="math inline">\(C_i\)</span> will be exponential with rate <span class="math inline">\(n-i+1,i=1,\ldots,n.\)</span> Thus, the expected total cost under Greedy Algorithm A is <span class="math display">\[
-\begin{align*}
+\begin{aligned}
 E_{A}[\mathrm{total~cost}]&amp;=E[C_{1}+\cdots+C_{n}]\\
 &amp;=\sum_{i=1}^{n}1/i
-\end{align*}
+\end{aligned}
 \]</span></p>
 <p>Let us now analyze Greedy Algorithm B. Let <span class="math inline">\(C_i\)</span> be the cost of the <span class="math inline">\(i\)</span> th personjob pair assigned by this algorithm. Since <span class="math inline">\(C_{1}\)</span> is the minimum of all the <span class="math inline">\(n^2\)</span> values <span class="math inline">\(C_{ij}\)</span>, it follows from <a href="#eq-eq5-6" class="quarto-xref">Equation&nbsp;<span>9.2</span></a> that <span class="math inline">\(C_1\)</span> is exponential with rate <span class="math inline">\(n^2.\)</span> Now, it follows from the lack of memory property of the exponential that the amounts by which the other <span class="math inline">\(C_{ij}\)</span> exceed <span class="math inline">\(C_1\)</span> will be independent exponentials with rates 1. As a result, <span class="math inline">\(C_2\)</span> is equal to <span class="math inline">\(C_1\)</span> plus the minimum of <span class="math inline">\((n-1)^2\)</span> independent exponentials with rate l. Similarly, <span class="math inline">\(C_{3}\)</span> is equal to <span class="math inline">\(C_2\)</span> plus the minimum of <span class="math inline">\((n-2)^2\)</span> independent exponentials with rate 1, and so on. Therefore, we see that <span class="math display">\[
-\begin{align*}
+\begin{aligned}
 &amp;E[C_{1}]=1/n^{2},\\&amp;E[C_{2}]=E[C_{1}]+1/(n-1)^{2},\\
 &amp;E[C_{3}]=E[C_{2}]+1/(n-2)^{2},\\
 &amp;E[C_{j}]=E[C_{j-1}]+1/(n-j+1)^{2},\\
 &amp;E[C_{n}]=E[C_{n-1}]+1
-\end{align*}
+\end{aligned}
 \]</span> Therefore, <span class="math display">\[
-\begin{align*}
+\begin{aligned}
 &amp;E[C_{1}]=1/n^{2},\\
 &amp;E[C_{2}]=1/n^{2}+1/(n-1)^{2},\\&amp;E[C_{3}]=1/n^{2}+1/(n-1)^{2}+1/(n-2)^{2},\\
 &amp;E[C_{n}]=1/n^{2}+1/(n-1)^{2}+1/(n-2)^{2}+\cdots+1
-\end{align*}
+\end{aligned}
 \]</span> Adding up all the <span class="math inline">\(E[C_{i}]\)</span> yields that <span class="math display">\[
-\begin{align*}
+\begin{aligned}
 E_{B}[\mathrm{total~cost}]&amp;=n/n^{2}+(n-1)/(n-1)^{2}+(n-2)/(n-2)^{2}+\cdots+1\\
 &amp;=\sum_{i=1}^{n}\frac{1}{i}
-\end{align*}
+\end{aligned}
 \]</span> The expected cost is thus the same for both greedy algorithms.</p>
 </div>
 <p>Next, we numerically verify the results.</p>
-<div id="6c19448b" class="cell">
+<div id="d7e82b53" class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> expon</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -438,7 +438,7 @@ E_{B}[\mathrm{total~cost}]&amp;=n/n^{2}+(n-1)/(n-1)^{2}+(n-2)/(n-2)^{2}+\cdots+1
 <span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>        C[:,np.argmin(C[i,:])] <span class="op">=</span> np.inf  <span class="co"># make sure assigned jobs are not assigned again</span></span>
 <span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> min_cost</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="24134b1f" class="cell">
+<div id="72a51737" class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="dv">50</span>  <span class="co"># fifty people and jobs</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>lam <span class="op">=</span> <span class="fl">1.0</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>sample_size <span class="op">=</span> <span class="dv">10000</span></span>
@@ -450,7 +450,7 @@ E_{B}[\mathrm{total~cost}]&amp;=n/n^{2}+(n-1)/(n-1)^{2}+(n-2)/(n-2)^{2}+\cdots+1
 <span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'For algorithm A, the computed expectation of cost is: '</span>, EcostA,</span>
 <span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>      <span class="st">'</span><span class="ch">\n</span><span class="st"> while the theoretical value is: '</span>, np.<span class="bu">sum</span>(<span class="dv">1</span><span class="op">/</span>np.arange(<span class="dv">1</span>, n<span class="op">+</span><span class="dv">1</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="7da3540c" class="cell">
+<div id="860e4649" class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> cost_algo_B(C):</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co">    Given the cost matrix, compute the cost using greedy algorithm B</span></span>
@@ -473,7 +473,7 @@ E_{B}[\mathrm{total~cost}]&amp;=n/n^{2}+(n-1)/(n-1)^{2}+(n-2)/(n-2)^{2}+\cdots+1
 <span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>        C[:, ind[<span class="dv">1</span>]] <span class="op">=</span> np.inf  <span class="co"># eliminate the job</span></span>
 <span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> min_cost</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="b016119f" class="cell">
+<div id="e8031c4a" class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="dv">50</span>  <span class="co"># fifty people and jobs</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>lam <span class="op">=</span> <span class="fl">1.0</span></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>sample_size <span class="op">=</span> <span class="dv">10000</span></span>
@@ -486,33 +486,33 @@ E_{B}[\mathrm{total~cost}]&amp;=n/n^{2}+(n-1)/(n-1)^{2}+(n-2)/(n-2)^{2}+\cdots+1
 <span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>      <span class="st">'</span><span class="ch">\n</span><span class="st"> while the theoretical value is: '</span>, np.<span class="bu">sum</span>(<span class="dv">1</span><span class="op">/</span>np.arange(<span class="dv">1</span>, n<span class="op">+</span><span class="dv">1</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Let <span class="math inline">\(X_1,\ldots,X_n\)</span> be independent exponential random variables, with respective rates <span class="math inline">\(\lambda_1,\ldots,\lambda_n.\)</span> A useful result, generalizing <a href="#eq-eq5-5" class="quarto-xref">Equation&nbsp;<span>9.1</span></a>, is that <span class="math inline">\(X_i\)</span> is the smallest of these with probability <span class="math inline">\(\lambda_i/\sum_j\lambda_j.\)</span> This is shown as follows: <span class="math display">\[
-\begin{align*}
+\begin{aligned}
 P\left\{X_{i}=\min_{j}X_{j}\right\}&amp;=P\left\{X_{i}&lt;\min_{j\neq i}X_{j}\right\}\\
 &amp;=\frac{\lambda_{i}}{\sum_{j=1}^{n}\lambda_{j}}
-\end{align*}
+\end{aligned}
 \]</span> where the final equality uses <a href="#eq-eq5-5" class="quarto-xref">Equation&nbsp;<span>9.1</span></a> along with the fact that <span class="math inline">\(\operatorname*{min}_{j\neq i}X_j\)</span> is exponential with rate <span class="math inline">\(\sum_{j\neq i}\lambda_j.\)</span></p>
 <p>Another important fact is that <span class="math inline">\(\operatorname*{min}_iX_i\)</span> and the rank ordering of the <span class="math inline">\(X_i\)</span> are independent. To see why this is true, consider the conditional probability that <span class="math inline">\(X_{i_1}&lt;X_{i_2}&lt;\cdots&lt;X_{i_n}\)</span> given that the minimal value is greater than <span class="math inline">\(t.\)</span> Because <span class="math inline">\(\min_iX_i&gt;t\)</span> means that all the <span class="math inline">\(X_i\)</span> are greater than <span class="math inline">\(t\)</span>, it follows from the lack of memory property of exponential random variables that their remaining lives beyond <span class="math inline">\(t\)</span> remain independent exponential random variables with their original rates. <span class="math inline">\({\mathrm{Consequently}}\)</span>, <span class="math display">\[
-\begin{align*}
+\begin{aligned}
 P\Big\{X_{i_{1}}&lt;\cdots&lt;X_{i_{n}}\Big|\operatorname*{min}_{i}X_{i}&gt;t\Big\}&amp;=P\Big\{X_{i_{1}}-t&lt;\cdots&lt;X_{i_{n}}-t\Big|\operatorname*{min}_{i}X_{i}&gt;t\Big\}\\
 &amp;=P\{X_{i_{1}}&lt;\cdots&lt;X_{i_{n}}\}
-\end{align*}
+\end{aligned}
 \]</span> which proves the result.</p>
 <div id="exm-exa2" class="theorem example">
 <p><span class="theorem-title"><strong>Example 9.2</strong></span> Suppose you arrive at a post office having two clerks at a moment when both are busy but there is no one else waiting in line. You will enter service when either clerk becomes free. If service times for clerk <span class="math inline">\(i\)</span> are exponential with rate <span class="math inline">\(\lambda_i,i=1,2\)</span>, find <span class="math inline">\(E[T]\)</span>, where <span class="math inline">\(T\)</span> is the amount of time that you spend in the post office.</p>
 </div>
 <div id="sol-sol2" class="proof solution">
 <p><span class="proof-title"><em>Solution 9.2</em>. </span>Let <span class="math inline">\(R_i\)</span> denote the remaining service time of the customer with clerk <span class="math inline">\(i, i=1,2\)</span>, and note, by the lack of memory property of exponentials, that <span class="math inline">\(R_1\)</span> and <span class="math inline">\(R_2\)</span> are independent exponential random variables with respective rates <span class="math inline">\(\lambda_1\)</span> and <span class="math inline">\(\lambda_2.\)</span> Conditioning on which of <span class="math inline">\(R_1\)</span> or <span class="math inline">\(R_2\)</span> is the smallest yields <span class="math display">\[
-\begin{align*}
+\begin{aligned}
 E[T]&amp;=E[T|R_{1}&lt;R_{2}]P\{R_{1}&lt;R_{2}\}+E[T|R_{2}\leqslant R_{1}]P\{R_{2}\leqslant R_{1}\}\\
 &amp;=E[T|R_{1}&lt;R_{2}]\frac{\lambda_{1}}{\lambda_{1}+\lambda_{2}}+E[T|R_{2}\leqslant R_{1}]\frac{\lambda_{2}}{\lambda_{1}+\lambda_{2}}
-\end{align*}
+\end{aligned}
 \]</span> Now, with S denoting your service time <span class="math display">\[
-\begin{align*}
+\begin{aligned}
 E[T|R_{1}&lt;R_{2}]&amp;=E[R_{1}+S|R_{1}&lt;R_{2}]\\
 &amp;=E[R_{1}|R_{1}&lt;R_{2}]+E[S|R_{1}&lt;R_{2}]\\
 &amp;=E[R_{1}|R_{1}&lt;R_{2}]+\frac{1}{\lambda_{1}}\\
 &amp;=\frac{1}{\lambda_{1}+\lambda_{2}}+\frac{1}{\lambda_{1}}
-\end{align*}
+\end{aligned}
 \]</span> The final equation used that conditional on <span class="math inline">\(R_1&lt;R_2\)</span> the random variable <span class="math inline">\(R_{1}\)</span> is the minimum of <span class="math inline">\(R_1\)</span> and <span class="math inline">\(R_2\)</span> and is thus exponential with rate <span class="math inline">\(\lambda_1+\lambda_2;\)</span> and also that conditional on <span class="math inline">\(R_1&lt;R_2\)</span> you are served by server 1.</p>
 <p>As we can show in a similar fashion that <span class="math display">\[
 E[T|R_2\leqslant R_1]=\frac{1}{\lambda_1+\lambda_2}+\frac{1}{\lambda_2}
@@ -521,17 +521,17 @@ E[T]=\frac{3}{\lambda_1+\lambda_2}
 \]</span></p>
 </div>
 <p>Another way to obtain <span class="math inline">\(E[T]\)</span> is to write <span class="math inline">\(T\)</span> as a sum, take expectations, and then condition where needed. This approach yields <span class="math display">\[
-\begin{align*}
+\begin{aligned}
 E[T]&amp;=E[\min(R_{1},R_{2})+S]\\
 &amp;=E[\min(R_{1},R_{2})]+E[S]\\
 &amp;=\frac{1}{\lambda_{1}+\lambda_{2}}+E[S]
-\end{align*}
+\end{aligned}
 \]</span></p>
 <p>To compute <span class="math inline">\(E[S]\)</span>, we condition on which of <span class="math inline">\(R_1\)</span> and <span class="math inline">\(R_2\)</span> is smallest. <span class="math display">\[
-\begin{align*}
+\begin{aligned}
 E[S]&amp;=E[S|R_{1}&lt;R_{2}]\frac{\lambda_{1}}{\lambda_{1}+\lambda_{2}}+E[S|R_{2}\leqslant R_{1}]\frac{\lambda_{2}}{\lambda_{1}+\lambda_{2}}\\
 &amp;=\frac{2}{\lambda_{1}+\lambda_{2}}
-\end{align*}
+\end{aligned}
 \]</span></p>
 
 

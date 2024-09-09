@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.47">
+<meta name="generator" content="quarto-1.5.57">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -338,39 +338,39 @@ window.Quarto = {
 <section id="continuous-time-markov-chains" class="level2" data-number="13.2">
 <h2 data-number="13.2" class="anchored" data-anchor-id="continuous-time-markov-chains"><span class="header-section-number">13.2</span> Continuous-Time Markov Chains</h2>
 <p>Suppose we have a continuous-time stochastic process <span class="math inline">\(\{X(t), t \ge 0\}\)</span> taking on values in the set of nonnegative integers. In analogy with the definition of a discrete-time Markov chain, we say that the process <span class="math inline">\(\{X(t), t \ge 0\}\)</span> is a continuous-time Markov chain if for all <span class="math inline">\(s, t \ge 0\)</span> and nonnegative integers <span class="math inline">\(i, j, x(u)\)</span>, <span class="math inline">\(0 \le u &lt; s\)</span> <span class="math display">\[
-\begin{align*}
-P\{X(t+s) &amp;= j | X(s) = i, X(u) = x(u), 0\le u \lt s\} \\
+\begin{aligned}
+P\{X(t+s) &amp;= j | X(s) = i, X(u) = x(u), 0\le u &lt; s\} \\
           &amp;= P\{X(t+s) = j | X(s) = i\}
-\end{align*}
+\end{aligned}
 \]</span></p>
 <p>In other words, a continuous-timeMarkov chain is a stochastic process having the Markovian property that the conditional distribution of the future <span class="math inline">\(X(t + s)\)</span> given the present <span class="math inline">\(X(s\)</span>) and the past <span class="math inline">\(X(u), 0\le u &lt; s\)</span>, depends only on the present and is independent of the past. If, in addition, <span class="math display">\[
 P\{X(t+s) = j | X(s)=i\}
 \]</span> is independent of <span class="math inline">\(s\)</span>, then the continuous-time Markov chain is said to have <em>stationary</em> or <em>homogeneous</em> transition probabilities.</p>
 <p>All Markov chains considered in this course will be assumed to have stationary transition probabilities.</p>
 <p>Suppose that a continuous-time Markov chain enters state <span class="math inline">\(i\)</span> at some time, say, time <span class="math inline">\(0\)</span>, and suppose that the process does not leave state <span class="math inline">\(i\)</span> (that is, a transition does not occur) during the next ten minutes. What is the probability that the process will not leave state <span class="math inline">\(i\)</span> during the following five minutes? Now since the process is in state <span class="math inline">\(i\)</span> at time 10 it follows, by the Markovian property, that the probability that it remains in that state during the interval <span class="math inline">\([10, 15]\)</span> is just the (unconditional) probability that it stays in state <span class="math inline">\(i\)</span> for at least five minutes. That is, if we let <span class="math inline">\(T_i\)</span> denote the amount of time that the process stays in state <span class="math inline">\(i\)</span> before making a transition into a different state, then <span class="math display">\[
-P\{T_i \gt 15 | T_i\gt 10\} = P\{T_i \gt 5\}
+P\{T_i &gt; 15 | T_i&gt; 10\} = P\{T_i &gt; 5\}
 \]</span> or, in general, by the same reasoning, <span class="math display">\[
-P\{T_i \gt s+t | T_i \gt s\} = P\{T_i \gt t\}
+P\{T_i &gt; s+t | T_i &gt; s\} = P\{T_i &gt; t\}
 \]</span> for all <span class="math inline">\(s, t \ge 0\)</span>. Hence, the random variable <span class="math inline">\(T_i\)</span> is <em>memoryless</em> and must thus be exponentially distributed.</p>
 <p>In fact, the preceding gives us another way of defining a continuous-time Markov chain. Namely, it is a stochastic process having the properties that each time it enters state <span class="math inline">\(i\)</span></p>
 <ol type="i">
 <li><p>the amount of time it spends in that state before making a transition into a different state is exponentially distributed with mean, say, <span class="math inline">\(1/v_i\)</span> , and</p></li>
 <li><p>when the process leaves state <span class="math inline">\(i\)</span>, it next enters state <span class="math inline">\(j\)</span> with some probability, say, <span class="math inline">\(P_{ij}\)</span>. Of course, the <span class="math inline">\(P_{ij}\)</span> must satisfy <span class="math display">\[
-\begin{align*}
+\begin{aligned}
 P_{ii} &amp;= 0, \quad \text{all } i \\
 \sum_j P_{ij} &amp;= 1, \quad \text{all }i
-\end{align*}
+\end{aligned}
 \]</span> In other words, a continuous-time Markov chain is a stochastic process that moves from state to state in accordance with a (discrete-time) Markov chain, but is such that the amount of time it spends in each state, before proceeding to the next state, is exponentially distributed. In addition, the amount of time the process spends in state <span class="math inline">\(i\)</span>, and the next state visited, must be independent random variables. For if the next state visited were dependent on <span class="math inline">\(T_i\)</span> , then information as to how long the process has already been in state <span class="math inline">\(i\)</span> would be relevant to the prediction of the next state—and this contradicts the Markovian assumption.</p></li>
 </ol>
 <div id="exm-exa1" class="theorem example">
-<p><span class="theorem-title"><strong>Example 13.1</strong></span> (A Shoeshine Shop) Consider a shoeshine establishment consisting of two chairs—chair 1 and chair 2. A customer upon arrival goes initially to chair 1 where his shoes are cleaned and polish is applied. After this is done the customer moves on to chair 2 where the polish is buffed. The service times at the two chairs are assumed to be independent random variables that are exponentially distributed with respective rates <span class="math inline">\(\mu_1\)</span> and <span class="math inline">\(\mu_2\)</span>. Suppose that potential customers arrive in accordance with a Poisson process having rate <span class="math inline">\(\lambda\)</span>, and that a potential customer will enter the system only if both chairs are empty. The preceding model can be analyzed as a continuous-time Markov chain, but first we must decide upon an appropriate state space. Since a potential customer will enter the system only if there are no other customers present, it follows that there will always either be 0 or 1 customers in the system. However, if there is 1 customer in the system, then we would also need to know which chair he was presently in. Hence, an appropriate state space might consist of the three states 0, 1, and 2 where the states have the following interpretation:</p>
-<span class="math display">\[\begin{array}
+<p><span class="theorem-title"><strong>Example 13.1</strong></span> (A Shoeshine Shop) Consider a shoeshine establishment consisting of two chairs—chair 1 and chair 2. A customer upon arrival goes initially to chair 1 where his shoes are cleaned and polish is applied. After this is done the customer moves on to chair 2 where the polish is buffed. The service times at the two chairs are assumed to be independent random variables that are exponentially distributed with respective rates <span class="math inline">\(\mu_1\)</span> and <span class="math inline">\(\mu_2\)</span>. Suppose that potential customers arrive in accordance with a Poisson process having rate <span class="math inline">\(\lambda\)</span>, and that a potential customer will enter the system only if both chairs are empty. The preceding model can be analyzed as a continuous-time Markov chain, but first we must decide upon an appropriate state space. Since a potential customer will enter the system only if there are no other customers present, it follows that there will always either be 0 or 1 customers in the system. However, if there is 1 customer in the system, then we would also need to know which chair he was presently in. Hence, an appropriate state space might consist of the three states 0, 1, and 2 where the states have the following interpretation: <span class="math display">\[
+\begin{array}{cc}
 \text{state}  &amp;  \text{Interpretation} \\
 0 &amp; \text{system is empty} \\
 1 &amp; \text{a customer is in chair } 1 \\
-2 &amp; \text{a customer is in chair } 2
-\end{array}\]</span>
-<p>We leave it as an exercise for you to verify that <span class="math display">\[
+2 &amp; \text{a customer is in chair } 2 \\
+\end{array}
+\]</span> We leave it as an exercise for you to verify that <span class="math display">\[
 v_0 = \lambda, \quad v_1 = \mu_1, \quad v_2=\mu_2
 \]</span> <span class="math display">\[
 P_{01} = P_{12} = P_{20} = 1
@@ -381,20 +381,20 @@ P_{01} = P_{12} = P_{20} = 1
 <h2 data-number="13.3" class="anchored" data-anchor-id="birth-and-death-processes"><span class="header-section-number">13.3</span> Birth and Death Processes</h2>
 <p>Consider a system whose state at any time is represented by the number of people in the system at that time. Suppose that whenever there are <span class="math inline">\(n\)</span> people in the system, then (i) new arrivals enter the system at an exponential rate <span class="math inline">\(\lambda_n\)</span>, and (ii) people leave the system at an exponential rate <span class="math inline">\(\mu_n\)</span>. That is, whenever there are <span class="math inline">\(n\)</span> persons in the system, then the time until the next arrival is exponentially distributed with mean <span class="math inline">\(1/\lambda_n\)</span> and is independent of the time until the next departure which is itself exponentially distributed with mean <span class="math inline">\(1/\mu_n\)</span>. Such a system is called a <em>birth and death process</em>. The parameters <span class="math inline">\(\{\lambda_n\}_{n=0}^\infty\)</span> and <span class="math inline">\(\{\mu_n\}_{n=1}^\infty\)</span> are called, respectively, the arrival (or birth) and departure (or death) rates.</p>
 <p>Thus, a birth and death process is a continuous-time Markov chain with states <span class="math inline">\(\{0, 1, \dots\}\)</span> for which transitions from state <span class="math inline">\(n\)</span> may go only to either state <span class="math inline">\(n - 1\)</span> or state <span class="math inline">\(n + 1\)</span>. The relationships between the birth and death rates and the state transition rates and probabilities are <span class="math display">\[
-\begin{align*}
+\begin{aligned}
 v_0 &amp;= \lambda_0, \\
-v_i &amp;= \lambda_i + \mu_i, \quad i\gt 0 \\
+v_i &amp;= \lambda_i + \mu_i, \quad i&gt; 0 \\
 P_{01} &amp;= 1, \\
-P_{i,i+1} &amp;= \frac{\lambda_i}{\lambda_i+\mu_i}, \quad i\gt 0 \\
-P_{i,i-1} &amp;= \frac{\mu_i}{\lambda_i+\mu_i}, \quad i\gt 0
-\end{align*}
+P_{i,i+1} &amp;= \frac{\lambda_i}{\lambda_i+\mu_i}, \quad i&gt; 0 \\
+P_{i,i-1} &amp;= \frac{\mu_i}{\lambda_i+\mu_i}, \quad i&gt; 0
+\end{aligned}
 \]</span> The preceding follows, because if there are <span class="math inline">\(i\)</span> in the system, then the next state will be <span class="math inline">\(i + 1\)</span> if a birth occurs before a death, and the probability that an exponential random variable with rate <span class="math inline">\(\lambda_i\)</span> will occur earlier than an (independent) exponential with rate <span class="math inline">\(\mu_i\)</span> is <span class="math inline">\(\lambda_i/(\lambda_i + \mu_i )\)</span>. Moreover, the time until either a birth or a death occurs is exponentially distributed with rate <span class="math inline">\(\lambda_i + \mu_i\)</span> (and so, <span class="math inline">\(v_i = \lambda_i + \mu_i\)</span> ).</p>
 <div id="exm-exa2" class="theorem example">
 <p><span class="theorem-title"><strong>Example 13.2</strong></span> (The Poisson Process) Consider a birth and death process for which <span class="math display">\[
-\begin{align*}
+\begin{aligned}
 \mu_n &amp;= 0, \quad \text{for all } n\ge 0 \\
 \lambda_n &amp;= \lambda, \quad \text{for all } n\ge 0
-\end{align*}
+\end{aligned}
 \]</span> This is a process in which departures never occur, and the time between successive arrivals is exponential with mean <span class="math inline">\(1/\lambda\)</span>. Hence, this is just the Poisson process.</p>
 </div>
 <p>A birth and death process for which <span class="math inline">\(\mu_n = 0\)</span> for all <span class="math inline">\(n\)</span> is called a pure birth process. Another pure birth process is given by the next example.</p>
@@ -403,10 +403,10 @@ P_{i,i-1} &amp;= \frac{\mu_i}{\lambda_i+\mu_i}, \quad i\gt 0
 </div>
 <div id="exm-exa4" class="theorem example">
 <p><span class="theorem-title"><strong>Example 13.4</strong></span> (A Linear Growth Model with Immigration) A model in which <span class="math display">\[
-\begin{align*}
+\begin{aligned}
 \mu_n &amp;= n\mu, \quad n\ge 1\\
 \lambda_n &amp;=n\lambda+\theta, \quad n\ge 0
-\end{align*}
+\end{aligned}
 \]</span> is called a linear growth process with immigration. Such processes occur naturally in the study of biological reproduction and population growth. Each individual in the population is assumed to give birth at an exponential rate <span class="math inline">\(\lambda\)</span>; in addition, there is an exponential rate of increase <span class="math inline">\(\theta\)</span> of the population due to an external source such as immigration. Hence, the total birth rate where there are <span class="math inline">\(n\)</span> persons in the system is <span class="math inline">\(n\lambda + \theta\)</span>. Deaths are assumed to occur at an exponential rate <span class="math inline">\(\mu\)</span> for each member of the population, so <span class="math inline">\(\mu_n = n\mu\)</span>.</p>
 </div>
 <p>Let <span class="math inline">\(X(t)\)</span> denote the population size at time <span class="math inline">\(t\)</span>. Suppose that <span class="math inline">\(X(0) = i\)</span> and let <span class="math display">\[
@@ -428,10 +428,10 @@ M^{\prime}(t)=\theta
 <p>Integrating <a href="#eq-eq6-2" class="quarto-xref">Equation&nbsp;<span>13.2</span></a> and using that <span class="math inline">\(M(0)=i\)</span> gives the solution <span class="math display">\[M(t)=\theta t+i\quad\blacksquare \]</span></p>
 <div id="exm-exa5" class="theorem example">
 <p><span class="theorem-title"><strong>Example 13.5</strong></span> (The Queueing System <span class="math inline">\(M/M/1)\)</span> Suppose that customers arrive at a single-server service station in accordance with a Poisson process having rate <span class="math inline">\(\lambda.\)</span> That is, the times between successive arrivals are independent exponential random variables having mean <span class="math inline">\(1/\lambda.\)</span> Upon arrival, each customer goes directly into service if the server is free; if not, then the customer joins the queue (that is, he waits in line). When the server finishes serving a customer, the customer leaves the system and the next customer in line, if there are any waiting, enters the service. The successive service times are assumed to be independent exponential random variables having mean <span class="math inline">\(1/\mu.\)</span> The preceding is known as the <span class="math inline">\(M/M/1\)</span> queueing system. The first <span class="math inline">\(M\)</span> refers to the fact that the interarrival process is Markovian (since it is a Poisson process) and the second to the fact that the service distribution is exponential (and, hence, Markovian).The 1 refers to the fact that there is a single server. If we let <span class="math inline">\(X(t)\)</span> denote the number in the system at time <span class="math inline">\(t\)</span> then <span class="math inline">\(\{X(t),t\geqslant0\}\)</span> is a birth and death process with <span class="math display">\[
-\begin{align*}
+\begin{aligned}
 &amp;\mu_{n}=\mu,\quad n\geqslant1\\
 &amp;\lambda_{n}=\lambda\:,\quad n\geqslant0\quad\blacksquare
-\end{align*}
+\end{aligned}
 \]</span></p>
 </div>
 <div id="exm-exa6" class="theorem example">
@@ -460,57 +460,57 @@ E[T_i]=\frac{1}{\lambda_i}+\frac{\mu_i}{\lambda_i}E[T_{i-1}],\quad i\geqslant1
 <p>Suppose now that we wanted to determine the expected time to go from state <span class="math inline">\(i\)</span> to state <span class="math inline">\(j\)</span> where <span class="math inline">\(i&lt;j.\)</span> This can be accomplished using the preceding by noting that this quantity will equal <span class="math inline">\(E[T_{i}]+E[T_{i+1}]+\cdots+E[T_{j-1}].\)</span></p>
 <div id="exm-exa7" class="theorem example">
 <p><span class="theorem-title"><strong>Example 13.7</strong></span> For the birth and death process having parameters <span class="math inline">\(\lambda_i\equiv\lambda\)</span>, <span class="math inline">\(\mu_i\equiv\mu\)</span>, <span class="math display">\[
-\begin{align*}
+\begin{aligned}
 E[T_{i}]&amp;=\frac{1}{\lambda}+\frac{\mu}{\lambda}E[T_{i-1}]\\&amp;=\frac{1}{\lambda}(1+\mu E[T_{i-1}])
-\end{align*}
+\end{aligned}
 \]</span> Starting with <span class="math inline">\(E[T_0]=1/\lambda\)</span>, we see that <span class="math display">\[
-\begin{align*}
+\begin{aligned}
 &amp;E[T_{1}]=\frac{1}{\lambda}\biggl(1+\frac{\mu}{\lambda}\biggr),\\
 &amp;E[T_{2}]=\frac{1}{\lambda}\biggl[1+\frac{\mu}{\lambda}+\biggl(\frac{\mu}{\lambda}\biggr)^{2}\biggr]
-\end{align*}
+\end{aligned}
 \]</span> and, in general, <span class="math display">\[
 E[T_i]=\frac{1}{\lambda}\biggl[1+\frac{\mu}{\lambda}+\biggl(\frac{\mu}{\lambda}\biggr)^2+\cdots+\biggl(\frac{\mu}{\lambda}\biggr)^i\biggr]
 \]</span> <span class="math display">\[=\frac{1-(\mu/\lambda)^{i+1}}{\lambda-\mu},\quad i\geqslant0\]</span> The expected time to reach state <span class="math inline">\(j\)</span>, starting at state <span class="math inline">\(k,k&lt;j\)</span>, is <span class="math display">\[
-\begin{align*}
+\begin{aligned}
 E[\text{time to go from } k \text{ to } j] &amp;= \sum_i=k^{j-1}E[T_i] \\
 &amp;= =\frac{j-k}{\lambda-\mu}-\frac{(\mu/\lambda)^{k+1}}{\lambda-\mu}\frac{[1-(\mu/\lambda)^{j-k}]}{1-\mu/\lambda}
-\end{align*}
+\end{aligned}
 \]</span> The foregoing assumes that <span class="math inline">\(\lambda\neq\mu.\)</span> If <span class="math inline">\(\lambda=\mu\)</span>, then <span class="math display">\[
-\begin{align*}
+\begin{aligned}
 E[T_{i}] &amp;= \frac{i+1}{\lambda}, \\
 E[\text{ time to go from } k \text{ to } j] &amp;= \frac {j( j+ 1) - k( k+ 1) }{21}
-\end{align*}
+\end{aligned}
 \]</span></p>
 </div>
 <p>We can also compute the variance of the time to go from 0 to <span class="math inline">\(i+1\)</span> by utilizing the conditional variance formula. First note that <a href="#eq-eq6-3" class="quarto-xref">Equation&nbsp;<span>13.3</span></a> can be written as <span class="math display">\[
 E[T_i|I_i]=\frac{1}{\lambda_i+\mu_i}+(1-I_i)(E[T_{i-1}]+E[T_i])
 \]</span> Thus <span id="eq-eq6-4"><span class="math display">\[
-\begin{align*}
+\begin{aligned}
 \mathrm{Var}(E[T_{i}|I_{i}])&amp;=(E[T_{i-1}]+E[T_{i}])^{2}\:\mathrm{Var}(I_{i})\\
 &amp;=(E[T_{i-1}]+E[T_{i}])^{2}\frac{\mu_{i}\lambda_{i}}{(\mu_{i}+\lambda_{i})^{2}}
-\end{align*}
+\end{aligned}
 \tag{13.4}\]</span></span></p>
 <p>where <span class="math inline">\(\mathrm{Var}(I_i)\)</span> is as shown since <span class="math inline">\(I_i\)</span> is a Bernoulli random variable with parameter <span class="math inline">\(p=\lambda_{i}/(\lambda_{i}+\mu_{i}).\)</span> Also, note that if we let <span class="math inline">\(X_i\)</span> denote the time until the transition from <span class="math inline">\(i\)</span> occurs, then <span id="eq-eq6-5"><span class="math display">\[
-\begin{align*}
+\begin{aligned}
 \mathrm{Var}(T_{i}|I_{i}=1)&amp;=\mathrm{Var}(X_{i}|I_{i}=1)\\
 &amp;=\mathrm{Var}(X_{i})\\&amp;=\frac{1}{(\lambda_{i}+\mu_{i})^{2}}
-\end{align*}
+\end{aligned}
 \tag{13.5}\]</span></span></p>
 <p>where the preceding uses the fact that the time until transition is independent of the next state visited. Also, <span id="eq-eq6-6"><span class="math display">\[
-\begin{align*}
+\begin{aligned}
 \mathrm{Var}(T_{i}|I_{i}=0)&amp;=\mathrm{Var}(X_{i}+\mathrm{time~to~get~back~to~}i+\mathrm{time~to~then~reach~} i+1)\\
 &amp;=\mathrm{Var}(X_{i})+\mathrm{Var}(T_{i-1})+\mathrm{Var}(T_{i})
-\end{align*}
+\end{aligned}
 \tag{13.6}\]</span></span></p>
 <p>where the foregoing uses the fact that the three random variables are independent. We can rewrite <a href="#eq-eq6-5" class="quarto-xref">Equation&nbsp;<span>13.5</span></a> and <a href="#eq-eq6-6" class="quarto-xref">Equation&nbsp;<span>13.6</span></a> as <span class="math display">\[
 \mathrm{Var}(T_i|I_i)=\mathrm{Var}(X_i)+(1-I_i)[\mathrm{Var}(T_{i-1})+\mathrm{Var}(T_i)]
 \]</span> so <span id="eq-eq6-7"><span class="math display">\[
 E[\mathrm{Var}(T_{i}|I_{i})]=\frac{1}{(\mu_{i}+\lambda_{i})^{2}}+\frac{\mu_{i}}{\mu_{i}+\lambda_{i}}[\mathrm{Var}(T_{i-1})+\mathrm{Var}(T_{i})]
 \tag{13.7}\]</span></span> Hence, using the conditional variance formula, which states that <span class="math inline">\(\mathrm{Var}(T_i)\)</span> is the sum of <a href="#eq-eq6-7" class="quarto-xref">Equation&nbsp;<span>13.7</span></a> and <a href="#eq-eq6-4" class="quarto-xref">Equation&nbsp;<span>13.4</span></a>, we obtain <span class="math display">\[
-\begin{align*}
+\begin{aligned}
 \mathrm{Var}(T_{i})&amp;=\frac{1}{(\mu_{i}+\lambda_{i})^{2}}+\frac{\mu_{i}}{\mu_{i}+\lambda_{i}}[\mathrm{Var}(T_{i-1})+\mathrm{Var}(T_{i})]\\
 &amp;+\frac{\mu_{i}\lambda_{i}}{(\mu_{i}+\lambda_{i})^{2}}(E[T_{i-1}]+E[T_{i}])^{2}
-\end{align*}
+\end{aligned}
 \]</span> or, equivalently, <span class="math display">\[
 \mathrm{Var}(T_{i})=\frac{1}{\lambda_{i}(\lambda_{i}+\mu_{i})}+\frac{\mu_{i}}{\lambda_{i}}\:\mathrm{Var}(T_{i-1})+\frac{\mu_{i}}{\mu_{i}+\lambda_{i}}(E[T_{i-1}]+E[T_{i}])^{2}
 \]</span> Starting with <span class="math inline">\(\mathrm{Var}(T_0)=1/\lambda_0^2\)</span> and using the former recursion to obtain the expectations, we can recursively compute <span class="math inline">\(\mathrm{Var}(T_i).\)</span> In addition, if we want the variance of the time to reach state <span class="math inline">\(j\)</span>, starting from state <span class="math inline">\(k, k&lt;j\)</span>,then this can be expressed as the time to go from <span class="math inline">\(k\)</span> to <span class="math inline">\(k+1\)</span> plus the additional time to go from <span class="math inline">\(k+1\)</span> to <span class="math inline">\(k+2\)</span>, and so on. Since, by the Markovian property, these successive random variables are independent, it follows that <span class="math display">\[

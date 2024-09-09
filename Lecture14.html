@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.47">
+<meta name="generator" content="quarto-1.5.57">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -337,18 +337,19 @@ window.Quarto = {
 <p>We will derive certain identities which are valid in the great majority of queueing models.</p>
 <section id="cost-equations" class="level3" data-number="14.1.1">
 <h3 data-number="14.1.1" class="anchored" data-anchor-id="cost-equations"><span class="header-section-number">14.1.1</span> Cost Equations</h3>
-<p>Some fundamental quantities of interest for queueing models are</p>
-<span class="math display">\[\begin{array}{lll}
+<p>Some fundamental quantities of interest for queueing models are <span class="math display">\[
+\begin{array}{lll}
 L, &amp; \text{the average number of customers in the system}; \\
 L_{Q}, &amp; \text{the average number of customers waiting in queue}; \\
 W, &amp; \text{the average amount of time a customer spends in the system}; \\
 W_Q, &amp; \text{the average amount of time a customer spends waiting in queue}.
-\end{array}\]</span>
+\end{array}
+\]</span></p>
 <p>A large number of interesting and useful relationships between the preceding and other quantities of interest can be obtained by making use of the following idea: Imagine that entering customers are forced to pay money (according to some rule) to the system. We would then have the following basic cost identity: <span id="eq-eq8-1"><span class="math display">\[
-\begin{align*}
+\begin{aligned}
 &amp;\text{average rate at which the system earns} \\
 &amp;=\lambda_a\times \text{ average amount an entering customer pays}
-\end{align*}
+\end{aligned}
 \tag{14.1}\]</span></span> where <span class="math inline">\(\lambda_a\)</span> is defined to be average arrival rate of entering customers. That is, if <span class="math inline">\(N(t)\)</span> denotes the number of customer arrivals by time <span class="math inline">\(t\)</span>, then <span class="math display">\[
 \lambda_a=\lim_{t\to\infty}\frac{N(t)}{t}
 \]</span> We now present a heuristic proof of <a href="#eq-eq8-1" class="quarto-xref">Equation&nbsp;<span>14.1</span></a>.</p>
@@ -369,12 +370,12 @@ L_Q=\lambda_a W_Q
 P_{n}=\lim_{t\to\infty}P\{X(t)=n\}
 \]</span> where we assume the preceding limit exists. In other words, <span class="math inline">\(P_n\)</span> is the limiting or long-run probability that there will be exactly <span class="math inline">\(n\)</span> customers in the system. It is sometimes referred to as the <em>steady-state probability</em> of exactly <span class="math inline">\(n\)</span> customers in the system. It also usually turns out that <span class="math inline">\(P_n\)</span> equals the (long-run) proportion of time that the system contains exactly <span class="math inline">\(n\)</span> customers. For example, if <span class="math inline">\(P_0=0.3\)</span>, then in the long run, the system will be empty of customers for 30 percent of the time. Similarly, <span class="math inline">\(P_1=0.2\)</span> would imply that for 20 percent of the time the system would contain exactly one customer.</p>
 <p>Two other sets of limiting probabilities are <span class="math inline">\(\{a_n,n\geqslant0\}\)</span> and <span class="math inline">\(\{d_n,n\geqslant0\}\)</span>, where <span class="math display">\[
-\begin{align*}
+\begin{aligned}
 a_{n} &amp;=\mathrm{proportion~of~customers~that~find~}n\\
 &amp;\mathrm{in~the~system~when~they~arrive,~and}\\
 d_{n} &amp;=\mathrm{proportion~of~customers~leaving~behind~}n\\
 &amp;\mathrm{in~the~system~when~they~depart}
-\end{align*}
+\end{aligned}
 \]</span> That is, <span class="math inline">\(P_n\)</span> is the proportion of time during which there are <span class="math inline">\(n\)</span> in the system; <span class="math inline">\(a_n\)</span> is the proportion of arrivals that find <span class="math inline">\(n;\)</span> and <span class="math inline">\(d_n\)</span> is the proportion of departures that leave behind <span class="math inline">\(n.\)</span> That these quantities need not always be equal is illustrated by the following example.</p>
 <div id="exm-exa1" class="theorem example">
 <p><span class="theorem-title"><strong>Example 14.1</strong></span> Consider a queueing model in which all customers have service times equal to 1, and where the times between successive customers are always greater than 1 [for instance, the interarrival times could be uniformly distributed over (1,2)]. Hence, as every arrival finds the system empty and every departure leaves it empty, we have <span class="math display">\[a_0=d_0=1\]</span> However, <span class="math display">\[

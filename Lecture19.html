@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.47">
+<meta name="generator" content="quarto-1.5.57">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -388,7 +388,7 @@ x=-\log{(1-u)}
 F^{-1}(U)=-\log{(1-U)}
 \]</span> is exponentially distributed with mean 1. Since <span class="math inline">\(1-U\)</span> is also uniformly distributed on <span class="math inline">\((0,1)\)</span> it follows that <span class="math inline">\(-\log U\)</span> is exponential with mean 1. Since <span class="math inline">\(cX\)</span> is exponential with mean <span class="math inline">\(c\)</span> when <span class="math inline">\(X\)</span> is exponential with mean 1, it follows that <span class="math inline">\(-c\log U\)</span> is exponential with mean <span class="math inline">\(c\)</span>.</p>
 </div>
-<div id="66100755" class="cell">
+<div id="37042576" class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> expon</span>
@@ -409,7 +409,7 @@ F^{-1}(U)=-\log{(1-U)}
 <span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> exp_rvs</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="d4a95325" class="cell">
+<div id="ef813282" class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>sample_size <span class="op">=</span> <span class="dv">10000</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>exp_rvs <span class="op">=</span> exp_invtran(sample_size)</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -443,14 +443,14 @@ F^{-1}(U)=-\log{(1-U)}
 </div>
 <div class="proof">
 <p><span class="proof-title"><em>Proof</em>. </span>Let <span class="math inline">\(X\)</span> be the value obtained, and let <span class="math inline">\(N\)</span> denote the number of necessary iterations. Then <span class="math display">\[
-\begin{align*}
+\begin{aligned}
 P\{X\leqslant x\}&amp;=P\{Y_{N}\leqslant x\}\\
 &amp;=P\{Y\leqslant x|U\leqslant f(Y)/cg(Y)\}\\
 &amp;=\frac{P\{Y\leqslant x,U\leqslant f(Y)/cg(Y)\}}{K}\\
 &amp;=\frac{\int P\{Y\leqslant x,U\leqslant f(Y)/cg(Y)|Y=y\}g(y)\:dy}{K}\\
 &amp;=\frac{\int_{-\infty}^{x}(f(y)/cg(y))g(y)\:dy}{K}\\
 &amp;=\frac{\int_{-\infty}^{x}f(y)\:dy}{Kc}
-\end{align*}
+\end{aligned}
 \]</span> where <span class="math inline">\(K= P\{ U\leqslant f( Y) / cg( Y) \}\)</span>. Letting <span class="math inline">\(x\to \infty\)</span> shows that <span class="math inline">\(K= 1/ c\)</span> and the proof is complete.</p>
 </div>
 <div id="exm-exa2" class="theorem example">
@@ -468,7 +468,7 @@ g(x)=1,\quad 0&lt;x&lt;1
 <p>Step 1: Generate random numbers <span class="math inline">\(U_1\)</span> and <span class="math inline">\(U_2\)</span>.</p>
 <p>Step 2: If <span class="math inline">\(U_{2}\leqslant\frac{256}{27}U_{1}(1-U_{1})^{3}\)</span>, stop and set <span class="math inline">\(X=U_1.\)</span> Otherwise return to Step 1.</p>
 <p>The average number of times that step 1 will be performed is <span class="math inline">\(c= \frac {135}{64}.\)</span></p>
-<div id="7b55f3fa" class="cell">
+<div id="ace430f9" class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>sample_size <span class="op">=</span> <span class="dv">10000</span>  <span class="co"># number of samples to generate</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>count <span class="op">=</span> <span class="dv">0</span></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>samples <span class="op">=</span> np.zeros(sample_size)</span>
@@ -479,7 +479,7 @@ g(x)=1,\quad 0&lt;x&lt;1
 <span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>        samples[count] <span class="op">=</span> U1</span>
 <span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>        count <span class="op">+=</span><span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="881f9581" class="cell">
+<div id="a5127665" class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> beta</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co"># density plot for the samples</span></span>

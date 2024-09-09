@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.47">
+<meta name="generator" content="quarto-1.5.57">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -367,10 +367,10 @@ window.Quarto = {
 \]</span> where the preceding is an <span class="math inline">\(n\)</span>-dimensional integral. (If the <span class="math inline">\(X_i\)</span> are discrete, then interpret the integral as an <span class="math inline">\(n\)</span>-fold summation.)</p>
 <p>Suppose that a direct simulation of the random vector <span class="math inline">\(\mathbf{X}\)</span>, so as to compute values of <span class="math inline">\(h(\mathbf{X})\)</span>, is inefficient, possibly because (a) it is difficult to simulate a random vector having density function <span class="math inline">\(f(\mathbf{x})\)</span>, or (b) the variance of <span class="math inline">\(h(\mathbf{X})\)</span> is large, or (c) a combination of (a) and (b).</p>
 <p>Another way in which we can use simulation to estimate <span class="math inline">\(\theta\)</span> is to note that if <span class="math inline">\(g(\mathbf{X})\)</span> is another probability density such that <span class="math inline">\(f (\mathbf{x}) = 0\)</span> whenever <span class="math inline">\(g(\mathbf{x}) = 0\)</span>, then we can express <span class="math inline">\(\theta\)</span> as <span id="eq-eq11-14"><span class="math display">\[
-\begin{align*}
+\begin{aligned}
 \theta &amp;= \int \frac{h(\mathbf{x})f(\mathbf{x})}{g(\mathbf{x})} g(\mathbf{x})\,d\mathbf{x} \\
 &amp;= E_g\left[\frac{h(\mathbf{X})f(\mathbf{X})}{g(\mathbf{X})}\right]
-\end{align*}
+\end{aligned}
 \tag{25.1}\]</span></span> where we have written <span class="math inline">\(E_g\)</span> to emphasize that the random vector <span class="math inline">\(\mathbf{X}\)</span> has joint density <span class="math inline">\(g(\mathbf{x})\)</span>.</p>
 <p>It follows from <a href="#eq-eq11-14" class="quarto-xref">Equation&nbsp;<span>25.1</span></a> that <span class="math inline">\(\theta\)</span> can be estimated by successively generating values of a random vector <span class="math inline">\(\mathbf{X}\)</span> having density function <span class="math inline">\(g(\mathbf{x})\)</span> and then using as the estimator the average of the values of <span class="math inline">\(h(\mathbf{X})f(\mathbf{X})/g(\mathbf{X})\)</span>. If a density function <span class="math inline">\(g(\mathbf{x})\)</span> can be chosen so that the random variable <span class="math inline">\(h(\mathbf{X})f(\mathbf{X})/g(\mathbf{X})\)</span> has a small variance then this approach—referred to as <em>importance sampling</em>—can result in an efficient estimator of <span class="math inline">\(\theta\)</span> .</p>
 <p>Let us now try to obtain a feel for why importance sampling can be useful. To begin, note that <span class="math inline">\(f(\mathbf{X})\)</span> and <span class="math inline">\(g(\mathbf{X})\)</span> represent the respective likelihoods of obtaining the vector <span class="math inline">\(\mathbf{X}\)</span> when <span class="math inline">\(\mathbf{X}\)</span> is a random vector with respective densities <span class="math inline">\(f\)</span> and <span class="math inline">\(g\)</span>. Hence, if <span class="math inline">\(\mathbf{X}\)</span> is distributed according to <span class="math inline">\(g\)</span>, then it will usually be the case that <span class="math inline">\(f(\mathbf{X})\)</span> will be small in relation to <span class="math inline">\(g(\mathbf{X})\)</span> and thus when <span class="math inline">\(\mathbf{X}\)</span> is simulated according to <span class="math inline">\(g\)</span> the likelihood ratio <span class="math inline">\(f(\mathbf{X})/g(\mathbf{X})\)</span> will usually be small in comparison to <span class="math inline">\(1\)</span>. However, it is easy to check that its mean is <span class="math inline">\(1\)</span>: <span class="math display">\[
@@ -391,10 +391,10 @@ f_{t}(x)=Ce^{tx}\lambda e^{-\lambda x}=\lambda Ce^{-(\lambda-t)x}
 <p>If <span class="math inline">\(f\)</span> is a Bernoulli probability mass function with parameter <span class="math inline">\(p\)</span>, then <span class="math display">\[
 f(x)=p^x(1-p)^{1-x},\quad x=0,1
 \]</span> Hence, <span class="math inline">\(M(t)=E_f[e^{tX}]=pe^{t}+1-p\)</span> and so <span class="math display">\[
-\begin{align*}
+\begin{aligned}
 f_{t}(x)&amp;=\frac{1}{M(t)}(pe^{t})^{x}(1-p)^{1-x}\\
 &amp;=\left(\frac{pe^{t}}{pe^{t}+1-p}\right)^{x}\left(\frac{1-p}{pe^{t}+1-p}\right)^{1-x}
-\end{align*}
+\end{aligned}
 \]</span> That is, <span class="math inline">\(f_t\)</span> is the probability mass function of a Bernoulli random variable with parameter <span class="math display">\[
 p_t=\frac{pe^t}{pe^t+1-p}
 \]</span> We leave it as an exercise to show that if <span class="math inline">\(f\)</span> is a normal density with parameters <span class="math inline">\(\mu\)</span> and <span class="math inline">\(\sigma^2\)</span> then <span class="math inline">\(f_t\)</span> is a normal density mean <span class="math inline">\(\mu+\sigma^2t\)</span> and variance <span class="math inline">\(\sigma^2.\)</span></p>
@@ -446,10 +446,10 @@ M(t^*)=(0.4e^{t^*}+0.6)^{20}\quad\mathrm{and}\quad e^{-t^*S}=(1/6)^S
 </div>
 <div id="exm-exa4" class="theorem example">
 <p><span class="theorem-title"><strong>Example 25.4</strong></span> Find the probability that a randomly chosen variable <span class="math inline">\(X\)</span> from the standard normal distribution is greater than <span class="math inline">\(3\)</span>. We know that one way to solve this is by solving the following integral: <span class="math display">\[
-P\{X\gt 3\} = \int_3^\infty f_X(t)\,dt = \frac{1}{\sqrt{2\pi}}\int_3^\infty e^{-t^2/2}\,dt
+P\{X&gt; 3\} = \int_3^\infty f_X(t)\,dt = \frac{1}{\sqrt{2\pi}}\int_3^\infty e^{-t^2/2}\,dt
 \]</span> We use a normal distribution with <span class="math inline">\(\mu = 4\)</span> and <span class="math inline">\(\sigma = 1\)</span> as <span class="math inline">\(g\)</span>.</p>
 </div>
-<div id="a5b15d0f" class="cell">
+<div id="0a2f8ff4" class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> scipy.stats <span class="im">as</span> stats </span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -473,7 +473,7 @@ P\{X\gt 3\} = \int_3^\infty f_X(t)\,dt = \frac{1}{\sqrt{2\pi}}\int_3^\infty e^{-
 <span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="st">'Crude MC error is: '</span>, np.<span class="bu">abs</span>(est_MC<span class="op">-</span>true_prob))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Now we visualize the performance of crude Monte Carlo and importance sampling using the following Python code.</p>
-<div id="4305395d" class="cell">
+<div id="cb0f82c4" class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>True_value <span class="op">=</span> stats.norm.cdf(<span class="op">-</span><span class="dv">3</span>)</span>

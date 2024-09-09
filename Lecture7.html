@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.47">
+<meta name="generator" content="quarto-1.5.57">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -364,18 +364,18 @@ window.Quarto = {
 <section id="hidden-markov-chains" class="level2" data-number="7.1">
 <h2 data-number="7.1" class="anchored" data-anchor-id="hidden-markov-chains"><span class="header-section-number">7.1</span> Hidden Markov Chains</h2>
 <p>Let <span class="math inline">\({X_n, n = 1, 2, \dots}\)</span> be a Markov chain with transition probabilities <span class="math inline">\(P_{i,j}\)</span> and initial state probabilities <span class="math inline">\(p_i = P\{X_1 = i\}\)</span>, <span class="math inline">\(i \ge 0\)</span>. Suppose that there is a finite set <span class="math inline">\(\mathcal{S}\)</span> of signals, and that a signal from <span class="math inline">\(\mathcal{S}\)</span> is emitted each time the Markov chain enters a state. Further, suppose that when the Markov chain enters state <span class="math inline">\(j\)</span> then, independently of previous Markov chain states and signals, the signal emitted is <span class="math inline">\(s\)</span> with probability <span class="math inline">\(p(s|j),\sum_{s\in \mathcal{S}} p(s|j) = 1\)</span>. That is, if <span class="math inline">\(S_n\)</span> represents the <span class="math inline">\(n\)</span>-th signal emitted, then <span class="math display">\[
-\begin{align*}
+\begin{aligned}
 P\{S_1 = s | X_1 = j\} &amp;= p(s|j) \\
 P\{S_n = s | X_1, S_1,\dots,X_{n-1}, S_{n-1}, X_n=j\} &amp;= p(s|j)
-\end{align*}
+\end{aligned}
 \]</span> A model of the preceding type in which the sequence of signals <span class="math inline">\(S_1, S_2, \dots\)</span> is observed, while the sequence of underlying Markov chain states <span class="math inline">\(X_1,X_2, \dots\)</span> is unobserved, is called a <em>hidden Markov chain</em> model.</p>
 <div id="exm-exa1" class="theorem example">
 <p><span class="theorem-title"><strong>Example 7.1</strong></span> Consider a production process that in each period is either in a good state (state 1) or in a poor state (state 2). If the process is in state 1 during a period then, independent of the past, with probability <span class="math inline">\(0.9\)</span> it will be in state 1 during the next period and with probability 0.1 it will be in state 2. Once in state 2, it remains in that state forever. Suppose that a single item is produced each period and that each item produced when the process is in state 1 is of acceptable quality with probability <span class="math inline">\(0.99\)</span>, while each item produced when the process is in state 2 is of acceptable quality with probability 0.96.</p>
 <p>If the status, either acceptable or unacceptable, of each successive item is observed, while the process states are unobservable, then the preceding is a hidden Markov chain model. The signal is the status of the item produced, and has value either <span class="math inline">\(a\)</span> or <span class="math inline">\(u\)</span>, depending on whether the item is acceptable or unacceptable. The signal probabilities are <span class="math display">\[
-\begin{align*}
+\begin{aligned}
 p(u|1) &amp;= 0.01,\quad p(a|1) = 0.99, \\
 p(u|2) &amp;= 0.04,\quad p(a|2) = 0.96, \\
-\end{align*}
+\end{aligned}
 \]</span> while the transition probabilities of the underlying Markov chain are <span class="math display">\[
 P_{1,1} = 0.9 = 1-P_{1,2},\quad P_{2,2} = 1
 \]</span></p>
@@ -386,19 +386,19 @@ F_n(j) = P\{\boldsymbol{S}^n = \boldsymbol{s}_n, X_n=j\}
 \]</span> and note that <span class="math display">\[
 P\{X_n=j | \boldsymbol{S}^n = \boldsymbol{s}_n\} = \frac{P\{\boldsymbol{S}^n = \boldsymbol{s}_n, X_n=j\}}{P\{\boldsymbol{S}^n = \boldsymbol{s}_n\}} = \frac{F_n(j)}{\sum_{i}F_n(i)}
 \]</span> Now, <span id="eq-eq4-35"><span class="math display">\[
-\begin{align*}
+\begin{aligned}
 F_n(j) &amp;= P\{\boldsymbol{S}^{n-1} = \boldsymbol{s}_{n-1}, S_n = s_n, X_n=j\} \\
        &amp;= \sum_{i} P\{\boldsymbol{S}^{n-1} = \boldsymbol{s}_{n-1}, X_{n-1}=i, X_n=j, S_n = s_n,\} \\
        &amp;= \sum_{i} F_{n-1}(i)P\{X_n=j, S_n = s_n | \boldsymbol{S}^{n-1} = \boldsymbol{s}_{n-1}, X_{n-1}=i\} \\
        &amp;= \sum_{i} F_{n-1}(i)P\{X_n=j, S_n = s_n | X_{n-1}=i\} \\
        &amp;= \sum_{i} F_{n-1}(i) P_{i,j}p(s_n|j) \\
        &amp;= p(s_n|j)\sum_{i} F_{n-1}(i) P_{i,j}
-\end{align*}
+\end{aligned}
 \tag{7.1}\]</span></span> where the preceding used that <span class="math display">\[
-\begin{align*}
+\begin{aligned}
 P\{X_n=j, S_n=s_n | X_{n-1}=i\} &amp;= P\{S_n=s_n | X_n=j, X_{n-1}=i\} P\{X_n=j | X_{n-1}=i\} \\
                                 &amp;= P\{S_n=s_n|X_n=j\} P_{i,j} = p(s_n|j)P_{i,j}
-\end{align*}
+\end{aligned}
 \]</span> Starting with <span class="math display">\[
 F_1(i) = P\{X_1=i, S_1=s_1\} = p_ip(s_1|i)
 \]</span> we can use Equation <a href="#eq-eq4-35" class="quarto-xref">Equation&nbsp;<span>7.1</span></a> to recursively determine the functions <span class="math inline">\(F_2(i), F_3(i), \dots\)</span> up to <span class="math inline">\(F_n(i)\)</span>.</p>
@@ -412,35 +412,35 @@ F_1(i) = P\{X_1=i, S_1=s_1\} = p_ip(s_1|i)
 </div>
 <div id="sol-sol2" class="proof solution">
 <p><span class="proof-title"><em>Solution 7.1</em>. </span>With <span class="math inline">\(\mathbf{s}_3=(a, u, a)\)</span>, we have <span class="math display">\[
-\begin{align*}
+\begin{aligned}
 &amp; F_1(1)=(0.8)(0.99)=0.792, \\
 &amp; F_1(2)=(0.2)(0.96)=0.192 \\
 &amp; F_2(1)=0.01[0.792(0.9)+0.192(0)]=0.007128, \\
 &amp; F_2(2)=0.04[0.792(0.1)+(0.192)(1)]=0.010848 \\
 &amp; F_3(1)=0.99[(0.007128)(0.9)] \approx 0.006351, \\
 &amp; F_3(2)=0.96[(0.007128)(0.1)+0.010848] \approx 0.011098
-\end{align*}
+\end{aligned}
 \]</span> Therefore, the answer to part (i) is <span class="math display">\[
 P\left\{X_3=1 \mid \mathbf{s}_3\right\} \approx \frac{0.006351}{0.006351+0.011098} \approx 0.364
 \]</span> To compute <span class="math inline">\(P\left\{X_4=1 \mid \mathbf{s}_3\right\}\)</span>, condition on <span class="math inline">\(X_3\)</span> to obtain <span class="math display">\[
-\begin{align*}
+\begin{aligned}
 P\left\{X_4=1 \mid \mathbf{s}_3\right\}= &amp; P\left\{X_4=1 \mid X_3=1, \mathbf{s}_3\right\} P\left\{X_3=1 \mid \mathbf{s}_3\right\} \\
 &amp; +P\left\{X_4=1 \mid X_3=2, \mathbf{s}_3\right\} P\left\{X_3=2 \mid \mathbf{s}_3\right\} \\
 = &amp; P\left\{X_4=1 \mid X_3=1, \mathbf{s}_3\right\}(0.364)+P\left\{X_4=1 \mid X_3=2, \mathbf{s}_3\right\}(0.636) \\
 = &amp; 0.364 P_{1,1}+0.636 P_{2,1} \\
 = &amp; 0.3276
-\end{align*}
+\end{aligned}
 \]</span> To compute <span class="math inline">\(P\left\{S_4=a \mid \mathbf{s}_3\right\}\)</span>, condition on <span class="math inline">\(X_4\)</span> <span class="math display">\[
-\begin{align*}
+\begin{aligned}
 P\left\{S_4=a \mid \mathbf{s}_3\right\}= &amp; P\left\{S_4=a \mid X_4=1, \mathrm{~s}_3\right\} P\left\{X_4=1 \mid \mathrm{s}_3\right\} \\
 &amp; +P\left\{S_4=a \mid X_4=2, \mathbf{s}_3\right\} P\left\{X_4=2 \mid \mathbf{s}_3\right\} \\
 = &amp; P\left\{S_4=a \mid X_4=1\right\}(0.3276)+P\left\{S_4=a \mid X_4=2\right\}(1-0.3276) \\
 = &amp; (0.99)(0.3276)+(0.96)(0.6724)=0.9698
-\end{align*}
+\end{aligned}
 \]</span></p>
 </div>
 <p>We now use Python to simulate the conditional probabilities and compare the simulated results with what we obtained above.</p>
-<div id="ed5e87d8" class="cell">
+<div id="f84dcbe9" class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> HMM_cond_prob(P, p_init, p_signal, s_obs, sample_size):</span>
@@ -478,7 +478,7 @@ P\left\{S_4=a \mid \mathbf{s}_3\right\}= &amp; P\left\{S_4=a \mid X_4=1, \mathrm
 <span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> prob</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="bc8c2928" class="cell">
+<div id="58147ff9" class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># State 1: good state, State 2: poor state</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Signal 1: unacceptable, Signal 2: acceptable</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>P <span class="op">=</span> np.array([[<span class="fl">0.9</span>, <span class="fl">0.1</span>], [<span class="fl">0.0</span>, <span class="fl">1.0</span>]])</span>
@@ -493,48 +493,48 @@ P\left\{S_4=a \mid \mathbf{s}_3\right\}= &amp; P\left\{S_4=a \mid X_4=1, \mathrm
 </div>
 <p>The probabilities obtained in Part (i) have been verified numerically. Similarly, one can slightly modify the HMM_cond_prob function to compute the probabilities in Parts (ii) and (iii).</p>
 <p>To compute <span class="math inline">\(P\left\{\mathbf{S}^n=\mathbf{s}_n\right\}\)</span>, use the identity <span class="math inline">\(P\left\{\mathbf{S}^n=\mathbf{s}_n\right\}=\sum_i F_n(i)\)</span> along with the recursion <a href="#eq-eq4-35" class="quarto-xref">Equation&nbsp;<span>7.1</span></a>. If there are <span class="math inline">\(N\)</span> states of the Markov chain, this requires computing <span class="math inline">\(n N\)</span> quantities <span class="math inline">\(F_n(i)\)</span>, with each computation requiring a summation over <span class="math inline">\(N\)</span> terms. This can be compared with a computation of <span class="math inline">\(P\left\{\mathbf{S}^n=\mathbf{s}_n\right\}\)</span> based on conditioning on the first <span class="math inline">\(n\)</span> states of the Markov chain to obtain <span class="math display">\[
-\begin{align*}
+\begin{aligned}
 P\left\{\mathbf{S}^n=\mathbf{s}_n\right\} &amp; =\sum_{i_1, \ldots, i_n} P\left\{\mathbf{S}^n=\mathbf{s}_n \mid X_1=i_1, \ldots, X_n=i_n\right\} P\left\{X_1=i_1, \ldots, X_n=i_n\right\} \\
 &amp; =\sum_{i_1, \ldots, i_n} p\left(s_1 \mid i_1\right) \cdots p\left(s_n \mid i_n\right) p_{i_1} P_{i_1, i_2} P_{i_2, i_3} \cdots P_{i_{n-1}, i_n}
-\end{align*}
+\end{aligned}
 \]</span></p>
 <p>The use of the preceding identity to compute <span class="math inline">\(P\left\{\mathbf{S}^n=\mathbf{s}_n\right\}\)</span> would thus require a summation over <span class="math inline">\(N^n\)</span> terms, with each term being a product of <span class="math inline">\(2 n\)</span> values, indicating that it is not competitive with the previous approach.</p>
 <p>The computation of <span class="math inline">\(P\left\{\mathbf{S}^n=\mathrm{s}_n\right\}\)</span> by recursively determining the functions <span class="math inline">\(F_k(i)\)</span> is known as the <em>forward approach</em>. There also is a <em>backward approach</em>, which is based on the quantities <span class="math inline">\(B_k(i)\)</span>, defined by <span class="math display">\[
 B_k(i)=P\left\{S_{k+1}=s_{k+1}, \ldots, S_n=s_n \mid X_k=i\right\}
 \]</span></p>
 <p>A recursive formula for <span class="math inline">\(B_k(i)\)</span> can be obtained by conditioning on <span class="math inline">\(X_{k+1}\)</span>. <span id="eq-eq4-36"><span class="math display">\[
-\begin{align*}
+\begin{aligned}
 B_k(i)= &amp; \sum_j P\left\{S_{k+1}=s_{k+1}, \ldots, S_n=s_n \mid X_k=i, X_{k+1}=j\right\} P\left\{X_{k+1}=j \mid X_k=i\right\} \\
 = &amp; \sum_j P\left\{S_{k+1}=s_{k+1}, \ldots, S_n=s_n \mid X_{k+1}=j\right\} P_{i, j} \\
 = &amp; \sum_j P\left\{S_{k+1}=s_{k+1} \mid X_{k+1}=j\right\} \\
 &amp; \times P\left\{S_{k+2}=s_{k+2}, \ldots, S_n=s_n \mid S_{k+1}=s_{k+1}, X_{k+1}=j\right\} P_{i, j} \\
 = &amp; \sum_j p\left(s_{k+1} \mid j\right) P\left\{S_{k+2}=s_{k+2}, \ldots, S_n=s_n \mid X_{k+1}=j\right\} P_{i, j} \\
 = &amp; \sum_j p\left(s_{k+1} \mid j\right) B_{k+1}(j) P_{i, j}
-\end{align*}
+\end{aligned}
 \tag{7.2}\]</span></span></p>
 <p>Starting with <span class="math display">\[
-\begin{align*}
+\begin{aligned}
 B_{n-1}(i) &amp; =P\left\{S_n=s_n \mid X_{n-1}=i\right\} \\
 &amp; =\sum_j P_{i, j} p\left(s_n \mid j\right)
-\end{align*}
+\end{aligned}
 \]</span> we would then use Equation <a href="#eq-eq4-36" class="quarto-xref">Equation&nbsp;<span>7.2</span></a> to determine the function <span class="math inline">\(B_{n-2}(i)\)</span>, then <span class="math inline">\(B_{n-3}(i)\)</span>, and so on, down to <span class="math inline">\(B_1(i)\)</span>. This would then yield <span class="math inline">\(P\left\{\mathbf{S}^n=\mathbf{s}_n\right\}\)</span> via <span class="math display">\[
-\begin{align*}
+\begin{aligned}
 P\left\{\mathbf{S}^n=\mathrm{s}_n\right\} &amp; =\sum_i P\left\{S_1=s_1, \ldots, S_n=s_n \mid X_1=i\right\} p_i \\
 &amp; =\sum_i P\left\{S_1=s_1 \mid X_1=i\right\} P\left\{S_2=s_2, \ldots, S_n=s_n \mid S_1=s_1, X_1=i\right\} p_i
-\end{align*}
+\end{aligned}
 \]</span> <span class="math display">\[
-\begin{align*}
+\begin{aligned}
 &amp; =\sum_i p\left(s_1 \mid i\right) P\left\{S_2=s_2, \ldots, S_n=s_n \mid X_1=i\right\} p_i \\
 &amp; =\sum_i p\left(s_1 \mid i\right) B_1(i) p_i
-\end{align*}
+\end{aligned}
 \]</span></p>
 <p>Another approach to obtaining <span class="math inline">\(P\left\{\mathbf{S}^n=\mathbf{s}_n\right\}\)</span> is to combine both the forward and backward approaches. Suppose that for some <span class="math inline">\(k\)</span> we have computed both functions <span class="math inline">\(F_k(j)\)</span> and <span class="math inline">\(B_k(j)\)</span>. Because <span class="math display">\[
-\begin{align*}
+\begin{aligned}
 P\left\{\mathbf{S}^n=\mathbf{s}_n, X_k=j\right\}= &amp; P\left\{\mathbf{S}^k=\mathbf{s}_k, X_k=j\right\} \\
 &amp; \times P\left\{S_{k+1}=s_{k+1}, \ldots, S_n=s_n \mid \mathbf{S}^k=\mathbf{s}_k, X_k=j\right\} \\
 = &amp; P\left\{\mathbf{S}^k=\mathbf{s}_k, X_k=j\right\} P\left\{S_{k+1}=s_{k+1}, \ldots, S_n=s_n \mid X_k=j\right\} \\
 = &amp; F_k(j) B_k(j)
-\end{align*}
+\end{aligned}
 \]</span> we see that <span class="math display">\[
 P\left\{\mathbf{S}^n=\mathbf{s}_n\right\}=\sum_j F_k(j) B_k(j)
 \]</span></p>

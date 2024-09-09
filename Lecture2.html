@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.47">
+<meta name="generator" content="quarto-1.5.57">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -403,6 +403,94 @@ P_{00} &amp;= P_{NN} = 1
 \end{aligned}
 \]</span> States <span class="math inline">\(0\)</span> and <span class="math inline">\(N\)</span> are called <strong>absorbing states</strong> since once entered they are never left. Note that the preceding is a finite state random walk with absorbing barriers (states <span class="math inline">\(0\)</span> and <span class="math inline">\(N\)</span>).</p>
 </div>
+<div id="exm-insurance" class="theorem example">
+<p><span class="theorem-title"><strong>Example 2.4</strong></span> In most of Europe and Asia annual automobile insurance premiums are determined by use of a Bonus Malus (Latin for Good-Bad) system. Each policyholder is given a positive integer valued state and the annual premium is a function of this state (along, of course, with the type of car being insured and the level of insurance). A policyholder’s state changes from year to year in response to the number of claims made by that policyholder. Because lower numbered states correspond to lower annual premiums, a policyholder’s state will usually decrease if he or she had no claims in the preceding year, and will generally increase if he or she had at least one claim. (Thus, no claims is good and typically results in a decreased premium, while claims are bad and typically result in a higher premium.)</p>
+<p>For a given Bonus Malus system, let <span class="math inline">\(s_i(k)\)</span> denote the next state of a policyholder who was in state <span class="math inline">\(i\)</span> in the previous year and who made a total of <span class="math inline">\(k\)</span> claims in that year. If we suppose that the number of yearly claims made by a particular policyholder is a Poisson random variable with parameter <span class="math inline">\(\lambda\)</span>, then the successive states of this policyholder will constitute a Markov chain with transition probabilities <span class="math display">\[
+P_{i,j} = \sum_{k: s_i(k)=j}e^{-\lambda}\frac{\lambda^k}{k!},\quad j\ge 0
+\]</span></p>
+<p>Whereas there are usually many states (20 or so is not atypical), the following table specifies a hypothetical Bonus Malus system having four states.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 11%">
+<col style="width: 23%">
+<col style="width: 14%">
+<col style="width: 13%">
+<col style="width: 14%">
+<col style="width: 23%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th></th>
+<th>Next</th>
+<th>state</th>
+<th>if</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>State</td>
+<td>Annual Premium</td>
+<td>0 claims</td>
+<td>1 claim</td>
+<td>2 claims</td>
+<td><span class="math inline">\(\ge 3\)</span> claims</td>
+</tr>
+<tr class="even">
+<td>——–</td>
+<td>—————-</td>
+<td>———-</td>
+<td>———</td>
+<td>———-</td>
+<td>—————-</td>
+</tr>
+<tr class="odd">
+<td>1</td>
+<td>200</td>
+<td>1</td>
+<td>2</td>
+<td>3</td>
+<td>4</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>250</td>
+<td>1</td>
+<td>3</td>
+<td>4</td>
+<td>4</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>400</td>
+<td>2</td>
+<td>4</td>
+<td>4</td>
+<td>4</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>600</td>
+<td>3</td>
+<td>4</td>
+<td>4</td>
+<td>4</td>
+</tr>
+</tbody>
+</table>
+<p>Thus, for instance, the table indicates that <span class="math inline">\(s_2(0) = 1\)</span>; <span class="math inline">\(s_2(1) = 3\)</span>; <span class="math inline">\(s_2(k) = 4\)</span>, <span class="math inline">\(k \ge 2\)</span>. Consider a policyholder whose annual number of claims is a Poisson random variable with parameter <span class="math inline">\(\lambda\)</span>. If <span class="math inline">\(a_k\)</span> is the probability that such a policyholder makes <span class="math inline">\(k\)</span> claims in a year, then <span class="math display">\[
+a_k = e^{-\lambda}\frac{\lambda^k}{k!}, \quad k\ge 0
+\]</span> For the Bonus Malus system specified in the preceding table, the transition probability matrix of the successive states of this policyholder is <span class="math display">\[
+P =
+\begin{bmatrix}
+a_0 &amp; a_1 &amp; a_2 &amp; 1-a_0-a_1-a_2 \\
+a_0 &amp; 0 &amp; a_1 &amp; 1-a_0-a_1 \\
+0 &amp; a_0 &amp; 0 &amp; 1-a_0 \\
+0 &amp; 0 &amp; a_0 &amp; 1-a_0 \\
+\end{bmatrix}
+\]</span></p>
+</div>
 </section>
 <section id="chapmankolmogorov-equations" class="level2" data-number="2.2">
 <h2 data-number="2.2" class="anchored" data-anchor-id="chapmankolmogorov-equations"><span class="header-section-number">2.2</span> Chapman–Kolmogorov Equations</h2>
@@ -424,7 +512,7 @@ P^{(2)} = P^{(1+1)} = P\cdot P = P^{2}
 P^{(n)} = P^{(n-1+1)} = P^{n-1}\cdot P =  P^{n}
 \]</span> That is, the <span class="math inline">\(n\)</span>-step transition matrix may be obtained by multiplying the matrix <span class="math inline">\(P\)</span> by itself <span class="math inline">\(n\)</span> times.</p>
 <div id="exm-exa4" class="theorem example">
-<p><span class="theorem-title"><strong>Example 2.4</strong></span> Consider <a href="Lecture25.html#exm-exa1" class="quarto-xref">Example&nbsp;<span>25.1</span></a> in which the weather is considered as a two-state Markov chain. If <span class="math inline">\(\alpha = 0.7\)</span> and <span class="math inline">\(\beta = 0.4\)</span>, then calculate the probability that it will rain four days from today given that it is raining today.</p>
+<p><span class="theorem-title"><strong>Example 2.5</strong></span> Consider <a href="Lecture25.html#exm-exa1" class="quarto-xref">Example&nbsp;<span>25.1</span></a> in which the weather is considered as a two-state Markov chain. If <span class="math inline">\(\alpha = 0.7\)</span> and <span class="math inline">\(\beta = 0.4\)</span>, then calculate the probability that it will rain four days from today given that it is raining today.</p>
 </div>
 <div id="sol-exa4" class="proof solution">
 <p><span class="proof-title"><em>Solution 2.1</em>. </span>The one-step transition probability matrix is given by</p>
@@ -481,7 +569,7 @@ P\{X_{m+1}=j | X_m=i\} =
 \]</span></p>
 <p>That is, transform all states in <span class="math inline">\(\mathcal{A}\)</span> into absorbing states which once entered can never be left. Because the original and transformed Markov chain follows identical probabilities until a state in <span class="math inline">\(\mathcal{A}\)</span> is entered, it follows that the probability the original Markov chain enters a state in <span class="math inline">\(\mathcal{A}\)</span> by time <span class="math inline">\(n\)</span> is equal to the probability that the transformed Markov chain is in one of the states of <span class="math inline">\(\mathcal{A}\)</span> at time <span class="math inline">\(n\)</span>.</p>
 <div id="exm-exa5" class="theorem example">
-<p><span class="theorem-title"><strong>Example 2.5</strong></span> A pensioner receives <span class="math inline">\(2\)</span> (thousand dollars) at the beginning of each month. The amount of money he needs to spend during a month is independent of the amount he has and is equal to <span class="math inline">\(i\)</span> with probability <span class="math inline">\(P_i, i = 1, 2, 3, 4, \sum_{i=1}^4 P_i = 1\)</span>. If the pensioner has more than <span class="math inline">\(3\)</span> at the end of a month, he gives the amount greater than <span class="math inline">\(3\)</span> to his son. If, after receiving his payment at the beginning of a month, the pensioner has a capital of <span class="math inline">\(5\)</span>, what is the probability that his capital is ever <span class="math inline">\(1\)</span> or less at any time within the following four months?</p>
+<p><span class="theorem-title"><strong>Example 2.6</strong></span> A pensioner receives <span class="math inline">\(2\)</span> (thousand dollars) at the beginning of each month. The amount of money he needs to spend during a month is independent of the amount he has and is equal to <span class="math inline">\(i\)</span> with probability <span class="math inline">\(P_i, i = 1, 2, 3, 4, \sum_{i=1}^4 P_i = 1\)</span>. If the pensioner has more than <span class="math inline">\(3\)</span> at the end of a month, he gives the amount greater than <span class="math inline">\(3\)</span> to his son. If, after receiving his payment at the beginning of a month, the pensioner has a capital of <span class="math inline">\(5\)</span>, what is the probability that his capital is ever <span class="math inline">\(1\)</span> or less at any time within the following four months?</p>
 </div>
 <div id="sol-exa5" class="proof solution">
 <p><span class="proof-title"><em>Solution 2.2</em>. </span>To find the desired probability, we consider a Markov chain with the state equal to the amount the pensioner has at the end of a month. Because we are interested in whether this amount ever falls as low as <span class="math inline">\(1\)</span>, we will let <span class="math inline">\(1\)</span> mean that the pensioner’s end-of-month fortune has ever been less than or equal to <span class="math inline">\(1\)</span>. Because the pensioner will give any end-of-month amount greater than <span class="math inline">\(3\)</span> to his son, we need only consider the Markov chain with states <span class="math inline">\(1, 2, 3\)</span> and transition probability matrix <span class="math inline">\(Q = [Q_{i,j}]\)</span> given by <span class="math display">\[
@@ -520,7 +608,7 @@ P\{X_n=j | X_0=i, X_k\notin\mathcal{A}, k=1,\dots,n\} &amp;= \frac{P\{X_n=j, X_k
 \end{aligned}
 \]</span></p>
 <p>Now we use Python to numerically compute the probability analytically calculated in <a href="Lecture13.html#exm-exa5" class="quarto-xref">Example&nbsp;<span>13.5</span></a>.</p>
-<div id="94090f58" class="cell" data-execution_count="1">
+<div id="9e3136cd" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> prob_1_or_less(P, sample_size):</span>
@@ -555,13 +643,13 @@ P\{X_n=j | X_0=i, X_k\notin\mathcal{A}, k=1,\dots,n\} &amp;= \frac{P\{X_n=j, X_k
 <span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>    prob <span class="op">=</span> count <span class="op">/</span> sample_size</span>
 <span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> prob</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="ad7286d5" class="cell" data-execution_count="2">
+<div id="0ab79de5" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>P <span class="op">=</span> np.array([<span class="fl">0.25</span>, <span class="fl">0.25</span>, <span class="fl">0.25</span>, <span class="fl">0.25</span>])</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>sample_size <span class="op">=</span> <span class="dv">100000</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>prob <span class="op">=</span> prob_1_or_less(P, sample_size)</span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Computed probability is '</span>, prob, <span class="st">'and the theoretical probability is '</span>, <span class="dv">201</span><span class="op">/</span><span class="dv">256</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Computed probability is  0.7835 and the theoretical probability is  0.78515625</code></pre>
+<pre><code>Computed probability is  0.78755 and the theoretical probability is  0.78515625</code></pre>
 </div>
 </div>
 <p>The numerical result verifies our theoretical result.</p>

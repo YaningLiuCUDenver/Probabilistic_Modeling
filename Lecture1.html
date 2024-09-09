@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.47">
+<meta name="generator" content="quarto-1.5.57">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -371,110 +371,29 @@ P\{X_{n+1}=i+1|X_n=i\} = P\{X_{n+1}=i-1|X_n=i\} = \frac{1}{2}
 P\{i \text{ is the last node visited} \} = 1/m, i=1,\dots,m
 \]</span></p>
 </div>
-<div class="cell" data-layout-align="default">
-<div class="cell-output-display">
-<div>
-<p></p><figure class="figure"><p></p>
-<div>
-<svg width="672" height="480" viewbox="0.00 0.00 382.86 364.86" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none">
-<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 360.86)">
-<title>G</title>
-<polygon fill="white" stroke="transparent" points="-4,4 -4,-360.86 378.86,-360.86 378.86,4 -4,4"></polygon>
-<!-- node_0 -->
-<g id="node1" class="node">
-<title>node_0</title>
-<ellipse fill="none" stroke="black" cx="300.87" cy="-64.99" rx="27" ry="18"></ellipse>
-<text text-anchor="middle" x="300.87" y="-60.79" font-family="Times,serif" font-size="14.00">0</text>
-</g>
-<!-- node_1 -->
-<g id="node2" class="node">
-<title>node_1</title>
-<ellipse fill="none" stroke="black" cx="187.43" cy="-18" rx="27" ry="18"></ellipse>
-<text text-anchor="middle" x="187.43" y="-13.8" font-family="Times,serif" font-size="14.00">1</text>
-</g>
-<!-- node_0&#45;&#45;node_1 -->
-<g id="edge1" class="edge">
-<title>node_0--node_1</title>
-<path fill="none" stroke="black" d="M277.91,-55.48C258.36,-47.38 230.39,-35.8 210.74,-27.66"></path>
-</g>
-<!-- node_2 -->
-<g id="node3" class="node">
-<title>node_2</title>
-<ellipse fill="none" stroke="black" cx="73.99" cy="-64.99" rx="27" ry="18"></ellipse>
-<text text-anchor="middle" x="73.99" y="-60.79" font-family="Times,serif" font-size="14.00">...</text>
-</g>
-<!-- node_1&#45;&#45;node_2 -->
-<g id="edge2" class="edge">
-<title>node_1--node_2</title>
-<path fill="none" stroke="black" d="M164.47,-27.51C144.92,-35.61 116.95,-47.19 97.3,-55.33"></path>
-</g>
-<!-- node_3 -->
-<g id="node4" class="node">
-<title>node_3</title>
-<ellipse fill="none" stroke="black" cx="27" cy="-178.43" rx="27" ry="18"></ellipse>
-<text text-anchor="middle" x="27" y="-174.23" font-family="Times,serif" font-size="14.00">i-1</text>
-</g>
-<!-- node_2&#45;&#45;node_3 -->
-<g id="edge3" class="edge">
-<title>node_2--node_3</title>
-<path fill="none" stroke="black" d="M66.65,-82.71C57.82,-104.02 43.09,-139.57 34.29,-160.83"></path>
-</g>
-<!-- node_4 -->
-<g id="node5" class="node">
-<title>node_4</title>
-<ellipse fill="none" stroke="black" cx="73.99" cy="-291.87" rx="27" ry="18"></ellipse>
-<text text-anchor="middle" x="73.99" y="-287.67" font-family="Times,serif" font-size="14.00">i</text>
-</g>
-<!-- node_3&#45;&#45;node_4 -->
-<g id="edge4" class="edge">
-<title>node_3--node_4</title>
-<path fill="none" stroke="black" d="M34.34,-196.15C43.17,-217.46 57.89,-253.01 66.7,-274.27"></path>
-</g>
-<!-- node_5 -->
-<g id="node6" class="node">
-<title>node_5</title>
-<ellipse fill="none" stroke="black" cx="187.43" cy="-338.86" rx="27" ry="18"></ellipse>
-<text text-anchor="middle" x="187.43" y="-334.66" font-family="Times,serif" font-size="14.00">i+1</text>
-</g>
-<!-- node_4&#45;&#45;node_5 -->
-<g id="edge5" class="edge">
-<title>node_4--node_5</title>
-<path fill="none" stroke="black" d="M96.94,-301.38C116.5,-309.48 144.46,-321.06 164.12,-329.2"></path>
-</g>
-<!-- node_6 -->
-<g id="node7" class="node">
-<title>node_6</title>
-<ellipse fill="none" stroke="black" cx="300.87" cy="-291.87" rx="27" ry="18"></ellipse>
-<text text-anchor="middle" x="300.87" y="-287.67" font-family="Times,serif" font-size="14.00">...</text>
-</g>
-<!-- node_5&#45;&#45;node_6 -->
-<g id="edge6" class="edge">
-<title>node_5--node_6</title>
-<path fill="none" stroke="black" d="M210.38,-329.35C229.94,-321.25 257.9,-309.66 277.56,-301.52"></path>
-</g>
-<!-- node_7 -->
-<g id="node8" class="node">
-<title>node_7</title>
-<ellipse fill="none" stroke="black" cx="347.86" cy="-178.43" rx="27" ry="18"></ellipse>
-<text text-anchor="middle" x="347.86" y="-174.23" font-family="Times,serif" font-size="14.00">m</text>
-</g>
-<!-- node_6&#45;&#45;node_7 -->
-<g id="edge7" class="edge">
-<title>node_6--node_7</title>
-<path fill="none" stroke="black" d="M308.21,-274.14C317.04,-252.83 331.76,-217.28 340.57,-196.03"></path>
-</g>
-<!-- node_7&#45;&#45;node_0 -->
-<g id="edge8" class="edge">
-<title>node_7--node_0</title>
-<path fill="none" stroke="black" d="M340.51,-160.7C331.69,-139.39 316.96,-103.84 308.16,-82.59"></path>
-</g>
-</g>
-</svg>
-</div>
-<p></p></figure><p></p>
-</div>
-</div>
-</div>
+<!-- ```{dot}
+graph G {
+    layout=circo
+    node_0 [label="0"]
+    node_1 [label="1"]
+    node_2 [label="..."]
+    node_3 [label="i-1"]
+    node_4 [label="i"]
+    node_5 [label="i+1"]
+    node_6 [label="..."]
+    node_7 [label="m"]
+    
+    node_0 -- node_1;
+    node_1 -- node_2;
+    node_2 -- node_3;
+    node_3 -- node_4;
+    node_4 -- node_5;
+    node_5 -- node_6;
+    node_6 -- node_7;
+    node_7 -- node_0;
+}
+``` -->
+<p><img src="images/nodes.png" class="img-fluid" style="width:70.0%"></p>
 <div id="rem-exa1" class="proof remark">
 <p><span class="proof-title"><em>Remark 1.1</em>. </span>The argument used in <a href="Lecture25.html#exm-exa1" class="quarto-xref">Example&nbsp;<span>25.1</span></a> also shows that a gambler who is equally likely to either win or lose one unit on each gamble will be down <span class="math inline">\(n\)</span> before being up <span class="math inline">\(1\)</span> with probability <span class="math inline">\(1/(n+1)\)</span>; or equivalently <span class="math display">\[
 P\{\text{gambler is up 1 before being down }n\} = \frac{n}{n+1},\,\,i=1, \dots, m
@@ -492,7 +411,7 @@ P\{\text{gambler is up } k \text{ before being down }n\}=\frac{n}{n+k}
 \]</span></p>
 </div>
 <p>Below, we use Python to simulate the process and numerically determine the probability that a node is the last one visited, and compare the numerical results with the theoretical ones.</p>
-<div id="8be66fe9" class="cell" data-execution_count="1">
+<div id="95e59ffa" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> last_visited_node(m):</span>
@@ -552,10 +471,10 @@ P\{\text{gambler is up } k \text{ before being down }n\}=\frac{n}{n+k}
 <span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> probs</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Consider a case where there are 11 nodes (<span class="math inline">\(m=10\)</span>), and we simulate the process <span class="math inline">\(10000\)</span> times and compute the probability that each node is last visited . The result is in agreement with the theoretical one (<span class="math inline">\(1/m\)</span>).</p>
-<div id="7f49c655" class="cell" data-execution_count="2">
+<div id="007ffd10" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(prob_nodes(<span class="dv">10</span>, <span class="dv">10000</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[0.0992 0.0952 0.0983 0.0957 0.1013 0.0983 0.0998 0.099  0.1059 0.1073]</code></pre>
+<pre><code>[0.1005 0.1014 0.0976 0.0974 0.1031 0.0988 0.1003 0.0973 0.1066 0.097 ]</code></pre>
 </div>
 </div>
 

@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.47">
+<meta name="generator" content="quarto-1.5.57">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -337,34 +337,34 @@ window.Quarto = {
 \lambda P_0 = \mu P_1
 \]</span></p>
 <p>Now consider state 1. The process can leave this state either by an arrival (which occurs at rate <span class="math inline">\(\lambda)\)</span> or a departure (which occurs at rate <span class="math inline">\(\mu).\)</span> Hence, when in state 1, the process will leave this state at a rate of <span class="math inline">\(\lambda+\mu^*\)</span> Since the proportion of time the process is in state 1 is <span class="math inline">\(P_1\)</span>, the rate at which the process leaves state 1 is <span class="math inline">\((\lambda+\mu)P_1.\)</span> On the other hand, state 1 can be entered either from state 0 via an arrival or from state 2 via a departure. Hence, the rate at which the process enters state 1 is <span class="math inline">\(\lambda P_0+\mu P_2.\)</span> Because the reasoning for other states is similar, we obtain the following set of equations: <span id="eq-eq8-5"><span class="math display">\[
-\begin{array}{c}
+\begin{array}{cc}
 \text{State} &amp; \text{Rate at which the process leaves = rate at which it enters} \\
 0 &amp; \lambda P_{0}=\mu P_{1}\\
 n,n\geqslant1 &amp; (\lambda+\mu)P_{n}=\lambda P_{n-1}+\mu P_{n+1}\\
 \end{array}
 \tag{15.1}\]</span></span></p>
 <p>The set of <a href="#eq-eq8-5" class="quarto-xref">Equation&nbsp;<span>15.1</span></a> which balances the rate at which the process enters each state with the rate at which it leaves that state is known as <em>balance equations</em>. In order to solve <a href="#eq-eq8-5" class="quarto-xref">Equation&nbsp;<span>15.1</span></a>, we rewrite them to obtain <span class="math display">\[
-\begin{align*}
+\begin{aligned}
 P_{1}&amp;=\frac{\lambda}{\mu}P_{0},\\
 P_{n+1}&amp;=\frac{\lambda}{\mu}P_{n}+\left(P_{n}-\frac{\lambda}{\mu}P_{n-1}\right),\quad n\geqslant 1
-\end{align*}
+\end{aligned}
 \]</span> Solving in terms of <span class="math inline">\(P_0\)</span> yields <span class="math display">\[
-\begin{align*}
+\begin{aligned}
 &amp;P_{0}=P_{0},\\
 &amp;P_{1}=\frac{\lambda}{\mu}P_{0},\\
 &amp;P_{2}=\frac{\lambda}{\mu}P_{1}+\left(P_{1}-\frac{\lambda}{\mu}P_{0}\right)=\frac{\lambda}{\mu}P_{1}=\left(\frac{\lambda}{\mu}\right)^{2}P_{0},\\
 &amp;P_{3}=\frac{\lambda}{\mu}P_{2}+\left(P_{2}-\frac{\lambda}{\mu}P_{1}\right)=\frac{\lambda}{\mu}P_{2}=\left(\frac{\lambda}{\mu}\right)^{3}P_{0},\\
 &amp;P_{4}=\frac{\lambda}{\mu}P_{3}+\left(P_{3}-\frac{\lambda}{\mu}P_{2}\right)=\frac{\lambda}{\mu}P_{3}=\left(\frac{\lambda}{\mu}\right)^{4}P_{0},\\
 &amp;P_{n+1}=\frac{\lambda}{\mu}P_{n}+\left(P_{n}-\frac{\lambda}{\mu}P_{n-1}\right)=\frac{\lambda}{\mu}P_{n}=\left(\frac{\lambda}{\mu}\right)^{n+1}P_{0}
-\end{align*}
+\end{aligned}
 \]</span></p>
 <p>To determine <span class="math inline">\(P_0\)</span> we use the fact that the <span class="math inline">\(P_n\)</span> must sum to 1, and thus <span class="math display">\[
 1=\sum_{n=0}^{\infty}P_{n}=\sum_{n=0}^{\infty}\left(\frac{\lambda}{\mu}\right)^{n}P_{0}=\frac{P_{0}}{1-\lambda/\mu}
 \]</span> or <span id="eq-eq8-6"><span class="math display">\[
-\begin{align*}
+\begin{aligned}
 &amp;P_{0}=1-\frac{\lambda}{\mu},\\
 &amp;P_{n}=\left(\frac{\lambda}{\mu}\right)^{n}\left(1-\frac{\lambda}{\mu}\right),\quad n\geqslant1
-\end{align*}
+\end{aligned}
 \tag{15.2}\]</span></span></p>
 <p>Notice that for the preceding equations to make sense, it is necessary for <span class="math inline">\(\lambda/\mu\)</span> to be less than l. For otherwise <span class="math inline">\(\sum_{n=0}^\infty(\lambda/\mu)^n\)</span> would be infinite and all the <span class="math inline">\(P_n\)</span> would be 0. Hence, we shall assume that <span class="math inline">\(\lambda/\mu&lt;1.\)</span> Note that it is quite intuitive that there would be no limiting probabilities if <span class="math inline">\(\lambda&gt;\mu.\)</span> For suppose that <span class="math inline">\(\lambda&gt;\mu.\)</span> Since customers arrive at a Poisson rate <span class="math inline">\(\lambda\)</span>, it follows that the expected total number of arrivals by time <span class="math inline">\(t\)</span> is <span class="math inline">\(\lambda t.\)</span> On the other hand, what is the expected number of customers served by time <span class="math inline">\(t?\)</span> If there were always customers present, then the number of customers served would be a Poisson process having rate <span class="math inline">\(\mu\)</span> since the time between successive services would be independent exponentials having mean <span class="math inline">\(1/\mu.\)</span> Hence, the expected number of customers served by time <span class="math inline">\(\iota\)</span> is no greater than <span class="math inline">\(\mu t;\)</span> and, therefore, the expected number in the system at time <span class="math inline">\(t\)</span> is at least <span class="math display">\[
 \lambda t-\mu t=(\lambda-\mu)t
@@ -382,33 +382,33 @@ P_{n+1}&amp;=\frac{\lambda}{\mu}P_{n}+\left(P_{n}-\frac{\lambda}{\mu}P_{n-1}\rig
 \]</span> Therefore, the queueing cost identity yields that <span class="math display">\[
 P\{X\geqslant n\}=(\lambda/\mu)P\{X\geqslant n-1\},\quad n&gt;0
 \]</span> Iterating this gives <span class="math display">\[
-\begin{align*}
+\begin{aligned}
 P\{X\geqslant n\}&amp;=(\lambda/\mu)P\{X\geqslant n-1\}\\
 &amp;=(\lambda/\mu)^{2}P\{X\geqslant n-2\}\\&amp;=\cdots\\
 &amp;=(\lambda/\mu)^{n}P\{X\geqslant0\}\\
 &amp;=(\lambda/\mu)^{n}
-\end{align*}
+\end{aligned}
 \]</span> Therefore, <span class="math display">\[
 P\{X=n\}=P\{X\geqslant n\}-P\{X\geqslant n+1\}=(\lambda/\mu)^{n}(1-\lambda/\mu)
 \]</span></p></li>
 </ol>
 </div>
 <p>Now let us attempt to express the quantities <span class="math inline">\(L,L_Q,W\)</span>, and <span class="math inline">\(W_Q\)</span> in terms of the limiting probabilities <span class="math inline">\(P_n.\)</span> Since <span class="math inline">\(P_n\)</span> is the long-run probability that the system contains exactly <span class="math inline">\(n\)</span> customers, the average number of customers in the system clearly is given by <span id="eq-eq8-7"><span class="math display">\[
-\begin{align*}
+\begin{aligned}
 \text{L}&amp;=\sum_{n=0}^{\infty}nP_{n}\\
 &amp;=\sum_{n=0}^{\infty}n\left(\frac{\lambda}{\mu}\right)^{n}\left(1-\frac{\lambda}{\mu}\right)\\
 &amp;=\frac{\lambda}{\mu-\lambda}
-\end{align*}
+\end{aligned}
 \tag{15.3}\]</span></span> where the last equation followed upon application of the algebraic identity <span class="math display">\[
 \sum_{n=0}^{\infty}nx^n=\frac{x}{(1-x)^2}
 \]</span> The quantities <span class="math inline">\(W, W_Q\)</span>, and <span class="math inline">\(L_Q\)</span> now can be obtained with the help of Equations (2) and (3) from Lecture 14. That is, since <span class="math inline">\(\lambda_{\alpha}=\lambda\)</span>, we have from <a href="#eq-eq8-7" class="quarto-xref">Equation&nbsp;<span>15.3</span></a> that <span id="eq-eq8-8"><span class="math display">\[
-\begin{align*}
+\begin{aligned}
 W&amp;=\frac{L}{\lambda}\\&amp;=\frac{1}{\mu-\lambda},\\W_{Q}&amp;=W-E[S]\\
 &amp;=W-\frac{1}{\mu}\\
 &amp;=\frac{\lambda}{\mu(\mu-\lambda)},\\L_{Q}
 &amp;=\lambda W_{Q}\\
 &amp;=\frac{\lambda^{2}}{\mu(\mu-\lambda)}
-\end{align*}
+\end{aligned}
 \tag{15.4}\]</span></span></p>
 <div id="exm-exa1" class="theorem example">
 <p><span class="theorem-title"><strong>Example 15.1</strong></span> Suppose that customers arrive at a Poisson rate of one per every 12 minutes, and that the service time is exponential at a rate of one service per 8 minutes. What are <span class="math inline">\(L\)</span> and <span class="math inline">\(W?\)</span></p>
@@ -421,52 +421,52 @@ L=2,\quad W=24
 L=4,\quad W=40
 \]</span> Hence, an increase of 20 percent in the arrival rate doubled the average number of customers in the system.</p>
 <p>To understand this better, write <a href="#eq-eq8-7" class="quarto-xref">Equation&nbsp;<span>15.3</span></a> as <span class="math display">\[
-\begin{align*}
+\begin{aligned}
 L&amp;=\frac{\lambda/\mu}{1-\lambda/\mu},\\
 W&amp;=\frac{1/\mu}{1-\lambda/\mu}
-\end{align*}
+\end{aligned}
 \]</span> From these equations we can see that when <span class="math inline">\(\lambda/\mu\)</span> is near 1, a slight increase in <span class="math inline">\(\lambda/\mu\)</span> will lead to a large increase in <span class="math inline">\(L\)</span> and <span class="math inline">\(W.\)</span></p>
 </div>
 <div id="rem-rem2" class="proof remark">
 <p><span class="proof-title"><em>Remark 15.2</em>. </span>(<strong>A Technical Remark</strong>) We have used the fact that if one event occurs at an exponential rate <span class="math inline">\(\lambda\)</span>, and another independent event at an exponential rate <span class="math inline">\(\mu\)</span>, then together they occur at an exponential rate <span class="math inline">\(\lambda+\mu.\)</span> To check this formally, let <span class="math inline">\(T_{1}\)</span> be the time at which the first event occurs, and <span class="math inline">\(T_{2}\)</span> the time at which the second event occurs. Then <span class="math display">\[
-\begin{align*}
+\begin{aligned}
 P\{T_{1}\leqslant t\}&amp;=1-e^{-\lambda t},\\
 P\{T_{2}\leqslant t\}&amp;=1-e^{-\mu t}
-\end{align*}
+\end{aligned}
 \]</span> Now if we are interested in the time until either <span class="math inline">\(T_1\)</span> or <span class="math inline">\(T_2\)</span> occurs, then we are interested in <span class="math inline">\(T=\min(T_1,T_2).\)</span> Now <span class="math display">\[
-\begin{align*}
+\begin{aligned}
 P\{T\leqslant t\}&amp;=1-P\{T&gt;t\}\\
 &amp;=1-P\{\min(T_1,T_2)&gt;t\}
-\end{align*}
+\end{aligned}
 \]</span> However, <span class="math inline">\(\min(T_1,T_2)&gt;t\)</span> if and only if both <span class="math inline">\(T_1\)</span> and <span class="math inline">\(T_2\)</span> are greater than <span class="math inline">\(t;\)</span> hence, <span class="math display">\[
-\begin{align*}
+\begin{aligned}
 P\{T\leqslant t\}&amp;=1-P\{T_{1}&gt;t,T_{2}&gt;t\}\\
 &amp;=1-P\{T_{1}&gt;t\}P\{T_{2}&gt;t\}\\
 &amp;=1-e^{-\lambda t}e^{-\mu t}\\&amp;=1-e^{-(\lambda+\mu)t}
-\end{align*}
+\end{aligned}
 \]</span> Thus, <span class="math inline">\(T\)</span> has an exponential distribution with rate <span class="math inline">\(\lambda+\mu\)</span>, and we are justified in adding the rates.</p>
 </div>
 <p>Given that an <span class="math inline">\(M/M/1\)</span> steady-state customer—that is, a customer who arrives after the system has been in operation a long time—spends a total of <span class="math inline">\(t\)</span> time units in the system, let us determine the conditional distribution of <span class="math inline">\(N\)</span>, the number of others that were present when that customer arrived. That is, letting <span class="math inline">\(W^*\)</span> be the amount of time a customer spends in the system, we will find <span class="math inline">\(P\{N=n|W^*=t\}.\)</span> Now, <span class="math display">\[
-\begin{align*}
+\begin{aligned}
 P\{N=n|W^{*}=t\}&amp;=\frac{f_{N,W^{*}}(n,t)}{f_{W}^{*}(t)}\\
 &amp;=\frac{P\{N=n\}f_{W^{*}|N}(t|n)}{f_{W}^{*}(t)}
-\end{align*}
+\end{aligned}
 \]</span> where <span class="math inline">\(f_W^*|N(t|n)\)</span> is the conditional density of <span class="math inline">\(W^*\)</span> given that <span class="math inline">\(N=n\)</span>, and <span class="math inline">\(f_W^*(t)\)</span> is the unconditional density of <span class="math inline">\(W^*.\)</span> Now, given that <span class="math inline">\(N=n\)</span>, the time that the customer spends in the system is distributed as the sum of <span class="math inline">\(n+1\)</span> independent exponential random variables with a common rate <span class="math inline">\(\mu\)</span>, implying that the conditional distribution of <span class="math inline">\(W^*\)</span> given that <span class="math inline">\(N=n\)</span> is the gamma distribution with parameters <span class="math inline">\(n+1\)</span> and <span class="math inline">\(\mu.\)</span> Therefore, with <span class="math inline">\(C=1/f_W^*(t)\)</span> <span class="math display">\[
-\begin{align*}
+\begin{aligned}
 P\{N=n|W^{*}=t\}&amp;=CP\{N=n\}\mu e^{-\mu t}\frac{(\mu t)^{n}}{n!}\\
 &amp;=C(\lambda/\mu)^{n}(1-\lambda/\mu)\mu e^{-\mu t}\frac{(\mu t)^{n}}{n!}&amp;\text{(by PASTA)}\\
 &amp;=K\:\frac{(\lambda t)^{n}}{n!}
-\end{align*}
+\end{aligned}
 \]</span> where <span class="math inline">\(K=C(1-\lambda/\mu)\mu e^{-\mu t}\)</span> does not depend on <span class="math inline">\(n.\)</span> Summing over <span class="math inline">\(n\)</span> yields <span class="math display">\[
 1=\sum_{n=0}^{\infty}P\{N=n|T=t\}=K\sum_{n=0}^{\infty}\frac{(\lambda t)^{n}}{n!}=Ke^{\lambda t}
 \]</span> Thus, <span class="math inline">\(K=e^{-\lambda I}\)</span>, showing that <span class="math display">\[
 P\{N=n|W^{*}=t\}=e^{-\lambda t}\frac{(\lambda t)^{n}}{n!}
 \]</span> Therefore, the conditional distribution of the number seen by an arrival who spends a total of <span class="math inline">\(t\)</span> time units in the system is the Poisson distribution with mean <span class="math inline">\(\lambda t.\)</span> In addition, as a by-product of our analysis, we have that <span class="math display">\[
-\begin{align*}
+\begin{aligned}
 f_{W^{*}}(t)&amp;=1/C\\
 &amp;=\frac{1}{K}(1-\lambda/\mu)\mu e^{-\mu t}\\
 &amp;=(\mu-\lambda)e^{-(\mu-\lambda)t}
-\end{align*}
+\end{aligned}
 \]</span> In other words, <span class="math inline">\(W^*\)</span>, the amount of time a customer spends in the system, is an exponential random variable with rate <span class="math inline">\(\mu-\lambda.\)</span> (As a check, we note that <span class="math inline">\(E[W^*]=\)</span> <span class="math inline">\(1/(\mu-\lambda)\)</span> which checks with <a href="#eq-eq8-8" class="quarto-xref">Equation&nbsp;<span>15.4</span></a> since W=E[W*].)</p>
 <div id="rem-rem3" class="proof remark">
 <p><span class="proof-title"><em>Remark 15.3</em>. </span>Another argument as to why <span class="math inline">\(W^*\)</span> is exponential with rate <span class="math inline">\(\mu-\lambda\)</span> is as follows. If we let <span class="math inline">\(N\)</span> denote the number of customers in the system as seen by an arrival, then this arrival will spend <span class="math inline">\(N+1\)</span> service times in the system before departing. Now, <span class="math display">\[
@@ -478,7 +478,7 @@ P\{N+1=j\}=P\{N=j-1\}=(\lambda/\mu)^{j-1}(1-\lambda/\mu),\quad j\geqslant 1
 <h2 data-number="15.2" class="anchored" data-anchor-id="a-single-server-exponential-queueing-system-having-finite-capacity"><span class="header-section-number">15.2</span> A Single-Server Exponential Queueing System Having Finite Capacity</h2>
 <p>In the previous model, we assumed that there was no limit on the number of customers that could be in the system at the same time. However, in reality there is always a finite system capacity <span class="math inline">\(N\)</span>, in the sense that there can be no more than <span class="math inline">\(N\)</span> customers in the system at any time. By this, we mean that if an arriving customer finds that there are already <span class="math inline">\(N\)</span> customers present, then he does not enter the system.</p>
 <p>As before, we let <span class="math inline">\(P_n, 0 \le n \le N\)</span>, denote the limiting probability that there are <span class="math inline">\(n\)</span> customers in the system. The rate-equality principle yields the following set of balance equations: <span class="math display">\[
-\begin{array}{c}
+\begin{array}{cc}
 \text{State} &amp; \text{Rate at which the process leaves = rate at which it enters} \\
 0 &amp; \lambda P_0 = \mu P_1 \\
 1\le n \le N-1 &amp; (\lambda+\mu) P_n = \lambda P_{n-1} + \mu P_{n+1} \\
@@ -491,10 +491,10 @@ N &amp; \mu P_N = \lambda P_{N-1}
 P_n=\dfrac{\lambda}{\mu}P_{n-1}=\left(\dfrac{\lambda}{\mu}\right)^2P_{n-2}=\cdots=\left(\dfrac{\lambda}{\mu}\right)^nP_0,\quad n=1,\ldots,N
 \tag{15.6}\]</span></span></p>
 <p>By using the fact that <span class="math inline">\(\sum_{n=0}^NP_n=1\)</span> we obtain <span class="math display">\[
-\begin{align*}
+\begin{aligned}
 1 &amp;=P_{0}\sum_{n=0}^{N}\left(\frac{\lambda}{\mu}\right)^{n}\\
   &amp;=P_{0}\left[\frac{1-(\lambda/\mu)^{N+1}}{1-\lambda/\mu}\right]
-\end{align*}
+\end{aligned}
 \]</span> or <span class="math display">\[
 P_0=\frac{(1-\lambda/\mu)}{1-(\lambda/\mu)^{N+1}}
 \]</span> and hence from <a href="#eq-eq8-10" class="quarto-xref">Equation&nbsp;<span>15.6</span></a> we obtain <span id="eq-eq8-11"><span class="math display">\[
@@ -502,10 +502,10 @@ P_{n}=\frac{(\lambda/\mu)^{n}(1-\lambda/\mu)}{1-(\lambda/\mu)^{N+1}},\quad n=0,1
 \tag{15.7}\]</span></span></p>
 <p>Note that in this case, there is no need to impose the condition that <span class="math inline">\(\lambda/\mu&lt;1.\)</span> The queue size is, by definition, bounded so there is no possibility of its increasing indefinitely.</p>
 <p>As before, <span class="math inline">\(L\)</span> may be expressed in terms of <span class="math inline">\(P_n\)</span> to yield <span class="math display">\[
-\begin{align*}
+\begin{aligned}
 \text{L}&amp;=\sum_{n=0}^{N}n\:P_{n}\\
 &amp;=\frac{(1-\lambda/\mu)}{1-(\lambda/\mu)^{N+1}}\sum_{n=0}^{N}n\left(\frac{\lambda}{\mu}\right)^{n}
-\end{align*}
+\end{aligned}
 \]</span> which after some algebra yields <span id="eq-eq8-12"><span class="math display">\[
 L=\frac{\lambda[1+N(\lambda/\mu)^{N+1}-(N+1)(\lambda/\mu)^{N}]}{(\mu-\lambda)(1-(\lambda/\mu)^{N+1})}
 \tag{15.8}\]</span></span></p>
@@ -517,16 +517,16 @@ W=\frac{L}{\lambda_a}
 <div id="sol-sol2" class="proof solution">
 <p><span class="proof-title"><em>Solution 15.2</em>. </span>To solve this, suppose that we use rate <span class="math inline">\(\mu.\)</span> Let us determine the amount of money coming in per hour and subtract from this the amount going out each hour. This will give us our profit per hour, and we can choose <span class="math inline">\(\mu\)</span> so as to maximize this.</p>
 <p>Now, potential customers arrive at a rate <span class="math inline">\(\lambda.\)</span> However, a certain proportion of them do not join the system—namely, those who arrive when there are <span class="math inline">\(N\)</span> customers already in the system. Hence, since <span class="math inline">\(P_N\)</span> is the proportion of time that the system is full, it follows that entering customers arrive at a rate of <span class="math inline">\(\lambda(1-P_N).\)</span> Since each customer pays $A, it follows that money comes in at an hourly rate of <span class="math inline">\(\lambda(1-P_N)A\)</span> and since it goes out at an hourly rate of <span class="math inline">\(c\mu\)</span>,it follows that our total profit per hour is given by <span class="math display">\[
-\begin{align*}
+\begin{aligned}
 \text{profit per hour}&amp;=\lambda(1-P_{N})A-c\mu\\
 &amp;=\lambda A\biggl[1-\frac{(\lambda/\mu)^{N}(1-\lambda/\mu)}{1-(\lambda/\mu)^{N+1}}\biggr]-c\mu\\
 &amp;=\frac{\lambda A[1-(\lambda/\mu)^{N}]}{1-(\lambda/\mu)^{N+1}}-c\mu
-\end{align*}
+\end{aligned}
 \]</span> For instance if <span class="math inline">\(N=2,\lambda=1,A=10,c=1\)</span>, then <span class="math display">\[
-\begin{align*}
+\begin{aligned}
 \mathrm{profit~per~hour}&amp;=\frac{10[1-(1/\mu)^{2}]}{1-(1/\mu)^{3}}-\mu\\
 &amp;=\frac{10(\mu^{3}-\mu)}{\mu^{3}-1}-\mu
-\end{align*}
+\end{aligned}
 \]</span> in order to maximize profit we differentiate to obtain <span class="math display">\[
 \frac{d}{d\mu}[\text{profit per hour}]=10\frac{(2\mu^3-3\mu^2+1)}{(\mu^3-1)^2}-1
 \]</span> The value of <span class="math inline">\(\mu\)</span> that maximizes our profit now can be obtained by equating to zero and solving numerically.</p>
@@ -542,7 +542,7 @@ W=\frac{L}{\lambda_a}
 </ol>
 <p>To begin we must first decide upon an appropriate state space. It is clear that the state of the system must include more information than merely the number of customers in the system. For instance, it would not be enough to specify that there is one customer in the system as we would also have to know which chair he was in. Further, if we only know that there are two customers in the system, then we would not know if the man in chair 1 is still being served or if he is just waiting for the person in chair 2 to finish. To account for these points, the following state space, consisting of the five states, <span class="math inline">\((0, 0), (1, 0), (0, 1), (1, 1)\)</span>, and <span class="math inline">\((b, 1)\)</span>, will be used. The states have the following interpretation:</p>
 <p><span class="math display">\[
-\begin{array}{c}
+\begin{array}{cc}
 \text{State}  &amp;  \text{Interpretation} \\
 (0, 0) &amp; \text{There are no customers in the system.} \\
 (1, 0) &amp; \text{There is one customer in the system, and he is in chair 1.} \\
@@ -557,7 +557,7 @@ W=\frac{L}{\lambda_a}
 <p>As a prelude to writing down the balance equations, it is usually worthwhile to make a transition diagram. This is done by first drawing a circle for each state and then drawing an arrow labeled by the rate at which the process goes from one state to another. The transition diagram for this model is shown in the following figure. The explanation for the diagram is as follows: The arrow from state <span class="math inline">\((0, 0)\)</span> to state <span class="math inline">\((1, 0)\)</span> which is labeled <span class="math inline">\(\lambda\)</span> means that when the process is in state <span class="math inline">\((0, 0)\)</span>, that is, when the system is empty, then it goes to state <span class="math inline">\((1, 0)\)</span> at a rate <span class="math inline">\(\lambda\)</span>, that is via an arrival. The arrow from <span class="math inline">\((0, 1)\)</span> to <span class="math inline">\((1, 1)\)</span> is similarly explained.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="Shoeshine.png" class="img-fluid figure-img" style="width:70.0%"></p>
+<p><img src="images/Shoeshine.png" class="img-fluid figure-img" style="width:70.0%"></p>
 <figcaption>A transition diagram.</figcaption>
 </figure>
 </div>
@@ -565,7 +565,7 @@ W=\frac{L}{\lambda_a}
 <p>When in state <span class="math inline">\((b, 1)\)</span> the process will go to state <span class="math inline">\((0, 1)\)</span> when the customer in chair 2 completes his service (which occurs at rate <span class="math inline">\(\mu_2\)</span>); hence the arrow from <span class="math inline">\((b, 1)\)</span> to <span class="math inline">\((0, 1)\)</span> labeled <span class="math inline">\(\mu_2\)</span>. Also when in state <span class="math inline">\((1, 1)\)</span> the process will go to state <span class="math inline">\((1, 0)\)</span> when the man in chair 2 finishes and hence the arrow from <span class="math inline">\((1, 1)\)</span> to <span class="math inline">\((1, 0)\)</span> labeled <span class="math inline">\(\mu_2\)</span>. Finally, if the process is in state <span class="math inline">\((0, 1)\)</span>, then it will go to state <span class="math inline">\((0, 0)\)</span> when the man in chair 2 completes his service, hence the arrow from <span class="math inline">\((0, 1)\)</span> to <span class="math inline">\((0, 0)\)</span> labeled <span class="math inline">\(\mu_2\)</span>.</p>
 <p>Because there are no other possible transitions, this completes the transition diagram.</p>
 <p>To write the balance equations we equate the sum of the arrows (multiplied by the probability of the states where they originate) coming into a state with the sum of the arrows (multiplied by the probability of the state) going out of that state. This gives <span class="math display">\[
-\begin{array}{c}
+\begin{array}{cc}
 \text{State} &amp; \text{Rate that the process leaves = rate that it enters} \\
 (0, 0) &amp; \lambda P_{00} = \mu_2 P_{01} \\
 (1, 0) &amp; \mu_1P_{10} = \lambda P_{00} +\mu_2P_{11} \\

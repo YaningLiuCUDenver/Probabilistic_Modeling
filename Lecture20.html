@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.47">
+<meta name="generator" content="quarto-1.5.57">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -372,7 +372,7 @@ f(x,y)=\frac{1}{2\pi}e^{-(x^{2}+y^{2})/2},\quad-\infty&lt;x&lt;\infty,-\infty&lt
 <div id="fig-fig1" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-fig1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="box_muller.png" class="img-fluid figure-img">
+<img src="images/box_muller.png" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-fig1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;20.1: An elephant
@@ -380,10 +380,10 @@ Figure&nbsp;20.1: An elephant
 </figure>
 </div>
 <p>Consider now the polar coordinates of the point <span class="math inline">\((X,Y).\)</span> As shown in <a href="#fig-fig1" class="quarto-xref">Figure&nbsp;<span>20.1</span></a>, <span class="math display">\[
-\begin{align*}
+\begin{aligned}
 R^{2}&amp;=X^{2}+Y^{2},\\
 \Theta&amp;=\tan^{-1}Y/X
-\end{align*}
+\end{aligned}
 \]</span> To obtain the joint density of <span class="math inline">\(R^2\)</span> and <span class="math inline">\(\Theta\)</span>, consider the transformation <span class="math display">\[
 d=x^2+y^2,\quad\theta=\tan^{-1}(y/x)
 \]</span></p>
@@ -395,10 +395,10 @@ d=x^2+y^2,\quad\theta=\tan^{-1}(y/x)
 =2
 \end{aligned}
 \]</span> Hence, the joint density of <span class="math inline">\(R^{2}\)</span> and <span class="math inline">\(\Theta\)</span> is given by <span class="math display">\[
-\begin{align*}
+\begin{aligned}
 f_{R^{2},\Theta}(d,\theta)&amp;=\frac{1}{2\pi}e^{-d/2}\frac{1}{2}\\
 &amp;=\frac{1}{2}e^{-d/2}\frac{1}{2\pi},\quad 0&lt;d&lt;\infty, 0&lt;\theta&lt;2\pi
-\end{align*}
+\end{aligned}
 \]</span> Thus, we can conclude that <span class="math inline">\(R^2\)</span> and <span class="math inline">\(\Theta\)</span> are independent with <span class="math inline">\(R^2\)</span> having an exponential distribution with rate <span class="math inline">\(\frac{1}{2}\)</span> and <span class="math inline">\(\Theta\)</span> being uniform on <span class="math inline">\((0,2\pi).\)</span></p>
 <p>Let us now go in reverse from the polar to the rectangular coordinates. From the preceding if we start with <span class="math inline">\(W\)</span>, an exponential random variable with rate <span class="math inline">\(\frac{1}{2}\)</span> (<span class="math inline">\(W\)</span> plays the role of <span class="math inline">\(R^2\)</span>) and with <span class="math inline">\(V\)</span>, independent of <span class="math inline">\(W\)</span> and uniformly distributed over <span class="math inline">\((0,2\pi)\)</span> (<span class="math inline">\(V\)</span> plays the role of <span class="math inline">\(\Theta\)</span>) then <span class="math inline">\(X=\sqrt{W}\cos V, Y=\sqrt{W}\sin V\)</span> will be independent standard normals. Hence using the results of Example 1 Lecture 19 we see that if <span class="math inline">\(U_1\)</span> and <span class="math inline">\(U_2\)</span> are independent uniform <span class="math inline">\((0,1)\)</span> random numbers, then <span id="eq-eq11-4"><span class="math display">\[
 \begin{matrix}
@@ -410,34 +410,35 @@ Y=(-2\log\:U_1)^{1/2}\sin(2\pi U_2)
 <div id="fig-fig2" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-fig2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="box_muller2.png" id="fig-fig2" class="img-fluid figure-img">
+<img src="images/box_muller2.png" id="fig-fig2" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-fig2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;20.2
 </figcaption>
 </figure>
 </div>
 <p>Thus, if we generate random numbers <span class="math inline">\(U_1\)</span> and <span class="math inline">\(U_2\)</span> and set <span class="math display">\[
-\begin{align*}
+\begin{aligned}
 V_1 &amp;= 2U_1-1, \\
 V_{2} &amp;= 2U_{2}-1
-\end{align*}
+\end{aligned}
 \]</span> then <span class="math inline">\((V_1,V_2)\)</span> is uniformly distributed in the square of area 4 centered at <span class="math inline">\((0,0)\)</span> (see <a href="#fig-fig2" class="quarto-xref">Figure&nbsp;<span>20.2</span></a>).</p>
 <p>Suppose now that we continually generate such pairs <span class="math inline">\((V_1,V_2)\)</span> until we obtain one that is contained in the circle of radius 1 centered at <span class="math inline">\((0,0)\)</span>—that is, until <span class="math inline">\((V_1,V_2)\)</span> is such that <span class="math inline">\(V_1^2+V_2^2\leqslant1.\)</span> It now follows that such a pair <span class="math inline">\((V_1,V_2)\)</span> is uniformly distributed in the circle. If we let <span class="math inline">\(\bar{R},\bar{\Theta}\)</span> denote the polar coordinates of this pair, then it is easy to verify that <span class="math inline">\(\bar{R}\)</span> and <span class="math inline">\(\bar{\Theta}\)</span> are independent, with <span class="math inline">\(\bar{R}^2\)</span> being uniformly distributed on <span class="math inline">\((0,1)\)</span>, and <span class="math inline">\(\bar{\Theta}\)</span> uniformly distributed on <span class="math inline">\((0,2\pi).\)</span></p>
 <p>Since <span class="math display">\[
-\begin{align*}
+\begin{aligned}
 \sin\bar{\Theta}&amp;=V_{2}/\bar{R}=\frac{V_{2}}{\sqrt{V_{1}^{2}+V_{2}^{2}}},\\
 \cos\bar{\Theta}&amp;=V_{1}/\bar{R}=\frac{V_{1}}{\sqrt{V_{1}^{2}+V_{2}^{2}}}
-\end{align*}
+\end{aligned}
 \]</span> it follows from <a href="#eq-eq11-4" class="quarto-xref">Equation&nbsp;<span>20.1</span></a> that we can generate independent standard normals <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> by generating another random number <span class="math inline">\(U\)</span> and setting <span class="math display">\[
-\begin{align*}
+\begin{aligned}
 X &amp;= (-2\log U)^{1/2}V_{1}/\bar{R},\\
 Y &amp;= (-2\log U)^{1/2}V_{2}/\bar{R}
-\end{align*}
+\end{aligned}
 \]</span> In fact, since (conditional on <span class="math inline">\(V_1^2+V_2^2\leqslant1\)</span>) <span class="math inline">\(\bar{R}^2\)</span> is uniform on <span class="math inline">\((0,1)\)</span> and is independent of <span class="math inline">\(\bar{\Theta}\)</span>, we can use it instead of generating a new random number <span class="math inline">\(U;\)</span> thus showing that <span class="math display">\[
-\begin{align*}
+\begin{aligned}
 X&amp;=(-2\log\bar{R}^{2})^{1/2}V_{1}/\bar{R}=\sqrt{\frac{-2\log S}{S}}V_{1},\\
 Y&amp;=(-2\log\bar{R}^{2})^{1/2}V_{2}/\bar{R}=\sqrt{\frac{-2\log S}{S}}V_{2}
-\end{align*}
+\end{aligned}
 \]</span> are independent standard normals, where <span class="math display">\[
 S=\bar{R}^2=V_1^2+V_2^2
 \]</span></p>
@@ -448,7 +449,7 @@ S=\bar{R}^2=V_1^2+V_2^2
 <p>Step 4: Return the independent unit normals <span class="math display">\[
 X=\sqrt{\frac{-2\log S}{S}}V_1,\quad Y=\sqrt{\frac{-2\log S}{S}}V_2
 \]</span> The preceding is called the <em>polar method</em>. Since the probability that a random point in the square will fall within the circle is equal to <span class="math inline">\(\pi/4\)</span> (the area of the circle divided by the area of the square), it follows that, on average, the polar method will require <span class="math inline">\(4/\pi=1.273\)</span> iterations of step 1. Hence, it will, on average, require <span class="math inline">\(2.546\)</span> random numbers, <span class="math inline">\(1\)</span> logarithm, <span class="math inline">\(1\)</span> square root, <span class="math inline">\(1\)</span> division, and <span class="math inline">\(4.546\)</span> multiplications to generate <span class="math inline">\(2\)</span> independent standard normals.</p>
-<div id="9b773dcb" class="cell">
+<div id="96d7a739" class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> box_muller(sample_size):</span>
@@ -468,7 +469,7 @@ X=\sqrt{\frac{-2\log S}{S}}V_1,\quad Y=\sqrt{\frac{-2\log S}{S}}V_2
 <span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>        samples[<span class="dv">2</span><span class="op">*</span>i:<span class="dv">2</span><span class="op">*</span>i<span class="op">+</span><span class="dv">1</span><span class="op">+</span><span class="dv">1</span>] <span class="op">=</span> [X1, X2]</span>
 <span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> samples</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="fb65d588" class="cell">
+<div id="fd536a0d" class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> norm</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>

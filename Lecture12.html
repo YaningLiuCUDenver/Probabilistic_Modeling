@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.47">
+<meta name="generator" content="quarto-1.5.57">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -330,13 +330,13 @@ window.Quarto = {
 <section id="conditional-distribution-of-the-arrival-times" class="level2" data-number="12.1">
 <h2 data-number="12.1" class="anchored" data-anchor-id="conditional-distribution-of-the-arrival-times"><span class="header-section-number">12.1</span> Conditional Distribution of the Arrival Times</h2>
 <p>Suppose we are told that exactly one event of a Poisson process has taken place by time <span class="math inline">\(t\)</span>, and we are asked to determine the distribution of the time at which the event occurred. Now, since a Poisson process possesses stationary and independent increments it seems reasonable that each interval in <span class="math inline">\([0, t]\)</span> of equal length should have the same probability of containing the event. In other words, the time of the event should be uniformly distributed over <span class="math inline">\([0, t]\)</span>. This is easily checked since, for <span class="math inline">\(s \le t\)</span>, <span class="math display">\[
-\begin{align*}
+\begin{aligned}
 P\{T_{1}&lt;s|N(t)=1\} &amp;= \frac{P\{T_{1}&lt;s,N(t)=1\}}{P\{N(t)=1\}} \\
                     &amp;=\frac{P\{1\mathrm{~event~in~}[0,s),0\mathrm{~events~in~}[s,t]\}}{P\{N(t)=1\}} \\
                     &amp;=\frac{P\{1\mathrm{~event~in~}[0,s)\}P\{0\mathrm{~events~in~}[s,t]\}}{P\{N(t)=1\}} \\
                     &amp;=\frac{\lambda se^{-\lambda s}e^{-\lambda(t-s)}}{\lambda te^{-\lambda t}} \\
                     &amp;=\frac{s}{t}
-\end{align*}
+\end{aligned}
 \]</span> This result may be generalized, but before doing so we need to introduce the concept of order statistics.</p>
 <p>Let <span class="math inline">\(Y_1, Y_2, \ldots, Y_n\)</span> be <span class="math inline">\(n\)</span> random variables. We say that <span class="math inline">\(Y_{(1)}, Y_{(2)}, \ldots, Y_{(n)}\)</span> are the order statistics corresponding to <span class="math inline">\(Y_{1}, Y_{2}, \ldots, Y_{n}\)</span> if <span class="math inline">\(Y_{(k) }\)</span> is the <span class="math inline">\(k\)</span>th smallest value among <span class="math inline">\(Y_{1}, \ldots, Y_{n}, k= 1, 2, \ldots, n.\)</span> For instance if <span class="math inline">\(n=3\)</span> and <span class="math inline">\(Y_1=4\)</span>, <span class="math inline">\(Y_2=5\)</span>, <span class="math inline">\(Y_{3}=1\)</span> then <span class="math inline">\(Y_{(1)}=1,Y_{(2)}=4,Y_{(3)}=5.\)</span> If the <span class="math inline">\(Y_i,i=1,\ldots,n\)</span>,are independent identically distributed continuous random variables with probability density <span class="math inline">\(f\)</span>, then the joint density of the order statistics <span class="math inline">\(Y_{(1)},Y_{(2)},\ldots,\dot{Y}_{(n)}\)</span> is given by <span class="math display">\[
 f(y_1,y_2,\dots,y_n)=n!\prod\limits_{i=1}^nf(y_i),\quad y_1&lt;y_2&lt;\dots&lt;y_n
@@ -356,11 +356,11 @@ f(y_1,y_2,\ldots,y_n)=\frac{n!}{t^n},\quad0&lt;y_1&lt;y_2&lt;\cdots&lt;y_n&lt;t
 </div>
 <div class="proof">
 <p><span class="proof-title"><em>Proof</em>. </span>To obtain the conditional density of <span class="math inline">\(S_1,\ldots,S_n\)</span> given that <span class="math inline">\(N(t)=n\)</span> note that for <span class="math inline">\(0&lt;S_1&lt;\cdots&lt;S_n&lt;t\)</span> the event that <span class="math inline">\(S_1=s_1,S_2=s_2,\ldots\)</span>, <span class="math inline">\(S_n=s_n,N(t)=n\)</span> is equivalent to the event that the first <span class="math inline">\(n+1\)</span> interarrival times satisfy <span class="math inline">\(T_1=s_1,T_2=s_2-s_1,\ldots,T_n=s_n-s_{n-1},T_{n+1}&gt;t-s_n.\)</span> Hence, using Proposition 1 in Lecture 7, we have that the conditional joint density of <span class="math inline">\(S_1,\ldots,S_n\)</span> given that <span class="math inline">\(N(t)=n\)</span> is as follows: <span class="math display">\[
-\begin{align*}
+\begin{aligned}
 f(s_1,\dots,s_n|n) &amp;= \frac{f(s_1,\dots,s_n,n)}{P\{N(t)=n\}} \\
                    &amp;= \frac{\lambda e^{-\lambda s_1}\lambda e^{-\lambda (s_2-s_1)}\cdots\lambda e^{-\lambda(s_n-s_{n-1})}e^{-\lambda (t-s_n)}}{e^{-\lambda t}((\lambda t)^n/n!)} \\
-                   &amp;= \frac{n!}{t^n}, \quad 0\lt s_1\lt \cdots \lt s_n\lt t
-\end{align*}
+                   &amp;= \frac{n!}{t^n}, \quad 0&lt; s_1&lt; \cdots &lt; s_n&lt; t
+\end{aligned}
 \]</span> which proves the result.</p>
 </div>
 <div id="rem-rem1" class="proof remark">
@@ -384,32 +384,32 @@ E[Y(t)]=\lambda\int_0^t\bar{G}(t-s)\:ds=\lambda\int_0^t\bar{G}(y)\:dy
 <p>type 3: if he arrives between <span class="math inline">\(t\)</span> and <span class="math inline">\(t+s\)</span> and completes service after <span class="math inline">\(t+s\)</span>,</p>
 <p>type 4: otherwise.</p>
 <p>Hence an arrival at time y will be type <span class="math inline">\(i\)</span> with probability <span class="math inline">\(P_i(y)\)</span> given by <span class="math display">\[
-\begin{align*}
+\begin{aligned}
 &amp;P_{1}(y)=\begin{cases}G(t+s-y)-G(t-y),&amp;\quad\text{if }y&lt;t\\0,&amp;\quad\text{otherwise}\end{cases}\\
 &amp;P_{2}(y)=\begin{cases}\tilde{G}(t+s-y),&amp;\quad\text{if }y&lt;t\\0,&amp;\quad\text{otherwise}\end{cases} \\
 &amp;P_3(y)=\begin{cases}\bar G(t+s-y),&amp;\quad\text{if}\:t&lt;y&lt;t+s\\0,&amp;\quad\text{otherwise}\end{cases}\\
 &amp;P_{4}(y)=1-P_{1}(y)-P_{2}(y)-P_{3}(y)
-\end{align*}
+\end{aligned}
 \]</span> Hence, if <span class="math inline">\(N_i=N_i(s+t), i=1,2,3\)</span>, denotes the number of type <span class="math inline">\(i\)</span> events that occur, then from <a href="Lecture24.html#prp-prp1" class="quarto-xref">Proposition&nbsp;<span>24.1</span></a>, <span class="math inline">\(N_i, i=1,2,3\)</span>, are independent Poisson random variables with respective means <span class="math display">\[
 E[N_i]=\lambda\int_0^{t+s}P_i(y)\:dy,\quad i=1,2,3
 \]</span> Because <span class="math display">\[
-\begin{align*}
+\begin{aligned}
 Y(t)&amp;=N_1+N_2,\\
 Y(t+s)&amp;=N_2+N_3
-\end{align*}
+\end{aligned}
 \]</span> it is now an easy matter to compute the joint distribution of <span class="math inline">\(Y(t)\)</span> and <span class="math inline">\(Y(t+s).\)</span> For instance, <span class="math display">\[
-\begin{align*}&amp;\mathrm{Cov}[Y(t),Y(t+s)]\\
+\begin{aligned}&amp;\mathrm{Cov}[Y(t),Y(t+s)]\\
 &amp;=\mathrm{Cov}(N_{1}+N_{2},N_{2}+N_{3})\\
 &amp;=\mathrm{Cov}(N_{2},N_{2})\quad\mathrm{by~independence~of~}N_{1},N_{2},N_{3}\\
 &amp;=\mathrm{Var}(N_{2})\\
 &amp;=\lambda\int_{0}^{t}\bar{G}(t+s-y)\:dy=\lambda\int_{0}^{t}\bar{G}(u+s)\:du
-\end{align*}
+\end{aligned}
 \]</span> where the last equality follows since the variance of a Poisson random variable equals its mean, and from the substitution <span class="math inline">\(u=t-y.\)</span> Also, the joint distribution of <span class="math inline">\(Y(t)\)</span> and <span class="math inline">\(Y(t+s)\)</span> is as follows: <span class="math display">\[
-\begin{align*}
+\begin{aligned}
 P\{Y(t)&amp;=i,Y(t+s)=j\}=P\{N_{1}+N_{2}=i,N_{2}+N_{3}=j\}\\
 &amp;=\sum_{l=0}^{\min(i,j)}P\{N_{2}=l,N_{1}=i-l,N_{3}=j-l\}\\
 &amp;=\sum_{l=0}^{\min(i,j)}P\{N_{2}=l\}P\{N_{1}=i-l\}P\{N_{3}=j-l\}\quad\blacksquare
-\end{align*}
+\end{aligned}
 \]</span></p>
 <div id="exm-exa2" class="theorem example">
 <p><span class="theorem-title"><strong>Example 12.2</strong></span> (Tracking the Number of HIV Infections) There is a relatively long incubation period from the time when an individual becomes infected with the HIV virus, which causes AIDS, until the symptoms of the disease appear.</p>
@@ -424,10 +424,10 @@ n_1\approx E[N_1(t)] = \lambda \int_{0}^t G(y) dy
 \]</span> Therefore, we can estimate <span class="math inline">\(\lambda\)</span> by the quantity <span class="math inline">\(\hat{\lambda}\)</span> given by <span class="math display">\[
 \hat{\lambda} = n_1 / \int_{0}^t G(y) dy
 \]</span> Using this estimate of <span class="math inline">\(\lambda\)</span>, we can estimate the number of infected but symptomless individuals at time <span class="math inline">\(t\)</span> by <span class="math display">\[
-\begin{align*}
+\begin{aligned}
 \text{estimate of } N_2(t)  &amp;= \hat{\lambda} \int_{0}^t \hat{G}(y) dy \\
 &amp;= \frac{n_1\int_{0}^t\hat{G}(y)dy}{\int_0^t G(y)dy}
-\end{align*}
+\end{aligned}
 \]</span> For example, suppose that <span class="math inline">\(G\)</span> is exponential with mean <span class="math inline">\(\mu.\)</span> Then <span class="math inline">\(\bar{G}(y)=e^-y/\mu\)</span> and a simple integration gives that <span class="math display">\[
 \text{estimate of }N_2(t)=\frac{n_1\mu(1-e^{-t/\mu})}{t-\mu(1-e^{-t/\mu})}
 \]</span> If we suppose that <span class="math inline">\(t=16\)</span> years, <span class="math inline">\(\mu=10\)</span> years, and <span class="math inline">\(n_1=220\)</span> thousand, then the estimate of the number of infected but symptomless individuals at time 16 is <span class="math display">\[
@@ -436,10 +436,10 @@ n_1\approx E[N_1(t)] = \lambda \int_{0}^t G(y) dy
 </div>
 <p><strong>Proof of Proposition 5.3</strong></p>
 <p>Let us compute the joint probability <span class="math inline">\(P\{N_i(t)=n_i,i=1,\ldots,k\}.\)</span> To do so note first that in order for there to have been <span class="math inline">\(n_i\)</span> type <span class="math inline">\(i\)</span> events for <span class="math inline">\(i=1,\ldots,k\)</span> there must have been a total of <span class="math inline">\(\sum_i=1^kn_i\)</span> events. Hence, conditioning on <span class="math inline">\(N(t)\)</span> yields <span class="math display">\[
-\begin{align*}&amp;P\{N_{1}(t)=n_{1},\ldots,N_{k}(t)=n_{k}\} \\
+\begin{aligned}&amp;P\{N_{1}(t)=n_{1},\ldots,N_{k}(t)=n_{k}\} \\
 &amp;=P\left\{N_{1}(t)=n_{1},\ldots,N_{k}(t)=n_{k}\:\Big|\:N(t)=\sum_{i=1}^{k}n_{i}\right\} \\
 &amp;\times P\left\{N(t)=\sum_{i=1}^{k}n_{i}\right\}
-\end{align*}
+\end{aligned}
 \]</span> Now consider an arbitrary event that occurred in the interval <span class="math inline">\([0,t].\)</span> If it had occurred at time <span class="math inline">\(s\)</span>,then the probability that it would be a type <span class="math inline">\(i\)</span> event would be <span class="math inline">\(P_i(s).\)</span> Hence, since by <a href="Lecture23.html#thm-thm1" class="quarto-xref">Theorem&nbsp;<span>23.1</span></a> this event will have occurred at some time uniformly distributed on <span class="math inline">\((0,t)\)</span>, it follows that the probability that this event will be a type <span class="math inline">\(i\)</span> event is <span class="math display">\[
 P_i = \frac{1}{t}\int_0^t P_i(s)ds
 \]</span> independently of the other events. Hence, <span class="math display">\[
@@ -447,10 +447,10 @@ P\left\{N_i(t) = n_i, i = 1,\dots,k | N(t)=\sum_{i=1}^k n_i\right\}
 \]</span> will just equal the multinomial probability of <span class="math inline">\(n_i\)</span> type i outcomes for <span class="math inline">\(i = 1, \dots, k\)</span> when each of <span class="math inline">\(\sum_{i=1}^kn_i\)</span> independent trials results in outcome <span class="math inline">\(i\)</span> with probability <span class="math inline">\(P_i, i = 1, \dots, k\)</span>. That is, <span class="math display">\[
 P\left\{N_1(t) = n_1, \dots, N_k(t) = n_k | N(t)=\sum_{i=1}^k n_i\right\} = \frac{(\sum_{i=1}^k n_i)!}{n_1!\cdots n_k!}P_1^{n_1}\cdots P_{k}^{n_k}
 \]</span> Consequently, <span class="math display">\[
-\begin{align*}
+\begin{aligned}
 P\{N_1(t) = n_1, \dots, N_k(t) = n_k\} &amp;= \frac{(\sum_{i=1}^k n_i)!}{n_1!\cdots n_k!}P_1^{n_1}\cdots P_{k}^{n_k}e^{-\lambda t}\frac{(\lambda t)\sum_i n_i}{(\sum_i n_i)!} \\
 &amp;= \prod_{i=1}^k e^{-\lambda t}P_i (\lambda t P_i)^{n_i} / n_i!
-\end{align*}
+\end{aligned}
 \]</span> and the proof is complete</p>
 <p>We now present an additional example of the usefulness of <a href="Lecture23.html#thm-thm1" class="quarto-xref">Theorem&nbsp;<span>23.1</span></a>.</p>
 <div id="exm-exa3" class="theorem example">
@@ -459,23 +459,23 @@ D(t) = \sum_{i=1}^{N(t)} e^{-\alpha S_i}C_i
 \]</span> where <span class="math inline">\(\alpha\)</span> is the discount rate and <span class="math inline">\(N(t)\)</span> is the number of claims made by time <span class="math inline">\(t\)</span>. To determine the expected value of <span class="math inline">\(D(t)\)</span>, we condition on <span class="math inline">\(N(t)\)</span> to obtain <span class="math display">\[
 E[D(t)] = \sum_{n=0}^\infty E[D(t)|N(t)=n]e^{-\lambda t}\frac{(\lambda t)^n}{n!}
 \]</span> Now, conditional on <span class="math inline">\(N(t) = n\)</span> the claim arrival times <span class="math inline">\(S_1, \dots, S_n\)</span> are distributed as the ordered values <span class="math inline">\(U_{(1)}, \dots, U_{(n)}\)</span> of <span class="math inline">\(n\)</span> independent uniform <span class="math inline">\((0, t)\)</span> random variables <span class="math inline">\(U_1, \dots, U_n\)</span>. Therefore, <span class="math display">\[
-\begin{align*}
+\begin{aligned}
 E[D(t)|N(t)=n] &amp;= E\left[\sum_{i=1}^nC_ie^{-\alpha U_{(i)}}\right] \\
                &amp;= \sum_{i=1}^n E\left[C_ie^{-\alpha U_{(i)}}\right] \\
                &amp;= \sum_{i=1}^n E\left[C_i\right] E\left[e^{-\alpha U_{(i)}}\right]
-\end{align*}
+\end{aligned}
 \]</span> where the final equality used the independence of the claim amounts and their arrival times. Because <span class="math inline">\(E[C_i] = \mu\)</span>, continuing the preceding gives <span class="math display">\[
-\begin{align*}
+\begin{aligned}
 E[D(t)|N(t)=n] &amp;= \mu  \sum_{i=1}^n E\left[e^{-\alpha U_{(i)}}\right]  \\
                &amp;= \mu E\left[\sum_{i=1}^n e^{-\alpha U_{(i)}}\right] \\
                &amp;= \mu E\left[\sum_{i=1}^n e^{-\alpha U_{i}}\right]
-\end{align*}
+\end{aligned}
 \]</span> The last equality follows because <span class="math inline">\(U_{(1)}, \dots, U_{(n)}\)</span> are the values <span class="math inline">\(U_1, \dots, U_n\)</span> in increasing order, and so <span class="math inline">\(\sum_{i=1}^n e^{-\alpha U_{(i)}} = \sum_{i=1}^n e^{-\alpha U_{i}}\)</span>. Continuing the string of equalities yields <span class="math display">\[
-\begin{align*}
+\begin{aligned}
 E[D(t)|N(t)=n] &amp;= n\mu E\left[e^{-\alpha U}\right]  \\
                &amp;= n\frac{\mu}{t}\int_0^t e^{-\alpha x} dx \\
                &amp;= n\frac{\mu}{\alpha t}(1-e^{-\alpha t})
-\end{align*}
+\end{aligned}
 \]</span> Therefore, <span class="math display">\[
 E[D(t)|N(t)] = N(t)\frac{\mu}{\alpha t}(1-e^{-\alpha t})
 \]</span> Taking expectations yields the result <span class="math display">\[

@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.47">
+<meta name="generator" content="quarto-1.5.57">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -369,30 +369,30 @@ f(x)=\begin{cases}\lambda e^{-\lambda x},\quad&amp;x\geqslant0\\0,\quad&amp;x&lt
 \]</span> or, equivalently, if its cdf is given by <span class="math display">\[
 F(x)=\int_{-\infty}^{x}f(y)\:dy=\begin{cases}1-e^{-\lambda x},\quad&amp;x\geqslant0\\0,\quad&amp;x&lt;0\end{cases}
 \]</span> The mean of the exponential distribution, <span class="math inline">\(E[X]\)</span>, is given by <span class="math display">\[
-\begin{align*}
+\begin{aligned}
 E[X]&amp;=\int_{-\infty}^\infty xf(x)\:dx\\&amp;=\int_0^\infty\lambda xe^{-\lambda x}\:dx
-\end{align*}
+\end{aligned}
 \]</span> Integrating by parts <span class="math inline">\((u=x,dv=\lambda e^{-\lambda x}dx)\)</span> yields <span class="math display">\[
 E[X]=-xe^{-\lambda x}\Big|_{0}^{\infty}+\int_{0}^{\infty}e^{-\lambda x}\:dx=\frac{1}{\lambda}
 \]</span> The moment generating function <span class="math inline">\(\phi(t)\)</span> of the exponential distribution is given by <span id="eq-eq5-1"><span class="math display">\[
-\begin{align*}
+\begin{aligned}
 \phi(t)&amp;=E[e^{tX}]\\
 &amp;=\int_{0}^{\infty}e^{tx}\lambda e^{-\lambda x}\:dx\\
 &amp;=\frac{\lambda}{\lambda-t}\quad\mathrm{for}\:t&lt;\lambda
-\end{align*}
+\end{aligned}
 \tag{8.1}\]</span></span></p>
 <p>All the moments of <span class="math inline">\(X\)</span> can now be obtained by differentiating <a href="#eq-eq5-1" class="quarto-xref">Equation&nbsp;<span>8.1</span></a>. For example, <span class="math display">\[
-\begin{align*}
+\begin{aligned}
 E[X^{2}]&amp;=\frac{d^{2}}{dt^{2}}\phi(t)\bigg|_{t=0}\\
 &amp;=\frac{2\lambda}{(\lambda-t)^{3}}\bigg|_{t=0}\\
 &amp;=\frac{2}{\lambda^{2}}
-\end{align*}
+\end{aligned}
 \]</span> Consequently, <span class="math display">\[
-\begin{align*}
+\begin{aligned}
 \operatorname{Var}(X) &amp;= E[X^{2}]-(E[X])^{2}\\
 &amp;=\frac{2}{\lambda^{2}}-\frac{1}{\lambda^{2}}\\
 &amp;=\frac{1}{\lambda^{2}}
-\end{align*}
+\end{aligned}
 \]</span></p>
 <div id="exm-exa1" class="theorem example">
 <p><span class="theorem-title"><strong>Example 8.1</strong></span> (Exponential Random Variables and Expected Discounted Returns) Suppose that you are receiving rewards at randomly changing rates continuously throughout time. Let <span class="math inline">\(R(x)\)</span> denote the random rate at which you are receiving rewards at time <span class="math inline">\(x.\)</span> For a value <span class="math inline">\(\alpha\geqslant0\)</span>, called the discount rate, the quantity <span class="math display">\[
@@ -411,12 +411,12 @@ I(x)=
 \]</span> and note that <span class="math display">\[
 \int_0^TR(x)\:dx=\int_0^\infty R(x)I(x)\:dx
 \]</span> Thus, <span class="math display">\[
-\begin{align*}
+\begin{aligned}
 E\bigg[\int_{0}^{T}R(x)\:dx\bigg]&amp;=E\bigg[\int_{0}^{\infty}R(x)I(x)\:dx\bigg]\\
 &amp;=\int_{0}^{\infty}E[R(x)I(x)]dx\\
 &amp;=\int_{0}^{\infty}E[R(x)]E[I(x)]dx&amp;\text{by independence}\\&amp;=\int_{0}^{\infty}E[R(x)]P\{T\geqslant x\}\:dx\\
 &amp;=\int_{0}^{\infty}e^{-\alpha x}E[R(x)]\:dx
-\end{align*}
+\end{aligned}
 \]</span> Therefore, the expected total discounted reward is equal to the expected total (undiscounted) reward earned by a random time that is exponentially distributed with a rate equal to the discount factor.</p>
 </div>
 </section>
@@ -443,7 +443,7 @@ P\{X&gt;5\} = e^{-5\lambda} = e^{-1/2} \approx 0.604
 \]</span></p>
 </div>
 <p>Python simulations can be used to estimate these probabilities as shown below.</p>
-<div id="ea6d4dc4" class="cell">
+<div id="a0514f12" class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np </span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> expon</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -456,7 +456,7 @@ P\{X&gt;5\} = e^{-5\lambda} = e^{-1/2} \approx 0.604
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>      <span class="st">'fifteen minutes in the bank is: </span><span class="ch">\n</span><span class="st">'</span>, prob, </span>
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>      <span class="st">' and the theorectical probability is: '</span>, np.exp(<span class="op">-</span><span class="dv">3</span><span class="op">/</span><span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="1c2bc152" class="cell">
+<div id="23d4b19c" class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># What is the probability that a customer will spend more than fifteen minutes </span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co"># in the bank given that she is still in the bank after ten minutes?</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>sample_size <span class="op">=</span> <span class="dv">10000</span></span>
@@ -478,7 +478,7 @@ P\{X&gt;5\} = e^{-5\lambda} = e^{-1/2} \approx 0.604
 </div>
 <p>The answer is obtained by this reasoning: Consider the time at which Mr.&nbsp;Smith first finds a free clerk. At this point either Mr.&nbsp;Jones or Mr.&nbsp;Brown would have just left and the other one would still be in service. However, by the lack of memory of the exponential, it follows that the amount of time that this other man (either Jones or Brown) would still have to spend in the post office is exponentially distributed with mean <span class="math inline">\(1/\lambda\)</span>. That is, it is the same as if he were just starting his service at this point. Hence, by symmetry, the probability that he finishes before Smith must equal <span class="math inline">\(\frac{1}{2}\)</span>. .</p>
 <p>Now we numerically simulate the processes and compute the probability.</p>
-<div id="f95caa2a" class="cell">
+<div id="288d3948" class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>sample_size <span class="op">=</span> <span class="dv">10000</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>lam <span class="op">=</span> <span class="fl">0.1</span>  <span class="co"># arbitrarily picked</span></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>count <span class="op">=</span> <span class="dv">0</span></span>
@@ -500,27 +500,27 @@ I=
 0,&amp;\quad\text{if}X\leqslant400
 \end{cases}
 \]</span> Let <span class="math inline">\(Y=(X-400)^+\)</span> be the amount paid. By the lack of memory property of the exponential, it follows that if a damage amount exceeds 400, then the amount by which it exceeds it is exponential with mean 1000. Therefore, <span class="math display">\[
-\begin{align*}
+\begin{aligned}
 E[Y|I&amp;=1]=1000\\
 E[Y|I&amp;=0]=0\\
 \operatorname{Var}(Y|I&amp;=1)=(1000)^{2}\\
 \operatorname{Var}(Y|I&amp;=0)=0
-\end{align*}
+\end{aligned}
 \]</span> which can be conveniently written as <span class="math display">\[
 E[Y|I]=10^{3}I,\quad\mathrm{Var}(Y|I)=10^{6}I
 \]</span> Because <span class="math inline">\(I\)</span> is a Bernoulli random variable that is equal to l with probability <span class="math inline">\(e^{-0.4}\)</span>, we obtain <span class="math display">\[
 E[Y]=E\Big[E[Y|I]\Big]=10^{3}E[I]=10^{3}e^{-0.4}\approx670.32
 \]</span> and, by the conditional variance formula <span class="math display">\[
-\begin{align*}
+\begin{aligned}
 \operatorname{Var}(Y)&amp;=E\Big[\operatorname{Var}(Y|I)\Big]+\operatorname{Var}\big(E[Y|I]\big)\\
 &amp;=10^{6}e^{-0.4}+10^{6}e^{-0.4}(1-e^{-0.4})
-\end{align*}
+\end{aligned}
 \]</span> where the final equality used that the variance of a Bernoulli random variable with parameter <span class="math inline">\(p\)</span> is <span class="math inline">\(p(1-p).\)</span> Consequently, <span class="math display">\[
 \sqrt{\mathrm{Var}(Y)}\approx944.09
 \]</span></p>
 </div>
 <p>Numerical results are as follows:</p>
-<div id="9858112a" class="cell">
+<div id="63caf0e9" class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>n_accidents <span class="op">=</span> <span class="dv">1000000</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>deductible <span class="op">=</span> <span class="dv">400</span></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>lam <span class="op">=</span> <span class="dv">1</span><span class="op">/</span><span class="dv">1000</span></span>
@@ -567,11 +567,11 @@ P\{T=j|X&gt;t\}=\frac{P\{X&gt;t|T=j\}P\{T=j\}}{P\{X&gt;t\}}
 \]</span> we see that the failure rate function <span class="math inline">\(r(t)\)</span> can also be written as <span class="math display">\[
 r(t)=\sum_{j=1}^n\lambda_jP\{T=j|X&gt;t\}
 \]</span> If <span class="math inline">\(\lambda_1&lt;\lambda_i\)</span>, for all <span class="math inline">\(i&gt;1\)</span>,then <span class="math display">\[
-\begin{align*}
+\begin{aligned}
 P\{T=1|X&gt;t\}&amp;=\:\frac{P_{1}e^{-\lambda_{1}t}}{P_{1}e^{-\lambda_{1}t}+\sum_{i=2}^{n}P_{i}e^{-\lambda_{i}t}}\\
 &amp;=\:\frac{P_{1}}{P_{1}+\sum_{i=2}^{n}P_{i}e^{-(\lambda_{i}-\lambda_{1})t}}\\
 &amp;\to1\quad\mathrm{as}\:t\to\infty
-\end{align*}
+\end{aligned}
 \]</span> Similarly, <span class="math inline">\(P\left\{T=i|X&gt;t\right\}\to0\)</span> when <span class="math inline">\(i\neq1\)</span>, thus showing that <span class="math display">\[
 \lim_{t\to\infty}r(t)=\min_{i}\lambda_{i}
 \]</span> That is, as a randomly chosen battery ages its failure rate converges to the failure rate of the exponential type having the smallest failure rate, which is intuitive since the longer the battery lasts, the more likely it is a battery type with the smallest failure rate.</p>

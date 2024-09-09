@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.47">
+<meta name="generator" content="quarto-1.5.57">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -359,7 +359,7 @@ window.Quarto = {
 P\{X=x_{j}\}=P_{j},\quad j=1,2,\ldots,\quad\sum_{j}P_{j}=1
 \]</span> We can use the following discrete time analog of the inverse transform technique.</p>
 <p><span class="math display">\[
-\begin{align*}
+\begin{aligned}
 &amp;\text{To simulate } X \text{ for which } P\{X=x_j\}=P_j \\
 &amp;\text{let } U \text{ be uniformly distributed over } (0,1), \text{ and set } \\
 &amp;X=
@@ -370,7 +370,7 @@ x_2,&amp;\quad\text{if}\:P_1&lt;U&lt;P_1+P_2\\
 x_j,&amp;\quad\text{if}\:\sum_1^{j-1}P_i&lt;U&lt;\sum_i^jP_i\\
 \vdots
 \end{cases}
-\end{align*}
+\end{aligned}
 \]</span> As, <span class="math display">\[
 P\{X=x_j\}=P\left\{\sum_1^{j-1}P_i&lt;U&lt;\sum_1^jP_i\right\}=P_j
 \]</span> we see that <span class="math inline">\(X\)</span> has the desired distribution.</p>
@@ -380,13 +380,13 @@ P\{X=i\}=p(1-p)^{i-1},\quad i\geqslant1
 \]</span> As <span class="math display">\[
 \sum_{i=1}^{j-1}P\{X=i\}=1-P\{X&gt;j-1\}=1-(1-p)^{j-1}
 \]</span> we can simulate such a random variable by generating a random number <span class="math inline">\(U\)</span> and then setting <span class="math inline">\(X\)</span> equal to that value <span class="math inline">\(j\)</span> for which <span class="math display">\[1-(1-p)^{j-1}&lt;U&lt;1-(1-p)^{j}\]</span> or, equivalently, for which <span class="math display">\[(1-p)^j&lt;1-U&lt;(1-p)^{j-1}\]</span> As <span class="math inline">\(1-U\)</span> has the same distribution as <span class="math inline">\(U\)</span>,we can thus define <span class="math inline">\(X\)</span> by <span class="math display">\[
-\begin{align*}
+\begin{aligned}
 \text{X}&amp;=\min\{j\colon(1-p)^{j}&lt;U\}=\min\left\{j\colon j&gt;\frac{\log U}{\log(1-p)}\right\}\\
 &amp;=1+\left[\frac{\log U}{\log(1-p)}\right]
-\end{align*}
+\end{aligned}
 \]</span> As in the continuous case, special simulation techniques have been developed for the more common discrete distributions. We now present some of these.</p>
 </div>
-<div id="b9072796" class="cell">
+<div id="6d47e91c" class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> geom</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -406,7 +406,7 @@ P\{X=i\}=p(1-p)^{i-1},\quad i\geqslant1
 <span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    geo_rvs <span class="op">=</span> <span class="dv">1</span> <span class="op">+</span> np.floor(np.log(U)<span class="op">/</span>np.log(<span class="dv">1</span><span class="op">-</span>p))</span>
 <span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> geo_rvs</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="900c4aa2" class="cell">
+<div id="bbd7f102" class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>sample_size <span class="op">=</span> <span class="dv">100000</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>p <span class="op">=</span> <span class="fl">0.5</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>geo_samples <span class="op">=</span> generate_geometric(sample_size, p)</span>
@@ -443,15 +443,15 @@ N+1=\min\left\{n\colon\prod\limits_{i=1}^nU_i&lt;e^{-\lambda}\right\}
 N=\max\left\{n\colon\sum_{i=1}^n-\log U_i&lt;\lambda\right\}
 \]</span> But <span class="math inline">\(-\log U_i\)</span> is exponential with rate 1, and so if we interpret <span class="math inline">\(-\log U_i, i\geqslant1\)</span>, as the interarrival times of a Poisson process having rate 1, we see that <span class="math inline">\(N=N(\lambda)\)</span> would equal the number of events by time <span class="math inline">\(\lambda.\)</span> Hence <span class="math inline">\(N\)</span> is Poisson with mean <span class="math inline">\(\lambda.\)</span></p>
 <p>When <span class="math inline">\(\lambda\)</span> is large we can reduce the amount of computation in the preceding simulation of <span class="math inline">\(N(\lambda)\)</span>, the number of events by time <span class="math inline">\(\lambda\)</span> of a Poisson process having rate 1, by first choosing an integer <span class="math inline">\(m\)</span> and simulating <span class="math inline">\(S_m\)</span>, the time of the <span class="math inline">\(m\)</span>th event of the Poisson process and then simulating <span class="math inline">\(N(\lambda)\)</span> according to the conditional distribution of <span class="math inline">\(N(\lambda)\)</span> given <span class="math inline">\(S_m.\)</span> Now the conditional distribution of <span class="math inline">\(N(\lambda)\)</span> given <span class="math inline">\(S_m\)</span> is as follows: <span class="math display">\[
-\begin{array}{c}
-N(\lambda)|S_m=s\sim m+ \mathrm{ Poisson}(\lambda-s) &amp; \text{ if } s \lt \lambda \\
-N(\lambda)|S_m=s\sim\mathrm{Binomial}\bigg(m-1,\frac{\lambda}{s}\bigg) &amp; \text{ if } s \gt \lambda
+\begin{array}{cc}
+N(\lambda)|S_m=s\sim m+ \mathrm{ Poisson}(\lambda-s) &amp; \text{ if } s &lt; \lambda \\
+N(\lambda)|S_m=s\sim\mathrm{Binomial}\bigg(m-1,\frac{\lambda}{s}\bigg) &amp; \text{ if } s &gt; \lambda
 \end{array}
-\]</span> where~ means “has the distribution of.” This follows since if the <span class="math inline">\(m\)</span>th event occurs at time s, where <span class="math inline">\(s&lt;\lambda\)</span>, then the number of events by time <span class="math inline">\(\lambda\)</span> is <span class="math inline">\(m\)</span> plus the number of events in <span class="math inline">\((s, \lambda)\)</span>. On the other hand given that <span class="math inline">\(S_m = s\)</span> the set of times at which the first <span class="math inline">\(m - 1\)</span> events occur has the same distribution as a set of <span class="math inline">\(m - 1\)</span> uniform <span class="math inline">\((0, s)\)</span> random variables. Hence, when <span class="math inline">\(\lambda \lt s\)</span>, the number of these which occur by time <span class="math inline">\(\lambda\)</span> is binomial with parameters <span class="math inline">\(m - 1\)</span> and <span class="math inline">\(\lambda/s\)</span>. Hence, we can simulate <span class="math inline">\(N(\lambda)\)</span> by first simulating <span class="math inline">\(S_m\)</span> and then simulate either <span class="math inline">\(P(\lambda - S_m)\)</span>, a Poisson random variable with mean <span class="math inline">\(\lambda - S_m\)</span> when <span class="math inline">\(S_m &lt; \lambda\)</span>, or simulate <span class="math inline">\(\mathrm{Bin}(m - 1, \lambda/S_m)\)</span>, a binomial random variable with parameters <span class="math inline">\(m - 1\)</span>, and <span class="math inline">\(\lambda/S_m\)</span>, when <span class="math inline">\(S_m \gt \lambda\)</span>; and then setting <span class="math display">\[
+\]</span> where~ means “has the distribution of.” This follows since if the <span class="math inline">\(m\)</span>th event occurs at time s, where <span class="math inline">\(s&lt;\lambda\)</span>, then the number of events by time <span class="math inline">\(\lambda\)</span> is <span class="math inline">\(m\)</span> plus the number of events in <span class="math inline">\((s, \lambda)\)</span>. On the other hand given that <span class="math inline">\(S_m = s\)</span> the set of times at which the first <span class="math inline">\(m - 1\)</span> events occur has the same distribution as a set of <span class="math inline">\(m - 1\)</span> uniform <span class="math inline">\((0, s)\)</span> random variables. Hence, when <span class="math inline">\(\lambda &lt; s\)</span>, the number of these which occur by time <span class="math inline">\(\lambda\)</span> is binomial with parameters <span class="math inline">\(m - 1\)</span> and <span class="math inline">\(\lambda/s\)</span>. Hence, we can simulate <span class="math inline">\(N(\lambda)\)</span> by first simulating <span class="math inline">\(S_m\)</span> and then simulate either <span class="math inline">\(P(\lambda - S_m)\)</span>, a Poisson random variable with mean <span class="math inline">\(\lambda - S_m\)</span> when <span class="math inline">\(S_m &lt; \lambda\)</span>, or simulate <span class="math inline">\(\mathrm{Bin}(m - 1, \lambda/S_m)\)</span>, a binomial random variable with parameters <span class="math inline">\(m - 1\)</span>, and <span class="math inline">\(\lambda/S_m\)</span>, when <span class="math inline">\(S_m &gt; \lambda\)</span>; and then setting <span class="math display">\[
 N(\lambda) =
 \begin{cases}
-m + P(\lambda-S_m), &amp; \text{ if } S_m\lt \lambda \\
-\mathrm{Bin}(m - 1, \lambda/S_m), &amp; \text{ if } S_m\gt \lambda
+m + P(\lambda-S_m), &amp; \text{ if } S_m&lt; \lambda \\
+\mathrm{Bin}(m - 1, \lambda/S_m), &amp; \text{ if } S_m&gt; \lambda
 \end{cases}
 \]</span> In the preceding it has been found computationally effective to let <span class="math inline">\(m\)</span> be approximately <span class="math inline">\(\frac{7}{8}\lambda\)</span>. Of course, <span class="math inline">\(S_m\)</span> is simulated by simulating from a <span class="math inline">\(\text{gamma}(m, \lambda)\)</span> distribution via an approach that is computationally fast when <span class="math inline">\(m\)</span> is large.</p>
 </div>
